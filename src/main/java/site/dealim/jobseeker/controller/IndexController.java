@@ -9,6 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     @GetMapping("/main")
     public String main() {
-        return "main.html";
+        return "main";
+    }
+
+    @GetMapping("/user")
+    public String user() {
+        return "user";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/exception")
+    public String failure() {
+        return "exception";
     }
 }

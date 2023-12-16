@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<header th:fragment="common-header">
+    <nav>
+        <a href="/auth/login">Login</a>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="logout"/>
+        </form>
+    </nav>
+</header>
+</body>
+</html>
