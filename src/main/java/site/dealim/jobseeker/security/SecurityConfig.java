@@ -45,7 +45,6 @@ public class SecurityConfig {
     }
 
 
-    // TODO: DB와 연동하여 로그인 인증 및 처리 구현해볼것
     @Bean
     UserDetailsManager inMemoryUserDetailsManager() {
         var user1 = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
