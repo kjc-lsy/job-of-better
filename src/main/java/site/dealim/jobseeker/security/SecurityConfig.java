@@ -4,11 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,7 +16,7 @@ public class SecurityConfig {
     SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/img/**", "/css/**", "/login", "/", "/register").permitAll()
+                        .requestMatchers("/img/**", "/css/**", "/login", "/", "/auth/**").permitAll()
                         .requestMatchers("/user").hasAnyRole("USER")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
@@ -45,9 +42,9 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    UserDetailsManager inMemoryUserDetailsManager() {
-        var user1 = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
-        return new InMemoryUserDetailsManager(user1);
-    }
+//    @Bean
+//    UserDetailsManager inMemoryUserDetailsManager() {
+//        var user1 = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
+//        return new InMemoryUserDetailsManager(user1);
+//    }
 }
