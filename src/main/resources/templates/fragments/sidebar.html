@@ -44,9 +44,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i><img th:src="@{/img/icon7.svg}" alt="icon7"></i>
-                        <span>Sign out</span>
+                    <a href="javascript:void(0)">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" id="logout" value="logout" hidden/>
+                            <label for="logout">
+                                <i><img th:src="@{/img/icon7.svg}" alt="icon7"></i>
+                                <span>Sign out</span>
+                            </label>
+                        </form>
                     </a>
                 </li>
             </ul>
