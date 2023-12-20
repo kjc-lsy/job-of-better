@@ -32,6 +32,6 @@ public class AuthenticationController {
     public String processRegistrationForm(@ModelAttribute User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         customUserDetailsService.save(user);
-        return "redirect:/login";
+        return "login";
     }
 }
