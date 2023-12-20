@@ -19,7 +19,7 @@ public class SecurityConfig {
     SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/img/**", "/css/**", "/login", "/").permitAll()
+                        .requestMatchers("/img/**", "/css/**", "/login", "/", "/register").permitAll()
                         .requestMatchers("/user").hasAnyRole("USER")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
@@ -48,8 +48,7 @@ public class SecurityConfig {
     // TODO: DB와 연동하여 로그인 인증 및 처리 구현해볼것
     @Bean
     UserDetailsManager inMemoryUserDetailsManager() {
-        var user1 = User.withUsername("user").password(passwordEncoder().encode("user")).roles("USER").build();
-        var user2 = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
-        return new InMemoryUserDetailsManager(user1, user2);
+        var user1 = User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build();
+        return new InMemoryUserDetailsManager(user1);
     }
 }
