@@ -16,6 +16,7 @@ public class SecurityConfig {
     SecurityFilterChain filter(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/**").permitAll() // 개발 동안 모든 경로 허용
                         .requestMatchers("/img/**", "/css/**", "/login", "/", "/auth/**").permitAll()
                         .requestMatchers("/user").hasAnyRole("USER")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
