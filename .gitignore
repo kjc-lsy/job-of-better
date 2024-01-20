@@ -38,3 +38,6 @@ out/
 
 ### env ###
 .env
+
+### react buildfiles ###
+/src/main/resources/static/**
