@@ -1,6 +1,5 @@
 package site.dealim.jobconsulting.security.custom;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,21 +7,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.Member;
-import site.dealim.jobconsulting.repository.MemberRepository;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberMapper memberMapper;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) {
-        log.info("login - loadUserByUsername : " + username);
-        Member member = memberRepository.findByMemberId(username)
-                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-        log.info(member.getRoleList().toString());
+        log.info("로그인 시도 - loadUserByUsername : " + username);
+        Member member = memberMapper.login(username);
+
+        if (member == null) {
+            log.info("로그인 시도 - 사용자 없음");
+            throw new UsernameNotFoundException("로그인 시도 - 사용자 없음");
+        }
         return new CustomMember(member);
     }
 }

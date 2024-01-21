@@ -57,7 +57,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 사용자 인증 (로그인)
         // authenticate 메소드는 UserDetailService + PasswordEncoder를 사용해 인증을 확인함
         authentication = authenticationManager.authenticate(authentication);
-
+        CustomMember customMember = (CustomMember) authentication.getPrincipal();
+        log.info(customMember.getMember().getRoleList().toString());
         log.info("인증 여부 : " + authentication.isAuthenticated());
 
         if (!authentication.isAuthenticated()) {
@@ -79,16 +80,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         log.info("인증 성공...");
 
-        CustomMember user = (CustomMember) authentication.getPrincipal();
-        long userNo = user.getMember().getMemberIdx();
-        String userId = user.getMember().getMemberId();
+        CustomMember customMember = (CustomMember) authentication.getPrincipal();
+        long idx = customMember.getMember().getIdx();
+        String memberId = customMember.getMember().getMemberId();
 
-        List<String> roles = user.getMember().getRoleList().stream()
+        List<String> roles = customMember.getMember().getRoleList().stream()
                 .map((auth) -> auth.getRoleName())
                 .collect(Collectors.toList());
 
         // 💍 JWT 토큰 생성 요청
-        String jwt = jwtTokenProvider.createToken(userNo, userId, roles);
+        String jwt = jwtTokenProvider.createToken(idx, memberId, roles);
 
         // 💍 { Authorization : Bearer + {jwt} }
         response.addHeader(JwtConstants.TOKEN_HEADER, JwtConstants.TOKEN_PREFIX + jwt);

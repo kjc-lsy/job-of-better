@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.prop.JwtProps;
-import site.dealim.jobconsulting.repository.MemberRepository;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.security.jwt.constants.JwtConstants;
 
@@ -26,7 +26,7 @@ public class JwtTokenProvider {
     @Autowired
     private JwtProps jwtProps;
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberMapper memberMapper;
 
     public String createToken(long memberIdx, String memberId, List<String> roleList) {
 
@@ -98,12 +98,12 @@ public class JwtTokenProvider {
 
             // 유저 정보 세팅
             Member member = new Member();
-            member.setMemberIdx(no);
+            member.setIdx(no);
             member.setMemberId(userId);
             // OK: 권한도 바로 Users 객체에 담아보기
             List<MemberRole> authList = ((List<?>) roles)
                     .stream()
-                    .map(auth -> new MemberRole(auth.toString(), member))
+                    .map(auth -> new MemberRole(auth.toString(), userId))
                     .collect(Collectors.toList());
             member.setRoleList(authList);
 
@@ -117,7 +117,7 @@ public class JwtTokenProvider {
             // 토큰 유효하면
             // name, email 도 담아주기
             try {
-                Member userInfo = memberRepository.findByMemberId(userId).get();
+                Member userInfo = memberMapper.selectMember(no);
                 if (userInfo != null) {
                     member.setName(userInfo.getName());
                     member.setEmail(userInfo.getEmail());

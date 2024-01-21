@@ -12,61 +12,73 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.Member;
-import site.dealim.jobconsulting.repository.MemberRepository;
+import site.dealim.jobconsulting.domain.MemberRole;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 
 @Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private MemberMapper memberMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    /*
+     * 회원 등록 (회원 가입)
+     * 1. 비밀번호 암호화
+     * 2. 회원 등록
+     * 3. 권한 등록
+     */
     @Override
-    public Member insert(Member member) {
+    public int insert(Member member) {
         // 비밀번호 암호화
         String memberPwd = member.getPassword();
         String encodedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encodedPwd);
 
-        return memberRepository.save(member);
-    }
+        //회원 등록
+        int result = memberMapper.insertMember(member);
 
-    @Override
-    public Member update(Member member) throws Exception {
-        // 회원 존재 여부 확인
-        Member existingMember = memberRepository.findByMemberId(member.getMemberId())
-                .orElseThrow(() -> new Exception("Member를 조회할 수 없습니다."));
-
-        // 수정할 값 업데이트
-        if (member.getName() != null) {
-            existingMember.setName(member.getName());
-        }
-        if (member.getEmail() != null) {
-            existingMember.setEmail(member.getEmail());
+        //권한 등록
+        if (result > 0) {
+            MemberRole memberRole = new MemberRole();
+            memberRole.setMemberId(member.getMemberId());
+            memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
+            result = memberMapper.insertMemberRole(memberRole);
         }
 
-        return memberRepository.save(existingMember);
+        return result;
     }
 
     @Override
-    public void delete(String memberId) throws Exception {
-        //회원 존재 여부 확인
-        Member deleteMember = memberRepository.findByMemberId(memberId).orElseThrow(() -> new Exception("Member를 조회 할 수 없습니다"));
+    public int update(Member member) {
+        String memberPwd = member.getPassword();
+        String encondedPwd = passwordEncoder.encode(memberPwd);
+        member.setPassword(encondedPwd);
 
-        //회원 삭제
-        memberRepository.delete(deleteMember);
+        return memberMapper.updateMember(member);
+    }
+
+    /**
+     * 회원 삭제 (회원 탈퇴)
+     */
+    @Override
+    public int delete(String memberId) {
+        return memberMapper.deleteMember(memberId);
+    }
+
+    /**
+     * idx로 회원 조회
+     */
+    @Override
+    public Member select(long idx) {
+        return memberMapper.selectMember(idx);
     }
 
     @Override
-    public Member select(String memberId) throws Exception {
-        return memberRepository.findByMemberId(memberId).orElseThrow(() -> new Exception("Member를 조회할 수 없습니다."));
-    }
-
-    @Override
-    public void login(Member member, HttpServletRequest request) throws Exception {
+    public void login(Member member, HttpServletRequest request) {
         String username = member.getMemberId();
         String password = member.getPassword();
 
