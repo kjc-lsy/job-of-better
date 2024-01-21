@@ -10,7 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import site.dealim.jobconsulting.dto.CustomMember;
+import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.security.jwt.constants.JwtConstants;
 import site.dealim.jobconsulting.security.jwt.provider.JwtTokenProvider;
 
@@ -55,6 +55,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
 
         // 사용자 인증 (로그인)
+        // authenticate 메소드는 UserDetailService + PasswordEncoder를 사용해 인증을 확인함
         authentication = authenticationManager.authenticate(authentication);
 
         log.info("인증 여부 : " + authentication.isAuthenticated());
@@ -85,6 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         List<String> roles = user.getMember().getRoleList().stream()
                 .map((auth) -> auth.getRoleName())
                 .collect(Collectors.toList());
+
         // 💍 JWT 토큰 생성 요청
         String jwt = jwtTokenProvider.createToken(userNo, userId, roles);
 

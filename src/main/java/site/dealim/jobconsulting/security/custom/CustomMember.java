@@ -1,4 +1,4 @@
-package site.dealim.jobconsulting.dto;
+package site.dealim.jobconsulting.security.custom;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

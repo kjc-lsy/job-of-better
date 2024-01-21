@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
-import site.dealim.jobconsulting.dto.CustomMember;
 import site.dealim.jobconsulting.prop.JwtProps;
 import site.dealim.jobconsulting.repository.MemberRepository;
+import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.security.jwt.constants.JwtConstants;
 
 import javax.crypto.SecretKey;
@@ -199,7 +199,6 @@ public class JwtTokenProvider {
 
 
     }
-
 
     // secretKey ➡ signingKey
     private byte[] getSigningKey() {

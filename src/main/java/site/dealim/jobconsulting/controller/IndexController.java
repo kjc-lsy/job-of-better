@@ -15,6 +15,7 @@ public class IndexController {
 
     @GetMapping({"/", "/error", "/admin"})
     public String index() {
+
         return "index.html";
     }
 }

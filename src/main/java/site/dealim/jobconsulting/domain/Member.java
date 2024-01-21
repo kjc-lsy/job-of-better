@@ -8,13 +8,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @DynamicInsert // 속성의 값이 null 인경우 아예 insert 문을 만들지 않도록함. DB에 설정된 default 값을 null이 덮어 씌우기 때문에 설정함.
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "roleList")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,8 +27,8 @@ public class Member {
     @Column(unique = true)
     private String memberId;
     private String password;
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<MemberRole> roleList;
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<MemberRole> roleList = new ArrayList<>();
     private String email;
     private LocalDate birthDate;
     private String gender;

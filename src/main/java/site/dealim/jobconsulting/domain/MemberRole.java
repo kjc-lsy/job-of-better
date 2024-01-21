@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberRole {
     @Id
+    @GeneratedValue
     private long roleIdx;
     private String roleName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId") // memberId Unique Key
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_idx")
     private Member member;
 
     public MemberRole(String roleName, Member member) {
