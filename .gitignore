@@ -4,6 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
@@ -36,8 +37,12 @@ out/
 ### VS Code ###
 .vscode/
 
-### env ###
+### member secure info ###
 .env
+sql-scripts/*
+
+### env ###
+.envv
 
 ### react buildfiles ###
 /src/main/resources/static/**

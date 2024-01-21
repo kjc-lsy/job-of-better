@@ -1,39 +1,39 @@
-package site.dealim.jobseeker.security;
+package site.dealim.jobconsulting.dto;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import site.dealim.jobseeker.model.User;
+import site.dealim.jobconsulting.domain.Member;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class UserDetailsImpl implements UserDetails {
-    private User user;
+@Data
+public class CustomMember implements UserDetails {
+    private Member member;
 
-    public UserDetailsImpl(User user) {
-        this.user = user;
+    public CustomMember(Member member) {
+        this.member = member;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return "ROLE_" + user.getRole();
-            }
-        });
-        return collect;
+        String[] userRoles = member.getRoleList()
+                .stream()
+                .map((role) -> role.getRoleName())
+                .toArray(String[]::new);
+
+        return AuthorityUtils.createAuthorityList(userRoles);
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return member.getMemberId();
     }
 
     @Override
