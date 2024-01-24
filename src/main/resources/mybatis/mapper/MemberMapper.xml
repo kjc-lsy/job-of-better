@@ -87,7 +87,6 @@
         WHERE m.member_id = #{memberId}
     </select>
 
-
     <!-- 회원 권한 등록 -->
     <insert id="insertMemberRole">
         INSERT INTO member_role (role_name, member_id)

@@ -12,10 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import site.dealim.jobconsulting.security.custom.CustomUserDetailsService;
-import site.dealim.jobconsulting.security.jwt.filter.JwtAuthenticationFilter;
-import site.dealim.jobconsulting.security.jwt.filter.JwtRequestFilter;
 import site.dealim.jobconsulting.security.jwt.provider.JwtTokenProvider;
 
 @Slf4j
@@ -31,7 +28,7 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filter(HttpSecurity http) throws Exception {
-        log.info("시큐리티 설정...");
+        log.info("시큐리티 설정 시작...");
 
         // 폼 기반 로그인 비활성화
         http.formLogin(login -> login.disable());
@@ -43,12 +40,13 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         // 필터 설정 ✅
-        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager, jwtTokenProvider)
-                        , UsernamePasswordAuthenticationFilter.class)
+//        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager, jwtTokenProvider)
+//                        , UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new JwtRequestFilter(jwtTokenProvider)
+//                        , UsernamePasswordAuthenticationFilter.class);
 
-                .addFilterBefore(new JwtRequestFilter(jwtTokenProvider)
-                        , UsernamePasswordAuthenticationFilter.class)
-        ;
+        //인증 방식 설정
+        http.userDetailsService(customUserDetailService);
 
         // 인가 설정 ✅
         http.authorizeHttpRequests(authorizeRequests ->
@@ -57,12 +55,10 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/users/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
         );
 
-        //인증 방식 설정
-        http.userDetailsService(customUserDetailService);
 //        http
 //                .authorizeHttpRequests((authorize) -> authorize
 //                        .requestMatchers("/**").permitAll() // 개발 동안 모든 경로 허용

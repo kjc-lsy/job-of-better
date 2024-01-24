@@ -6,16 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import site.dealim.jobconsulting.service.MemberServiceImpl;
 
-@Controller
 @Slf4j
+@Controller
 public class IndexController {
 
     @Autowired
     private MemberServiceImpl memberServiceImpl;
 
-    @GetMapping({"/", "/error", "/admin"})
+    @GetMapping("/")
     public String index() {
-
-        return "index.html";
+        return "index";
     }
 }
