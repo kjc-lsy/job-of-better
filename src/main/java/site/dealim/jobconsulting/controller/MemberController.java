@@ -13,7 +13,7 @@ import site.dealim.jobconsulting.service.MemberServiceImpl;
 
 @Slf4j
 @RestController
-@RequestMapping("")
+@RequestMapping("/user")
 public class MemberController {
 
     @Autowired
@@ -43,7 +43,6 @@ public class MemberController {
         return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
     }
 
-
     /**
      * 회원가입
      *
@@ -51,8 +50,11 @@ public class MemberController {
      * @return
      * @throws Exception
      */
+
     @PostMapping("")
     public ResponseEntity<?> join(@RequestBody Member member) throws Exception {
+        log.info("회원가입 시작");
+        
         int result = memberServiceImpl.insert(member);
 
         if (result > 0) {

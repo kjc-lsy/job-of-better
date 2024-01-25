@@ -7,17 +7,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import site.dealim.jobconsulting.security.custom.CustomUserDetailsService;
+import site.dealim.jobconsulting.security.jwt.filter.JwtAuthenticationFilter;
+import site.dealim.jobconsulting.security.jwt.filter.JwtRequestFilter;
 import site.dealim.jobconsulting.security.jwt.provider.JwtTokenProvider;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -40,21 +46,21 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         // 필터 설정 ✅
-//        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager, jwtTokenProvider)
-//                        , UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JwtRequestFilter(jwtTokenProvider)
-//                        , UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(new JwtAuthenticationFilter(authenticationManager, jwtTokenProvider)
+                        , UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtRequestFilter(jwtTokenProvider)
+                        , UsernamePasswordAuthenticationFilter.class);
 
-        //인증 방식 설정
+        // 인증 방식 설정
         http.userDetailsService(customUserDetailService);
 
         // 인가 설정 ✅
-        http.authorizeHttpRequests(authorizeRequests ->
+        http.authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                        .requestMatchers("/user/**").hasAnyRole("USER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
         );
