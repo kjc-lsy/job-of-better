@@ -102,5 +102,4 @@ public class SecurityConfig {
         this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
         return authenticationManager;
     }
-
 }
