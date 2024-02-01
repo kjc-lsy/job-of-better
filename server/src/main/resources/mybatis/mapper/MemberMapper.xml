@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.dealim.jobconsulting.mapper.MemberMapper">
+
+    <!-- Member 매핑-->
+    <resultMap type="Member" id="memberMap">
+        <id property="idx" column="idx"/>
+
+        <result property="name" column="name"/>
+        <result property="memberId" column="member_id"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="birthDate" column="birth_date"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="comIdx" column="com_idx"/>
+        <result property="resumeFile" column="resume_file"/>
+        <result property="desiredInterviewDate" column="desired_interview_date"/>
+        <result property="assignedInterviewDate" column="assigned_interview_date"/>
+        <result property="isInterviewDate" column="is_interview_date"/>
+        <result property="interviewComment" column="interview_comment"/>
+        <result property="isCoverLetter" column="is_cover_letter"/>
+        <result property="isResume" column="is_resume"/>
+        <result property="joinDate" column="join_date"/>
+        <result property="modifiedDate" column="modified_date"/>
+        <result property="withdrawnDate" column="withdrawn_date"/>
+        <result property="isWithdrawn" column="is_withdrawn"/>
+
+        <collection property="roleList" resultMap="memberRoleMap"></collection>
+    </resultMap>
+
+    <!-- MemberRole 매핑 -->
+    <resultMap type="MemberRole" id="memberRoleMap">
+        <id property="roleIdx" column="role_idx"/>
+        <result property="roleName" column="role_name"/>
+        <result property="memberId" column="member_id"/>
+    </resultMap>
+
+    <!-- 회원 등록 -->
+    <insert id="insertMember" parameterType="Member">
+        INSERT INTO member (name, member_id, password, email, birth_date, gender, phone, com_idx, resume_file,
+                            desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
+                            is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
+        VALUES (#{name}, #{memberId}, #{password}, #{email}, #{birthDate}, #{gender}, #{phone}, #{comIdx},
+                #{resumeFile}, #{desiredInterviewDate}, #{assignedInterviewDate}, #{isInterviewDate},
+                #{interviewComment}, #{isCoverLetter}, #{isResume}, #{joinDate}, #{modifiedDate}, #{withdrawnDate},
+                #{isWithdrawn})
+    </insert>
+
+    <!-- 회원 조회 -->
+    <select id="selectMember" resultMap="memberMap">
+        SELECT *
+        FROM member
+        WHERE idx = #{idx}
+    </select>
+
+    <!-- 회원 조회 - id -->
+    <select id="login" resultMap="memberMap">
+        SELECT m.idx
+             , m.name
+             , m.member_id
+             , m.password
+             , m.email
+             , m.birth_date
+             , m.gender
+             , m.phone
+             , m.com_idx
+             , m.resume_file
+             , m.desired_interview_date
+             , m.assigned_interview_date
+             , m.is_interview_date
+             , m.interview_comment
+             , m.is_cover_letter
+             , m.is_resume
+             , m.join_date
+             , m.modified_date
+             , m.withdrawn_date
+             , m.is_withdrawn
+             , r.role_idx
+             , r.role_name
+             , r.member_id as role_member_id
+        FROM member m
+                 LEFT OUTER JOIN member_role r ON m.member_id = r.member_id
+        WHERE m.member_id = #{memberId}
+    </select>
+
+    <!-- 회원 권한 등록 -->
+    <insert id="insertMemberRole">
+        INSERT INTO member_role (role_name, member_id)
+        VALUES (#{roleName}, #{memberId})
+    </insert>
+
+    <!-- 회원 수정 -->
+    <update id="updateMember">
+        UPDATE member
+        SET name                    = #{name},
+            password                = #{password},
+            email                   = #{email},
+            birth_date              = #{birthDate},
+            gender                  = #{gender},
+            phone                   = #{phone},
+            com_idx                 = #{comIdx},
+            resume_file             = #{resumeFile},
+            desired_interview_date  = #{desiredInterviewDate},
+            assigned_interview_date = #{assignedInterviewDate},
+            is_interview_date       = #{isInterviewDate},
+            interview_comment       = #{interviewComment},
+            is_cover_letter         = #{isCoverLetter},
+            is_resume               = #{isResume},
+            join_date               = #{joinDate},
+            modified_date           = #{modifiedDate},
+            withdrawn_date          = #{withdrawnDate},
+            is_withdrawn            = #{isWithdrawn}
+        WHERE member_id = #{memberId}
+    </update>
+
+    <!-- 회원 삭제 -->
+    <delete id="deleteMember">
+        DELETE
+        FROM member
+        WHERE member_id = #{memberId}
+    </delete>
+
+
+</mapper>
