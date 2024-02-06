@@ -17,7 +17,7 @@
 */
 /*eslint-disable*/
 import {useState} from "react";
-import {Link, NavLink as NavLinkRRD} from "react-router-dom";
+import {Link, NavLink as NavLinkRRD, useLocation} from "react-router-dom";
 // nodejs library to set properties for components
 import {PropTypes} from "prop-types";
 
@@ -60,22 +60,36 @@ const Sidebar = (props) => {
     const closeCollapse = () => {
         setCollapseOpen(false);
     };
-    // creates the links that appear in the left menu / Sidebar
+    // 사이드바에 띄울 목록을 map을 통해 리턴
     const createLinks = (routes) => {
-        return routes.map((prop, key) => {
-            return (
-                <NavItem key={key}>
-                    <NavLink
-                        to={prop.layout + prop.path}
-                        tag={NavLinkRRD}
-                        onClick={closeCollapse}
-                    >
-                        <i className={prop.icon}/>
-                        {prop.name}
-                    </NavLink>
-                </NavItem>
-            );
+
+        return routes.map((prop, data) => {
+            if (prop.layout === useGetCurrentLayout()) {
+                return (
+                    <NavItem key={data}>
+                        <NavLink
+                            to={prop.layout + prop.path}
+                            tag={NavLinkRRD}
+                            onClick={closeCollapse}
+                        >
+                            <i className={prop.icon}/>
+                            {prop.name}
+                        </NavLink>
+                    </NavItem>
+                );
+            }
         });
+    };
+
+    const useGetCurrentLayout = () => {
+        const location = useLocation();
+        const currentPath = location.pathname;
+
+        // 현재 경로와 일치하는 route 객체를 찾습니다.
+        const currentRoute = routes.find(route => currentPath.includes(route.path));
+
+        // 찾은 route 객체에서 layout 값을 반환합니다.
+        return currentRoute ? currentRoute.layout : undefined;
     };
 
     const {bgColor, routes, logo} = props;
@@ -137,12 +151,12 @@ const Sidebar = (props) => {
                     <UncontrolledDropdown nav>
                         <DropdownToggle nav>
                             <Media className="align-items-center">
-                <span className="avatar avatar-sm rounded-circle">
-                  <img
-                      alt="..."
-                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                  />
-                </span>
+                            <span className="avatar avatar-sm rounded-circle">
+                              <img
+                                  alt="..."
+                                  src={require("../../assets/img/theme/team-1-800x800.jpg")}
+                              />
+                            </span>
                             </Media>
                         </DropdownToggle>
                         <DropdownMenu className="dropdown-menu-arrow" right>
@@ -222,10 +236,10 @@ const Sidebar = (props) => {
                     {/* Navigation */}
                     <Nav navbar>{createLinks(routes)}</Nav>
                     {/* Divider */}
-                    <hr className="my-3"/>
-                    {/* Heading */}
+                    {/*<hr className="my-3"/>
+                     Heading
                     <h6 className="navbar-heading text-muted">Documentation</h6>
-                    {/* Navigation */}
+                     Navigation
                     <Nav className="mb-md-3" navbar>
                         <NavItem>
                             <NavLink
@@ -248,7 +262,7 @@ const Sidebar = (props) => {
                                 Components
                             </NavLink>
                         </NavItem>
-                    </Nav>
+                    </Nav>*/}
                 </Collapse>
             </Container>
         </Navbar>

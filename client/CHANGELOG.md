@@ -133,7 +133,7 @@ _In development mode, some of the above plugins will throw a warning because the
 - https://github.com/creativetimofficial/argon-dashboard-react/issues/15
 - https://github.com/creativetimofficial/argon-dashboard-react/issues/12
 - https://github.com/creativetimofficial/argon-dashboard-react/issues/3
-- Changed `componentWillMount` with `constructor` function inside `src/views/Index.js` (this was for initializing the charts)
+- Changed `componentWillMount` with `constructor` function inside `src/views/DashBoard.js` (this was for initializing the charts)
 
 ### Major style changes
 
