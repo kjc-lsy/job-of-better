@@ -82,7 +82,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         CustomMember customMember = (CustomMember) authentication.getPrincipal();
         long idx = customMember.getMember().getIdx();
-        String memberId = customMember.getMember().getMemberId();
+        String memberId = customMember.getMember().getUsername();
 
         List<String> roles = customMember.getMember().getRoleList().stream()
                 .map((auth) -> auth.getRoleName())

@@ -51,7 +51,7 @@ public class MemberController {
      * @throws Exception
      */
 
-    @PostMapping("")
+    @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody Member member) throws Exception {
         log.info("회원가입 시작");
         
@@ -74,7 +74,7 @@ public class MemberController {
      * @throws Exception
      */
     @Secured("ROLE_USER")           // USER 권한 설정
-    @PutMapping("")
+    @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
         log.info("[PUT] - /users");
         int result = memberServiceImpl.update(member);
@@ -91,16 +91,16 @@ public class MemberController {
     /**
      * 회원 탈퇴
      *
-     * @param userId
+     * @param username
      * @return
      * @throws Exception
      */
     @Secured("ROLE_ADMIN")          //  USER 권한 설정
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> destroy(@PathVariable("userId") String userId) throws Exception {
+    @DeleteMapping("delete/{username}")
+    public ResponseEntity<?> destroy(@PathVariable("username") String username) throws Exception {
         log.info("[DELETE] - /users/{userId}");
 
-        memberServiceImpl.delete(userId);
+        memberServiceImpl.delete(username);
 
         log.info("회원삭제 성공! - SUCCESS");
 

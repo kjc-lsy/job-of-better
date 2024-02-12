@@ -17,7 +17,7 @@ import java.util.List;
 public class Member {
     private long idx;
     private String name;
-    private String memberId;
+    private String username;
     private String password;
     private List<MemberRole> roleList = new ArrayList<>();
     private String email;

@@ -1,0 +1,15 @@
+POST http://localhost:9090/user/join
+Content-Type: application/json
+
+{
+  "username": "bsordk",
+  "password": "0000"
+}
+
+###
+GET http://localhost:9090/login?username=asordk&password=0000
+
+###
+GET http://localhost:9090
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDg2MDcyNTcsInVubyI6IjE0IiwidWlkIjoiYXNvcmRrIiwicm9sIjpbIlJPTEVfVVNFUiJdfQ.xnayh0t9f3bbPxp1E1gRX3qNYPnsXLW0ary07f9ihRYB617DD4te6irqLIomvwibNBhnsKXH2euRlbS_9ZiLLA
+

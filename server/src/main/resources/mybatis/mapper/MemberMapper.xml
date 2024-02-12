@@ -10,7 +10,7 @@
         <id property="idx" column="idx"/>
 
         <result property="name" column="name"/>
-        <result property="memberId" column="member_id"/>
+        <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="birthDate" column="birth_date"/>
@@ -36,15 +36,15 @@
     <resultMap type="MemberRole" id="memberRoleMap">
         <id property="roleIdx" column="role_idx"/>
         <result property="roleName" column="role_name"/>
-        <result property="memberId" column="member_id"/>
+        <result property="username" column="username"/>
     </resultMap>
 
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="Member">
-        INSERT INTO member (name, member_id, password, email, birth_date, gender, phone, com_idx, resume_file,
+        INSERT INTO member (name, username, password, email, birth_date, gender, phone, com_idx, resume_file,
                             desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
                             is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
-        VALUES (#{name}, #{memberId}, #{password}, #{email}, #{birthDate}, #{gender}, #{phone}, #{comIdx},
+        VALUES (#{name}, #{username}, #{password}, #{email}, #{birthDate}, #{gender}, #{phone}, #{comIdx},
                 #{resumeFile}, #{desiredInterviewDate}, #{assignedInterviewDate}, #{isInterviewDate},
                 #{interviewComment}, #{isCoverLetter}, #{isResume}, #{joinDate}, #{modifiedDate}, #{withdrawnDate},
                 #{isWithdrawn})
@@ -61,7 +61,7 @@
     <select id="login" resultMap="memberMap">
         SELECT m.idx
              , m.name
-             , m.member_id
+             , m.username
              , m.password
              , m.email
              , m.birth_date
@@ -81,16 +81,16 @@
              , m.is_withdrawn
              , r.role_idx
              , r.role_name
-             , r.member_id as role_member_id
+             , r.username as role_username
         FROM member m
-                 LEFT OUTER JOIN member_role r ON m.member_id = r.member_id
-        WHERE m.member_id = #{memberId}
+                 LEFT OUTER JOIN member_role r ON m.username = r.username
+        WHERE m.username = #{username}
     </select>
 
     <!-- 회원 권한 등록 -->
     <insert id="insertMemberRole">
-        INSERT INTO member_role (role_name, member_id)
-        VALUES (#{roleName}, #{memberId})
+        INSERT INTO member_role (role_name, username)
+        VALUES (#{roleName}, #{username})
     </insert>
 
     <!-- 회원 수정 -->
@@ -114,15 +114,14 @@
             modified_date           = #{modifiedDate},
             withdrawn_date          = #{withdrawnDate},
             is_withdrawn            = #{isWithdrawn}
-        WHERE member_id = #{memberId}
+        WHERE username = #{username}
     </update>
 
     <!-- 회원 삭제 -->
     <delete id="deleteMember">
         DELETE
         FROM member
-        WHERE member_id = #{memberId}
+        WHERE username = #{username}
     </delete>
-
 
 </mapper>

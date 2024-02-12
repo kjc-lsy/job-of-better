@@ -33,7 +33,7 @@ public class CustomMember implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getMemberId();
+        return member.getUsername();
     }
 
     @Override

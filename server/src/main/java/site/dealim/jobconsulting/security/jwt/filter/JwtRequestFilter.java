@@ -54,7 +54,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // 토큰 유효성 검사
         if (jwtTokenProvider.validateToken(jwt)) {
             log.info("유효한 JWT 토큰입니다.");
-
             // 로그인
             SecurityContextHolder.getContext().setAuthentication(authenticaion);
         }

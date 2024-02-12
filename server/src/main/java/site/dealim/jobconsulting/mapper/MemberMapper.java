@@ -14,7 +14,7 @@ public interface MemberMapper {
     public Member selectMember(long idx);
 
     // 사용자 인증(로그인) - id
-    public Member login(String memberId);
+    public Member login(String username);
 
     // 회원 권한 등록
     public int insertMemberRole(MemberRole memberRole);
@@ -23,6 +23,6 @@ public interface MemberMapper {
     public int updateMember(Member member);
 
     // 회원 삭제
-    public int deleteMember(String memberId);
+    public int deleteMember(String username);
 
 }

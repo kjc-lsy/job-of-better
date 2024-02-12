@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 public class MemberRole {
     private long roleIdx;
     private String roleName;
-    private String memberId;
+    private String username;
 
-    public MemberRole(String roleName, String memberId) {
+    public MemberRole(String roleName, String username) {
         this.roleName = roleName;
-        this.memberId = memberId;
+        this.username = username;
     }
 }

@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
         //권한 등록
         if (result > 0) {
             MemberRole memberRole = new MemberRole();
-            memberRole.setMemberId(member.getMemberId());
+            memberRole.setUsername(member.getUsername());
             memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
             result = memberMapper.insertMemberRole(memberRole);
         }
@@ -65,8 +65,8 @@ public class MemberServiceImpl implements MemberService {
      * 회원 삭제 (회원 탈퇴)
      */
     @Override
-    public int delete(String memberId) {
-        return memberMapper.deleteMember(memberId);
+    public int delete(String username) {
+        return memberMapper.deleteMember(username);
     }
 
     /**
@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void login(Member member, HttpServletRequest request) {
-        String username = member.getMemberId();
+        String username = member.getUsername();
         String password = member.getPassword();
 
         // AuthenticationManager

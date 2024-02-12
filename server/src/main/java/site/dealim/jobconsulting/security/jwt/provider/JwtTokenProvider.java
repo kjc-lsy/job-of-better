@@ -99,7 +99,7 @@ public class JwtTokenProvider {
             // 유저 정보 세팅
             Member member = new Member();
             member.setIdx(no);
-            member.setMemberId(userId);
+            member.setUsername(userId);
             // OK: 권한도 바로 Users 객체에 담아보기
             List<MemberRole> authList = ((List<?>) roles)
                     .stream()
