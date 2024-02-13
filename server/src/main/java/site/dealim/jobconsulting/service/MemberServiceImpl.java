@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    /*
+    /**
      * 회원 등록 (회원 가입)
      * 1. 비밀번호 암호화
      * 2. 회원 등록

@@ -47,7 +47,7 @@ const Login = () => {
 
         login(email, password);
 
-        navigate('/admin');
+        // navigate('/admin');
     }
 
     return (

@@ -29,18 +29,15 @@ public class MemberController {
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomMember customMember) {
 
-        log.info("::::: customMember :::::");
-        log.info("customMember : " + customMember);
-
+        log.info("유저 정보 가져오는 중...");
         Member user = customMember.getMember();
-        log.info("user : " + user);
 
         // 인증된 사용자 정보
         if (user != null)
             return new ResponseEntity<>(user, HttpStatus.OK);
 
         // 인증 되지 않음
-        return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("인증된 사용자 정보가 없습니다.", HttpStatus.UNAUTHORIZED);
     }
 
     /**
@@ -50,10 +47,9 @@ public class MemberController {
      * @return
      * @throws Exception
      */
-
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody Member member) throws Exception {
-        log.info("회원가입 시작");
+        log.info("회원가입 시작...");
         
         int result = memberServiceImpl.insert(member);
 
@@ -76,7 +72,7 @@ public class MemberController {
     @Secured("ROLE_USER")           // USER 권한 설정
     @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
-        log.info("[PUT] - /users");
+        log.info("회원 정보 수정 시작...");
         int result = memberServiceImpl.update(member);
 
         if (result > 0) {
@@ -98,7 +94,7 @@ public class MemberController {
     @Secured("ROLE_ADMIN")          //  USER 권한 설정
     @DeleteMapping("delete/{username}")
     public ResponseEntity<?> destroy(@PathVariable("username") String username) throws Exception {
-        log.info("[DELETE] - /users/{userId}");
+        log.info("회원 삭제 시작...");
 
         memberServiceImpl.delete(username);
 
