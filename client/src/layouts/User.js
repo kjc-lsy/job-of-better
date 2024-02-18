@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-dom";
 // reactstrap components
 import {Container} from "reactstrap";
@@ -29,6 +29,7 @@ import {useAuth} from "../contexts/AuthContextProvider";
 
 const User = (props) => {
     const mainContent = React.useRef(null);
+    const [isMounted, setIsMounted] = useState(false)
     const location = useLocation();
     const {isLogin, roles} = useAuth();
     const navigate = useNavigate()
@@ -41,13 +42,15 @@ const User = (props) => {
 
     // 권한 처리
     useEffect(() => {
-        if (!isLogin) { //contextProvider의 useEffect에 걸린 info()는 비동기 이기 때문에 isLogin이 업데이트 되는게 늦음.. 상태 업데이트가 되면 통과하도록 코딩
-            return
+        if(isMounted) {
+            if (!isLogin || !roles.isUser) {
+                alert("접근할 수 없습니다")
+                navigate("/auth/login")
+            }
+        }else {
+            setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
         }
 
-        if (!isLogin || !roles.isUser) {
-            navigate("/auth/login")
-        }
     }, [isLogin, roles]);
 
     const getRoutes = (routes) => {

@@ -23,13 +23,27 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
-
 import routes from "routes.js";
 import {useAuth} from "../contexts/AuthContextProvider";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const {isLogin, roles} = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => { // Auth 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
+    if (isLogin) {
+      if (roles.isAdmin) {
+        navigate("/admin");
+        return
+      }
+      if (roles.isUser) {
+        navigate("/user");
+        return
+      }
+    }
+  }, [isLogin, roles]);
 
   useEffect(() => {
     document.body.classList.add("bg-default");
@@ -43,9 +57,6 @@ const Auth = (props) => {
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
-
-  
-
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
