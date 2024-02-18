@@ -33,21 +33,33 @@ import {
 } from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import routes from "../../routes";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {login} = useAuth();
+    const {login, isLogin, roles} = useAuth();
     const navigate = useNavigate();
 
-    const loginSubmit = (e) => {
-        e.preventDefault();
+    useEffect(() => { // Login 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
+        if (isLogin) {
+            if (roles.isAdmin) {
+                navigate("/admin");
+                return
+            }
+            if (roles.isUser) {
+                navigate("/user");
+                return
+            }
+        }
+    }, [isLogin, roles]);
 
-        login(email, password);
 
-        // navigate('/admin');
+    const loginSubmit = async (e) => {
+        e.preventDefault()
+
+        await login(email, password)
     }
 
     return (

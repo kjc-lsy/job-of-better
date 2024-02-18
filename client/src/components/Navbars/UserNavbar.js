@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // reactstrap components
 import {
     Container,
@@ -33,8 +33,18 @@ import {
     Navbar,
     UncontrolledDropdown,
 } from "reactstrap";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 const UserNavbar = (props) => {
+    const {logoutSetting} = useAuth()
+    const navigate = useNavigate()
+
+    const logout = (e) => {
+        e.preventDefault()
+        logoutSetting()
+        navigate("/")
+    }
+
     return (
         <>
             <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -69,7 +79,7 @@ const UserNavbar = (props) => {
                   </span>
                                     <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      User Name
                     </span>
                                     </Media>
                                 </Media>
@@ -95,7 +105,7 @@ const UserNavbar = (props) => {
                                     <span>Support</span>
                                 </DropdownItem>
                                 <DropdownItem divider/>
-                                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                                <DropdownItem href="#pablo" onClick={logout}>
                                     <i className="ni ni-member-run"/>
                                     <span>Logout</span>
                                 </DropdownItem>

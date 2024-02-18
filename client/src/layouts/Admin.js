@@ -15,8 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import {useLocation, Route, Routes, Navigate} from "react-router-dom";
+import React, {useEffect} from "react";
+import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-dom";
 // reactstrap components
 import {Container} from "reactstrap";
 // core components
@@ -25,16 +25,30 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import {useAuth} from "../contexts/AuthContextProvider";
 
 const Admin = (props) => {
     const mainContent = React.useRef(null);
     const location = useLocation();
+    const {isLogin, roles} = useAuth();
+    const navigate = useNavigate()
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
         mainContent.current.scrollTop = 0;
     }, [location]);
+
+    // 권한 처리
+    useEffect(() => {
+        if (!isLogin) { //contextProvider의 useEffect에 걸린 info()는 비동기 이기 때문에 isLogin이 업데이트 되는게 늦음.. 상태 업데이트가 되면 통과하도록 코딩
+            return
+        }
+
+        if (!isLogin || !roles.isAdmin) {
+            navigate("/auth/login")
+        }
+    }, [isLogin, roles]);
 
     const getRoutes = (routes) => {
         return routes.map((prop, key) => {

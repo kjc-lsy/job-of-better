@@ -2,7 +2,7 @@ POST http://localhost:9090/user/join
 Content-Type: application/json
 
 {
-  "username": "asordk@naver.com",
+  "username": "asordk2@naver.com",
   "password": "0000"
 }
 

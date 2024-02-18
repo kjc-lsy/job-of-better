@@ -46,7 +46,6 @@ import Header from "components/Headers/Header.js";
 const DashBoard = (props) => {
     const [activeNav, setActiveNav] = useState(1);
     const [chartExample1Data, setChartExample1Data] = useState("data1");
-
     if (window.Chart) {
         parseOptions(Chart, chartOptions());
     }
