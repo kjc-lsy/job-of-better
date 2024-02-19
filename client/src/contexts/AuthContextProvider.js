@@ -24,7 +24,6 @@ export const AuthContextProvider = ({children}) => {
 
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(()=>{
-        console.log("로그인 유저 정보 가져오는 중")
         setLoginUser();
     }, [])
 
@@ -79,6 +78,7 @@ export const AuthContextProvider = ({children}) => {
 
             // 현재 로그인한 유저 정보 axios 요청
             let response = await auth.info()
+            console.log("로그인 유저 정보 가져오는 중")
 
             let data = response.data
 
