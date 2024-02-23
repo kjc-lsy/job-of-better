@@ -108,7 +108,15 @@ export const AuthContextProvider = ({children}) => {
         setRoles(updatedRoles);
     }
 
-    const value = { user, isLogin, roles, login, logoutSetting}; // 전역으로 넘길 함수들
+    const join = (userData) => {
+        // eslint-disable-next-line no-restricted-globals
+        const data = {username, password, name, email, birthDate, gender, phone}
+
+        data.username = userData.username
+
+    };
+
+    const value = { user, isLogin, roles, login, logoutSetting, join}; // 전역으로 넘길 함수들
 
     return(
         <AuthContext.Provider value={value}>

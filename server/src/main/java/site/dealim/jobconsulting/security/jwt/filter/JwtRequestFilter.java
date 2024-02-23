@@ -47,7 +47,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Bearer + {jwt} ➡ "Bearer " 제거
         String jwt = header.replace(JwtConstants.TOKEN_PREFIX, "");
 
-
         // 토큰 해석
         Authentication authenticaion = jwtTokenProvider.getAuthentication(jwt);
 

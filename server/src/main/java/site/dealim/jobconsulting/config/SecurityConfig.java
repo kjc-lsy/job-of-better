@@ -34,7 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        log.info("시큐리티 설정 빈 생성...");
+        log.info("SecurityFilterChain 빈 생성...");
 
         // 폼 기반 로그인 비활성화
         http.formLogin(login -> login.disable());
@@ -60,7 +60,8 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
-                        .requestMatchers("/**").hasAnyRole("USER")
+                        .requestMatchers("/user/join").permitAll()
+                        .requestMatchers("/user/**").hasAnyRole("USER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated()
         );

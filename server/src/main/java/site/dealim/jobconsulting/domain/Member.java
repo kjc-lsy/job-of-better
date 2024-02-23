@@ -16,9 +16,9 @@ import java.util.List;
 @Builder
 public class Member {
     private long idx;
-    private String name;
     private String username;
     private String password;
+    private String name;
     private List<MemberRole> roleList = new ArrayList<>();
     private String email;
     private LocalDate birthDate;
