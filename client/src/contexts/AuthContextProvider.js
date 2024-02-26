@@ -17,10 +17,6 @@ export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
     // 권한 정보
     const [roles, setRoles] = useState({isUser : false, isAdmin : false});
-    // 이메일값 저장
-    const [email, setEmail] = useState(null);
-    // 현재 페이지 위치 저장
-    const location = useLocation();
 
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(()=>{
@@ -48,6 +44,7 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const logoutSetting = () => {
+
         // axios 헤더 초기화
         api.defaults.headers.common.Authorization = undefined;
 
@@ -108,15 +105,7 @@ export const AuthContextProvider = ({children}) => {
         setRoles(updatedRoles);
     }
 
-    const join = (userData) => {
-        // eslint-disable-next-line no-restricted-globals
-        const data = {username, password, name, email, birthDate, gender, phone}
-
-        data.username = userData.username
-
-    };
-
-    const value = { user, isLogin, roles, login, logoutSetting, join}; // 전역으로 넘길 함수들
+    const value = { user, isLogin, roles, login, logoutSetting}; // 전역으로 넘길 함수들
 
     return(
         <AuthContext.Provider value={value}>
