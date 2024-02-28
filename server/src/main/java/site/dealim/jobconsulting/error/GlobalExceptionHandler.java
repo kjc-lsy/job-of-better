@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
         }
 
         // 다른 DataIntegrityViolationException 처리
-        return new ResponseEntity<>("데이터 처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        // TODO: DB 메시지가 클라이언트에 직접 보이고 있음. 개발이 끝나면 지울것
+        return new ResponseEntity<>("데이터 처리 오류 : " + e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

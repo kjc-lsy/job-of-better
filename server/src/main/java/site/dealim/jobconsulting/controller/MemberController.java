@@ -28,16 +28,16 @@ public class MemberController {
     @Secured("ROLE_USER")           // USER 권한 설정
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomMember customMember) {
-        log.info("유저 정보 가져오는 중...");
-        log.info("customMember : " + customMember);
         Member user = customMember.getMember();
 
-        // 인증된 사용자 정보
-        if (user != null)
+        // 인증된 사용자가 있으면
+        if (user != null) {
+            log.info("로그인 유저 조회 성공...");
             return new ResponseEntity<>(user, HttpStatus.OK);
+        }
 
         // 인증 되지 않음
-        return new ResponseEntity<>("인증된 사용자 정보가 없습니다.", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("인증된 사용자 정보가 없습니다...", HttpStatus.UNAUTHORIZED);
     }
 
     /**

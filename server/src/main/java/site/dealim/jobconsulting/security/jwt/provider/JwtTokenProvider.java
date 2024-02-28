@@ -74,21 +74,16 @@ public class JwtTokenProvider {
                     .build()
                     .parseSignedClaims(jwt);
 
-            log.info("parsedToken : " + parsedToken);
-
             // 인증된 사용자 번호
             String memberIdx = parsedToken.getPayload().get("uno").toString();
             int no = (memberIdx == null ? 0 : Integer.parseInt(memberIdx));
-            log.info("userNo : " + memberIdx);
 
             // 인증된 사용자 아이디
             String userId = parsedToken.getPayload().get("uid").toString();
-            log.info("userId : " + userId);
 
             // 인증된 사용자 권한
             Claims claims = parsedToken.getPayload();
             Object roles = claims.get("rol");
-            log.info("roles : " + roles);
 
             // 토큰에 userId 있는지 확인
             if (userId == null || userId.length() == 0)

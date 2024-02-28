@@ -57,13 +57,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // authenticate 메소드는 UserDetailService + PasswordEncoder를 사용해 인증을 확인함
         authentication = authenticationManager.authenticate(authentication);
         CustomMember customMember = (CustomMember) authentication.getPrincipal();
-        log.info(customMember.getMember().getRoleList().toString());
-        log.info("인증 여부 : " + authentication.isAuthenticated());
 
         if (!authentication.isAuthenticated()) {
             log.info("인증 실패");
             response.setStatus(401);
         }
+
         return authentication;
     }
 
