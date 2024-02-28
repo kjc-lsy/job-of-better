@@ -24,12 +24,15 @@ FROM nginx:alpine
 # 빌드 단계에서 생성된 /app/build 디렉토리의 내용을 Nginx가 호스팅하는 디렉토리(/usr/share/nginx/html)로 복사합니다.
 COPY --from=build /app/build /usr/share/nginx/html
 
-# SSL/TLS 인즌서 및 개인 키 파일 복사
+# 기본 nginx 설정 파일을 삭제한다. (custom 설정과 충돌 방지)
+RUN rm /etc/nginx/conf.d/default.conf
+
+# SSL/TLS 인증서 및 개인 키 파일 복사
 #COPY /nginx/cert.pem /etc/nginx/cert.pem
 #COPY /nginx/key.pem /etc/nginx/key.pem
 
 # Nginx 설정 파일 복사
-COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
 
 # 컨테이너가 80 포트에서 네트워크 서비스를 제공할 것임을 나타냅니다. 이 포트는 Nginx의 기본 포트입니다.
 EXPOSE 80
