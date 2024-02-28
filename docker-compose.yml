@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  springboot-app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+
+  react-app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+
