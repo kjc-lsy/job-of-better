@@ -14,3 +14,6 @@ export const update = (data) => api.put(`/user/update`, data)
 
 // 회원 탈퇴
 export const remove = (userId) => api.delete(`/user/delete/${userId}`)
+
+// 로그아웃
+export const logout = () => api.get('/logout')

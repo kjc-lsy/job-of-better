@@ -17,13 +17,13 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 import {useState} from "react";
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const {login} = useAuth();
 
     const loginSubmit = async (e) => {
         e.preventDefault()
-        await login(email, password)
+        await login(username, password)
     }
 
     return (
@@ -84,11 +84,10 @@ const Login = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder="Email"
-                                        type="email"
-                                        autoComplete="new-email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="아이디"
+                                        type="text"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                     />
                                 </InputGroup>
                             </FormGroup>
@@ -100,7 +99,7 @@ const Login = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        placeholder="Password"
+                                        placeholder="비밀번호"
                                         type="password"
                                         autoComplete="new-password"
                                         value={password}

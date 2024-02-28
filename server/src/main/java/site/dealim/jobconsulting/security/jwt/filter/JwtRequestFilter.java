@@ -32,13 +32,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        log.info("request jwt 필터링...");
+
         // 헤더에서 jwt 토큰을 가져옴
         String header = request.getHeader(JwtConstants.TOKEN_HEADER);
-        log.info("authorization : " + header);
 
         // jwt 토큰이 없으면 다음 필터로 이동
         // Bearer + {jwt} 체크
         if (header == null || header.length() == 0 || !header.startsWith(JwtConstants.TOKEN_PREFIX)) {
+            log.info("jwt 토큰을 찾을 수 없습니다...");
             filterChain.doFilter(request, response);
             return;
         }

@@ -44,6 +44,8 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const logoutSetting = () => {
+        // 서버 세션 초기화
+        auth.logout()
 
         // axios 헤더 초기화
         api.defaults.headers.common.Authorization = undefined;
@@ -59,6 +61,7 @@ export const AuthContextProvider = ({children}) => {
 
         // 권한 정보 초기화
         setRoles(null);
+
     };
 
     const setLoginUser = async () => {

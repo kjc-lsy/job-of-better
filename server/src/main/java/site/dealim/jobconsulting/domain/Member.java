@@ -28,12 +28,12 @@ public class Member {
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;
-    private String isInterviewDate;
+    private String isInterviewDate = "N";
     private String interviewComment;
-    private String isCoverLetter;
-    private String isResume;
-    private LocalDateTime joinDate;
-    private LocalDateTime modifiedDate;
+    private String isCoverLetter = "N";
+    private String isResume = "N";
+    private LocalDateTime joinDate = LocalDateTime.now();
+    private LocalDateTime modifiedDate = LocalDateTime.now();
     private LocalDateTime withdrawnDate;
-    private String isWithdrawn;
+    private String isWithdrawn = "N";
 }

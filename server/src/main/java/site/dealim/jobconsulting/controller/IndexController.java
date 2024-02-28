@@ -9,12 +9,9 @@ import site.dealim.jobconsulting.prop.JwtProps;
 @Slf4j
 @Controller
 public class IndexController {
-    @Autowired
-    private JwtProps jwtProps;
 
     @GetMapping("/")
     public String index() {
-        log.info(jwtProps.getSecretKey());
         return "index.html";
     }
 }

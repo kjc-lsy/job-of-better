@@ -14,8 +14,11 @@ import {
     Col, Label, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu,
 } from "reactstrap";
 import {useEffect, useState} from "react";
+import * as auth from '../../apis/auth';
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         username: "",
         validUsername: false,
@@ -33,7 +36,7 @@ const Register = () => {
         emailUserName: "",
         domain:"",
 
-        birthday: "",
+        birthDate: "",
 
         phone: "",
         validPhone: false,
@@ -60,29 +63,13 @@ const Register = () => {
         inputValue.validPassword &&
         inputValue.validName &&
         inputValue.validEmail &&
-        inputValue.birthday !== "" &&
+        inputValue.birthDate !== "" &&
         inputValue.validPhone &&
         inputValue.gender !== "" &&
         inputValue.agree;
 
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
-
-    // 직접 입력 선택시 도메인 직접입력 가능
-    const handleDomainChange = (domain) => {
-        if (domain === '직접 입력') {
-            setIsReadOnly(false);
-            setInputValue({...inputValue, domain:''});
-        } else {
-            setIsReadOnly(true);
-            setInputValue({...inputValue, domain:domain});
-        }
-    };
-
-    const handleJoin = async (e) => {
-        e.preventDefault()
-        console.log(inputValue)
-    }
 
     useEffect(()=>{
         if(inputValue.username.match(inputRegexs.usernameRegex)){
@@ -129,12 +116,35 @@ const Register = () => {
     }, [inputValue.emailUserName, inputValue.domain]);
 
     useEffect(() => {
-       if (inputValue.phone.match(inputRegexs.phoneRegex)) {
-           setInputValue({...inputValue, validPhone: true});
-       } else {
-           setInputValue({...inputValue, validPhone: false});
-       }
+        if (inputValue.phone.match(inputRegexs.phoneRegex)) {
+            setInputValue({...inputValue, validPhone: true});
+        } else {
+            setInputValue({...inputValue, validPhone: false});
+        }
     }, [inputValue.phone]);
+
+    // 직접 입력 선택시 이메일 도메인 직접입력 가능
+    const handleDomainChange = (domain) => {
+        if (domain === '직접 입력') {
+            setIsReadOnly(false);
+            setInputValue({...inputValue, domain:''});
+        } else {
+            setIsReadOnly(true);
+            setInputValue({...inputValue, domain:domain});
+        }
+    };
+
+    const handleJoin = async (e) => {
+        e.preventDefault()
+        auth.join(inputValue)
+            .then(response => {
+                navigate('/auth/login')
+                alert('회원가입 성공! 로그인 해주세요')
+            })
+            .catch(error => {
+                alert(error.response.data);
+            });
+    }
 
     return (
         <>
@@ -371,18 +381,18 @@ const Register = () => {
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input
-                                        vlaue={inputValue.birthday}
+                                        vlaue={inputValue.birthDate}
                                         placeholder="생년월일"
-                                        name="birthday"
+                                        name="birthDate"
                                         type="date"
-                                        onChange={e => setInputValue({...inputValue, birthday: e.target.value})}
+                                        onChange={e => setInputValue({...inputValue, birthDate: e.target.value})}
                                     />
                                 </InputGroup>
                             </FormGroup>
                             <div className="text-muted font-italic">
                                 <small>
                                     {
-                                        inputValue.birthday !== ""
+                                        inputValue.birthDate !== ""
                                             ? <span className="text-success font-weight-700">유효한 생년월일 입니다.</span>
                                             : <span>생년월일을 입력해주세요</span>
                                     }
@@ -429,7 +439,7 @@ const Register = () => {
                                                 <Input
                                                     type="radio"
                                                     name="gender"
-                                                    value="male"
+                                                    value="m"
                                                     onChange={e => setInputValue({
                                                         ...inputValue,
                                                         gender: e.target.value
@@ -444,7 +454,7 @@ const Register = () => {
                                                 <Input
                                                     type="radio"
                                                     name="gender"
-                                                    value="female"
+                                                    value="f"
                                                     onChange={e => setInputValue({
                                                         ...inputValue,
                                                         gender: e.target.value

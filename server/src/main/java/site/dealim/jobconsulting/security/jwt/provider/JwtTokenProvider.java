@@ -14,6 +14,7 @@ import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.prop.JwtProps;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.security.jwt.constants.JwtConstants;
+import site.dealim.jobconsulting.util.CopyBeanUtil;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -43,7 +44,7 @@ public class JwtTokenProvider {
                 .claim("rol", roleList)                                      // 클레임 설정: 권한
                 .compact();
 
-        log.info("jwt : " + jwt);
+        log.info("jwt 생성 완료 : " + jwt);
 
         return jwt;
     }
@@ -64,7 +65,6 @@ public class JwtTokenProvider {
             return null;
 
         try {
-
             // jwt 추출 (Bearer + {jwt}) ➡ {jwt}
             String jwt = authHeader.replace(JwtConstants.TOKEN_PREFIX, "");
 
@@ -90,16 +90,15 @@ public class JwtTokenProvider {
             Object roles = claims.get("rol");
             log.info("roles : " + roles);
 
-
             // 토큰에 userId 있는지 확인
             if (userId == null || userId.length() == 0)
                 return null;
-
 
             // 유저 정보 세팅
             Member member = new Member();
             member.setIdx(no);
             member.setUsername(userId);
+
             // OK: 권한도 바로 Users 객체에 담아보기
             List<MemberRole> authList = ((List<?>) roles)
                     .stream()
@@ -119,8 +118,7 @@ public class JwtTokenProvider {
             try {
                 Member userInfo = memberMapper.selectMember(no);
                 if (userInfo != null) {
-                    member.setName(userInfo.getName());
-                    member.setEmail(userInfo.getEmail());
+                    CopyBeanUtil.copyNonNullProperties(userInfo, member);
                 }
             } catch (Exception e) {
                 log.error(e.getMessage());

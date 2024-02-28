@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -34,10 +35,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        log.info("SecurityFilterChain 빈 생성...");
+        log.info("시큐리티 설정 시작...");
 
         // 폼 기반 로그인 비활성화
         http.formLogin(login -> login.disable());
+
+        // 로그아웃 설정
+        http.logout(auth -> auth.logoutUrl("/logout")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    log.info("로그아웃 중...");
+                    response.setStatus(HttpStatus.OK.value());
+                })
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll());
 
         // HTTP 기본 인증 비활성화
         http.httpBasic(basic -> basic.disable());

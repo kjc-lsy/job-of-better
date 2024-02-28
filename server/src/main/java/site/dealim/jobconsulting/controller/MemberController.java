@@ -28,8 +28,8 @@ public class MemberController {
     @Secured("ROLE_USER")           // USER 권한 설정
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomMember customMember) {
-
         log.info("유저 정보 가져오는 중...");
+        log.info("customMember : " + customMember);
         Member user = customMember.getMember();
 
         // 인증된 사용자 정보
@@ -50,16 +50,11 @@ public class MemberController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody Member member) throws Exception {
         log.info("회원가입 시작...");
-        
-        int result = memberServiceImpl.insert(member);
 
-        if (result > 0) {
-            log.info("회원가입 성공! - SUCCESS");
-            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-        } else {
-            log.info("회원가입 실패! - FAIL");
-            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-        }
+        memberServiceImpl.insert(member);
+
+        log.info("회원가입 성공! - SUCCESS");
+        return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
     /**
@@ -73,15 +68,11 @@ public class MemberController {
     @PutMapping("update")
     public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
         log.info("회원 정보 수정 시작...");
-        int result = memberServiceImpl.update(member);
 
-        if (result > 0) {
-            log.info("회원수정 성공! - SUCCESS");
-            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
-        } else {
-            log.info("회원수정 실패! - FAIL");
-            return new ResponseEntity<>("FAIL", HttpStatus.BAD_REQUEST);
-        }
+        memberServiceImpl.update(member);
+
+        log.info("회원수정 성공! - SUCCESS");
+        return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
     /**
