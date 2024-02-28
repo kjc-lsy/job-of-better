@@ -19,3 +19,15 @@ export const ThemeModeWrapper = styled.button`
     `;
 }}
 `;
+
+export const ButtonBox = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${({ theme }) => {
+  return css`
+      background-color: ${(props) => props.theme.colors.colorMain};
+      box-shadow: ${(props) => props.theme.colors.colorShadow};
+    `;
+  }}
+`;
