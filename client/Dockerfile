@@ -25,11 +25,11 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # SSL/TLS 인즌서 및 개인 키 파일 복사
-COPY ../nginx/cert.pem /etc/nginx/cert.pem
-COPY ../nginx/key.pem /etc/nginx/key.pem
+#COPY /nginx/cert.pem /etc/nginx/cert.pem
+#COPY /nginx/key.pem /etc/nginx/key.pem
 
 # Nginx 설정 파일 복사
-COPY ../nginx/nginx.conf /etc/nginx/nginx.conf
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf
 
 # 컨테이너가 80 포트에서 네트워크 서비스를 제공할 것임을 나타냅니다. 이 포트는 Nginx의 기본 포트입니다.
 EXPOSE 80

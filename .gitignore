@@ -46,3 +46,6 @@ sql-scripts/*
 
 ### react buildfiles ###
 /src/main/resources/static/**
+
+### nginx ###
+/nginx/*.pem
