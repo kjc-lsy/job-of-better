@@ -1,10 +1,10 @@
-import {BrowserRouter,Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import AdminLayout from "./layouts/Admin";
 import AuthLayout from "./layouts/Auth";
 import UserLayout from "./layouts/User";
 import React , {useState} from "react";
 
-import styled,{ThemeProvider} from "styled-components";
+import {ThemeProvider} from "styled-components";
 import {lightTheme,darkTheme} from "./theme/theme";
 import GlobalStyle from "./theme/GlobalStyle";
 import {ThemeModeButton} from "./theme/Button";
@@ -30,7 +30,7 @@ const App = () => {
         <>
             <ThemeProvider theme={theme}>
                 <GlobalStyle/>
-            <ThemeModeButton toggleTheme={toggleTheme} themeMode={themeMode}/>
+                <ThemeModeButton toggleTheme={toggleTheme} themeMode={themeMode}/>
             <Routes>
                 <Route path="/admin/*" element={<AdminLayout/>}/>
                 <Route path="/auth/*" element={<AuthLayout/>}/>

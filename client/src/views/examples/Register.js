@@ -16,6 +16,7 @@ import {
 import {useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
+import * as styled from "../../theme/styled";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -490,9 +491,9 @@ const Register = () => {
                                 </Col>
                             </Row>
                             <div className="text-center">
-                                <Button className="mt-4" color="primary" type="submit" disabled={!submitRequirement}>
+                                <styled.ButtonBox type="submit" disabled={!submitRequirement}>
                                     Create account
-                                </Button>
+                                </styled.ButtonBox>
                             </div>
                         </Form>
                     </CardBody>
