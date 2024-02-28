@@ -58,9 +58,11 @@
     "react-router-dom": "6.21.1",
     "react-scripts": "5.0.1",
     "reactstrap": "8.10.0",
-    "sass": "1.69.5"
+    "sass": "1.69.5",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
+    "@types/styled-components": "^5.1.34",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9"
   },

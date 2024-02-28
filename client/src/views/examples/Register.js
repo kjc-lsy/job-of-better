@@ -14,6 +14,8 @@ import {
     Col, Label, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu,
 } from "reactstrap";
 import {useEffect, useState} from "react";
+import * as auth from '../../apis/auth';
+
 
 const Register = () => {
     const [inputValue, setInputValue] = useState({
@@ -81,7 +83,10 @@ const Register = () => {
 
     const handleJoin = async (e) => {
         e.preventDefault()
-        console.log(inputValue)
+        //console.log(inputValue)
+        const response = await auth.join(inputValue)
+        console.log(response)
+
     }
 
     useEffect(()=>{

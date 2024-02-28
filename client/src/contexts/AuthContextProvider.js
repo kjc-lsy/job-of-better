@@ -25,7 +25,7 @@ export const AuthContextProvider = ({children}) => {
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(()=>{
         setLoginUser();
-    }, [])
+    }, []);
 
     const login = async (username, password) => {
         try {
@@ -110,9 +110,8 @@ export const AuthContextProvider = ({children}) => {
 
     const join = (userData) => {
         // eslint-disable-next-line no-restricted-globals
-        const data = {username, password, name, email, birthDate, gender, phone}
-
-        data.username = userData.username
+        /*const data = {username, password, name, email, birthDate, gender, phone}
+        data.username = userData.username*/
 
     };
 
