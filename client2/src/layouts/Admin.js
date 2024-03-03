@@ -138,7 +138,7 @@ function Admin(props) {
               <Routes>
                 {getRoutes(routes)}
                 <Route
-                  path="*"
+                  path="/"
                   element={<Navigate to="/admin/tables" replace />}
                 />
               </Routes>
