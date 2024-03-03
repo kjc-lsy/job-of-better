@@ -41,7 +41,7 @@ import {
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
 
-function AdminNavbar(props) {
+function UserNavbar(props) {
     const [collapseOpen, setcollapseOpen] = React.useState(false);
     const [modalSearch, setmodalSearch] = React.useState(false);
     const [color, setcolor] = React.useState("navbar-transparent");
@@ -205,4 +205,4 @@ function AdminNavbar(props) {
     );
 }
 
-export default AdminNavbar;
+export default UserNavbar;

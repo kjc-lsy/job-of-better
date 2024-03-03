@@ -14,7 +14,7 @@ import {
     Col,
 } from "reactstrap";
 import {useAuth} from "../contexts/AuthContextProvider";
-import {useState} from "react";
+import React, {useState} from "react";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -29,7 +29,12 @@ const Login = () => {
     return (
         <>
             <Col lg="5" md="7">
-                <Card className="bg-secondary shadow border-0">
+
+                <Card>
+                    <CardHeader className="text-center">
+                        <h3 className="title">로그인</h3>
+                    </CardHeader>
+                    {/*className="bg-secondary shadow border-0"*/}
                 {/*    <CardHeader className="bg-transparent pb-5">*/}
                 {/*        <div className="text-muted text-center mt-2 mb-3">*/}
                 {/*            <small>Sign in with</small>*/}
@@ -71,12 +76,12 @@ const Login = () => {
                 {/*            </Button>*/}
                 {/*        </div>*/}
                 {/*    </CardHeader>*/}
-                    <CardBody className="px-lg-5 py-lg-5">
-                        <div className="text-center text-muted mb-4">
+                    <CardBody>
+                        {/*<div className="text-center text-muted mb-4">
                             <small>로그인을 위해 정보를 입력해주세요</small>
-                        </div>
+                        </div>*/}
                         <Form role="form" onSubmit={loginSubmit}>
-                            <FormGroup className="mb-3">
+                            {/*<FormGroup className="mb-3">
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
@@ -90,8 +95,27 @@ const Login = () => {
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
                                 </InputGroup>
+                            </FormGroup>*/}
+                            <FormGroup>
+                                <label>아이디</label>
+                                <Input
+                                    placeholder="아이디"
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
                             </FormGroup>
                             <FormGroup>
+                                <label>비밀번호</label>
+                                <Input
+                                    placeholder="비밀번호"
+                                    type="password"
+                                    autoComplete="new-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </FormGroup>
+                            {/*<FormGroup>
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
@@ -106,7 +130,7 @@ const Login = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </InputGroup>
-                            </FormGroup>
+                            </FormGroup>*/}
                             <div className="custom-control custom-control-alternative custom-checkbox">
                                 <input
                                     className="custom-control-input"

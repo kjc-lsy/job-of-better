@@ -51,7 +51,7 @@ import {
 } from "variables/charts.js";
 
 function Home(props) {
-    const [bigChartData, setbigChartData] = React.useState("data1");
+    const [bigChartData, setbigChartData] = React.useState("data2");
     const setBgChartData = (name) => {
         setbigChartData(name);
     };
