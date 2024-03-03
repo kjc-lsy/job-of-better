@@ -5,6 +5,7 @@ import Login from "views/Login.js";
 import UserProfile from "./views/UserProfile";
 import TableList from "./views/TableList";
 import Map from "./views/Map";
+import Icons from "./views/Icons";
 
 
 var routes = [
@@ -52,6 +53,14 @@ var routes = [
     icon: "tim-icons icon-puzzle-10",
     component: <TableList />,
     layout: "/admin",
+  },
+  {
+    path: "/icons",
+    name: "Icons",
+    rtlName: "قائمة الجدول",
+    icon: "tim-icons icon-puzzle-10",
+    component: <Icons />,
+    layout: "/user",
   },
 ];
 export default routes;

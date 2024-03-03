@@ -13,7 +13,7 @@ import {
     Row,
     Col, Label, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu,
 } from "reactstrap";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as auth from '../apis/auth';
 import {useNavigate} from "react-router-dom";
 import * as styled from "../theme/styled";
@@ -150,7 +150,10 @@ const Register = () => {
     return (
         <>
             <Col lg="6" md="8">
-                <Card className="bg-secondary shadow border-0">
+                <Card>
+                    <CardHeader className="text-center">
+                        <h3 className="title">Sign Up</h3>
+                    </CardHeader>
                     {/*<CardHeader className="bg-transparent pb-5">*/}
                     {/*    <div className="text-muted text-center mt-2 mb-4">*/}
                     {/*        <small>Sign up with</small>*/}
@@ -192,18 +195,29 @@ const Register = () => {
                     {/*        </Button>*/}
                     {/*    </div>*/}
                     {/*</CardHeader>*/}
-                    <CardBody className="px-lg-5 py-lg-5">
-                        <div className="text-center text-muted mb-4">
+                    <CardBody >
+                        {/*<div className="text-center text-muted mb-4">
                             <small>회원가입을 위해 정보를 입력해주세요</small>
-                        </div>
+                        </div>*/}
                         <Form role="form" className="form-register" onSubmit={handleJoin}>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>아이디</label>
+                                <Input
+                                    value={inputValue.username}
+                                    name="username"
+                                    placeholder="아이디"
+                                    type="text"
+                                    onChange={e => {
+                                        setInputValue({...inputValue, username: e.target.value})
+                                    }}
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-hat-3"/>
                                         </InputGroupText>
                                     </InputGroupAddon>
+                                    <label>아이디</label>
                                     <Input
                                         value={inputValue.username}
                                         name="username"
@@ -213,21 +227,33 @@ const Register = () => {
                                             setInputValue({...inputValue, username: e.target.value})
                                         }}
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {" "}
+                                        {inputValue.validUsername && inputValue.username !== ""
+                                            ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                            : inputValue.username !== ""
+                                                ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                                : <span> 문자, 영문자, 숫자를 사용해주세요</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {" "}
-                                    {inputValue.validUsername && inputValue.username !== ""
-                                        ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                        : inputValue.username !== ""
-                                            ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                            : <span> 문자, 영문자, 숫자를 사용해주세요</span>
-                                    }
-                                </small>
-                            </div>
+
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>비밀번호</label>
+                                <Input
+                                    value={inputValue.password}
+                                    placeholder="비밀번호"
+                                    name="password"
+                                    type="password"
+                                    onChange={(e) => {
+                                        setInputValue({...inputValue, password: e.target.value})
+                                    }}
+                                    autoComplete="new-password"
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-lock-circle-open"/>
@@ -243,21 +269,32 @@ const Register = () => {
                                         }}
                                         autoComplete="new-password"
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {" "}
+                                        {inputValue.validPassword && inputValue.password !== ""
+                                            ? <span className="text-success font-weight-700">유효한 비밀번호 입니다.</span>
+                                            : inputValue.password !== ""
+                                                ? <span className="text-danger font-weight-700">유효하지 않은 비밀번호 입니다</span>
+                                                : <span>하나의 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {" "}
-                                    {inputValue.validPassword && inputValue.password !== ""
-                                        ? <span className="text-success font-weight-700">유효한 비밀번호 입니다.</span>
-                                        : inputValue.password !== ""
-                                            ? <span className="text-danger font-weight-700">유효하지 않은 비밀번호 입니다</span>
-                                            : <span>하나의 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다</span>
-                                    }
-                                </small>
-                            </div>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>비밀번호 확인</label>
+                                <Input
+                                    value={inputValue.checkPassword}
+                                    placeholder="비밀번호 확인"
+                                    name="checkPassword"
+                                    type="password"
+                                    onChange={(e) => {
+                                        setInputValue({...inputValue, checkPassword: e.target.value})
+                                    }}
+                                    autoComplete="new-password"
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-lock-circle-open"/>
@@ -273,21 +310,31 @@ const Register = () => {
                                         }}
                                         autoComplete="new-password"
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {" "}
+                                        {inputValue.validCheckPassword && inputValue.checkPassword !== ""
+                                            ? <span className="text-success font-weight-700">비밀번호가 일치합니다</span>
+                                            : inputValue.checkPassword !== ""
+                                                ? <span className="text-danger font-weight-700">비밀번호가 일치하지 않습니다</span>
+                                                : <span>비밀번호를 확인해야 합니다</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {" "}
-                                    {inputValue.validCheckPassword && inputValue.checkPassword !== ""
-                                        ? <span className="text-success font-weight-700">비밀번호가 일치합니다</span>
-                                        : inputValue.checkPassword !== ""
-                                            ? <span className="text-danger font-weight-700">비밀번호가 일치하지 않습니다</span>
-                                            : <span>비밀번호를 확인해야 합니다</span>
-                                    }
-                                </small>
-                            </div>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>이름</label>
+                                <Input
+                                    value={inputValue.name}
+                                    name="name"
+                                    placeholder="이름"
+                                    onChange={(e) => {
+                                        setInputValue({...inputValue, name: e.target.value})
+                                    }}
+                                    type="text"
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-circle-08"/>
@@ -302,26 +349,22 @@ const Register = () => {
                                         }}
                                         type="text"
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {
+                                            inputValue.validName && inputValue.name !== ""
+                                                ? <span className="text-success font-weight-700">유효한 이름 입니다.</span>
+                                                : inputValue.name !== ""
+                                                    ? <span className="text-danger font-weight-700">유효한 이름이 아닙니다.</span>
+                                                    : <span>영어 대/소문자, 숫자, 한글을 사용해주세요</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {
-                                        inputValue.validName && inputValue.name !== ""
-                                            ? <span className="text-success font-weight-700">유효한 이름 입니다.</span>
-                                            : inputValue.name !== ""
-                                                ? <span className="text-danger font-weight-700">유효한 이름이 아닙니다.</span>
-                                                : <span>영어 대/소문자, 숫자, 한글을 사용해주세요</span>
-                                    }
-                                </small>
-                            </div>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-email-83"/>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
+                                <label>이메일</label>
+                                <InputGroup>
                                     <Input
                                         value={inputValue.emailUserName}
                                         onChange={(e) => setInputValue({
@@ -362,20 +405,29 @@ const Register = () => {
                                         </DropdownMenu>
                                     </ButtonDropdown>
                                 </InputGroup>
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {
+                                            inputValue.validEmail && inputValue.emailUserName !== "" && inputValue.domain !== ""
+                                                ? <span className="text-success font-weight-700">유효한 이메일 입니다.</span>
+                                                : inputValue.emailUserName !== ""
+                                                    ? <span className="text-danger font-weight-700">유효한 이메일이 아닙니다.</span>
+                                                    : <span>이메일을 입력해주세요</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {
-                                        inputValue.validEmail && inputValue.emailUserName !== "" && inputValue.domain !== ""
-                                            ? <span className="text-success font-weight-700">유효한 이메일 입니다.</span>
-                                            : inputValue.emailUserName !== ""
-                                                ? <span className="text-danger font-weight-700">유효한 이메일이 아닙니다.</span>
-                                                : <span>이메일을 입력해주세요</span>
-                                    }
-                                </small>
-                            </div>
+
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>생년월일</label>
+                                <Input
+                                    vlaue={inputValue.birthDate}
+                                    placeholder="생년월일"
+                                    name="birthDate"
+                                    type="date"
+                                    onChange={e => setInputValue({...inputValue, birthDate: e.target.value})}
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-calendar-grid-58"/>
@@ -388,19 +440,28 @@ const Register = () => {
                                         type="date"
                                         onChange={e => setInputValue({...inputValue, birthDate: e.target.value})}
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {
+                                            inputValue.birthDate !== ""
+                                                ? <span className="text-success font-weight-700">유효한 생년월일 입니다.</span>
+                                                : <span>생년월일을 입력해주세요</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {
-                                        inputValue.birthDate !== ""
-                                            ? <span className="text-success font-weight-700">유효한 생년월일 입니다.</span>
-                                            : <span>생년월일을 입력해주세요</span>
-                                    }
-                                </small>
-                            </div>
+
                             <FormGroup>
-                                <InputGroup className="input-group-alternative">
+                                <label>휴대폰 번호</label>
+                                <Input
+                                    vlaue={inputValue.phone}
+                                    placeholder="휴대폰 번호"
+                                    name="phone"
+                                    type="text"
+                                    onChange={e => setInputValue({...inputValue, phone: e.target.value})}
+                                />
+                                {/*<InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-mobile-button"/>
@@ -413,22 +474,54 @@ const Register = () => {
                                         type="text"
                                         onChange={e => setInputValue({...inputValue, phone: e.target.value})}
                                     />
-                                </InputGroup>
+                                </InputGroup>*/}
+                                <div className="text-muted font-italic">
+                                    <small>
+                                        {
+                                            inputValue.validPhone && inputValue.phone !== ""
+                                                ? <span className="text-success font-weight-700">유효한 번호 입니다.</span>
+                                                : inputValue.phone !== ""
+                                                    ? <span className="text-danger font-weight-700">유효한 번호가 아닙니다.</span>
+                                                    : <span>"-"를 뺀 번호를 입력해주세요</span>
+                                        }
+                                    </small>
+                                </div>
                             </FormGroup>
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {
-                                        inputValue.validPhone && inputValue.phone !== ""
-                                            ? <span className="text-success font-weight-700">유효한 번호 입니다.</span>
-                                            : inputValue.phone !== ""
-                                                ? <span className="text-danger font-weight-700">유효한 번호가 아닙니다.</span>
-                                                : <span>"-"를 뺀 번호를 입력해주세요</span>
-                                    }
-                                </small>
-                            </div>
                             <FormGroup>
-                                <InputGroup className="input-group-alternative bg-white"
-                                            style={{color: "#8898aa"}}>
+                                <label htmlFor="">성별</label>
+                                <InputGroup>
+                                <Col>
+                                    <FormGroup check>
+                                        <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
+                                            <Input
+                                                type="radio"
+                                                name="gender"
+                                                value="m"
+                                                onChange={e => setInputValue({
+                                                    ...inputValue,
+                                                    gender: e.target.value
+                                                })}
+                                            />남성
+                                        </Label>
+                                    </FormGroup>
+                                </Col>
+                                <Col>
+                                    <FormGroup check>
+                                        <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
+                                            <Input
+                                                type="radio"
+                                                name="gender"
+                                                value="f"
+                                                onChange={e => setInputValue({
+                                                    ...inputValue,
+                                                    gender: e.target.value
+                                                })}
+                                            />여성
+                                        </Label>
+                                    </FormGroup>
+                                </Col>
+                                </InputGroup>
+                                {/*<InputGroup className="input-group-alternative bg-white">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
                                             <i className="ni ni-ui-04"/>
@@ -464,7 +557,7 @@ const Register = () => {
                                             </Label>
                                         </FormGroup>
                                     </Col>
-                                </InputGroup>
+                                </InputGroup>*/}
                             </FormGroup>
                             <Row className="my-4">
                                 <Col xs="12">
@@ -491,10 +584,14 @@ const Register = () => {
                                 </Col>
                             </Row>
                             <div className="text-center">
-                                <styled.ButtonBox type="submit" disabled={!submitRequirement}>
+                                {/*<styled.ButtonBox type="submit" disabled={!submitRequirement}>
                                     Create account
-                                </styled.ButtonBox>
+                                </styled.ButtonBox>*/}
+                                <Button className="my-4" color="primary" type="submit" disabled={!submitRequirement}>
+                                    Create account
+                                </Button>
                             </div>
+
                         </Form>
                     </CardBody>
                 </Card>

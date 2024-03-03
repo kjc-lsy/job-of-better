@@ -30,6 +30,8 @@ import routes from "routes.js";
 import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import {useAuth} from "../contexts/AuthContextProvider";
+import AdminNavbar from "../components/Navbars/AdminNavbar";
+import Footer from "../components/Footer/Footer";
 
 var ps;
 
@@ -141,10 +143,14 @@ function User(props) {
                             <Routes>
                                 {getRoutes(routes)}
                                 <Route
-                                    path="*"
+                                    path="/"
                                     element={<Navigate to="/user/home" replace />}
                                 />
                             </Routes>
+                            {
+                                // we don't want the Footer to be rendered on map page
+                                location.pathname === "/admin/maps" ? null : <Footer fluid />
+                            }
                         </div>
                     </div>
                     <FixedPlugin bgColor={color} handleBgClick={changeColor} />

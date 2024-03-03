@@ -37,7 +37,7 @@ let chart1_2_options = {
   },
   responsive: true,
   scales: {
-    yAxes: {
+    yAxes: [{
       barPercentage: 1.6,
       gridLines: {
         drawBorder: false,
@@ -50,8 +50,8 @@ let chart1_2_options = {
         padding: 20,
         fontColor: "#9a9a9a",
       },
-    },
-    xAxes: {
+    }],
+    xAxes: [{
       barPercentage: 1.6,
       gridLines: {
         drawBorder: false,
@@ -62,7 +62,7 @@ let chart1_2_options = {
         padding: 20,
         fontColor: "#9a9a9a",
       },
-    },
+    }],
   },
 };
 
@@ -293,7 +293,7 @@ let chartExample3 = {
       position: "nearest",
     },
     responsive: true,
-    scales: {
+    /*scales: {
       yAxes: {
         gridLines: {
           drawBorder: false,
@@ -318,7 +318,7 @@ let chartExample3 = {
           fontColor: "#9e9e9e",
         },
       },
-    },
+    },*/
   },
 };
 
@@ -375,7 +375,7 @@ const chartExample4 = {
       position: "nearest",
     },
     responsive: true,
-    scales: {
+    /*scales: {
       yAxes: {
         barPercentage: 1.6,
         gridLines: {
@@ -402,7 +402,7 @@ const chartExample4 = {
           fontColor: "#9e9e9e",
         },
       },
-    },
+    },*/
   },
 };
 

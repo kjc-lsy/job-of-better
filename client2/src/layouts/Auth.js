@@ -3,9 +3,13 @@ import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-do
 import { Container, Row, Col } from "reactstrap";
 
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import "assets/scss/argon-dashboard-react.scss";
 
 import routes from "routes.js";
+import { BackgroundColorContext } from "../contexts/BackgroundColorContext";
 import {useAuth} from "../contexts/AuthContextProvider";
+import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
+
 
 
 const Auth = (props) => {
@@ -53,23 +57,27 @@ const Auth = (props) => {
   };
 
   return (
-    <>
-      <div className="main-content" ref={mainContent}>
+      <BackgroundColorContext.Consumer>
+        {({ color, changeColor }) => (
+            <React.Fragment>
+              <div className="wrapper">
+                <div className="main-panel" ref={mainContent} data={color}>
+      {/*<div className="main-content " ref={mainContent} data={color}>*/}
         <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
+        <div className="header py-7">
+          {/*<Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
+                  <h1>Welcome!</h1>
                   <p className="text-lead text-light">
                     학생들에게 보여줄 문구를 입력해주세요!!
                   </p>
                 </Col>
               </Row>
             </div>
-          </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
+          </Container>*/}
+          {/*<div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -83,7 +91,7 @@ const Auth = (props) => {
                 points="2560 0 2560 100 0 100"
               />
             </svg>
-          </div>
+          </div>*/}
         </div>
         {/* Page content */}
         <Container className="mt--8 pb-5">
@@ -95,7 +103,11 @@ const Auth = (props) => {
           </Row>
         </Container>
       </div>
-    </>
+              </div>
+              <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+            </React.Fragment>
+        )}
+      </BackgroundColorContext.Consumer>
   );
 };
 

@@ -1,0 +1,48 @@
+/*.input-group-alternative {
+    .form-control {
+      &:hover {
+        background : var(--background)
+      }
+      &:focus {
+        background : var(--background)
+      }
+    }
+}*/
+.navbar {
+  background: #1e1e2f
+}
+.white-content {
+  h1 {
+    color: #000;
+  }
+  .navbar {
+    background: #f5f6fa;
+  }
+  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus ,
+  .navbar-dark .navbar-nav .nav-link{
+    color: #000;
+  }
+}
+.form-register .form-group {
+  margin-bottom: 20px;
+}
+form.form-register label + .form-control {
+  margin-bottom: 0;
+}
+@mixin ellipsis($lines: 1) {
+  @if ($lines==1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    line-height: $lines * 1.2em;
+    height: $lines * 1.2em;
+  }
+}
+.text { @include ellipsis; }
+.long-text { @include ellipsis(3); }

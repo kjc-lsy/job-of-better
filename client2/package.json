@@ -29,8 +29,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile:scss": "sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css",
-    "minify:scss": "sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.min.css --style compressed",
     "build:scss": "npm run compile:scss && npm run minify:scss && npm run map:scss",
     "compile-scss": "sass src/assets/scss/black-dashboard-react.scss src/assets/css/black-dashboard-react.css",
     "minify-scss": "sass src/assets/scss/black-dashboard-react.scss src/assets/css/black-dashboard-react.min.css --style compressed"
@@ -52,24 +50,23 @@
     "@fortawesome/fontawesome-free": "6.5.1",
     "axios": "^1.6.5",
     "bootstrap": "4.6.2",
-    "chart.js": "2.9.4",
+    "chart.js": "^4.4.2",
     "classnames": "2.3.2",
     "js-cookie": "^3.0.5",
     "moment": "2.29.4",
     "nouislider": "15.4.0",
-    "react": "18.2.0",
-    "react-chartjs-2": "2.11.2",
-    "react-copy-to-clipboard": "5.1.0",
-    "react-datetime": "3.2.0",
-    "react-dom": "18.2.0",
-    "react-router-dom": "6.21.1",
-    "react-scripts": "5.0.1",
-    "reactstrap": "8.10.0",
-    "sass": "1.69.5",
-    "styled-components": "^6.1.8",
     "perfect-scrollbar": "1.5.5",
     "prop-types": "15.8.1",
-    "react-notification-alert": "0.0.13"
+    "react": ">=16.8.0",
+    "react-chartjs-2": "^3.3.0",
+    "react-copy-to-clipboard": "5.1.0",
+    "react-datetime": "3.2.0",
+    "react-dom": ">=16.8.0",
+    "react-notification-alert": "0.0.13",
+    "react-router-dom": "6.21.1",
+    "react-scripts": "5.0.1",
+    "sass": "1.69.5",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.34",
@@ -78,8 +75,8 @@
   },
   "optionalDependencies": {
     "eslint-plugin-flowtype": "8.0.3",
-    "typescript": "5.3.3",
-    "reactstrap": "8.10.1"
+    "reactstrap": "8.10.1",
+    "typescript": "5.3.3"
   },
   "overrides": {
     "svgo": "3.0.2",
