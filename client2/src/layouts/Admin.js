@@ -39,18 +39,19 @@ function Admin(props) {
   const mainPanelRef = React.useRef(null);
   const {isLogin, roles} = useAuth();
   const navigate = useNavigate();
+  const [isMounted, setIsMounted] = React.useState(false);
 
-  useEffect(() => { // Auth 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
-    if (isLogin) {
-      if (roles.isAdmin) {
-        navigate("/admin");
-        return
+  // 권한 처리
+  useEffect(() => {
+    if(isMounted) {
+      if (!isLogin || !roles.isAdmin) {
+        alert("접근할 수 없습니다")
+        navigate("/auth/login")
       }
-      if (roles.isUser) {
-        navigate("/user");
-        return
-      }
+    }else {
+      setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
     }
+
   }, [isLogin, roles]);
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1

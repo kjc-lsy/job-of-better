@@ -7,7 +7,6 @@
   font-size: $font-size-sm;
   @include transition-input-focus-color();
 
-
   &:focus{
     border-color: $primary;
     background-color: $input-bg;

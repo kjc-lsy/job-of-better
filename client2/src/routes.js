@@ -1,10 +1,7 @@
 
 import Home from "./views/Home.js"
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
-import StudentList from "./views/examples/StudentList";
-import MyPage from "./views/examples/MyPage.js";
-import Dashboard from "./views/Dashboard.js";
+import Register from "views/Register.js";
+import Login from "views/Login.js";
 import UserProfile from "./views/UserProfile";
 import TableList from "./views/TableList";
 import Map from "./views/Map";
@@ -12,32 +9,11 @@ import Map from "./views/Map";
 
 var routes = [
   {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: <Dashboard />,
-    layout: "/admin",
-  },
-  {
     path: "/home",
     name: "Home",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
     layout: "/user",
-  },
-  {
-    path: "/mypage",
-    name: "Mypage",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <MyPage />,
-    layout: "/user",
-  },
-  {
-    path: "/studentList",
-    name: "StudentList",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <StudentList />,
-    layout: "/admin",
   },
   {
     path: "/login",
