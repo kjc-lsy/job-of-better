@@ -43,7 +43,7 @@ var routes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: "tim-icons icon-single-02",
     component: <UserProfile />,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/tables",

@@ -38,11 +38,16 @@ import {
   NavbarToggler,
   ModalHeader,
 } from "reactstrap";
+import {useAuth} from "../../contexts/AuthContextProvider";
+import {useNavigate} from "react-router-dom";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+  const {logoutSetting} = useAuth();
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -70,6 +75,12 @@ function AdminNavbar(props) {
   // this function is to open the Search modal
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
+  };
+
+  const logout = (e) => {
+    e.preventDefault()
+    logoutSetting()
+    navigate("/")
   };
   return (
     <>
@@ -165,7 +176,7 @@ function AdminNavbar(props) {
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                    <DropdownItem onClick={logout} className="nav-item">Log out</DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>

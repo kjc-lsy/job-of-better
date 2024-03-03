@@ -40,6 +40,7 @@ function Admin(props) {
   const {isLogin, roles} = useAuth();
   const navigate = useNavigate();
   const [isMounted, setIsMounted] = React.useState(false);
+  const adminRoutes = routes.filter(route => route.layout === "/admin");
 
   // 권한 처리
   useEffect(() => {
@@ -120,7 +121,7 @@ function Admin(props) {
         <React.Fragment>
           <div className="wrapper">
             <Sidebar
-              routes={routes}
+              routes={adminRoutes}
               logo={{
                 outterLink: "https://www.creative-tim.com/",
                 text: "Creative Tim",
@@ -137,8 +138,8 @@ function Admin(props) {
               <Routes>
                 {getRoutes(routes)}
                 <Route
-                  path="/"
-                  element={<Navigate to="/admin/dashboard" replace />}
+                  path="*"
+                  element={<Navigate to="/admin/tables" replace />}
                 />
               </Routes>
               {

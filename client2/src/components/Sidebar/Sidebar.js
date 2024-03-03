@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React from "react";
-import {NavLink, Link, useLocation} from "react-router-dom";
+import {NavLink, Link, useLocation, Route} from "react-router-dom";
 // nodejs library to set properties for components
 import {PropTypes} from "prop-types";
 
@@ -21,7 +21,6 @@ function Sidebar(props) {
     const currentPath = location.pathname;
     const sidebarRef = React.useRef(null);
 
-    console.log(currentPath)
     // verifies if routeName is the one active (in browser input)
     const activeRoute = (routeName) => {
         return location.pathname === routeName ? "active" : "";
@@ -41,22 +40,14 @@ function Sidebar(props) {
         };
     });
 
-    const useGetCurrentLayout = (routes) => {
-        const location = useLocation();
-        const currentPath = location.pathname;
 
-        // 현재 경로와 일치하는 route 객체를 찾습니다.
-        const currentRoute = routes.find(route => currentPath.includes(route.path));
-
-        // 찾은 route 객체에서 layout 값을 반환합니다.
-        return currentRoute ? currentRoute.layout : undefined;
-    };
     const linkOnClick = () => {
         document.documentElement.classList.remove("nav-open");
     };
 
     const {routes, rtlActive, logo} = props;
 
+    // 로고 설정
     let logoImg = null;
     let logoText = null;
     if (logo !== undefined) {

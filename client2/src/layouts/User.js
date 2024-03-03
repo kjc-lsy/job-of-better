@@ -39,6 +39,7 @@ function User(props) {
     const {isLogin, roles} = useAuth();
     const navigate = useNavigate();
     const [isMounted, setIsMounted] = React.useState(false);
+    const userRoutes = routes.filter(route => route.layout === "/user");
 
     // 권한 처리
     useEffect(() => {
@@ -107,6 +108,7 @@ function User(props) {
         });
     };
 
+
     const getBrandText = (path) => {
         for (let i = 0; i < routes.length; i++) {
             if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
@@ -122,7 +124,7 @@ function User(props) {
                 <React.Fragment>
                     <div className="wrapper">
                         <Sidebar
-                            routes={routes}
+                            routes={userRoutes}
                             logo={{
                                 outterLink: "https://www.creative-tim.com/",
                                 text: "Creative Tim",
