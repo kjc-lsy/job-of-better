@@ -1,4 +1,3 @@
-
 import Home from "./views/Home.js"
 import Register from "views/Register.js";
 import Login from "views/Login.js";
@@ -9,7 +8,6 @@ import Icons from "./views/Icons";
 import Rtl from "./views/Rtl";
 import Typography from "./views/Typography";
 import MemberList from "./views/MemberList";
-
 
 var routes = [
   {
@@ -73,4 +71,5 @@ var routes = [
     layout: "/user",
   },
 ];
+
 export default routes;

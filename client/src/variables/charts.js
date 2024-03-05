@@ -1,20 +1,4 @@
-/*!
-
-=========================================================
-* Black Dashboard React v1.2.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+const Chart = require("chart.js");
 // ##############################
 // // // Chart variables
 // #############################
@@ -293,11 +277,11 @@ let chartExample3 = {
       position: "nearest",
     },
     responsive: true,
-    scales: {
-      yAxes: [{
+    /*scales: {
+      yAxes: {
         gridLines: {
           drawBorder: false,
-          color: "rgba(225,78,202,0.0)",
+          color: "rgba(225,78,202,0.1)",
           zeroLineColor: "transparent",
         },
         ticks: {
@@ -306,8 +290,8 @@ let chartExample3 = {
           padding: 20,
           fontColor: "#9e9e9e",
         },
-      }],
-      xAxes: [{
+      },
+      xAxes: {
         gridLines: {
           drawBorder: false,
           color: "rgba(225,78,202,0.1)",
@@ -317,8 +301,8 @@ let chartExample3 = {
           padding: 20,
           fontColor: "#9e9e9e",
         },
-      }],
-    },
+      },
+    },*/
   },
 };
 
@@ -375,12 +359,12 @@ const chartExample4 = {
       position: "nearest",
     },
     responsive: true,
-    scales: {
-      yAxes: [{
+    /*scales: {
+      yAxes: {
         barPercentage: 1.6,
         gridLines: {
           drawBorder: false,
-          color: "rgba(29,140,248,0)",
+          color: "rgba(29,140,248,0.0)",
           zeroLineColor: "transparent",
         },
         ticks: {
@@ -389,8 +373,8 @@ const chartExample4 = {
           padding: 20,
           fontColor: "#9e9e9e",
         },
-      }],
-      xAxes: [{
+      },
+      xAxes: {
         barPercentage: 1.6,
         gridLines: {
           drawBorder: false,
@@ -401,14 +385,14 @@ const chartExample4 = {
           padding: 20,
           fontColor: "#9e9e9e",
         },
-      }],
-    },
+      },
+    },*/
   },
 };
 
 module.exports = {
-  chartExample1, // in src/views/Dashboard.js
-  chartExample2, // in src/views/Dashboard.js
-  chartExample3, // in src/views/Dashboard.js
-  chartExample4, // in src/views/Dashboard.js
+  chartExample1, // used inside src/views/DashBoard.js
+  chartExample2, // used inside src/views/DashBoard.js
+  chartExample3, // used inside src/views/DashBoard.js
+  chartExample4, // used inside src/views/DashBoard.js
 };
