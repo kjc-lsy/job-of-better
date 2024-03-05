@@ -1,12 +1,12 @@
 /*!
 
 =========================================================
-* Argon Dashboard React - v1.2.4
+* Black Dashboard React v1.2.2
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+* Product Page: https://www.creative-tim.com/product/black-dashboard-react
+* Copyright 2023 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
 
 * Coded by Creative Tim
 
@@ -15,122 +15,141 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import {useState} from "react";
-// node.js library that concatenates classes (strings)
-import classnames from "classnames";
-// javascipt plugin for creating charts
-import Chart from "chart.js";
+import React from "react";
+// nodejs library that concatenates classes
+import classNames from "classnames";
 // react plugin used to create charts
-import {Bar, Line} from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
+
 // reactstrap components
 import {
     Button,
+    ButtonGroup,
     Card,
-    CardBody,
     CardHeader,
-    Col,
-    Container,
-    Nav,
-    NavItem,
-    NavLink,
-    Progress,
-    Row,
+    CardBody,
+    CardTitle,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    Label,
+    FormGroup,
+    Input,
     Table,
+    Row,
+    Col,
+    UncontrolledTooltip,
 } from "reactstrap";
 
 // core components
-import {chartExample1, chartExample2, chartOptions, parseOptions,} from "variables/charts.js";
+import {
+    chartExample1,
+    chartExample2,
+    chartExample3,
+    chartExample4,
+} from "variables/charts.js";
 
-import Header from "components/Headers/Header.js";
-
-const Index = (props) => {
-    const [activeNav, setActiveNav] = useState(1);
-    const [chartExample1Data, setChartExample1Data] = useState("data1");
-
-    if (window.Chart) {
-        parseOptions(Chart, chartOptions());
-    }
-
-    const toggleNavs = (e, index) => {
-        e.preventDefault();
-        setActiveNav(index);
-        setChartExample1Data("data" + index);
+function Home(props) {
+    const [bigChartData, setbigChartData] = React.useState("data2");
+    const setBgChartData = (name) => {
+        setbigChartData(name);
     };
     return (
         <>
-            <Header/>
-            {/* Page content */}
-            <Container className="mt--7" fluid>
+            <div className="content">
                 <Row>
-                    <Col className="mb-5 mb-xl-0" xl="8">
-                        <Card className="bg-gradient-default shadow">
-                            <CardHeader className="bg-transparent">
-                                <Row className="align-items-center">
-                                    <div className="col">
-                                        <h6 className="text-uppercase text-light ls-1 mb-1">
-                                            Overview
-                                        </h6>
-                                        <h2 className="text-white mb-0">Sales value</h2>
-                                    </div>
-                                    <div className="col">
-                                        <Nav className="justify-content-end" pills>
-                                            <NavItem>
-                                                <NavLink
-                                                    className={classnames("py-2 px-3", {
-                                                        active: activeNav === 1,
-                                                    })}
-                                                    href="#pablo"
-                                                    onClick={(e) => toggleNavs(e, 1)}
-                                                >
-                                                    <span className="d-none d-md-block">Month</span>
-                                                    <span className="d-md-none">M</span>
-                                                </NavLink>
-                                            </NavItem>
-                                            <NavItem>
-                                                <NavLink
-                                                    className={classnames("py-2 px-3", {
-                                                        active: activeNav === 2,
-                                                    })}
-                                                    data-toggle="tab"
-                                                    href="#pablo"
-                                                    onClick={(e) => toggleNavs(e, 2)}
-                                                >
-                                                    <span className="d-none d-md-block">Week</span>
-                                                    <span className="d-md-none">W</span>
-                                                </NavLink>
-                                            </NavItem>
-                                        </Nav>
-                                    </div>
+                    <Col xs="12">
+                        <Card className="card-chart">
+                            <CardHeader>
+                                <Row>
+                                    <Col className="text-left" sm="6">
+                                        <h5 className="card-category">Total Shipments</h5>
+                                        <CardTitle tag="h2">Performance</CardTitle>
+                                    </Col>
+                                    <Col sm="6">
+                                        <ButtonGroup
+                                            className="btn-group-toggle float-right"
+                                            data-toggle="buttons"
+                                        >
+                                            <Button
+                                                tag="label"
+                                                className={classNames("btn-simple", {
+                                                    active: bigChartData === "data1",
+                                                })}
+                                                color="info"
+                                                id="0"
+                                                size="sm"
+                                                onClick={() => setBgChartData("data1")}
+                                            >
+                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                          Accounts
+                        </span>
+                                                <span className="d-block d-sm-none">
+                          <i className="tim-icons icon-single-02" />
+                        </span>
+                                            </Button>
+                                            <Button
+                                                color="info"
+                                                id="1"
+                                                size="sm"
+                                                tag="label"
+                                                className={classNames("btn-simple", {
+                                                    active: bigChartData === "data2",
+                                                })}
+                                                onClick={() => setBgChartData("data2")}
+                                            >
+                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                          Purchases
+                        </span>
+                                                <span className="d-block d-sm-none">
+                          <i className="tim-icons icon-gift-2" />
+                        </span>
+                                            </Button>
+                                            <Button
+                                                color="info"
+                                                id="2"
+                                                size="sm"
+                                                tag="label"
+                                                className={classNames("btn-simple", {
+                                                    active: bigChartData === "data3",
+                                                })}
+                                                onClick={() => setBgChartData("data3")}
+                                            >
+                        <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                          Sessions
+                        </span>
+                                                <span className="d-block d-sm-none">
+                          <i className="tim-icons icon-tap-02" />
+                        </span>
+                                            </Button>
+                                        </ButtonGroup>
+                                    </Col>
                                 </Row>
                             </CardHeader>
                             <CardBody>
-                                {/* Chart */}
-                                <div className="chart">
+                                <div className="chart-area">
                                     <Line
-                                        data={chartExample1[chartExample1Data]}
+                                        data={chartExample1[bigChartData]}
                                         options={chartExample1.options}
-                                        getDatasetAtEvent={(e) => console.log(e)}
                                     />
                                 </div>
                             </CardBody>
                         </Card>
                     </Col>
-                    <Col xl="4">
-                        <Card className="shadow">
-                            <CardHeader className="bg-transparent">
-                                <Row className="align-items-center">
-                                    <div className="col">
-                                        <h6 className="text-uppercase text-muted ls-1 mb-1">
-                                            Performance
-                                        </h6>
-                                        <h2 className="mb-0">Total orders</h2>
-                                    </div>
-                                </Row>
+                </Row>
+                <Row>
+                    <Col lg="4">
+                        <Card className="card-chart">
+                            <CardHeader>
+                                <h5 className="card-category">Total Shipments</h5>
+                                <CardTitle tag="h3">
+                                    <i className="tim-icons icon-bell-55 text-info" /> 763,215
+                                </CardTitle>
                             </CardHeader>
                             <CardBody>
-                                {/* Chart */}
-                                <div className="chart">
-                                    <Bar
+                                <div className="chart-area">
+                                    <Line
                                         data={chartExample2.data}
                                         options={chartExample2.options}
                                     />
@@ -138,196 +157,379 @@ const Index = (props) => {
                             </CardBody>
                         </Card>
                     </Col>
-                </Row>
-                <Row className="mt-5">
-                    <Col className="mb-5 mb-xl-0" xl="8">
-                        <Card className="shadow">
-                            <CardHeader className="border-0">
-                                <Row className="align-items-center">
-                                    <div className="col">
-                                        <h3 className="mb-0">Page visits</h3>
-                                    </div>
-                                    <div className="col text-right">
-                                        <Button
-                                            color="primary"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                            size="sm"
-                                        >
-                                            See all
-                                        </Button>
-                                    </div>
-                                </Row>
+                    <Col lg="4">
+                        <Card className="card-chart">
+                            <CardHeader>
+                                <h5 className="card-category">Daily Sales</h5>
+                                <CardTitle tag="h3">
+                                    <i className="tim-icons icon-delivery-fast text-primary" />{" "}
+                                    3,500€
+                                </CardTitle>
                             </CardHeader>
-                            <Table className="align-items-center table-flush" responsive>
-                                <thead className="thead-light">
-                                <tr>
-                                    <th scope="col">Page name</th>
-                                    <th scope="col">Visitors</th>
-                                    <th scope="col">Unique users</th>
-                                    <th scope="col">Bounce rate</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">/argon/</th>
-                                    <td>4,569</td>
-                                    <td>340</td>
-                                    <td>
-                                        <i className="fas fa-arrow-up text-success mr-3"/> 46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">/argon/index.html</th>
-                                    <td>3,985</td>
-                                    <td>319</td>
-                                    <td>
-                                        <i className="fas fa-arrow-down text-warning mr-3"/>{" "}
-                                        46,53%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">/argon/charts.html</th>
-                                    <td>3,513</td>
-                                    <td>294</td>
-                                    <td>
-                                        <i className="fas fa-arrow-down text-warning mr-3"/>{" "}
-                                        36,49%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">/argon/tables.html</th>
-                                    <td>2,050</td>
-                                    <td>147</td>
-                                    <td>
-                                        <i className="fas fa-arrow-up text-success mr-3"/> 50,87%
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">/argon/profile.html</th>
-                                    <td>1,795</td>
-                                    <td>190</td>
-                                    <td>
-                                        <i className="fas fa-arrow-down text-danger mr-3"/>{" "}
-                                        46,53%
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </Table>
+                            <CardBody>
+                                <div className="chart-area">
+                                    <Bar
+                                        data={chartExample3.data}
+                                        options={chartExample3.options}
+                                    />
+                                </div>
+                            </CardBody>
                         </Card>
                     </Col>
-                    <Col xl="4">
-                        <Card className="shadow">
-                            <CardHeader className="border-0">
-                                <Row className="align-items-center">
-                                    <div className="col">
-                                        <h3 className="mb-0">Social traffic</h3>
-                                    </div>
-                                    <div className="col text-right">
-                                        <Button
-                                            color="primary"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                            size="sm"
-                                        >
-                                            See all
-                                        </Button>
-                                    </div>
-                                </Row>
+                    <Col lg="4">
+                        <Card className="card-chart">
+                            <CardHeader>
+                                <h5 className="card-category">Completed Tasks</h5>
+                                <CardTitle tag="h3">
+                                    <i className="tim-icons icon-send text-success" /> 12,100K
+                                </CardTitle>
                             </CardHeader>
-                            <Table className="align-items-center table-flush" responsive>
-                                <thead className="thead-light">
-                                <tr>
-                                    <th scope="col">Referral</th>
-                                    <th scope="col">Visitors</th>
-                                    <th scope="col"/>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">Facebook</th>
-                                    <td>1,480</td>
-                                    <td>
-                                        <div className="d-flex align-items-center">
-                                            <span className="mr-2">60%</span>
-                                            <div>
-                                                <Progress
-                                                    max="100"
-                                                    value="60"
-                                                    barClassName="bg-gradient-danger"
-                                                />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Facebook</th>
-                                    <td>5,480</td>
-                                    <td>
-                                        <div className="d-flex align-items-center">
-                                            <span className="mr-2">70%</span>
-                                            <div>
-                                                <Progress
-                                                    max="100"
-                                                    value="70"
-                                                    barClassName="bg-gradient-success"
-                                                />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Google</th>
-                                    <td>4,807</td>
-                                    <td>
-                                        <div className="d-flex align-items-center">
-                                            <span className="mr-2">80%</span>
-                                            <div>
-                                                <Progress max="100" value="80"/>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Instagram</th>
-                                    <td>3,678</td>
-                                    <td>
-                                        <div className="d-flex align-items-center">
-                                            <span className="mr-2">75%</span>
-                                            <div>
-                                                <Progress
-                                                    max="100"
-                                                    value="75"
-                                                    barClassName="bg-gradient-info"
-                                                />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">twitter</th>
-                                    <td>2,645</td>
-                                    <td>
-                                        <div className="d-flex align-items-center">
-                                            <span className="mr-2">30%</span>
-                                            <div>
-                                                <Progress
-                                                    max="100"
-                                                    value="30"
-                                                    barClassName="bg-gradient-warning"
-                                                />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </Table>
+                            <CardBody>
+                                <div className="chart-area">
+                                    <Line
+                                        data={chartExample4.data}
+                                        options={chartExample4.options}
+                                    />
+                                </div>
+                            </CardBody>
                         </Card>
                     </Col>
                 </Row>
-            </Container>
+                <Row>
+                    <Col lg="6" md="12">
+                        <Card className="card-tasks">
+                            <CardHeader>
+                                <h6 className="title d-inline">Tasks(5)</h6>
+                                <p className="card-category d-inline"> today</p>
+                                <UncontrolledDropdown>
+                                    <DropdownToggle
+                                        caret
+                                        className="btn-icon"
+                                        color="link"
+                                        data-toggle="dropdown"
+                                        type="button"
+                                    >
+                                        <i className="tim-icons icon-settings-gear-63" />
+                                    </DropdownToggle>
+                                    <DropdownMenu aria-labelledby="dropdownMenuLink" right>
+                                        <DropdownItem
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            Action
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            Another action
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            href="#pablo"
+                                            onClick={(e) => e.preventDefault()}
+                                        >
+                                            Something else
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </CardHeader>
+                            <CardBody>
+                                <div className="table-full-width table-responsive">
+                                    <Table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input defaultValue="" type="checkbox" />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">Update the Documentation</p>
+                                                <p className="text-muted">
+                                                    Dwuamish Head, Seattle, WA 8:47 AM
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip636901683"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip636901683"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input
+                                                            defaultChecked
+                                                            defaultValue=""
+                                                            type="checkbox"
+                                                        />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">GDPR Compliance</p>
+                                                <p className="text-muted">
+                                                    The GDPR is a regulation that requires businesses to
+                                                    protect the personal data and privacy of Europe
+                                                    citizens for transactions that occur within EU
+                                                    member states.
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip457194718"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip457194718"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input defaultValue="" type="checkbox" />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">Solve the issues</p>
+                                                <p className="text-muted">
+                                                    Fifty percent of all respondents said they would be
+                                                    more likely to shop at a company
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip362404923"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip362404923"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input defaultValue="" type="checkbox" />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">Release v2.0.0</p>
+                                                <p className="text-muted">
+                                                    Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip818217463"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip818217463"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input defaultValue="" type="checkbox" />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">Export the processed files</p>
+                                                <p className="text-muted">
+                                                    The report also shows that consumers will not easily
+                                                    forgive a company once a breach exposing their
+                                                    personal data occurs.
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip831835125"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip831835125"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <FormGroup check>
+                                                    <Label check>
+                                                        <Input defaultValue="" type="checkbox" />
+                                                        <span className="form-check-sign">
+                                <span className="check" />
+                              </span>
+                                                    </Label>
+                                                </FormGroup>
+                                            </td>
+                                            <td>
+                                                <p className="title">Arival at export process</p>
+                                                <p className="text-muted">
+                                                    Capitol Hill, Seattle, WA 12:34 AM
+                                                </p>
+                                            </td>
+                                            <td className="td-actions text-right">
+                                                <Button
+                                                    color="link"
+                                                    id="tooltip217595172"
+                                                    title=""
+                                                    type="button"
+                                                >
+                                                    <i className="tim-icons icon-pencil" />
+                                                </Button>
+                                                <UncontrolledTooltip
+                                                    delay={0}
+                                                    target="tooltip217595172"
+                                                    placement="right"
+                                                >
+                                                    Edit Task
+                                                </UncontrolledTooltip>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                    <Col lg="6" md="12">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle tag="h4">Simple Table</CardTitle>
+                            </CardHeader>
+                            <CardBody>
+                                <Table className="tablesorter" responsive>
+                                    <thead className="text-primary">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Country</th>
+                                        <th>City</th>
+                                        <th className="text-center">Salary</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Dakota Rice</td>
+                                        <td>Niger</td>
+                                        <td>Oud-Turnhout</td>
+                                        <td className="text-center">$36,738</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Minerva Hooper</td>
+                                        <td>Curaçao</td>
+                                        <td>Sinaai-Waas</td>
+                                        <td className="text-center">$23,789</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sage Rodriguez</td>
+                                        <td>Netherlands</td>
+                                        <td>Baileux</td>
+                                        <td className="text-center">$56,142</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Philip Chaney</td>
+                                        <td>Korea, South</td>
+                                        <td>Overland Park</td>
+                                        <td className="text-center">$38,735</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Doris Greene</td>
+                                        <td>Malawi</td>
+                                        <td>Feldkirchen in Kärnten</td>
+                                        <td className="text-center">$63,542</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mason Porter</td>
+                                        <td>Chile</td>
+                                        <td>Gloucester</td>
+                                        <td className="text-center">$78,615</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jon Porter</td>
+                                        <td>Portugal</td>
+                                        <td>Gloucester</td>
+                                        <td className="text-center">$98,615</td>
+                                    </tr>
+                                    </tbody>
+                                </Table>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
         </>
     );
-};
+}
 
-export default Index;
+export default Home;

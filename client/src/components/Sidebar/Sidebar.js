@@ -1,292 +1,164 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 /*eslint-disable*/
-import {useState} from "react";
-import {Link, NavLink as NavLinkRRD, useLocation} from "react-router-dom";
+import React from "react";
+import {NavLink, Link, useLocation, Route} from "react-router-dom";
 // nodejs library to set properties for components
 import {PropTypes} from "prop-types";
 
+// javascript plugin used to create scrollbars on windows
+import PerfectScrollbar from "perfect-scrollbar";
+
 // reactstrap components
+import {Nav, NavLink as ReactstrapNavLink} from "reactstrap";
 import {
-    Col,
-    Collapse,
-    Container,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Form,
-    Input,
-    InputGroup,
-    InputGroupAddon,
-    InputGroupText,
-    Media,
-    Nav,
-    Navbar,
-    NavbarBrand,
-    NavItem,
-    NavLink,
-    Row,
-    UncontrolledDropdown,
-} from "reactstrap";
+    BackgroundColorContext,
+    backgroundColors,
+} from "contexts/BackgroundColorContext";
 
 var ps;
 
-const Sidebar = (props) => {
-    const [collapseOpen, setCollapseOpen] = useState();
+function Sidebar(props) {
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const sidebarRef = React.useRef(null);
+
     // verifies if routeName is the one active (in browser input)
     const activeRoute = (routeName) => {
-        return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+        return location.pathname === routeName ? "active" : "";
     };
-    // toggles collapse between opened and closed (true/false)
-    const toggleCollapse = () => {
-        setCollapseOpen((data) => !data);
-    };
-    // closes the collapse
-    const closeCollapse = () => {
-        setCollapseOpen(false);
-    };
-    // 사이드바에 띄울 목록을 map을 통해 리턴
-    const createLinks = (routes) => {
-
-        return routes.map((prop, data) => {
-            if (prop.layout === useGetCurrentLayout()) {
-                return (
-                    <NavItem key={data}>
-                        <NavLink
-                            to={prop.layout + prop.path}
-                            tag={NavLinkRRD}
-                            onClick={closeCollapse}
-                        >
-                            <i className={prop.icon}/>
-                            {prop.name}
-                        </NavLink>
-                    </NavItem>
-                );
+    React.useEffect(() => {
+        if (navigator.platform.indexOf("Win") > -1) {
+            ps = new PerfectScrollbar(sidebarRef.current, {
+                suppressScrollX: true,
+                suppressScrollY: false,
+            });
+        }
+        // Specify how to clean up after this effect:
+        return function cleanup() {
+            if (navigator.platform.indexOf("Win") > -1) {
+                ps.destroy();
             }
-        });
+        };
+    });
+
+
+    const linkOnClick = () => {
+        document.documentElement.classList.remove("nav-open");
     };
 
-    const useGetCurrentLayout = () => {
-        const location = useLocation();
-        const currentPath = location.pathname;
+    const {routes, rtlActive, logo} = props;
 
-        // 현재 경로와 일치하는 route 객체를 찾습니다.
-        const currentRoute = routes.find(route => currentPath.includes(route.path));
-
-        // 찾은 route 객체에서 layout 값을 반환합니다.
-        return currentRoute ? currentRoute.layout : undefined;
-    };
-
-    const {bgColor, routes, logo} = props;
-    let navbarBrandProps;
-    if (logo && logo.innerLink) {
-        navbarBrandProps = {
-            to: logo.innerLink,
-            tag: Link,
-        };
-    } else if (logo && logo.outterLink) {
-        navbarBrandProps = {
-            href: logo.outterLink,
-            target: "_blank",
-        };
-    }
-
-    return (
-        <Navbar
-            className="navbar-vertical fixed-left navbar-light bg-white"
-            expand="md"
-            id="sidenav-main"
-        >
-            <Container fluid>
-                {/* Toggler */}
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    onClick={toggleCollapse}
+    // 로고 설정
+    let logoImg = null;
+    let logoText = null;
+    if (logo !== undefined) {
+        if (logo.outterLink !== undefined) {
+            logoImg = (
+                <a
+                    href={logo.outterLink}
+                    className="simple-text logo-mini"
+                    target="_blank"
+                    onClick={props.toggleSidebar}
                 >
-                    <span className="navbar-toggler-icon"/>
-                </button>
-                {/* Brand */}
-                {logo ? (
-                    <NavbarBrand className="pt-0" {...navbarBrandProps}>
-                        <img
-                            alt={logo.imgAlt}
-                            className="navbar-brand-img"
-                            src={logo.imgSrc}
-                        />
-                    </NavbarBrand>
-                ) : null}
-                {/* User */}
-                <Nav className="align-items-center d-md-none">
-                    <UncontrolledDropdown nav>
-                        <DropdownToggle nav className="nav-link-icon">
-                            <i className="ni ni-bell-55"/>
-                        </DropdownToggle>
-                        <DropdownMenu
-                            aria-labelledby="navbar-default_dropdown_1"
-                            className="dropdown-menu-arrow"
-                            right
-                        >
-                            <DropdownItem>Action</DropdownItem>
-                            <DropdownItem>Another action</DropdownItem>
-                            <DropdownItem divider/>
-                            <DropdownItem>Something else here</DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
-                    <UncontrolledDropdown nav>
-                        <DropdownToggle nav>
-                            <Media className="align-items-center">
-                            <span className="avatar avatar-sm rounded-circle">
-                              <img
-                                  alt="..."
-                                  src={require("../../assets/img/theme/team-1-800x800.jpg")}
-                              />
-                            </span>
-                            </Media>
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem className="noti-title" header tag="div">
-                                <h6 className="text-overflow m-0">Welcome!</h6>
-                            </DropdownItem>
-                            <DropdownItem to="/admin/member-profile" tag={Link}>
-                                <i className="ni ni-single-02"/>
-                                <span>My profile</span>
-                            </DropdownItem>
-                            <DropdownItem to="/admin/member-profile" tag={Link}>
-                                <i className="ni ni-settings-gear-65"/>
-                                <span>Settings</span>
-                            </DropdownItem>
-                            <DropdownItem to="/admin/member-profile" tag={Link}>
-                                <i className="ni ni-calendar-grid-58"/>
-                                <span>Activity</span>
-                            </DropdownItem>
-                            <DropdownItem to="/admin/member-profile" tag={Link}>
-                                <i className="ni ni-support-16"/>
-                                <span>Support</span>
-                            </DropdownItem>
-                            <DropdownItem divider/>
-                            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                                <i className="ni ni-member-run"/>
-                                <span>Logout</span>
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
-                </Nav>
-                {/* Collapse */}
-                <Collapse navbar isOpen={collapseOpen}>
-                    {/* Collapse header */}
-                    <div className="navbar-collapse-header d-md-none">
-                        <Row>
-                            {logo ? (
-                                <Col className="collapse-brand" xs="6">
-                                    {logo.innerLink ? (
-                                        <Link to={logo.innerLink}>
-                                            <img alt={logo.imgAlt} src={logo.imgSrc}/>
-                                        </Link>
-                                    ) : (
-                                        <a href={logo.outterLink}>
-                                            <img alt={logo.imgAlt} src={logo.imgSrc}/>
-                                        </a>
-                                    )}
-                                </Col>
-                            ) : null}
-                            <Col className="collapse-close" xs="6">
-                                <button
-                                    className="navbar-toggler"
-                                    type="button"
-                                    onClick={toggleCollapse}
-                                >
-                                    <span/>
-                                    <span/>
-                                </button>
-                            </Col>
-                        </Row>
+                    <div className="logo-img">
+                        <img src={logo.imgSrc} alt="react-logo"/>
                     </div>
-                    {/* Form */}
-                    <Form className="mt-4 mb-3 d-md-none">
-                        <InputGroup className="input-group-rounded input-group-merge">
-                            <Input
-                                aria-label="Search"
-                                className="form-control-rounded form-control-prepended"
-                                placeholder="Search"
-                                type="search"
-                            />
-                            <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                    <span className="fa fa-search"/>
-                                </InputGroupText>
-                            </InputGroupAddon>
-                        </InputGroup>
-                    </Form>
-                    {/* Navigation */}
-                    <Nav navbar>{createLinks(routes)}</Nav>
-                    {/* Divider */}
-                    {/*<hr className="my-3"/>
-                     Heading
-                    <h6 className="navbar-heading text-muted">Documentation</h6>
-                     Navigation
-                    <Nav className="mb-md-3" navbar>
-                        <NavItem>
-                            <NavLink
-                                href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
-                                <i className="ni ni-spaceship"/>
-                                Getting started
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                                <i className="ni ni-palette"/>
-                                Foundation
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                                <i className="ni ni-ui-04"/>
-                                Components
-                            </NavLink>
-                        </NavItem>
-                    </Nav>*/}
-                </Collapse>
-            </Container>
-        </Navbar>
+                </a>
+            );
+            logoText = (
+                <a
+                    href={logo.outterLink}
+                    className="simple-text logo-normal"
+                    target="_blank"
+                    onClick={props.toggleSidebar}
+                >
+                    {logo.text}
+                </a>
+            );
+        } else {
+            logoImg = (
+                <Link
+                    to={logo.innerLink}
+                    className="simple-text logo-mini"
+                    onClick={props.toggleSidebar}
+                >
+                    <div className="logo-img">
+                        <img src={logo.imgSrc} alt="react-logo"/>
+                    </div>
+                </Link>
+            );
+            logoText = (
+                <Link
+                    to={logo.innerLink}
+                    className="simple-text logo-normal"
+                    onClick={props.toggleSidebar}
+                >
+                    {logo.text}
+                </Link>
+            );
+        }
+    }
+    return (
+        <BackgroundColorContext.Consumer>
+            {({color}) => (
+                <div className="sidebar" data={color}>
+                    <div className="sidebar-wrapper" ref={sidebarRef}>
+                        {logoImg !== null || logoText !== null ? (
+                            <div className="logo">
+                                {logoImg}
+                                {logoText}
+                            </div>
+                        ) : null}
+                        <Nav>
+                            {routes.map((prop, key) => {
+                                return (
+                                    <li
+                                        className={
+                                            activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
+                                        }
+                                        key={key}
+                                    >
+                                        <NavLink
+                                            to={prop.layout + prop.path}
+                                            className="nav-link"
+                                            onClick={props.toggleSidebar}
+                                        >
+                                            <i className={prop.icon}/>
+                                            <p>{rtlActive ? prop.rtlName : prop.name}</p>
+                                        </NavLink>
+                                    </li>
+                                );
+                            })}
+{/*                            <li className="active-pro">
+                                <ReactstrapNavLink
+                                    href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro">
+                                    <i className="tim-icons icon-spaceship"/>
+                                    <p>Upgrade to PRO</p>
+                                </ReactstrapNavLink>
+                            </li*/}>
+                        </Nav>
+                    </div>
+                </div>
+            )}
+        </BackgroundColorContext.Consumer>
     );
-};
-
-Sidebar.defaultProps = {
-    routes: [{}],
-};
+}
 
 Sidebar.propTypes = {
-    // links that will be displayed inside the component
+    // if true, then instead of the routes[i].name, routes[i].rtlName will be rendered
+    // insde the links of this component
+    rtlActive: PropTypes.bool,
     routes: PropTypes.arrayOf(PropTypes.object),
     logo: PropTypes.shape({
-        // innerLink is for links that will direct the member within the app
+        // innerLink is for links that will direct the user within the app
         // it will be rendered as <Link to="...">...</Link> tag
         innerLink: PropTypes.string,
-        // outterLink is for links that will direct the member outside the app
+        // outterLink is for links that will direct the user outside the app
         // it will be rendered as simple <a href="...">...</a> tag
         outterLink: PropTypes.string,
+        // the text of the logo
+        text: PropTypes.node,
         // the image src of the logo
-        imgSrc: PropTypes.string.isRequired,
-        // the alt for the img
-        imgAlt: PropTypes.string.isRequired,
+        imgSrc: PropTypes.string,
     }),
 };
 

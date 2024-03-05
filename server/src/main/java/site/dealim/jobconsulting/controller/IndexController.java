@@ -9,7 +9,6 @@ import site.dealim.jobconsulting.prop.JwtProps;
 @Slf4j
 @Controller
 public class IndexController {
-
     @GetMapping("/")
     public String index() {
         return "index.html";
