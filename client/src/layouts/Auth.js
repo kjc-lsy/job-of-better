@@ -1,30 +1,16 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, {useEffect} from "react";
 import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-dom";
-// reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
-// core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
-import AuthFooter from "components/Footers/AuthFooter.js";
+import "assets/scss/argon-dashboard-react.scss";
+
 import routes from "routes.js";
+import { BackgroundColorContext } from "../contexts/BackgroundColorContext";
 import {useAuth} from "../contexts/AuthContextProvider";
+import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
+
+
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
@@ -71,23 +57,27 @@ const Auth = (props) => {
   };
 
   return (
-    <>
-      <div className="main-content" ref={mainContent}>
+      <BackgroundColorContext.Consumer>
+        {({ color, changeColor }) => (
+            <React.Fragment>
+              <div className="wrapper">
+                <div className="main-panel" ref={mainContent} data={color}>
+      {/*<div className="main-content " ref={mainContent} data={color}>*/}
         <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
+        <div className="header py-7">
+          {/*<Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
+                  <h1>Welcome!</h1>
                   <p className="text-lead text-light">
                     학생들에게 보여줄 문구를 입력해주세요!!
                   </p>
                 </Col>
               </Row>
             </div>
-          </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
+          </Container>*/}
+          {/*<div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -101,7 +91,7 @@ const Auth = (props) => {
                 points="2560 0 2560 100 0 100"
               />
             </svg>
-          </div>
+          </div>*/}
         </div>
         {/* Page content */}
         <Container className="mt--8 pb-5">
@@ -113,8 +103,11 @@ const Auth = (props) => {
           </Row>
         </Container>
       </div>
-      <AuthFooter />
-    </>
+              </div>
+              <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+            </React.Fragment>
+        )}
+      </BackgroundColorContext.Consumer>
   );
 };
 

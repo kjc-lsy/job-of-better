@@ -8,6 +8,27 @@
       }
     }
 }*/
+.navbar {
+  background: #1e1e2f
+}
+.white-content {
+  h1 {
+    color: #000;
+  }
+  .navbar {
+    background: #f5f6fa;
+  }
+  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus ,
+  .navbar-dark .navbar-nav .nav-link{
+    color: #000;
+  }
+}
+.form-register .form-group {
+  margin-bottom: 20px;
+}
+form.form-register label + .form-control {
+  margin-bottom: 0;
+}
 @mixin ellipsis($lines: 1) {
   @if ($lines==1) {
     overflow: hidden;
