@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-dom";
-import { Container, Row, Col } from "reactstrap";
-
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
+import {Container, Row, Col, Navbar} from "reactstrap";
+import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
 
 import routes from "routes.js";
@@ -63,7 +62,7 @@ const Auth = (props) => {
               <div className="wrapper">
                 <div className="main-panel" ref={mainContent} data={color}>
       {/*<div className="main-content " ref={mainContent} data={color}>*/}
-        <AuthNavbar />
+        <CommonNavbar />
         <div className="header py-7">
           {/*<Container>
             <div className="header-body text-center mb-7">

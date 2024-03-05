@@ -30,7 +30,7 @@ import routes from "routes.js";
 import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import {useAuth} from "../contexts/AuthContextProvider";
-import AdminNavbar from "../components/Navbars/AdminNavbar";
+import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
 
 var ps;
@@ -135,7 +135,7 @@ function User(props) {
                             toggleSidebar={toggleSidebar}
                         />
                         <div className="main-panel" ref={mainPanelRef} data={color}>
-                            <UserNavbar
+                            <CommonNavbar
                                 brandText={getBrandText(location.pathname)}
                                 toggleSidebar={toggleSidebar}
                                 sidebarOpened={sidebarOpened}
