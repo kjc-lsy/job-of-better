@@ -1,10 +1,14 @@
-POST http://localhost:8080/logout
+POST http://localhost:9090/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "0000"
+}
 
 ###
-GET http://localhost:8080/logout
-Accept: application/json
+POST http://localhost:9090/logout
 
-###
 POST http://localhost:9090/user/join
 Content-Type: application/json
 
@@ -14,7 +18,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:9090/login?username=asordk&password=0000g
+GET http://localhost:9090/login?username=user&password=0000
 
 ###
 GET http://localhost:9090/info

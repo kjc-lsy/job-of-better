@@ -10,8 +10,6 @@ import { BackgroundColorContext } from "../contexts/BackgroundColorContext";
 import {useAuth} from "../contexts/AuthContextProvider";
 import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
 
-
-
 const Auth = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();

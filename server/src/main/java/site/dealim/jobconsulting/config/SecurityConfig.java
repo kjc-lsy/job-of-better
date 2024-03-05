@@ -38,12 +38,12 @@ public class SecurityConfig {
         log.info("시큐리티 설정 시작...");
 
         // 폼 기반 로그인 비활성화
-        http.formLogin(login -> login.disable());
+        http.formLogin(login -> login.loginProcessingUrl("/login").disable());
 
         // 로그아웃 설정
         http.logout(auth -> auth.logoutUrl("/logout")
                 .logoutSuccessHandler((request, response, authentication) -> {
-                    log.info("로그아웃 중...");
+                    log.info("로그아웃...");
                     response.setStatus(HttpStatus.OK.value());
                 })
                 .invalidateHttpSession(true)
