@@ -179,16 +179,17 @@ function CommonNavbar(props) {
           </Collapse>
            : <Nav>
                 <NavItem>
-                  <NavLink active={pathPage === "login" ? "true" : ""} href="/auth/login">
+                  <NavLink active={pathPage === "login" ? "true" : "false"} href="/auth/login">
                     로그인
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink active={pathPage === "register" ? "true" : ""} href="/auth/register">
+                  <NavLink active={pathPage === "register" ? "true" : "false"} href="/auth/register">
                     회원가입
                   </NavLink>
                 </NavItem>
-              </Nav>}
+              </Nav>
+          }
         </Container>
       </Navbar>
       <Modal
