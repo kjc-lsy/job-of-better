@@ -211,23 +211,6 @@ const Register = () => {
                                         setInputValue({...inputValue, username: e.target.value})
                                     }}
                                 />
-                                {/*<InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-hat-3"/>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <label>아이디</label>
-                                    <Input
-                                        value={inputValue.username}
-                                        name="username"
-                                        placeholder="아이디"
-                                        type="text"
-                                        onChange={e => {
-                                            setInputValue({...inputValue, username: e.target.value})
-                                        }}
-                                    />
-                                </InputGroup>*/}
                                 <div className="text-muted font-italic">
                                     <small>
                                         {" "}
