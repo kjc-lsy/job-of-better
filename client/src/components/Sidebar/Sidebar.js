@@ -134,7 +134,7 @@ function Sidebar(props) {
                                     <i className="tim-icons icon-spaceship"/>
                                     <p>Upgrade to PRO</p>
                                 </ReactstrapNavLink>
-                            </li*/}>
+                            </li>*/}
                         </Nav>
                     </div>
                 </div>
