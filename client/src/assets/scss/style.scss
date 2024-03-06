@@ -1,4 +1,5 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
 body {
     font-family: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
@@ -32,6 +33,34 @@ body {
   .navbar-dark .navbar-nav .nav-link{
     color: #000;
   }
+  .emailInput .btn-group > button {
+    background: $primary;
+  }
+  .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .navbar .navbar-nav > a.btn:hover, .navbar .navbar-nav > a.btn:focus, .navbar .navbar-nav > a.btn:active, .navbar .navbar-nav > a.btn.active, .navbar .navbar-nav > a.btn:active:focus, .navbar .navbar-nav > a.btn:active:hover, .navbar .navbar-nav > a.btn.active:focus, .navbar .navbar-nav > a.btn.active:hover {
+    background-color:  $primary !important;
+    background-image: linear-gradient(to bottom left, #0806fd, #0806fd, #4745ef) !important;
+    background-image: -moz-linear-gradient(to bottom left, #0806fd, #0806fd, #4745ef) !important;
+    color: #fff !important;
+    box-shadow: none;
+  }
+  .navbar.navbar-transparent .search-bar.input-group .btn:hover i {
+    color: #fff;
+  }
+  .form-control {
+    border-color: rgba(29, 37, 59, 0.3);
+  }
+  .card h3.title {
+    font-size:24px
+  }
+  .card .card-header {
+    padding:  50px 15px 0;
+  }
+  .nav-link.active {
+    color: $primary;
+  }
+  .nav-link {
+    font-size:1.2em
+  }
 }
 .form-register .form-group {
   margin-bottom: 20px;
@@ -56,3 +85,49 @@ form.form-register label + .form-control {
 }
 .text { @include ellipsis; }
 .long-text { @include ellipsis(3); }
+
+.form-control {
+  height: auto;
+}
+.custom-control {
+  padding-left: 2em;
+}
+.custom-control-label::before {
+  left: -2em;
+}
+.form-group .form-control, .input-group .form-control {
+  padding: 13px 18px;
+  font-size:1em
+}
+.card label {
+  font-size:1em
+}
+.input-group:not(.has-validation) > .form-control:not(:last-child), .input-group:not(.has-validation) > .custom-select:not(:last-child), .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label, .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label::after {
+  border-radius: 5px;
+  border:1px solid rgba(29, 37, 59, 0.3);
+  padding: 13px 18px;
+}
+input[type=radio], input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  padding: 0.5rem !important;
+  position: static;
+  margin-top: 0;
+}
+.input-group {
+  align-items: center;
+}
+.emailInput span {
+  padding:0 5px;
+}
+.emailInput button {
+  margin: 0 0 0 5px;
+  padding: 14px 18px;
+}
+
+.card:not(.card-white) label:not(.btn) {
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+}

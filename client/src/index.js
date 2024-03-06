@@ -11,7 +11,7 @@ import "assets/scss/black-dashboard-react.scss";
 import "assets/plugins/nucleo/css/nucleo.css";
 import "assets/css/nucleo-icons.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "assets/scss/style.scss";
+/*import "assets/scss/style.scss";*/
 
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";

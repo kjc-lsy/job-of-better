@@ -19,7 +19,7 @@ import {
   Container,
   Modal,
   NavbarToggler,
-  ModalHeader,
+  ModalHeader, NavItem,
 } from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -33,6 +33,7 @@ function CommonNavbar(props) {
 
   let location = useLocation();
   let pathLayout = location.pathname.split("/")[1];
+  let pathPage = location.pathname.split("/")[2];
 
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
@@ -99,6 +100,7 @@ function CommonNavbar(props) {
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
           </NavbarToggler>
+          {pathLayout !== "auth" ?
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
               <InputGroup className="search-bar">
@@ -175,6 +177,18 @@ function CommonNavbar(props) {
               <li className="separator d-lg-none" />
             </Nav>
           </Collapse>
+           : <Nav>
+                <NavItem>
+                  <NavLink active={pathPage === "login" ? "true" : ""} href="/auth/login">
+                    로그인
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink active={pathPage === "register" ? "true" : ""} href="/auth/register">
+                    회원가입
+                  </NavLink>
+                </NavItem>
+              </Nav>}
         </Container>
       </Navbar>
       <Modal

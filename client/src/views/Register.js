@@ -347,7 +347,7 @@ const Register = () => {
                             </FormGroup>
                             <FormGroup>
                                 <label>이메일</label>
-                                <InputGroup>
+                                <InputGroup className="emailInput">
                                     <Input
                                         value={inputValue.emailUserName}
                                         onChange={(e) => setInputValue({
@@ -410,20 +410,6 @@ const Register = () => {
                                     type="date"
                                     onChange={e => setInputValue({...inputValue, birthDate: e.target.value})}
                                 />
-                                {/*<InputGroup className="input-group-alternative">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-calendar-grid-58"/>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input
-                                        vlaue={inputValue.birthDate}
-                                        placeholder="생년월일"
-                                        name="birthDate"
-                                        type="date"
-                                        onChange={e => setInputValue({...inputValue, birthDate: e.target.value})}
-                                    />
-                                </InputGroup>*/}
                                 <div className="text-muted font-italic">
                                     <small>
                                         {
@@ -480,6 +466,7 @@ const Register = () => {
                                                 type="radio"
                                                 name="gender"
                                                 value="m"
+                                                checked="checked"
                                                 onChange={e => setInputValue({
                                                     ...inputValue,
                                                     gender: e.target.value
@@ -504,43 +491,6 @@ const Register = () => {
                                     </FormGroup>
                                 </Col>
                                 </InputGroup>
-                                {/*<InputGroup className="input-group-alternative bg-white">
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <i className="ni ni-ui-04"/>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Col>
-                                        <FormGroup check>
-                                            <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
-                                                <Input
-                                                    type="radio"
-                                                    name="gender"
-                                                    value="m"
-                                                    onChange={e => setInputValue({
-                                                        ...inputValue,
-                                                        gender: e.target.value
-                                                    })}
-                                                />남성
-                                            </Label>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup check>
-                                            <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
-                                                <Input
-                                                    type="radio"
-                                                    name="gender"
-                                                    value="f"
-                                                    onChange={e => setInputValue({
-                                                        ...inputValue,
-                                                        gender: e.target.value
-                                                    })}
-                                                />여성
-                                            </Label>
-                                        </FormGroup>
-                                    </Col>
-                                </InputGroup>*/}
                             </FormGroup>
                             <Row className="my-4">
                                 <Col xs="12">
@@ -550,6 +500,7 @@ const Register = () => {
                                             id="customCheckRegister"
                                             type="checkbox"
                                             name="agree"
+                                            checked="checked"
                                             onClick={(e) => setInputValue({...inputValue, agree: !inputValue.agree})}
                                         />
                                         <label
