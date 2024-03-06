@@ -348,6 +348,9 @@
   &[data="green"]{
     @include linear-gradient($success-states, $success);
   }
+  &[data="yellow"]{
+    @include linear-gradient($pink, $dark-pink 80%);
+  }
 
   .user{
     padding-bottom: 20px;
@@ -458,6 +461,9 @@
     border-top: 2px solid $primary;
   }
 
+  &[data="yellow"]{
+    border-top: 2px solid $orange-color;
+  }
   > .content {
     padding: 78px 30px 30px 280px;
     min-height: calc(100vh - 70px);

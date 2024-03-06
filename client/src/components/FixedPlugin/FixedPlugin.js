@@ -27,6 +27,7 @@ function FixedPlugin(props) {
     const handleClick = () => {
         setdropDownIsOpen(!dropDownIsOpen);
     };
+
     return (
         <div className="fixed-plugin">
             <Dropdown isOpen={dropDownIsOpen} toggle={handleClick}>
@@ -47,12 +48,11 @@ function FixedPlugin(props) {
                                 }}
                             />{" "}
                             <Badge
-                                color="info"
                                 className={
-                                    props.bgColor === backgroundColors.blue ? "active" : ""
+                                    props.bgColor === backgroundColors.yellow ? "active pink" : "pink"
                                 }
                                 onClick={() => {
-                                    props.handleBgClick(backgroundColors.blue);
+                                    props.handleBgClick(backgroundColors.yellow);
                                 }}
                             />{" "}
                             <Badge
@@ -68,15 +68,19 @@ function FixedPlugin(props) {
                     </li>
                     <li className="adjustments-line text-center color-change">
                         <ThemeContext.Consumer>
-                            {({changeTheme}) => (
+                            {({changeTheme,theme}) => (
                                 <>
                                     <span className="color-label">LIGHT MODE</span>{" "}
                                     <Badge
-                                        className="light-badge mr-2"
+                                        className={
+                                             theme === themes.light ? "light-badge mr-2 active" : "light-badge mr-2"
+                                        }
                                         onClick={() => changeTheme(themes.light)}
                                     />{" "}
                                     <Badge
-                                        className="dark-badge ml-2"
+                                        className={
+                                            theme === themes.dark ? "dark-badge ml-2 active" : "dark-badge ml-2"
+                                        }
                                         onClick={() => changeTheme(themes.dark)}
                                     />{" "}
                                     <span className="color-label">DARK MODE</span>{" "}
