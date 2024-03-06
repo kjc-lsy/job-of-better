@@ -74,7 +74,8 @@ function CommonNavbar(props) {
         <Container fluid>
           <div className="navbar-wrapper">
 
-            {pathLayout !== "auth" ?
+            {pathLayout !== "auth"
+                ?
                 <div>
                   <div
                       className={classNames("navbar-toggle d-inline", {
@@ -92,7 +93,8 @@ function CommonNavbar(props) {
                   </NavbarBrand>
                 </div>
                 :
-                null}
+                null
+            }
           </div>
           <NavbarToggler onClick={toggleCollapse}>
             <span className="navbar-toggler-bar navbar-kebab" />
