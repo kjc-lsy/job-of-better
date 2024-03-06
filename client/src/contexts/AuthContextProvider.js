@@ -115,7 +115,6 @@ export const AuthContextProvider = ({children}) => {
             {children}
         </AuthContext.Provider>
     )
-
 };
 
 // 다른 컴포넌트에서 const {isLogin, login, logout} = useContext(AuthContext); 대신 const {isLogin, login, logout} = useAuth(); 가능
