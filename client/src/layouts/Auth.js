@@ -58,39 +58,41 @@ const Auth = (props) => {
             {({color, changeColor}) => (
                 <React.Fragment>
                     <div className="wrapper">
-                        <div className="main-panel" ref={mainContent} data={color}>
+                        <div className="main-panel auth_wrap p-6" ref={mainContent} data={color}>
                             {/*<div className="main-content " ref={mainContent} data={color}>*/}
-                            <div className="header py-7">
-                                {/*<Container>
-            <div className="header-body text-center mb-7">
-              <Row className="justify-content-center">
-                <Col lg="5" md="6">
-                  <h1>Welcome!</h1>
-                  <p className="text-lead text-light">
-                    학생들에게 보여줄 문구를 입력해주세요!!
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </Container>*/}
+                            <div className="">
+                                {/*
+                            header py-7
+                            <Container>
+                              <div className="header-body text-center mb-7">
+                                <Row className="justify-content-center">
+                                  <Col lg="5" md="6">
+                                    <h1>Welcome!</h1>
+                                    <p className="text-lead text-light">
+                                      학생들에게 보여줄 문구를 입력해주세요!!
+                                    </p>
+                                  </Col>
+                                </Row>
+                              </div>
+                            </Container>*/}
                                 {/*<div className="separator separator-bottom separator-skew zindex-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon
-                className="fill-default"
-                points="2560 0 2560 100 0 100"
-              />
-            </svg>
-          </div>*/}
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                preserveAspectRatio="none"
+                                version="1.1"
+                                viewBox="0 0 2560 100"
+                                x="0"
+                                y="0"
+                              >
+                                <polygon
+                                  className="fill-default"
+                                  points="2560 0 2560 100 0 100"
+                                />
+                              </svg>
+                            </div>*/}
                             </div>
                             {/* Page content */}
-                            <Container className="mt--8 pb-5">
+                            <Container className="">
                                 <Row className="justify-content-center">
                                     <Routes>
                                         {getRoutes(routes)}

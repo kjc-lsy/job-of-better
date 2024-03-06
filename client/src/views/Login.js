@@ -21,15 +21,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const {login} = useAuth();
 
-    const loginSubmit = async (e) => {
+    const loginSubmit = (e) => {
         e.preventDefault()
-        await login(username, password)
+        login(username, password)
     }
 
     return (
         <>
             <Col lg="5" md="7">
-
                 <Card>
                     <CardHeader className="text-center">
                         <h3 className="title">로그인</h3>

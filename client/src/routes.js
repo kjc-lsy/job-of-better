@@ -8,6 +8,7 @@ import Icons from "./views/Icons";
 import Rtl from "./views/Rtl";
 import Typography from "./views/Typography";
 import MemberList from "./views/MemberList";
+import ComCoverLetter from "./views/admin/ComCoverLetter";
 
 var routes = [
   {
@@ -68,6 +69,13 @@ var routes = [
     rtlName: "قائمة الجدول",
     icon: "tim-icons icon-puzzle-10",
     component: <Icons />,
+    layout: "/user",
+  },
+  {
+    path: "/comcoverletter",
+    name: "자소서 항목",
+    icon: "tim-icons icon-puzzle-10",
+    component: <ComCoverLetter />,
     layout: "/user",
   },
 ];
