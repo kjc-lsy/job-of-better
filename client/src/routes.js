@@ -76,7 +76,7 @@ var routes = [
     name: "자소서 항목",
     icon: "tim-icons icon-puzzle-10",
     component: <ComCoverLetter />,
-    layout: "/user",
+    layout: "/admin",
   },
 ];
 
