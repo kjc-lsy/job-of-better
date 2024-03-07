@@ -6,18 +6,14 @@ import {Exception} from "sass";
 import {useLocation} from "react-router-dom";
 const AuthContext = createContext(null);
 
-/**
- * 로그인 기능 세팅하기
- */
-
 export const AuthContextProvider = ({children}) => {
+
     // 로그인 여부
     const [isLogin, setIsLogin] = useState(false);
     // 로그인 유저 정보
     const [user, setUser] = useState(null);
     // 권한 정보
     const [roles, setRoles] = useState({isUser : false, isAdmin : false});
-
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(()=>{
         setLoginUser();
@@ -26,7 +22,6 @@ export const AuthContextProvider = ({children}) => {
     const login = async (username, password) => {
         try {
             const response = await auth.login(username, password) // 로그인 axios 요청
-            const status = response.status
             const headers = response.headers
             const authorization = headers.authorization;
             const accessToken = authorization.replace("Bearer ", "")

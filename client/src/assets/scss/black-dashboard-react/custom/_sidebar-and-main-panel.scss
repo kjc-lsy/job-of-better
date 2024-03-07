@@ -348,7 +348,7 @@
   &[data="green"]{
     @include linear-gradient($success-states, $success);
   }
-  &[data="yellow"]{
+  &[data="pink"]{
     @include linear-gradient($pink, $dark-pink 80%);
   }
 
@@ -461,8 +461,8 @@
     border-top: 2px solid $primary;
   }
 
-  &[data="yellow"]{
-    border-top: 2px solid $orange-color;
+  &[data="pink"]{
+    border-top: 2px solid $dark-pink;
   }
   > .content {
     padding: 78px 30px 30px 280px;
