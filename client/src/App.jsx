@@ -14,7 +14,9 @@ const App = () => {
 
     const localThemeMode = window.localStorage.getItem("back-color" || "primary");
     const [themeMode, setThemeMode] = useState(localThemeMode);
+
     let theme = themeMode === "primary" ? primary : themeMode === "pink" ? pink : green ;
+
     useEffect (() => {
         theme = window.localStorage.getItem("back-color");
     }, []);

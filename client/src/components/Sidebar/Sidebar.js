@@ -102,12 +102,14 @@ function Sidebar(props) {
             {({color}) => (
                 <div className="sidebar" data={color}>
                     <div className="sidebar-wrapper" ref={sidebarRef}>
-                        {logoImg !== null || logoText !== null ? (
-                            <div className="logo">
+                        {logoImg !== null || logoText !== null
+                            ?
+                            (<div className="logo">
                                 {logoImg}
                                 {logoText}
-                            </div>
-                        ) : null}
+                            </div>)
+                            :
+                            null}
                         <Nav>
                             {routes.map((prop, key) => {
                                 return (
@@ -128,7 +130,7 @@ function Sidebar(props) {
                                     </li>
                                 );
                             })}
-{/*                            <li className="active-pro">
+                            {/*                            <li className="active-pro">
                                 <ReactstrapNavLink
                                     href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro">
                                     <i className="tim-icons icon-spaceship"/>
