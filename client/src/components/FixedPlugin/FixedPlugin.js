@@ -24,7 +24,7 @@ import {backgroundColors} from "contexts/BackgroundColorContext";
 
 function FixedPlugin(props) {
     const [dropDownIsOpen, setdropDownIsOpen] = React.useState(false);
-    const handleClick = () => {
+    const handleClick = (color) =>{
         setdropDownIsOpen(!dropDownIsOpen);
     };
 
@@ -45,14 +45,16 @@ function FixedPlugin(props) {
                                 }
                                 onClick={() => {
                                     props.handleBgClick(backgroundColors.primary);
+                                    localStorage.setItem("back-color", "primary");
                                 }}
                             />{" "}
                             <Badge
                                 className={
-                                    props.bgColor === backgroundColors.yellow ? "active pink" : "pink"
+                                    props.bgColor === backgroundColors.pink ? "active pink" : "pink"
                                 }
                                 onClick={() => {
-                                    props.handleBgClick(backgroundColors.yellow);
+                                    props.handleBgClick(backgroundColors.pink);
+                                    localStorage.setItem("back-color", "pink");
                                 }}
                             />{" "}
                             <Badge
@@ -62,6 +64,7 @@ function FixedPlugin(props) {
                                 }
                                 onClick={() => {
                                     props.handleBgClick(backgroundColors.green);
+                                    localStorage.setItem("back-color", "green");
                                 }}
                             />{" "}
                         </div>

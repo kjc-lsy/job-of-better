@@ -1,3 +1,4 @@
+
 export const lightTheme = {
     colors: {
         colorMain: "#ffffff4d",
@@ -33,3 +34,14 @@ export const darkTheme = {
         colorDarkShadow: "0 3px 6px rgba(255, 255, 255, .5)",
     },
 };
+
+export const primary = {
+    colors: "#0906ff"
+}
+export const pink = {
+    colors: "#e44cc4"
+}
+export const green = {
+    colors: "#00f2c3"
+}
+
