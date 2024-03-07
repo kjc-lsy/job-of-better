@@ -18,13 +18,13 @@
 import React from "react";
 
 // reactstrap components
-import {Button, Dropdown, DropdownToggle, Badge} from "reactstrap";
-import {ThemeContext, themes} from "contexts/ThemeContext";
-import {backgroundColors} from "contexts/BackgroundColorContext";
+import {Dropdown, DropdownToggle, Badge} from "reactstrap";
+import {ThemeContext, themes} from "contexts/ThemeWrapper";
+import {backgroundColors} from "contexts/BackgroundColorWrapper";
 
 function FixedPlugin(props) {
     const [dropDownIsOpen, setdropDownIsOpen] = React.useState(false);
-    const handleClick = (color) =>{
+    const handleClick = (color) => {
         setdropDownIsOpen(!dropDownIsOpen);
     };
 
@@ -45,7 +45,7 @@ function FixedPlugin(props) {
                                 }
                                 onClick={() => {
                                     props.handleBgClick(backgroundColors.primary);
-                                    localStorage.setItem("back-color", "primary");
+                                    //localStorage.setItem("back-color", "primary");
                                 }}
                             />{" "}
                             <Badge
@@ -54,7 +54,7 @@ function FixedPlugin(props) {
                                 }
                                 onClick={() => {
                                     props.handleBgClick(backgroundColors.pink);
-                                    localStorage.setItem("back-color", "pink");
+                                    //localStorage.setItem("back-color", "pink");
                                 }}
                             />{" "}
                             <Badge
@@ -64,7 +64,7 @@ function FixedPlugin(props) {
                                 }
                                 onClick={() => {
                                     props.handleBgClick(backgroundColors.green);
-                                    localStorage.setItem("back-color", "green");
+                                    //localStorage.setItem("back-color", "green");
                                 }}
                             />{" "}
                         </div>

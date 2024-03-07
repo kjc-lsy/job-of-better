@@ -12,7 +12,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import routes from "routes.js";
 
 import logo from "assets/img/react-logo.png";
-import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import { BackgroundColorContext } from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 
@@ -102,6 +102,7 @@ function Admin(props) {
   return (
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (
+
         <React.Fragment>
           <div className="wrapper">
             <Sidebar

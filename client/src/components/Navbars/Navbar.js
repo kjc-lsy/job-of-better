@@ -35,6 +35,8 @@ function CommonNavbar(props) {
     let pathLayout = location.pathname.split("/")[1];
     let pathPage = location.pathname.split("/")[2];
 
+    console.log(pathPage);
+
     React.useEffect(() => {
         window.addEventListener("resize", updateColor);
         // Specify how to clean up after this effect:
@@ -71,11 +73,12 @@ function CommonNavbar(props) {
     };
     return (
         <>
-            <Navbar className={classNames("navbar-absolute", color)} expand="lg">
+            <Navbar className={classNames("navbar-absolute" , color)} expand="lg">
                 <Container fluid>
                     <div className="navbar-wrapper">
 
-                        {pathLayout !== "auth" ?
+                        {pathLayout !== "auth"
+                            ?
                             <div>
                                 <div
                                     className={classNames("navbar-toggle d-inline", {
@@ -93,7 +96,8 @@ function CommonNavbar(props) {
                                 </NavbarBrand>
                             </div>
                             :
-                            null}
+                            null
+                        }
                     </div>
                     <NavbarToggler onClick={toggleCollapse}>
                         <span className="navbar-toggler-bar navbar-kebab" />
@@ -179,12 +183,12 @@ function CommonNavbar(props) {
                         </Collapse>
                         : <Nav>
                             <NavItem>
-                                <NavLink active={pathPage === "login" ? "true" : "false"} href="/auth/login">
+                                <NavLink active={pathPage === "login" ? true : false} href="/auth/login">
                                     로그인
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={pathPage === "register" ? "true" : "false"} href="/auth/register">
+                                <NavLink active={pathPage === "register" ? true : false} href="/auth/register">
                                     회원가입
                                 </NavLink>
                             </NavItem>

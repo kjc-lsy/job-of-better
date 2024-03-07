@@ -5,7 +5,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
 
 import routes from "routes.js";
-import {BackgroundColorContext} from "../contexts/BackgroundColorContext";
+import {BackgroundColorContext} from "../contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
 
@@ -52,13 +52,25 @@ const Auth = (props) => {
             }
         });
     };
+    const getBrandText = (path) => {
+        for (let i = 0; i < routes.length; i++) {
+            if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
+                return routes[i].name;
+            }
+        }
+        return "Brand";
+    };
 
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
+                    <CommonNavbar
+                        brandText={getBrandText(location.pathname)}
+                    />
                     <div className="wrapper">
                         <div className="main-panel auth_wrap p-6" ref={mainContent} data={color}>
+
                             {/*<div className="main-content " ref={mainContent} data={color}>*/}
                             <div className="">
                                 {/*

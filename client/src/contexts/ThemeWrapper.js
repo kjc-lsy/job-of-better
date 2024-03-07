@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { ThemeContext, themes } from "contexts/ThemeContext";
+/*import { ThemeContext, themes } from "contexts/ThemeWrapper";*/
+import {createContext} from "react";
+import styled from 'styled-components';
+
+
+export const themes = {
+  dark: "",
+  light: "white-content",
+};
+
+export const ThemeContext = createContext({
+  theme: themes.light,
+  changeTheme: () => {},
+});
 
 export default function ThemeContextWrapper(props) {
   const [theme, setTheme] = useState(themes.light);
@@ -26,3 +39,8 @@ export default function ThemeContextWrapper(props) {
     </ThemeContext.Provider>
   );
 }
+
+
+
+
+
