@@ -21,7 +21,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-      --background : ${themes => themes.theme.colors.colorBg};
+      --main-color : ${themes => themes.theme.colors};
+     /* --background : ${themes => themes.theme.colors.colorBg};
       --main : ${themes => themes.theme.colors.colorMain};
       --main-font : ${themes => themes.theme.colors.colorMainFont};
       --sky-blue : ${themes => themes.theme.colors.colorSkyBlue};
@@ -33,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
       --red : ${themes => themes.theme.colors.colorRed};
       --di-red : ${themes => themes.theme.colors.colorDiRed};
       --shadow : ${themes => themes.theme.colors.colorShadow};
-      --dark-shadow : ${themes => themes.theme.colors.colorDarkShadow};
+      --dark-shadow : ${themes => themes.theme.colors.colorDarkShadow};*/
   }
   
 `;
