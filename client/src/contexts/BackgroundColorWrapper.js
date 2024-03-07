@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {createContext} from "react";
 import GlobalStyle from "../theme/GlobalStyle";
-import {green, pink, primary} from "../theme/theme";
 import {ThemeProvider} from "styled-components";
-/*import {
-  BackgroundColorContext,
-  backgroundColors,
-} from "contexts/BackgroundColorContext";*/
 
 
 export const backgroundColors = {
@@ -16,13 +11,16 @@ export const backgroundColors = {
     pink: "pink",
 };
 export const primaryValue = {
-    colors: "#0906ff"
+    colors: "#0906ff",
+    bgColor: "linear-gradient(0deg, #3358f4 0%, #0906ff 100%)"
 }
 export const pinkValue = {
-    colors: "#e44cc4"
+    colors: "#e44cc4",
+    bgColor: "linear-gradient(0deg, #f3a4b5 0%, #e44cc4 80% 100%)"
 }
 export const greenValue = {
-    colors: "#00f2c3"
+    colors: "#00f2c3",
+    bgColor: "linear-gradient(0deg, #0098f0 0%, #00f2c3 100%)"
 }
 
 

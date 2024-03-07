@@ -2,12 +2,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import AdminLayout from "./layouts/Admin";
 import AuthLayout from "./layouts/Auth";
 import UserLayout from "./layouts/User";
-import React, {useEffect, useState} from "react";
-
-import {ThemeProvider} from "styled-components";
-import {primary, green, pink} from "./theme/theme";
-import GlobalStyle from "./theme/GlobalStyle";
-
+import React from "react";
 const App = () => {
 
     return (

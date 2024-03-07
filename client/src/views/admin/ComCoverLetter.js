@@ -10,7 +10,7 @@ import {
     FormGroup,
     Input,
     Form,
-    Button,
+    Button, CardTitle,
 } from "reactstrap";
 import api from "js-cookie";
 import {coverLetterSave} from "../../apis/admin";
@@ -19,12 +19,6 @@ function ComCoverLetter() {
 
     let [inputValue, setInputValue] = useState([{
         num: 1,
-        question: ""
-    },{
-        num: 2,
-        question: ""
-    },{
-        num: 3,
         question: ""
     }]);
 
@@ -57,8 +51,10 @@ function ComCoverLetter() {
             <div className="content">
                 <Row>
                     <Col md="12">
-                        <Card className="card-plain">
-                            <CardHeader>자소서 항목</CardHeader>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle tag="h4">자소서 항목</CardTitle>
+                            </CardHeader>
                             <CardBody>
                                 <Form role="form" onSubmit={(e) => e.preventDefault()}>
                                     <div>
