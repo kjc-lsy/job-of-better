@@ -16,7 +16,6 @@ import {
 import React, {useEffect, useState} from "react";
 import * as auth from '../apis/auth';
 import {useNavigate} from "react-router-dom";
-import * as styled from "../theme/styled";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -500,7 +499,6 @@ const Register = () => {
                                             id="customCheckRegister"
                                             type="checkbox"
                                             name="agree"
-                                            checked="checked"
                                             onClick={(e) => setInputValue({...inputValue, agree: !inputValue.agree})}
                                         />
                                         <label

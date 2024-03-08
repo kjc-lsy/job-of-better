@@ -33,13 +33,17 @@ body {
   .navbar-dark .navbar-nav .nav-link{
     color: #000;
   }
-  .emailInput .btn-group > button {
-    background: $primary;
+  .emailInput .btn-group > button , .custom-control-input:checked ~ .custom-control-label::before{
+    background: var(--main-color);
+  }
+  .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary:disabled, .btn-primary:disabled:hover, .btn-primary:disabled:focus, .btn-primary:disabled.focus, .btn-primary:disabled:active, .btn-primary:disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
+    background-color: var(--main-color) !important;
+    background: var(--main-color) !important;
+    border-color: var(--main-color) !important;
   }
   .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .navbar .navbar-nav > a.btn:hover, .navbar .navbar-nav > a.btn:focus, .navbar .navbar-nav > a.btn:active, .navbar .navbar-nav > a.btn.active, .navbar .navbar-nav > a.btn:active:focus, .navbar .navbar-nav > a.btn:active:hover, .navbar .navbar-nav > a.btn.active:focus, .navbar .navbar-nav > a.btn.active:hover {
-    background-color:  $primary !important;
-    background-image: linear-gradient(to bottom left, #0806fd, #0806fd, #4745ef) !important;
-    background-image: -moz-linear-gradient(to bottom left, #0806fd, #0806fd, #4745ef) !important;
+    background-color:  var(--main-color) !important;
+    background-image: var(--main-bgColor) !important;
     color: #fff !important;
     box-shadow: none;
   }
@@ -56,11 +60,15 @@ body {
     padding:  50px 15px 0;
   }
   .nav-link.active {
-    color: $primary;
+    color: var(--main-color);
   }
   .nav-link {
-    font-size:1.2em
+    font-size: 0.8em
   }
+  .form-control:focus {
+    border-color: var(--main-color)
+  }
+
 }
 .form-register .form-group {
   margin-bottom: 20px;
@@ -96,8 +104,7 @@ form.form-register label + .form-control {
   left: -2em;
 }
 .form-group .form-control, .input-group .form-control {
-  padding: 13px 18px;
-  font-size:1em
+  padding: 10px 18px;
 }
 .card label {
   font-size:1em
@@ -123,14 +130,56 @@ input[type=radio], input[type=checkbox] {
 }
 .emailInput button {
   margin: 0 0 0 5px;
-  padding: 14px 18px;
+  padding: 13px 18px;
 }
 
 .card:not(.card-white) label:not(.btn) {
   padding: 0 !important;
   display: flex;
-  align-items: center;
+  align-items: end;
 }
-
-
-
+a:hover, a:focus , a{
+  color: var(--main-color);
+}
+input[type=radio], input[type=checkbox] {
+  display: none;
+}
+.white-content .custom-control-input ~ .custom-control-label::before {
+  border:1px solid #999;
+  color: #999;
+  top: 50%;
+  transform: translateY(-45%);
+}
+.white-content .custom-control-input:checked ~ .custom-control-label::before {
+  content: '✔';
+  border:1px solid var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff
+}
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+  font-size:0.8em
+}
+.card .btn {
+  background: var(--main-color);
+  margin: 0 4px;
+}
+.white-content .btn:hover, .white-content .btn:focus, .white-content .btn:active, .white-content .btn.active, .white-content .btn:active:focus, .white-content .btn:active:hover, .white-content .btn.active:focus, .white-content .btn.active:hover, .white-content .navbar .navbar-nav > a.btn:hover, .white-content .navbar .navbar-nav > a.btn:focus, .white-content .navbar .navbar-nav > a.btn:active, .white-content .navbar .navbar-nav > a.btn.active, .white-content .navbar .navbar-nav > a.btn:active:focus, .white-content .navbar .navbar-nav > a.btn:active:hover, .white-content .navbar .navbar-nav > a.btn.active:focus, .white-content .navbar .navbar-nav > a.btn.active:hover {
+  background: var(--main-bgColor);
+}
+.card .btn:hover {
+  background: var(--main-bgColor);
+}
+.card form label + .form-control {
+  margin-bottom: 0
+}
+.input-group, .form-group {
+  margin-bottom:0
+}
+.card ul li {
+  margin-bottom: 20px;
+}
+ul li .row {
+  align-items: end;
+}
