@@ -21,7 +21,6 @@ const App = () => {
         theme = window.localStorage.getItem("back-color");
     }, []);
 
-
     /*const toggleTheme = () => {
         if (themeMode === "lightTheme") {
             setThemeMode("darkTheme");
@@ -47,4 +46,5 @@ const App = () => {
         </>
     )
 }
+
 export default App

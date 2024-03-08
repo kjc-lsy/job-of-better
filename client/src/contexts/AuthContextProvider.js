@@ -112,5 +112,7 @@ export const AuthContextProvider = ({children}) => {
     )
 };
 
+
+
 // 다른 컴포넌트에서 const {isLogin, login, logout} = useContext(AuthContext); 대신 const {isLogin, login, logout} = useAuth(); 가능
 export const useAuth = () => useContext(AuthContext);
