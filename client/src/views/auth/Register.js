@@ -14,7 +14,7 @@ import {
     Col, Label, ButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu,
 } from "reactstrap";
 import React, {useEffect, useState} from "react";
-import * as auth from '../apis/auth';
+import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 
 const Register = () => {

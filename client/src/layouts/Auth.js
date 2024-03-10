@@ -17,8 +17,8 @@ const Auth = (props) => {
 
     useEffect(() => { // Auth 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
         if (isLogin) {
-            if (roles.isAdmin) {
-                navigate("/admin");
+            if (roles.isCompany) {
+                navigate("/company");
                 return
             }
             if (roles.isUser) {

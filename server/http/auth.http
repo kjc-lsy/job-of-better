@@ -1,21 +1,24 @@
+###
+POST http://localhost:9090/user/join
+Content-Type: application/json
+
+{
+  "username": "company",
+  "password": "0000"
+}
+
+###
 POST http://localhost:9090/login
 Content-Type: application/json
 
 {
-  "username": "user",
+  "username": "admin",
   "password": "0000"
 }
 
 ###
 POST http://localhost:9090/logout
 
-POST http://localhost:9090/user/join
-Content-Type: application/json
-
-{
-  "username": "user",
-  "password": "0000"
-}
 
 ###
 GET http://localhost:9090/login?username=user&password=0000

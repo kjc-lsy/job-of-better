@@ -35,8 +35,6 @@ function CommonNavbar(props) {
     let pathLayout = location.pathname.split("/")[1];
     let pathPage = location.pathname.split("/")[2];
 
-    console.log(pathPage);
-
     React.useEffect(() => {
         window.addEventListener("resize", updateColor);
         // Specify how to clean up after this effect:

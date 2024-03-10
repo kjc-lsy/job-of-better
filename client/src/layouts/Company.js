@@ -1,43 +1,42 @@
-
 import React, {useEffect} from "react";
 import {Route, Routes, Navigate, useLocation, useNavigate} from "react-router-dom";
+// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
+import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
 import logo from "assets/img/react-logo.png";
-import { BackgroundColorContext } from "contexts/BackgroundColorWrapper";
+import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
-import Footer from "../components/Footer/Footer";
 
 var ps;
 
-function User(props) {
+function Company(props) {
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
     const {isLogin, roles} = useAuth();
     const navigate = useNavigate();
     const [isMounted, setIsMounted] = React.useState(false);
-    const userRoutes = routes.filter(route => route.layout === "/user");
+    const companyRoutes = routes.filter(route => route.layout === "/company");
 
     // 권한 처리
     useEffect(() => {
-        if(isMounted) {
-            if (!isLogin || !roles.isUser) {
+        if (isMounted) {
+            if (!isLogin || !roles.isCompany) {
                 alert("접근할 수 없습니다")
                 navigate("/auth/login")
             }
-        }else {
+        } else {
             setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
         }
 
     }, [isLogin, roles]);
-
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
     );
@@ -82,16 +81,15 @@ function User(props) {
     };
     const getRoutes = (routes) => {
         return routes.map((prop, key) => {
-            if (prop.layout === "/user") {
+            if (prop.layout === "/company") {
                 return (
-                    <Route path={prop.path} element={prop.component} key={key} exact />
+                    <Route path={prop.path} element={prop.component} key={key} exact/>
                 );
             } else {
                 return null;
             }
         });
     };
-
     const getBrandText = (path) => {
         for (let i = 0; i < routes.length; i++) {
             if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
@@ -100,14 +98,14 @@ function User(props) {
         }
         return "Brand";
     };
-
     return (
         <BackgroundColorContext.Consumer>
-            {({ color, changeColor }) => (
+            {({color, changeColor}) => (
+
                 <React.Fragment>
                     <div className="wrapper">
                         <Sidebar
-                            routes={userRoutes}
+                            routes={companyRoutes}
                             logo={{
                                 outterLink: "https://www.creative-tim.com/",
                                 text: "Creative Tim",
@@ -125,20 +123,20 @@ function User(props) {
                                 {getRoutes(routes)}
                                 <Route
                                     path="/"
-                                    element={<Navigate to="/user/home" replace />}
+                                    element={<Navigate to="/company/home" replace/>}
                                 />
                             </Routes>
                             {
                                 // we don't want the Footer to be rendered on map page
-                                location.pathname === "/company/map" ? null : <Footer fluid />
+                                location.pathname === "/company/map" ? null : <Footer fluid/>
                             }
                         </div>
                     </div>
-                    <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+                    <FixedPlugin bgColor={color} handleBgClick={changeColor}/>
                 </React.Fragment>
             )}
         </BackgroundColorContext.Consumer>
     );
 }
 
-export default User;
+export default Company;

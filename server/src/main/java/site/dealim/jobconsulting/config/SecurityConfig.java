@@ -70,9 +70,8 @@ public class SecurityConfig {
                 authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
-                        .requestMatchers("/api/user/join").permitAll()
-                        .requestMatchers("/api/user/**").hasAnyRole("USER")
-                        .requestMatchers("/api/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER")
+                        .requestMatchers("/company/**").hasAnyRole("COMPANY")
                         .anyRequest().authenticated()
         );
 

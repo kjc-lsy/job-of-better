@@ -1,14 +1,11 @@
-import Home from "./views/Home.js"
-import Register from "views/Register.js";
-import Login from "views/Login.js";
-import UserProfile from "./views/UserProfile";
-import TableList from "./views/TableList";
-import Map from "./views/Map";
-import Icons from "./views/Icons";
-import Rtl from "./views/Rtl";
-import Typography from "./views/Typography";
-import MemberList from "./views/MemberList";
-import ComCoverLetter from "./views/admin/ComCoverLetter";
+import Login from "./views/auth/Login";
+import Register from "./views/auth/Register";
+import MemberList from "./views/company/MemberList";
+import ComCoverLetter from "./views/company/ComCoverLetter";
+import Icons from "./views/common/Icons";
+import Home from "./views/common/Home";
+import UserProfile from "./views/user/UserProfile";
+import React from "react";
 
 var routes = [
   {
@@ -26,19 +23,32 @@ var routes = [
     layout: "/auth",
   },
   {
+    path: "/home",
+    name: "Home",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <Home />,
+    layout: "/company",
+  },
+  {
     path: "/member-list",
     name: "학생목록",
     icon: "tim-icons icon-bullet-list-67",
     component: <MemberList />,
-    layout: "/admin",
+    layout: "/company",
   },
   {
-    path: "/map",
-    name: "Map",
-    rtlName: "خرائط",
-    icon: "tim-icons icon-pin",
-    component: <Map />,
-    layout: "/admin",
+    path: "/com-cover-letter",
+    name: "자소서 항목",
+    icon: "tim-icons icon-puzzle-10",
+    component: <ComCoverLetter />,
+    layout: "/company",
+  },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "tim-icons icon-zoom-split",
+    component: <Icons />,
+    layout: "/company",
   },
   {
     path: "/home",
@@ -50,33 +60,16 @@ var routes = [
   {
     path: "/user-profile",
     name: "User Profile",
-    rtlName: "ملف تعريفي للمستخدم",
     icon: "tim-icons icon-single-02",
     component: <UserProfile />,
     layout: "/user",
   },
   {
-    path: "/tables",
-    name: "Table List",
-    rtlName: "قائمة الجدول",
-    icon: "tim-icons icon-puzzle-10",
-    component: <TableList />,
-    layout: "/admin",
-  },
-  {
     path: "/icons",
     name: "Icons",
-    rtlName: "قائمة الجدول",
     icon: "tim-icons icon-puzzle-10",
     component: <Icons />,
     layout: "/user",
-  },
-  {
-    path: "/comcoverletter",
-    name: "자소서 항목",
-    icon: "tim-icons icon-puzzle-10",
-    component: <ComCoverLetter />,
-    layout: "/admin",
   },
 ];
 

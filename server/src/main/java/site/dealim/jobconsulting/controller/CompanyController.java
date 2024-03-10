@@ -6,9 +6,9 @@ import site.dealim.jobconsulting.service.CompanyService;
 
 @RestController
 public class CompanyController {
-    private CompanyService adminService;
+    private CompanyService companyService;
     @PostMapping("/com-cl-save")
     public String comCoverLetterSave() {
-        return adminService.comCoverLetterSave();
+        return companyService.comCoverLetterSave();
     }
 }

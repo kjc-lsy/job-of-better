@@ -13,7 +13,7 @@ import {
     Row,
     Col,
 } from "reactstrap";
-import {useAuth} from "../contexts/AuthContextProvider";
+import {useAuth} from "../../contexts/AuthContextProvider";
 import React, {useState} from "react";
 
 const Login = () => {

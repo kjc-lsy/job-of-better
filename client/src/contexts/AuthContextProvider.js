@@ -13,7 +13,7 @@ export const AuthContextProvider = ({children}) => {
     // 로그인 유저 정보
     const [user, setUser] = useState(null);
     // 권한 정보
-    const [roles, setRoles] = useState({isUser : false, isAdmin : false});
+    const [roles, setRoles] = useState({isUser : false, isCompany : false});
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(()=>{
         setLoginUser();
@@ -95,10 +95,10 @@ export const AuthContextProvider = ({children}) => {
         setUser({idx, username, authList})
 
         // 권한 정보 세팅
-        const updatedRoles = {isUser : false, isAdmin : false};
+        const updatedRoles = {isUser : false, isCompany : false};
         roleList.forEach((role)=> {
             if(role.roleName == 'ROLE_USER') updatedRoles.isUser = true
-            if(role.roleName == 'ROLE_ADMIN') updatedRoles.isAdmin = true
+            if(role.roleName == 'ROLE_COMPANY') updatedRoles.isCompany = true
         });
         setRoles(updatedRoles);
     }

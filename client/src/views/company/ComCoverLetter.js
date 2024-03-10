@@ -13,7 +13,7 @@ import {
     Button, CardTitle,
 } from "reactstrap";
 import api from "js-cookie";
-import {coverLetterSave} from "../../apis/admin";
+import {coverLetterSave} from "../../apis/company";
 
 function ComCoverLetter() {
 

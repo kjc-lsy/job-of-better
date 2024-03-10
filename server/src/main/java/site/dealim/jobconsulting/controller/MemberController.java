@@ -65,7 +65,7 @@ public class MemberController {
      * @throws Exception
      */
     @Secured("ROLE_USER")           // USER 권한 설정
-    @PutMapping("update")
+    @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
         log.info("회원 정보 수정 시작...");
 
@@ -82,8 +82,8 @@ public class MemberController {
      * @return
      * @throws Exception
      */
-    @Secured("ROLE_ADMIN")          //  USER 권한 설정
-    @DeleteMapping("delete/{username}")
+    @Secured("ROLE_COMPANY")          //  USER 권한 설정
+    @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> destroy(@PathVariable("username") String username) throws Exception {
         log.info("회원 삭제 시작...");
 
