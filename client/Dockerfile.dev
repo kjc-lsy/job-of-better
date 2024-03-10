@@ -1,0 +1,20 @@
+# node 이미지를 사용합니다.
+FROM node:18.18.0
+
+# 작업 디렉토리를 /app으로 설정합니다.
+WORKDIR /app
+
+# package.json과 package-lock.json 파일을 컨테이너의 작업 디렉토리로 복사합니다.
+COPY package.json ./
+COPY package-lock.json ./
+
+# 의존성 설치. 개발 의존성도 포함되어야 하므로 --only=production 플래그는 사용하지 않습니다.
+RUN npm install --legacy-peer-deps
+
+# 애플리케이션 소스 코드를 복사합니다.
+# 개발 환경에서는 볼륨을 사용하여 로컬 파일 시스템을 컨테이너에 연동할 예정이므로, 이 단계는 생략할 수도 있습니다.
+# COPY . .
+
+# 리액트 개발 서버를 시작합니다. 기본 포트는 3000입니다.
+EXPOSE 3000
+CMD ["npm", "start"]

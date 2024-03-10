@@ -27,13 +27,12 @@ const Login = () => {
     }
 
     return (
-        <>
-            <Col lg="5" md="7">
-                <Card>
-                    <CardHeader className="text-center">
-                        <h3 className="title">로그인</h3>
-                    </CardHeader>
-                    {/*className="bg-secondary shadow border-0"*/}
+        <Col lg="5" md="7">
+            <Card>
+                <CardHeader className="text-center">
+                    <h3 className="title">로그인</h3>
+                </CardHeader>
+                {/*className="bg-secondary shadow border-0"*/}
                 {/*    <CardHeader className="bg-transparent pb-5">*/}
                 {/*        <div className="text-muted text-center mt-2 mb-3">*/}
                 {/*            <small>Sign in with</small>*/}
@@ -75,12 +74,12 @@ const Login = () => {
                 {/*            </Button>*/}
                 {/*        </div>*/}
                 {/*    </CardHeader>*/}
-                    <CardBody>
-                        {/*<div className="text-center text-muted mb-4">
+                <CardBody>
+                    {/*<div className="text-center text-muted mb-4">
                             <small>로그인을 위해 정보를 입력해주세요</small>
                         </div>*/}
-                        <Form role="form" onSubmit={loginSubmit}>
-                            {/*<FormGroup className="mb-3">
+                    <Form role="form" onSubmit={loginSubmit}>
+                        {/*<FormGroup className="mb-3">
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
@@ -95,26 +94,26 @@ const Login = () => {
                                     />
                                 </InputGroup>
                             </FormGroup>*/}
-                            <FormGroup>
-                                <label>아이디</label>
-                                <Input
-                                    placeholder="아이디"
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <label>비밀번호</label>
-                                <Input
-                                    placeholder="비밀번호"
-                                    type="password"
-                                    autoComplete="new-password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </FormGroup>
-                            {/*<FormGroup>
+                        <FormGroup>
+                            <label>아이디</label>
+                            <Input
+                                placeholder="아이디"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <label>비밀번호</label>
+                            <Input
+                                placeholder="비밀번호"
+                                type="password"
+                                autoComplete="new-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </FormGroup>
+                        {/*<FormGroup>
                                 <InputGroup className="input-group-alternative">
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
@@ -130,48 +129,47 @@ const Login = () => {
                                     />
                                 </InputGroup>
                             </FormGroup>*/}
-                            <div className="custom-control custom-control-alternative custom-checkbox">
-                                <input
-                                    className="custom-control-input"
-                                    id=" customCheckLogin"
-                                    type="checkbox"
-                                />
-                                <label
-                                    className="custom-control-label"
-                                    htmlFor=" customCheckLogin"
-                                >
-                                    <span className="text-muted">Remember me</span>
-                                </label>
-                            </div>
-                            <div className="text-center">
-                                <Button className="my-4" color="primary" type="submit">
-                                    Sign in
-                                </Button>
-                            </div>
-                        </Form>
-                    </CardBody>
-                </Card>
-                <Row className="mt-3">
-                    <Col xs="6">
-                        <a
-                            className="text-light"
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                        >
-                            <small>Forgot password?</small>
-                        </a>
-                    </Col>
-                    <Col className="text-right" xs="6">
-                        <a
-                            className="text-light"
-                            href="/auth/register"
-                        >
-                            <small>Create new account</small>
-                        </a>
-                    </Col>
-                </Row>
-            </Col>
-        </>
+                        <div className="custom-control custom-control-alternative custom-checkbox">
+                            <input
+                                className="custom-control-input"
+                                id=" customCheckLogin"
+                                type="checkbox"
+                            />
+                            <label
+                                className="custom-control-label"
+                                htmlFor=" customCheckLogin"
+                            >
+                                <span className="text-muted">Remember me</span>
+                            </label>
+                        </div>
+                        <div className="text-center">
+                            <Button className="my-4" color="primary" type="submit">
+                                Sign in
+                            </Button>
+                        </div>
+                    </Form>
+                </CardBody>
+            </Card>
+            <Row className="mt-3">
+                <Col xs="6">
+                    <a
+                        className="text-light"
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                    >
+                        <small>Forgot password?</small>
+                    </a>
+                </Col>
+                <Col className="text-right" xs="6">
+                    <a
+                        className="text-light"
+                        href="/auth/register"
+                    >
+                        <small>Create new account</small>
+                    </a>
+                </Col>
+            </Row>
+        </Col>
     );
 };
 
