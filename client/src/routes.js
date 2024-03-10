@@ -39,7 +39,7 @@ var routes = [
   {
     path: "/com-cover-letter",
     name: "자소서 항목",
-    icon: "tim-icons icon-puzzle-10",
+    icon: "tim-icons icon-notes",
     component: <ComCoverLetter />,
     layout: "/company",
   },
