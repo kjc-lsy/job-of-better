@@ -15,7 +15,7 @@ COPY build.gradle .
 COPY src ./src
 
 # Build the application
-RUN ./gradlew bootJar
+RUN gradle build
 
 # Use adoptopenjdk for base image
 FROM openjdk:17-jdk-slim
