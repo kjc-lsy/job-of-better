@@ -5,7 +5,6 @@ import { Card, CardHeader, CardBody, CardTitle, Row, Col } from "reactstrap";
 
 function Typography() {
   return (
-    <>
       <div className="content">
         <Row>
           <Col md="12">
@@ -190,7 +189,6 @@ function Typography() {
           </Col>
         </Row>
       </div>
-    </>
   );
 }
 

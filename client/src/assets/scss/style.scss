@@ -1,7 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 body {
-    font-family: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  font-family: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 }
 
 /*.input-group-alternative {
@@ -19,63 +19,80 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .navbar {
   background: #1e1e2f
 }
+
 .white-content {
   h1 {
     color: #000;
   }
+
   .navbar {
     background: #f5f6fa;
   }
-  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus ,
-  .navbar-dark .navbar-nav .nav-link{
+
+  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus,
+  .navbar-dark .navbar-nav .nav-link {
     color: #000;
   }
-  .emailInput .btn-group > button , .custom-control-input:checked ~ .custom-control-label::before{
+
+  .emailInput .btn-group > button, .custom-control-input:checked ~ .custom-control-label::before {
     background: var(--main-color);
   }
+
   .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary:disabled, .btn-primary:disabled:hover, .btn-primary:disabled:focus, .btn-primary:disabled.focus, .btn-primary:disabled:active, .btn-primary:disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
     background-color: var(--main-color) !important;
     background: var(--main-color) !important;
     border-color: var(--main-color) !important;
   }
+
   .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .navbar .navbar-nav > a.btn:hover, .navbar .navbar-nav > a.btn:focus, .navbar .navbar-nav > a.btn:active, .navbar .navbar-nav > a.btn.active, .navbar .navbar-nav > a.btn:active:focus, .navbar .navbar-nav > a.btn:active:hover, .navbar .navbar-nav > a.btn.active:focus, .navbar .navbar-nav > a.btn.active:hover {
-    background-color:  var(--main-color) !important;
+    background-color: var(--main-color) !important;
     background-image: var(--main-bgColor) !important;
     color: #fff !important;
     box-shadow: none;
   }
+
   .navbar.navbar-transparent .search-bar.input-group .btn:hover i {
     color: #fff;
   }
+
   .form-control {
     border-color: rgba(29, 37, 59, 0.3);
   }
+
   .card h3.title {
-    font-size:24px
+    font-size: 24px
   }
+
   .card .card-header {
-    padding:  50px 15px 0;
+    padding: 50px 15px 0;
   }
+
   .nav-link.active {
     color: var(--main-color);
   }
+
   .nav-link {
     font-size: 0.8em
   }
+
   .form-control:focus {
     border-color: var(--main-color)
   }
 
 }
+
 .form-register .form-group {
   margin-bottom: 20px;
 }
+
 form.form-register label + .form-control {
   margin-bottom: 0;
 }
+
 @mixin ellipsis($lines: 1) {
   @if ($lines==1) {
     overflow: hidden;
@@ -91,29 +108,48 @@ form.form-register label + .form-control {
     height: $lines * 1.2em;
   }
 }
-.text { @include ellipsis; }
-.long-text { @include ellipsis(3); }
+
+.toastui-editor-toolbar-item-wrapper {
+  .scroll-sync {
+    display: inline-block !important;
+    margin-bottom: 0px;
+  }
+}
+
+.text {
+  @include ellipsis;
+}
+
+.long-text {
+  @include ellipsis(3);
+}
 
 .form-control {
   height: auto;
 }
+
 .custom-control {
   padding-left: 2em;
 }
+
 .custom-control-label::before {
   left: -2em;
 }
+
 .form-group .form-control, .input-group .form-control {
   padding: 10px 18px;
 }
+
 .card label {
-  font-size:1em
+  font-size: 1em
 }
+
 .input-group:not(.has-validation) > .form-control:not(:last-child), .input-group:not(.has-validation) > .custom-select:not(:last-child), .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label, .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label::after {
   border-radius: 5px;
-  border:1px solid rgba(29, 37, 59, 0.3);
+  border: 1px solid rgba(29, 37, 59, 0.3);
   padding: 13px 18px;
 }
+
 input[type=radio], input[type=checkbox] {
   width: 20px;
   height: 20px;
@@ -122,12 +158,15 @@ input[type=radio], input[type=checkbox] {
   position: static;
   margin-top: 0;
 }
+
 .input-group {
   align-items: center;
 }
+
 .emailInput span {
-  padding:0 5px;
+  padding: 0 5px;
 }
+
 .emailInput button {
   margin: 0 0 0 5px;
   padding: 13px 18px;
@@ -138,48 +177,72 @@ input[type=radio], input[type=checkbox] {
   display: flex;
   align-items: end;
 }
-a:hover, a:focus , a{
+
+a:hover, a:focus, a {
   color: var(--main-color);
 }
+
 input[type=radio], input[type=checkbox] {
   display: none;
 }
+
 .white-content .custom-control-input ~ .custom-control-label::before {
-  border:1px solid #999;
+  border: 1px solid #999;
   color: #999;
   top: 50%;
   transform: translateY(-45%);
 }
+
 .white-content .custom-control-input:checked ~ .custom-control-label::before {
   content: '✔';
-  border:1px solid var(--main-color);
+  border: 1px solid var(--main-color);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff
 }
+
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
-  font-size:0.8em
+  font-size: 0.8em
 }
+
 .card .btn {
   background: var(--main-color);
   margin: 0 4px;
 }
+
 .white-content .btn:hover, .white-content .btn:focus, .white-content .btn:active, .white-content .btn.active, .white-content .btn:active:focus, .white-content .btn:active:hover, .white-content .btn.active:focus, .white-content .btn.active:hover, .white-content .navbar .navbar-nav > a.btn:hover, .white-content .navbar .navbar-nav > a.btn:focus, .white-content .navbar .navbar-nav > a.btn:active, .white-content .navbar .navbar-nav > a.btn.active, .white-content .navbar .navbar-nav > a.btn:active:focus, .white-content .navbar .navbar-nav > a.btn:active:hover, .white-content .navbar .navbar-nav > a.btn.active:focus, .white-content .navbar .navbar-nav > a.btn.active:hover {
   background: var(--main-bgColor);
 }
+
 .card .btn:hover {
   background: var(--main-bgColor);
 }
+
 .card form label + .form-control {
   margin-bottom: 0
 }
+
 .input-group, .form-group {
-  margin-bottom:0
+  margin-bottom: 0
 }
+
 .card ul li {
   margin-bottom: 20px;
 }
+
 ul li .row {
   align-items: end;
 }
+
+.card .enrollProg {
+  .image {
+    height: auto;
+  }
+
+  input {
+    margin-bottom: 20px;
+  }
+}
+
+

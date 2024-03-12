@@ -6,6 +6,8 @@ import Icons from "./views/common/Icons";
 import Home from "./views/common/Home";
 import UserProfile from "./views/user/UserProfile";
 import React from "react";
+import Program from "./views/company/Program";
+import Typography from "./views/common/Typography";
 
 var routes = [
   {
@@ -30,6 +32,13 @@ var routes = [
     layout: "/company",
   },
   {
+    path: "/program",
+    name: "교육 프로그램",
+    icon: "tim-icons icon-components",
+    component: <Program />,
+    layout: "/company",
+  },
+  {
     path: "/member-list",
     name: "학생목록",
     icon: "tim-icons icon-bullet-list-67",
@@ -48,6 +57,13 @@ var routes = [
     name: "Icons",
     icon: "tim-icons icon-zoom-split",
     component: <Icons />,
+    layout: "/company",
+  },
+  {
+    path: "/typo",
+    name: "Typography",
+    icon: "tim-icons icon-zoom-split",
+    component: <Typography />,
     layout: "/company",
   },
   {

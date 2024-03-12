@@ -35,71 +35,70 @@ function ComCoverLetter() {
 
     function deleteInput({num}) {
         //console.log(num);
-        if( num !== 1) {
-        setInputValue(inputValue.filter(input => (input.num !== num )));
-            }
+        if (num !== 1) {
+            setInputValue(inputValue.filter(input => (input.num !== num)));
+        }
         //setInputValue()
     }
 
-   const save = () => {
+    const save = () => {
         coverLetterSave(inputValue);
         console.log(inputValue);
-   }
+    }
 
     return (
-        <>
-            <div className="content">
-                <Row>
-                    <Col md="12">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle tag="h4">자소서 항목</CardTitle>
-                            </CardHeader>
-                            <CardBody>
-                                <Form role="form" onSubmit={(e) => e.preventDefault()}>
-                                    <div>
-                                        <ul>
-                                            {inputValue.map((value, index) => {
-                                                let num = value.num;
-                                                console.log(value);
-                                                return (
-                                                    <li key={value.num}>
-                                                        {deleteInput}
-                                                        <Row>
-                                                            <Col md="10">
-                                                        <FormGroup>
-                                                            <label>항목 {index+1}</label>
-                                                            <Input
-                                                                placeholder={`항목 ${index+1}`}
-                                                                type="text"
-                                                                value={value.question}
-                                                                onChange={(e) => {
-                                                                    let copyInputValue = [...inputValue];
-                                                                    copyInputValue[index].question = e.target.value;
-                                                                    setInputValue(copyInputValue);
-                                                                    //console.log(inputValue);
-                                                                }}
-                                                            />
-                                                        </FormGroup>
-                                                            </Col>
-                                                        <Col md="2">
-                                                            <Button type="button" onClick={()=>deleteInput({num})}>삭제</Button>
+        <div className="content">
+            <Row>
+                <Col md="12">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle tag="h4">자소서 항목</CardTitle>
+                        </CardHeader>
+                        <CardBody>
+                            <Form role="form" onSubmit={(e) => e.preventDefault()}>
+                                <div>
+                                    <ul>
+                                        {inputValue.map((value, index) => {
+                                            let num = value.num;
+                                            console.log(value);
+                                            return (
+                                                <li key={value.num}>
+                                                    {deleteInput}
+                                                    <Row>
+                                                        <Col md="10">
+                                                            <FormGroup>
+                                                                <label>항목 {index + 1}</label>
+                                                                <Input
+                                                                    placeholder={`항목 ${index + 1}`}
+                                                                    type="text"
+                                                                    value={value.question}
+                                                                    onChange={(e) => {
+                                                                        let copyInputValue = [...inputValue];
+                                                                        copyInputValue[index].question = e.target.value;
+                                                                        setInputValue(copyInputValue);
+                                                                        //console.log(inputValue);
+                                                                    }}
+                                                                />
+                                                            </FormGroup>
                                                         </Col>
-                                                        </Row>
-                                                    </li>)
-                                            })}
-                                        </ul>
-                                    </div>
+                                                        <Col md="2">
+                                                            <Button type="button"
+                                                                    onClick={() => deleteInput({num})}>삭제</Button>
+                                                        </Col>
+                                                    </Row>
+                                                </li>)
+                                        })}
+                                    </ul>
+                                </div>
 
-                                    <Button type="button" onClick={addInput}>추가</Button>
-                                    <Button type="button" onClick={save}>저장</Button>
-                                </Form>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
-        </>
+                                <Button type="button" onClick={addInput}>추가</Button>
+                                <Button type="button" onClick={save}>저장</Button>
+                            </Form>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
     );
 }
 
