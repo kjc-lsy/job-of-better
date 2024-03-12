@@ -7,5 +7,6 @@ import site.dealim.jobconsulting.domain.ComCoverLetter;
 public class CompanyService {
     public ComCoverLetter comCoverLetterSave(ComCoverLetter comCoverLetter) {
         return null;
+
     }
 }
