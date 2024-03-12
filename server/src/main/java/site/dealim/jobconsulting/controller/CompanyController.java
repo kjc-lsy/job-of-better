@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 public class CompanyController {
     private CompanyService companyService;
-    @PostMapping("/coverLetterSave")
-    public ResponseEntity<?> comCoverLetterSave(@RequestBody List<String> comCoverLetter, @AuthenticationPrincipal CustomMember customMember) {
+    @PostMapping("/cover-letter-save")
+    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember) {
         Member user = customMember.getMember();
-        System.out.println("comCoverLetter = " + comCoverLetter.toString());
+        System.out.println("comCoverLetter = ");
         //companyService.comCoverLetterSave(comCoverLetter);
 
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);

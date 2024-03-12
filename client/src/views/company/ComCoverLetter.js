@@ -58,7 +58,7 @@ function ComCoverLetter() {
                 });
             //coverLetterSave(inputValue);
         }
-        //console.log(inputValue.map(value => value.question));
+        console.log(inputValue.map(value => value.question));
     }
 
     return (
