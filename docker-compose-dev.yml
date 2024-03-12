@@ -24,3 +24,4 @@ services:
       - "3000:3000" # node 서버의 기본 포트를 사용
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
