@@ -1,6 +1,5 @@
 FROM gradle:8.6.0-jdk17 AS build
 
-# Set the working directory to '/app'
 WORKDIR /app
 
 # Copy the gradlew and gradle folder to the docker image
