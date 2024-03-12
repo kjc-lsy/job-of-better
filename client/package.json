@@ -89,5 +89,5 @@
     "fsevents": "2.3.2",
     "chokidar": "3.5.3"
   },
-  "proxy": "http://springboot-app:9090"
+  "proxy": "http://localhost:9090"
 }
