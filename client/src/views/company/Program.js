@@ -1,7 +1,7 @@
-import React, {useRef} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import '@toast-ui/editor/dist/toastui-editor.css';
 import {Editor, Viewer} from '@toast-ui/react-editor';
-
+import {ThemeContext} from "../../contexts/ThemeWrapper";
 
 // reactstrap components
 import {
@@ -17,6 +17,8 @@ import {
 
 function Program() {
     const editorRef = useRef();
+    let theme = useContext(ThemeContext);
+
     const onChangeGetHTML = () => {
         const data = editorRef.current.getInstance().getHTML();
     }
