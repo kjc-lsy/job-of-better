@@ -20,9 +20,10 @@ import java.util.List;
 public class CompanyController {
     private CompanyService companyService;
     @PostMapping("/cover-letter-save")
-    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<TestDto> testDto) {
+    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<String> values) {
         Member user = customMember.getMember();
-        //companyService.comCoverLetterSave(comCoverLetter);
+        //System.out.println("values = " + values);
+        companyService.comCoverLetterSave(values, user.getComIdx());
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 }

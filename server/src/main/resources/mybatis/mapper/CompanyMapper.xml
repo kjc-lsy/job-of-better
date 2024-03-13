@@ -3,48 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site.dealim.jobconsulting.mapper.CompanyMapper">
-    <!-- Member 매핑-->
-    <resultMap type="Company" id="CompanyMap">
-        <id property="idx" column="idx"/>
-
-        <result property="name" column="name"/>
-        <result property="username" column="username"/>
-        <result property="password" column="password"/>
-        <result property="email" column="email"/>
-        <result property="birthDate" column="birth_date"/>
-        <result property="gender" column="gender"/>
-        <result property="phone" column="phone"/>
-        <result property="comIdx" column="com_idx"/>
-        <result property="resumeFile" column="resume_file"/>
-        <result property="desiredInterviewDate" column="desired_interview_date"/>
-        <result property="assignedInterviewDate" column="assigned_interview_date"/>
-        <result property="isInterviewDate" column="is_interview_date"/>
-        <result property="interviewComment" column="interview_comment"/>
-        <result property="isCoverLetter" column="is_cover_letter"/>
-        <result property="isResume" column="is_resume"/>
-        <result property="joinDate" column="join_date"/>
-        <result property="modifiedDate" column="modified_date"/>
-        <result property="withdrawnDate" column="withdrawn_date"/>
-        <result property="isWithdrawn" column="is_withdrawn"/>
-
-        <collection property="roleList" resultMap="memberRoleMap"></collection>
-    </resultMap>
-
-    <!-- MemberRole 매핑 -->
-    <resultMap type="MemberRole" id="memberRoleMap">
-        <id property="roleIdx" column="role_idx"/>
-        <result property="roleName" column="role_name"/>
-        <result property="username" column="username"/>
-    </resultMap>
-
-    <!-- 회원 등록 -->
-    <insert id="insertMember" parameterType="Member">
-        INSERT INTO member (name, username, password, email, birth_date, gender, phone, com_idx, resume_file,
-                            desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
-                            is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
-        VALUES (#{name}, #{username}, #{password}, #{email}, #{birthDate}, #{gender}, #{phone}, #{comIdx},
-                #{resumeFile}, #{desiredInterviewDate}, #{assignedInterviewDate}, #{isInterviewDate},
-                #{interviewComment}, #{isCoverLetter}, #{isResume}, #{joinDate}, #{modifiedDate}, #{withdrawnDate},
-                #{isWithdrawn})
+    <!-- 자소서 질문 등록 -->
+    <insert id="ComcCoverLetterinsert" parameterType="Map">
+        INSERT INTO ComcCoverLetterinsert(ccl_com_idx,ccl_letter_question,ccl_min_length,ccl_is_active) values()
     </insert>
 </mapper>

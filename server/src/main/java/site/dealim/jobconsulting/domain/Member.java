@@ -20,7 +20,7 @@ public class Member {
     private LocalDate birthDate;
     private String gender;
     private String phone;
-    private Integer comIdx;
+    private Long comIdx;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;
