@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
+import site.dealim.jobconsulting.dto.TestDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.CompanyService;
 
@@ -19,11 +20,9 @@ import java.util.List;
 public class CompanyController {
     private CompanyService companyService;
     @PostMapping("/cover-letter-save")
-    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember) {
+    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<TestDto> testDto) {
         Member user = customMember.getMember();
-        System.out.println("comCoverLetter = ");
         //companyService.comCoverLetterSave(comCoverLetter);
-
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 }

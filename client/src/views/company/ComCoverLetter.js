@@ -27,11 +27,9 @@ function ComCoverLetter() {
             ...prevInputValue,
             {
                 num: prevInputValue.length > 0 ? prevInputValue[prevInputValue.length - 1].num + 1 : 1,
-                id: "",
                 question: ""
             }
         ]);
-        //console.log(inputValue);
     }
 
     function deleteInput({num}) {
@@ -45,20 +43,19 @@ function ComCoverLetter() {
     const save = (e) => {
         e.preventDefault();
 
-        if(inputValue.some(value => !value.question)) {
+        if (inputValue.some(value => !value.question)) {
             alert("항목을 하나 이상 입력해주세요.");
-        }else {
-            company.coverLetterSave(inputValue.map(value => value.question))
+        } else {
+            company.coverLetterSave(inputValue)
                 .then(response => {
                     //navigate('/auth/login')
-                    alert('회원가입 성공! 로그인 해주세요')
+                    alert(response.data)
                 })
                 .catch(error => {
                     alert(error.response.data);
                 });
             //coverLetterSave(inputValue);
         }
-        console.log(inputValue.map(value => value.question));
     }
 
     return (
@@ -75,10 +72,8 @@ function ComCoverLetter() {
                                     <ul>
                                         {inputValue.map((value, index) => {
                                             let num = value.num;
-                                            console.log(value);
                                             return (
                                                 <li key={value.num}>
-                                                    {deleteInput}
                                                     <Row>
                                                         <Col md="10">
                                                             <FormGroup>
