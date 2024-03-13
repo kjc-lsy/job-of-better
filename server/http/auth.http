@@ -1,5 +1,5 @@
 ###
-POST http://localhost:9090/user/join
+POST http://localhost:9090/api/user/join
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ POST http://localhost:9090/login
 Content-Type: application/json
 
 {
-  "username": "admin",
+  "username": "company",
   "password": "0000"
 }
 

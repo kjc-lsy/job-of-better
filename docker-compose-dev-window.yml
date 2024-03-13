@@ -16,12 +16,12 @@ services:
     image: node:latest
     volumes:
       - ./client:/app
-#      - /app/node_modules
+    #      - /app/node_modules
     working_dir: /app
     command: npm start
     ports:
       - "3000:3000"
     environment:
       - REACT_APP_ENV=development
-      - REACT_APP_PROXY=http://springboot-app:9090
+      - REACT_APP_PROXY=http://localhost:9090
       - CHOKIDAR_USEPOLLING=true

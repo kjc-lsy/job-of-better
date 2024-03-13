@@ -13,7 +13,7 @@ import site.dealim.jobconsulting.service.MemberServiceImpl;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class MemberController {
 
     @Autowired
