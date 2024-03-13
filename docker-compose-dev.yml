@@ -16,7 +16,6 @@ services:
     image: node:latest
     volumes:
       - ./client:/app
-#      - /app/node_modules
     working_dir: /app
     command: npm start
     ports:

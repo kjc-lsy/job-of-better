@@ -63,7 +63,7 @@ export const AuthContextProvider = ({children}) => {
         // 로그인 성공시 쿠키에 있던 JWT 토큰 가져옴
         let accessToken = Cookies.get("accessToken");
         if(!accessToken) { // 토큰이 없을 시 로그아웃 처리하고 함수 실행 종료
-            // logoutSetting();
+            logoutSetting();
             return;
         }
 

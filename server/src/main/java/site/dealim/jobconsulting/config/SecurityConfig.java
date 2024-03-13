@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        log.info("시큐리티 설정 시작...");
+        log.info("시큐리티 설정 시작......");
 
         // 폼 기반 로그인 비활성화
         http.formLogin(login -> login.loginProcessingUrl("/api/login").disable());
