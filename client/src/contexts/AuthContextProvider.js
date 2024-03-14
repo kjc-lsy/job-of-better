@@ -1,9 +1,8 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import api from '../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
-import {Exception} from "sass";
-import {useLocation} from "react-router-dom";
+
 const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({children}) => {
@@ -97,8 +96,8 @@ export const AuthContextProvider = ({children}) => {
         // 권한 정보 세팅
         const updatedRoles = {isUser : false, isCompany : false};
         roleList.forEach((role)=> {
-            if(role.roleName == 'ROLE_USER') updatedRoles.isUser = true
-            if(role.roleName == 'ROLE_COMPANY') updatedRoles.isCompany = true
+            if(role.roleName === 'ROLE_USER') updatedRoles.isUser = true
+            if(role.roleName === 'ROLE_COMPANY') updatedRoles.isCompany = true
         });
         setRoles(updatedRoles);
     }

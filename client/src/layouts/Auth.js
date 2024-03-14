@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
-import {useLocation, Route, Routes, Navigate, useNavigate} from "react-router-dom";
-import {Container, Row, Col, Navbar} from "reactstrap";
+import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Container, Row} from "reactstrap";
 import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
 

@@ -1,18 +1,5 @@
 // reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Row,
-    Col,
-} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Row,} from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import React, {useState} from "react";
 
@@ -20,7 +7,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const {login} = useAuth();
-
+    
     const loginSubmit = (e) => {
         e.preventDefault()
         login(username, password)

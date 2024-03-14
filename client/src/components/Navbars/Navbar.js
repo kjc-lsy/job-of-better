@@ -1,25 +1,25 @@
 import React from "react";
 import classNames from "classnames";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // reactstrap components
 import {
     Button,
     Collapse,
-    DropdownToggle,
-    DropdownMenu,
+    Container,
     DropdownItem,
-    UncontrolledDropdown,
+    DropdownMenu,
+    DropdownToggle,
     Input,
     InputGroup,
-    NavbarBrand,
-    Navbar,
-    NavLink,
-    Nav,
-    Container,
     Modal,
+    ModalHeader,
+    Nav,
+    Navbar,
+    NavbarBrand,
     NavbarToggler,
-    ModalHeader, NavItem,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
 } from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLocation, useNavigate} from "react-router-dom";

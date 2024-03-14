@@ -10,5 +10,4 @@ import java.util.List;
 @Mapper
 public interface CompanyMapper {
     public int ComCoverLetterinsert(HashMap map);
-    public int insertProgram(Program program);
 }

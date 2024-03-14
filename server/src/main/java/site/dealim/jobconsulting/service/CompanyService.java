@@ -28,8 +28,4 @@ public class CompanyService {
 
     }
 
-    public int insertProgram(Program program) {
-        return companyMapper.insertProgram(program);
-    }
-
 }

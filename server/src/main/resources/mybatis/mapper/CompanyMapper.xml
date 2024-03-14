@@ -10,10 +10,4 @@
         values(#{cclComIdx},#{cclLetterQuestion},#{cclMinLength},#{cclMaxLength})
     </insert>
 
-    <!-- program 등록 -->
-    <insert id="insertProgram" parameterType="Program">
-    INSERT INTO program (pg_title, pg_content)
-    VALUES (#{pg_title}, #{pg_content})
-    </insert>
-
 </mapper>

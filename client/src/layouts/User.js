@@ -1,6 +1,5 @@
-
 import React, {useEffect} from "react";
-import {Route, Routes, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
@@ -10,7 +9,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import routes from "routes.js";
 
 import logo from "assets/img/react-logo.png";
-import { BackgroundColorContext } from "contexts/BackgroundColorWrapper";
+import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -27,12 +26,12 @@ function User(props) {
 
     // 권한 처리
     useEffect(() => {
-        if(isMounted) {
+        if (isMounted) {
             if (!isLogin || !roles.isUser) {
                 alert("접근할 수 없습니다")
                 navigate("/auth/login")
             }
-        }else {
+        } else {
             setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
         }
 
@@ -84,7 +83,7 @@ function User(props) {
         return routes.map((prop, key) => {
             if (prop.layout === "/user") {
                 return (
-                    <Route path={prop.path} element={prop.component} key={key} exact />
+                    <Route path={prop.path} element={prop.component} key={key} exact/>
                 );
             } else {
                 return null;
@@ -103,7 +102,7 @@ function User(props) {
 
     return (
         <BackgroundColorContext.Consumer>
-            {({ color, changeColor }) => (
+            {({color, changeColor}) => (
                 <React.Fragment>
                     <div className="wrapper">
                         <Sidebar
@@ -125,16 +124,16 @@ function User(props) {
                                 {getRoutes(routes)}
                                 <Route
                                     path="/"
-                                    element={<Navigate to="/user/home" replace />}
+                                    element={<Navigate to="/user/home" replace/>}
                                 />
                             </Routes>
                             {
                                 // we don't want the Footer to be rendered on map page
-                                location.pathname === "/company/map" ? null : <Footer fluid />
+                                location.pathname === "/company/map" ? null : <Footer fluid/>
                             }
                         </div>
                     </div>
-                    <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+                    <FixedPlugin bgColor={color} handleBgClick={changeColor}/>
                 </React.Fragment>
             )}
         </BackgroundColorContext.Consumer>

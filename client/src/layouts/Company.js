@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Route, Routes, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 

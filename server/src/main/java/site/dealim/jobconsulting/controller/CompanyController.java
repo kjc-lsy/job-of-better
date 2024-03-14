@@ -29,22 +29,4 @@ public class CompanyController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
-    @PostMapping("/insert-program")
-    public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody ProgramInsertDto programDto) {
-        Member user = customMember.getMember();
-
-        Program program = Program.builder()
-                                .pg_com_idx(customMember.getMember().getComIdx())
-                                .pg_content(programDto.getContent())
-                                .pg_title(programDto.getTitle())
-                                .build();
-
-        try {
-            int result = companyService.insertProgram(program);
-        } catch (Exception e) {
-            return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        return new ResponseEntity<>("프로그램 추가 성공", HttpStatus.OK);
-    }
 }

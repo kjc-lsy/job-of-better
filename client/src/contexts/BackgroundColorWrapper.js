@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {createContext} from "react";
+import React, {createContext, useState} from "react";
 import GlobalStyle from "../theme/GlobalStyle";
 import {ThemeProvider} from "styled-components";
-
 
 export const backgroundColors = {
     primary: "primary",

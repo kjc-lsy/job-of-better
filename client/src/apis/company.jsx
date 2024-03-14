@@ -10,9 +10,3 @@ export const coverLetterSave = (value) => {
         }
     }))
 };
-
-
-export const programSave = (title, content) => api.post('/api/company/insert-program', {
-    'title': title,
-    'content': content
-})

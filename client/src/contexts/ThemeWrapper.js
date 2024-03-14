@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
 /*import { ThemeContext, themes } from "contexts/ThemeWrapper";*/
-import {createContext} from "react";
-import styled from 'styled-components';
-
+import React, {createContext, useEffect, useState} from "react";
 
 export const themes = {
   dark: "",
@@ -39,8 +36,3 @@ export default function ThemeContextWrapper(props) {
     </ThemeContext.Provider>
   );
 }
-
-
-
-
-

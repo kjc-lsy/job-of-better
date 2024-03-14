@@ -1,20 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import {Editor, Viewer} from '@toast-ui/react-editor';
 import {ThemeContext} from "../../contexts/ThemeWrapper";
 
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
-    Row,
-    Col, FormGroup, Input, Form, CardSubtitle, Button,
-} from "reactstrap";
-import {programSave} from "../../apis/company";
+import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Form, FormGroup, Input, Row,} from "reactstrap";
+import {programSave} from "../../apis/program";
 
 
 function Program() {
