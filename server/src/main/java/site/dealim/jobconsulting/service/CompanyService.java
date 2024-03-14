@@ -13,16 +13,16 @@ public class CompanyService {
 
     @Autowired
     CompanyMapper companyMapper;
-    public void comCoverLetterSave(List<String> values, Long comIdx) {
-        for(String str : values) {
-            //System.out.println(values.get(i));
+    public void comCoverLetterSave(List<ComCoverLetter> values, Long comIdx) {
+        for(ComCoverLetter comCoverLetter : values) {
             HashMap map = new HashMap();
             map.put("cclComIdx", comIdx);
-            map.put("cclLetterQuestion", str);
-            companyMapper.ComcCoverLetterinsert(map);
+            map.put("cclLetterQuestion", comCoverLetter.getCclLetterQuestion().toString());
+            map.put("cclMinLength", comCoverLetter.getCclMinLength());
+            map.put("cclMaxLength", comCoverLetter.getCclMaxLength());
+            companyMapper.ComCoverLetterinsert(map);
+            //System.out.println("map = " + map);
         }
-
-        //return null;
 
     }
 }

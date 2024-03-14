@@ -14,10 +14,9 @@ import java.time.LocalDateTime;
 public class ComCoverLetter {
     private Long cclIdx;
     private Long cclComIdx;
-    private String cclComName;
     private String cclLetterQuestion;
     private int cclMinLength;
-    private char cclIsActive;
+    private int cclMaxLength;
     private LocalDateTime cclRegistrationDate;
     private LocalDateTime cclModifiedDate;
 }
