@@ -10,7 +10,7 @@ import {
     FormGroup,
     Input,
     Form,
-    Button, CardTitle,
+    Button, CardTitle, Label,
 } from "reactstrap";
 //import {coverLetterSave} from "../../apis/company";
 import * as company from "../../apis/company";
@@ -19,6 +19,9 @@ function ComCoverLetter() {
 
     let [inputValue, setInputValue] = useState([{
         num: 1,
+        id: null,
+        maxlength:0,
+        minlength:0,
         question: ""
     }]);
 
@@ -27,6 +30,9 @@ function ComCoverLetter() {
             ...prevInputValue,
             {
                 num: prevInputValue.length > 0 ? prevInputValue[prevInputValue.length - 1].num + 1 : 1,
+                id: null,
+                maxlength:0,
+                minlength:0,
                 question: ""
             }
         ]);
@@ -43,9 +49,12 @@ function ComCoverLetter() {
     const save = (e) => {
         e.preventDefault();
 
-        if (inputValue.some(value => !value.question)) {
+        if (inputValue[0].question === "") {
             alert("항목을 하나 이상 입력해주세요.");
+        }else if(inputValue.some(value => !value.question)) {
+            alert("빈 값은 등록 할 수 없습니다.\n 삭제 또는 내용을 입력해주세요.")
         } else {
+            //inputValue.map(value => value.question)
             company.coverLetterSave(inputValue)
                 .then(response => {
                     //navigate('/auth/login')
@@ -54,6 +63,7 @@ function ComCoverLetter() {
                 .catch(error => {
                     alert(error.response.data);
                 });
+            console.log(inputValue);
             //coverLetterSave(inputValue);
         }
     }
@@ -67,7 +77,7 @@ function ComCoverLetter() {
                             <CardTitle tag="h4">자소서 항목</CardTitle>
                         </CardHeader>
                         <CardBody>
-                            <Form role="form" onSubmit={(e) => e.preventDefault()}>
+                        <Form role="form" onSubmit={(e) => e.preventDefault()}>
                                 <div>
                                     <ul>
                                         {inputValue.map((value, index) => {
@@ -75,13 +85,42 @@ function ComCoverLetter() {
                                             return (
                                                 <li key={value.num}>
                                                     <Row>
-                                                        <Col md="10">
+                                                        <Col md="2">
+                                                            <div>
+                                                                <Label htmlFor={"minleng"+index}
+                                                                >
+                                                                    <span className="text-muted">최소 길이(ex. 100)</span>
+                                                                </Label>
+                                                                <Input
+                                                                    id={"minleng"+index}
+                                                                    onChange={(e) => {
+                                                                        let copyInputValue = [...inputValue];
+                                                                        copyInputValue[index].minlength = e.target.value;
+                                                                        setInputValue(copyInputValue);
+                                                                    }}
+                                                                /> 자
+                                                            </div>
+                                                            <div>
+                                                                <Label htmlFor={"maxleng"+index}
+                                                                >
+                                                                    <span className="text-muted">최대 길이(ex. 200~300 or 500)</span>
+                                                                </Label>
+                                                                <Input
+                                                                    id={"maxleng"+index}
+                                                                    onChange={(e) => {
+                                                                        let copyInputValue = [...inputValue];
+                                                                        copyInputValue[index].maxlength = e.target.value;
+                                                                        setInputValue(copyInputValue);
+                                                                    }}
+                                                                /> 자
+                                                            </div>
+                                                        </Col>
+                                                        <Col md="8">
                                                             <FormGroup>
                                                                 <label>항목 {index + 1}</label>
                                                                 <Input
                                                                     placeholder={`항목 ${index + 1}`}
                                                                     type="text"
-                                                                    value={value.question}
                                                                     onChange={(e) => {
                                                                         let copyInputValue = [...inputValue];
                                                                         copyInputValue[index].question = e.target.value;

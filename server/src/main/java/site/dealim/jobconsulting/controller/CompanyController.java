@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramInsertDto;
@@ -21,9 +22,10 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
     @PostMapping("/cover-letter-save")
-    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember) {
+    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
         Member user = customMember.getMember();
-        //companyService.comCoverLetterSave(comCoverLetter);
+        //System.out.println("values = " + values.get(0));
+        companyService.comCoverLetterSave(values, user.getComIdx());
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
@@ -37,11 +39,12 @@ public class CompanyController {
                                 .pg_title(programDto.getTitle())
                                 .build();
 
-        int result = companyService.insertProgram(program);
-
-        if(result > 0) {
-            return new ResponseEntity<>("프로그램 추가 성공", HttpStatus.OK);
+        try {
+            int result = companyService.insertProgram(program);
+        } catch (Exception e) {
+            return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return new ResponseEntity<>("프로그램 추가 성공", HttpStatus.OK);
     }
 }

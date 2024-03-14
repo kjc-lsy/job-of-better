@@ -35,6 +35,7 @@ function Program() {
             alert(response.data)
         } catch(e) {
             alert(e.response.data)
+            console.log(e)
         }
     }
 
