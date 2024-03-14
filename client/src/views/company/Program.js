@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import {Editor, Viewer} from '@toast-ui/react-editor';
 import {ThemeContext} from "../../contexts/ThemeWrapper";
 
@@ -11,39 +12,59 @@ import {
     CardTitle,
     Table,
     Row,
-    Col, FormGroup, Input, Form, CardSubtitle,
+    Col, FormGroup, Input, Form, CardSubtitle, Button,
 } from "reactstrap";
+import {programSave} from "../../apis/company";
 
 
 function Program() {
     const editorRef = useRef();
-    let theme = useContext(ThemeContext);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const theme = useContext(ThemeContext);
 
     const onChangeGetHTML = () => {
         const data = editorRef.current.getInstance().getHTML();
+        setContent(data);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await programSave(title, content);
+            alert(response.data)
+        } catch(e) {
+            alert(e.response.data)
+        }
     }
 
     return (
         <div className="content">
             <Row>
-
                 <Card>
                     <CardHeader>
                         <h5 className="card-category">교육생들에게 소개할 프로그램 내용을 등록해주세요</h5>
                         <CardTitle tag="h3">프로그램 등록</CardTitle>
                     </CardHeader>
                     <CardBody>
-                        <Form className="enrollProg">
+                        <Form className="enrollProg" onSubmit={handleSubmit}>
                             <FormGroup>
-                                <Input></Input>
-                                <Editor
-                                    height="400px"
-                                    previewStyle="vertical"
-                                    initialEditType="markdown"
-                                    ref={editorRef}
-                                    onChange={onChangeGetHTML}
+                                <Input
+                                    value={title}
+                                    onChange={(e)=>setTitle(e.target.value)}
                                 />
+                                <div className={theme.theme==='white-content'?'':'toastui-editor-dark'}>
+                                    <Editor
+                                        height="400px"
+                                        previewStyle="vertical"
+                                        initialEditType="markdown"
+                                        ref={editorRef}
+                                        onChange={onChangeGetHTML}
+                                    />
+                                </div>
                             </FormGroup>
+
+                            <Button type="submit"> 추가 </Button>
                         </Form>
                     </CardBody>
                 </Card>

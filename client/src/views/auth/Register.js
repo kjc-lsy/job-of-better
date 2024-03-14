@@ -498,7 +498,7 @@ const Register = () => {
                                         id="customCheckRegister"
                                         type="checkbox"
                                         name="agree"
-                                        onClick={(e) => setInputValue({...inputValue, agree: !inputValue.agree})}
+                                        onChange={(e) => setInputValue({...inputValue, agree: !inputValue.agree})}
                                     />
                                     <label
                                         className="custom-control-label"

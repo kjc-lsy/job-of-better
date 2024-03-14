@@ -69,9 +69,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
-                        .requestMatchers("/user/**").hasAnyRole("USER")
-                        .requestMatchers("/company/**").hasAnyRole("COMPANY")
+                        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+                        .requestMatchers("/api/user/**").hasAnyRole("USER")
+                        .requestMatchers("/api/company/**").hasAnyRole("COMPANY")
                         .anyRequest().authenticated()
         );
 
