@@ -3,9 +3,8 @@ package site.dealim.jobconsulting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
-import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
-import site.dealim.jobconsulting.mapper.CompanyMapper;
+import site.dealim.jobconsulting.domain.Member;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +18,16 @@ public class CompanyService {
         for(ComCoverLetter comCoverLetter : values) {
             HashMap map = new HashMap();
             map.put("cclComIdx", comIdx);
-            map.put("cclLetterQuestion", comCoverLetter.getCclLetterQuestion().toString());
+            map.put("cclLetterQuestion", comCoverLetter.getCclLetterQuestion());
             map.put("cclMinLength", comCoverLetter.getCclMinLength());
             map.put("cclMaxLength", comCoverLetter.getCclMaxLength());
-            companyMapper.ComCoverLetterinsert(map);
-            //System.out.println("map = " + map);
+            Long cclIdx = comCoverLetter.getCclIdx();
+            if(cclIdx != null) {
+                map.put("cclIdx", cclIdx);
+                companyMapper.ComCoverLetterUpdate(map);
+            }else {
+                companyMapper.ComCoverLetterinsert(map);
+            }
         }
 
     }
@@ -32,4 +36,10 @@ public class CompanyService {
         return companyMapper.comCoverLetterInfo(comIdx);
     }
 
+    public void comCoverLetterDelete(Long cclIdx, Member user) {
+        HashMap map = new HashMap();
+        map.put("cclIdx", cclIdx);
+        map.put("cclComIdx", user.getComIdx());
+        companyMapper.ComCoverLetterDelete(map);
+    }
 }

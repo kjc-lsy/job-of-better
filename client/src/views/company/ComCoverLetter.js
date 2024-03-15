@@ -14,8 +14,10 @@ import {
 } from "reactstrap";
 //import {coverLetterSave} from "../../apis/company";
 import * as company from "../../apis/company";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 function ComCoverLetter() {
+    const {isLogin} = useAuth();
 
     let [inputValue, setInputValue] = useState([{
         num: 1,
@@ -38,10 +40,25 @@ function ComCoverLetter() {
         ]);
     }
 
-    function deleteInput({num}) {
-        //console.log(num);
-        if (num !== 1) {
-            setInputValue(inputValue.filter(input => (input.num !== num)));
+    function deleteInput({num,id}) {
+        //console.log(id);
+        if(id === null) {
+            if(inputValue.length > 1) {
+                setInputValue(inputValue.filter(input => (input.num !== num)));
+            }else {
+                alert("항목은 한개 이상이어야 합니다.");
+            }
+        }else {
+            company.coverLetterDelete(id)
+                .then(response => {
+                    //console.log(response.data);
+                    if(response.data === "SUCCESS") {
+                        setInputValue(inputValue.filter(input => (input.num !== num)));
+                    }
+                })
+                .catch(error => {
+                    console.error("error",error.response.data);
+                });
         }
         //setInputValue()
     }
@@ -57,24 +74,36 @@ function ComCoverLetter() {
             company.coverLetterSave(inputValue)
                 .then(response => {
                     //navigate('/auth/login')
-                    alert(response.data)
+                    if(response.data === "SUCCESS") {
+                        alert("등록이 완료되었습니다.")
+                    }
+                    //alert(response.data)
                 })
                 .catch(error => {
-                    alert(error.response.data);
+                    console.error("error",error.response.data);
                 });
-            //console.log(inputValue);
-            //coverLetterSave(inputValue);
         }
     }
+    useEffect(() => {
+        company.coverLetterInfo()
+            .then(response => {
+                setInputValue(
+                    response.data.map((item,index) => {
+                        return {
+                            num: index+1,
+                            id: item.cclIdx,
+                            maxlength: item.cclMaxLength,
+                            minlength: item.cclMinLength,
+                            question: item.cclLetterQuestion
+                        }
+                    }));
+                //console.log(response.data);
+            })
+            .catch(error => {
+                console.error("error",error.response.data);
+            });
+    }, [isLogin]);
 
-    company.coverLetterInfo()
-    .then(response => {
-        setInputValue(response.data);
-        //console.log(response.data);
-    })
-    .catch(error => {
-        console.error("error",error.response.data);
-    });
 
     return (
         <div className="content">
@@ -90,20 +119,20 @@ function ComCoverLetter() {
                                     <ul>
                                         {inputValue.map((value, index) => {
                                             let num = value.num;
+                                            let id = value.id;
                                             return (
                                                 <li key={value.num}>
                                                     <Row>
                                                         <Col md="2">
                                                             <div>
-                                                                <Label htmlFor={"minleng"+index}
-                                                                >
+                                                                <Label htmlFor={"minleng"+index}>
                                                                     <span className="text-muted">최소 길이(ex. 100)</span>
                                                                 </Label>
                                                                 <Input
                                                                     id={"minleng"+index}
                                                                     value={value.minlength}
                                                                     onChange={(e) => {
-                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
                                                                         e.target.value = sanitizedValue;
                                                                         let copyInputValue = [...inputValue];
                                                                         copyInputValue[index].minlength = sanitizedValue;
@@ -120,10 +149,10 @@ function ComCoverLetter() {
                                                                     id={"maxleng"+index}
                                                                     value={value.maxlength}
                                                                     onChange={(e) => {
-                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
                                                                         e.target.value = sanitizedValue;
                                                                         let copyInputValue = [...inputValue];
-                                                                        copyInputValue[index].Maxlength = sanitizedValue;
+                                                                        copyInputValue[index].maxlength = sanitizedValue;
                                                                         setInputValue(copyInputValue);
                                                                     }}
                                                                 /> 자
@@ -133,8 +162,8 @@ function ComCoverLetter() {
                                                             <FormGroup>
                                                                 <label>항목 {index + 1}</label>
                                                                 <Input
-                                                                    placeholder={`항목 ${index + 1}`}
-                                                                    type="text"
+                                                                    type="textarea"
+                                                                    placeholder={`[항목 ${index + 1}]에 들어갈 내용을 입력해주세요.`}
                                                                     value={value.question}
                                                                     onChange={(e) => {
                                                                         let copyInputValue = [...inputValue];
@@ -146,7 +175,7 @@ function ComCoverLetter() {
                                                         </Col>
                                                         <Col md="2">
                                                             <Button type="button"
-                                                                    onClick={() => deleteInput({num})}>삭제</Button>
+                                                                    onClick={() => deleteInput({num,id})}>삭제</Button>
                                                         </Col>
                                                     </Row>
                                                 </li>)
