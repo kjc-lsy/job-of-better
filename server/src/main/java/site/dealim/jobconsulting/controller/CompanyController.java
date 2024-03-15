@@ -29,4 +29,13 @@ public class CompanyController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
+
+    @GetMapping("/cover-letter-info")
+    public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+        Member user = customMember.getMember();
+        //List<ComCoverLetter> comCoverLetters = companyService.comCoverLetterInfo(user.getComIdx());
+        //System.out.println("user = " + comCoverLetters);
+        //return null;
+        return companyService.comCoverLetterInfo(user.getComIdx());
+    }
 }

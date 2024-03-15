@@ -28,4 +28,8 @@ public class CompanyService {
 
     }
 
+    public List<ComCoverLetter> comCoverLetterInfo(Long comIdx) {
+        return companyMapper.comCoverLetterInfo(comIdx);
+    }
+
 }

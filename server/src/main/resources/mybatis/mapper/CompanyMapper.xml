@@ -10,4 +10,8 @@
         values(#{cclComIdx},#{cclLetterQuestion},#{cclMinLength},#{cclMaxLength})
     </insert>
 
+    <!-- 자소서 조회 -->
+    <select id="comCoverLetterInfo" resultType="ComCoverLetter" parameterType="Long">
+        SELECT * FROM company_cover_letter WHERE ccl_com_idx = #{param}
+    </select>
 </mapper>

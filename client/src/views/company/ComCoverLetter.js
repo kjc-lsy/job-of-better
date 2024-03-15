@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 // reactstrap components
 import {
@@ -48,7 +48,6 @@ function ComCoverLetter() {
 
     const save = (e) => {
         e.preventDefault();
-
         if (inputValue[0].question === "") {
             alert("항목을 하나 이상 입력해주세요.");
         }else if(inputValue.some(value => !value.question)) {
@@ -63,10 +62,19 @@ function ComCoverLetter() {
                 .catch(error => {
                     alert(error.response.data);
                 });
-            console.log(inputValue);
+            //console.log(inputValue);
             //coverLetterSave(inputValue);
         }
     }
+
+    company.coverLetterInfo()
+    .then(response => {
+        setInputValue(response.data);
+        //console.log(response.data);
+    })
+    .catch(error => {
+        console.error("error",error.response.data);
+    });
 
     return (
         <div className="content">
@@ -93,9 +101,12 @@ function ComCoverLetter() {
                                                                 </Label>
                                                                 <Input
                                                                     id={"minleng"+index}
+                                                                    value={value.minlength}
                                                                     onChange={(e) => {
+                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                                                        e.target.value = sanitizedValue;
                                                                         let copyInputValue = [...inputValue];
-                                                                        copyInputValue[index].minlength = e.target.value;
+                                                                        copyInputValue[index].minlength = sanitizedValue;
                                                                         setInputValue(copyInputValue);
                                                                     }}
                                                                 /> 자
@@ -107,9 +118,12 @@ function ComCoverLetter() {
                                                                 </Label>
                                                                 <Input
                                                                     id={"maxleng"+index}
+                                                                    value={value.maxlength}
                                                                     onChange={(e) => {
+                                                                        let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                                                                        e.target.value = sanitizedValue;
                                                                         let copyInputValue = [...inputValue];
-                                                                        copyInputValue[index].maxlength = e.target.value;
+                                                                        copyInputValue[index].Maxlength = sanitizedValue;
                                                                         setInputValue(copyInputValue);
                                                                     }}
                                                                 /> 자
@@ -121,11 +135,11 @@ function ComCoverLetter() {
                                                                 <Input
                                                                     placeholder={`항목 ${index + 1}`}
                                                                     type="text"
+                                                                    value={value.question}
                                                                     onChange={(e) => {
                                                                         let copyInputValue = [...inputValue];
                                                                         copyInputValue[index].question = e.target.value;
                                                                         setInputValue(copyInputValue);
-                                                                        //console.log(inputValue);
                                                                     }}
                                                                 />
                                                             </FormGroup>

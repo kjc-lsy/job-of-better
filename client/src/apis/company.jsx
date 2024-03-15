@@ -10,3 +10,7 @@ export const coverLetterSave = (value) => {
         }
     }))
 };
+
+export const coverLetterInfo = () => {
+    return api.get(`/api/company/cover-letter-info`)
+}
