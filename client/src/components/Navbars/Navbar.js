@@ -23,6 +23,7 @@ import {
 } from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLocation, useNavigate} from "react-router-dom";
+import FixedPlugin from "../FixedPlugin/FixedPlugin";
 
 function CommonNavbar(props) {
     const [collapseOpen, setcollapseOpen] = React.useState(false);
@@ -105,6 +106,9 @@ function CommonNavbar(props) {
                     {pathLayout !== "auth" ?
                         <Collapse navbar isOpen={collapseOpen}>
                             <Nav className="ml-auto" navbar>
+                                <InputGroup className="search-bar">
+                                <FixedPlugin bgColor={color} sideColor={props.sideColor} handleBgClick={props.changeColor}/>
+                                </InputGroup>
                                 <InputGroup className="search-bar">
                                     <Button color="link" onClick={toggleModalSearch}>
                                         <i className="tim-icons icon-zoom-split" />

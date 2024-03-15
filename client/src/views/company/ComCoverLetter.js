@@ -21,9 +21,9 @@ function ComCoverLetter() {
 
     let [inputValue, setInputValue] = useState([{
         num: 1,
-        id: null,
-        maxlength:0,
-        minlength:0,
+        id: 0,
+        maxlength: 0,
+        minlength: 0,
         question: ""
     }]);
 
@@ -32,32 +32,32 @@ function ComCoverLetter() {
             ...prevInputValue,
             {
                 num: prevInputValue.length > 0 ? prevInputValue[prevInputValue.length - 1].num + 1 : 1,
-                id: null,
-                maxlength:0,
-                minlength:0,
+                id: 0,
+                maxlength: 0,
+                minlength: 0,
                 question: ""
             }
         ]);
     }
 
-    function deleteInput({num,id}) {
+    function deleteInput({num, id}) {
         //console.log(id);
-        if(id === null) {
-            if(inputValue.length > 1) {
+        if (id === null) {
+            if (inputValue.length > 1) {
                 setInputValue(inputValue.filter(input => (input.num !== num)));
-            }else {
+            } else {
                 alert("항목은 한개 이상이어야 합니다.");
             }
-        }else {
+        } else {
             company.coverLetterDelete(id)
                 .then(response => {
                     //console.log(response.data);
-                    if(response.data === "SUCCESS") {
+                    if (response.data === "SUCCESS") {
                         setInputValue(inputValue.filter(input => (input.num !== num)));
                     }
                 })
                 .catch(error => {
-                    console.error("error",error.response.data);
+                    console.error("error", error.response.data);
                 });
         }
         //setInputValue()
@@ -67,20 +67,20 @@ function ComCoverLetter() {
         e.preventDefault();
         if (inputValue[0].question === "") {
             alert("항목을 하나 이상 입력해주세요.");
-        }else if(inputValue.some(value => !value.question)) {
+        } else if (inputValue.some(value => !value.question)) {
             alert("빈 값은 등록 할 수 없습니다.\n 삭제 또는 내용을 입력해주세요.")
         } else {
             //inputValue.map(value => value.question)
             company.coverLetterSave(inputValue)
                 .then(response => {
                     //navigate('/auth/login')
-                    if(response.data === "SUCCESS") {
+                    if (response.data === "SUCCESS") {
                         alert("등록이 완료되었습니다.")
                     }
                     //alert(response.data)
                 })
                 .catch(error => {
-                    console.error("error",error.response.data);
+                    console.error("error", error.response.data);
                 });
         }
     }
@@ -88,9 +88,9 @@ function ComCoverLetter() {
         company.coverLetterInfo()
             .then(response => {
                 setInputValue(
-                    response.data.map((item,index) => {
+                    response.data.map((item, index) => {
                         return {
-                            num: index+1,
+                            num: index + 1,
                             id: item.cclIdx,
                             maxlength: item.cclMaxLength,
                             minlength: item.cclMinLength,
@@ -100,7 +100,7 @@ function ComCoverLetter() {
                 //console.log(response.data);
             })
             .catch(error => {
-                console.error("error",error.response.data);
+                console.error("error", error.response.data);
             });
     }, [isLogin]);
 
@@ -114,23 +114,31 @@ function ComCoverLetter() {
                             <CardTitle tag="h4">자소서 항목</CardTitle>
                         </CardHeader>
                         <CardBody>
-                        <Form role="form" onSubmit={(e) => e.preventDefault()}>
+                            <Form role="form" onSubmit={(e) => e.preventDefault()}>
                                 <div>
                                     <ul>
                                         {inputValue.map((value, index) => {
                                             let num = value.num;
                                             let id = value.id;
                                             return (
-                                                <li key={value.num}>
-                                                    <Row>
-                                                        <Col md="2">
+                                                <li key={value.num} className="coverletter_row">
+                                                    <Row className="listTitle">
+                                                        <span>
+                                                            자소서 질문 항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}
+                                                        </span>
+                                                        <Button type="button"
+                                                                onClick={() => deleteInput({num, id})}>삭제</Button>
+                                                    </Row>
+                                                    <Row className="listCon">
+                                                        <div className="minmaxlength">
                                                             <div>
-                                                                <Label htmlFor={"minleng"+index}>
-                                                                    <span className="text-muted">최소 길이(ex. 100)</span>
+                                                                <Label htmlFor={"minleng" + index}>
+                                                                    <span className="text-muted">최소 글자수</span>
                                                                 </Label>
                                                                 <Input
-                                                                    id={"minleng"+index}
+                                                                    id={"minleng" + index}
                                                                     value={value.minlength}
+                                                                    className="sm_input"
                                                                     onChange={(e) => {
                                                                         let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
                                                                         e.target.value = sanitizedValue;
@@ -138,16 +146,16 @@ function ComCoverLetter() {
                                                                         copyInputValue[index].minlength = sanitizedValue;
                                                                         setInputValue(copyInputValue);
                                                                     }}
-                                                                /> 자
+                                                                />
                                                             </div>
                                                             <div>
-                                                                <Label htmlFor={"maxleng"+index}
-                                                                >
-                                                                    <span className="text-muted">최대 길이(ex. 200~300 or 500)</span>
+                                                                <Label htmlFor={"maxleng" + index}>
+                                                                    <span className="text-muted">최대 글자수</span>
                                                                 </Label>
                                                                 <Input
-                                                                    id={"maxleng"+index}
+                                                                    id={"maxleng" + index}
                                                                     value={value.maxlength}
+                                                                    className="sm_input"
                                                                     onChange={(e) => {
                                                                         let sanitizedValue = e.target.value.replace(/[^0-9.]/g, '');
                                                                         e.target.value = sanitizedValue;
@@ -155,13 +163,14 @@ function ComCoverLetter() {
                                                                         copyInputValue[index].maxlength = sanitizedValue;
                                                                         setInputValue(copyInputValue);
                                                                     }}
-                                                                /> 자
+                                                                />
                                                             </div>
-                                                        </Col>
-                                                        <Col md="8">
+                                                        </div>
+                                                        <div className="coverletterTxt">
                                                             <FormGroup>
-                                                                <label>항목 {index + 1}</label>
+                                                                <label htmlFor={"text" + index}>자소서 질문</label>
                                                                 <Input
+                                                                    id={"text" + index}
                                                                     type="textarea"
                                                                     placeholder={`[항목 ${index + 1}]에 들어갈 내용을 입력해주세요.`}
                                                                     value={value.question}
@@ -172,19 +181,16 @@ function ComCoverLetter() {
                                                                     }}
                                                                 />
                                                             </FormGroup>
-                                                        </Col>
-                                                        <Col md="2">
-                                                            <Button type="button"
-                                                                    onClick={() => deleteInput({num,id})}>삭제</Button>
-                                                        </Col>
+                                                        </div>
                                                     </Row>
                                                 </li>)
                                         })}
                                     </ul>
                                 </div>
-
-                                <Button type="button" onClick={addInput}>추가</Button>
-                                <Button type="button" onClick={save}>저장</Button>
+                                <div className="btngroup">
+                                    <Button type="button" className="btn2" onClick={addInput}>추가</Button>
+                                    <Button type="button" onClick={save}>저장</Button>
+                                </div>
                             </Form>
                         </CardBody>
                     </Card>

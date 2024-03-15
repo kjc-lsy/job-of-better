@@ -16,5 +16,5 @@ export const coverLetterInfo = () => {
 }
 
 export function coverLetterDelete(id) {
-    return api.post('/api/company/cover-letter-delete', {cclIdx: id})
+    return api.delete(`/api/company/cover-letter-delete/${id}`)
 }
