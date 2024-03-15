@@ -6,13 +6,14 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Input, Row,} from "reactstrap";
 import {deleteProgram, getPrograms} from "../../apis/program";
 import {useAuth} from "../../contexts/AuthContextProvider";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function Program() {
     const {isLogin} = useAuth();
     const [programs, setPrograms] = useState([]);
     const navigate = useNavigate();
+    const {pgIdx} = useParams();
 
     // 로그인 처리가 완료 되면 그 이후에 함수를 실행
     useEffect(() => {
@@ -38,6 +39,10 @@ function Program() {
         navigate('/company/program-insert')
     }
 
+    const handleInfoBtn = (pgIdx) => {
+        navigate('/company/program-info/' + pgIdx)
+    }
+
     return (
         <div className="content">
             <Row>
@@ -46,7 +51,7 @@ function Program() {
                         <Col md="6" key={index}>
                             <Card className="program-info">
                                 <CardHeader>
-                                    <h5 className="card-category"></h5>
+                                    <h5 className="card-category">교육 프로그램</h5>
                                     <CardTitle tag="h3">{program.pgTitle}</CardTitle>
                                 </CardHeader>
                                 <CardBody>
@@ -118,7 +123,7 @@ function Program() {
                                     </Row>
                                 </CardBody>
                                 <CardFooter >
-                                    <Button>수정</Button>
+                                    <Button onClick={() => handleInfoBtn(program.pgIdx)}>수정</Button>
                                     <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
                                 </CardFooter>
                             </Card>

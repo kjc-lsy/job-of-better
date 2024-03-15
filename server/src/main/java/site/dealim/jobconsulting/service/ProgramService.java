@@ -18,10 +18,14 @@ public class ProgramService {
     }
 
     public List<Program> getProgramsByComIdx(Long comIdx) {
-        return programMapper.selectByComIdx(comIdx);
+        return programMapper.selectPgsByComIdx(comIdx);
     }
 
     public int deleteByPgIdx(Long pgIdx) {
         return programMapper.deleteByPgIdx(pgIdx);
+    }
+
+    public Program getProgramByPgIdx(Long pgIdx) {
+        return programMapper.selectByPgIdx(pgIdx);
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface ProgramMapper {
     public int insertProgram(Program program);
-    public List<Program> selectByComIdx(Long comIdx);
+    public List<Program> selectPgsByComIdx(Long comIdx);
     public int deleteByPgIdx(Long pgIdx);
+    public Program selectByPgIdx(Long pgIdx);
 }

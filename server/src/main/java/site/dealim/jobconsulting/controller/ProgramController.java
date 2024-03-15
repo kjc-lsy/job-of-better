@@ -64,4 +64,13 @@ public class ProgramController {
 
         return new ResponseEntity<>("프로그램 삭제 완료", HttpStatus.OK);
     }
+
+    @Secured("ROLE_COMPANY")
+    @GetMapping("/get-program")
+    public ResponseEntity<?> getProgram(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 조회... : " + pgIdx);
+
+        Program program = programService.getProgramByPgIdx(pgIdx);
+        return new ResponseEntity<>(program, HttpStatus.OK);
+    }
 }

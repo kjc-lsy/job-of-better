@@ -5,7 +5,7 @@
 <mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
 
     <!-- program 조회 -->
-    <select id="selectByComIdx" parameterType="Long" resultType="Program">
+    <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
         WHERE pg_com_idx = #{param}
@@ -21,5 +21,11 @@
         DELETE FROM program
         WHERE pg_idx = #{param}
     </delete>
+
+    <select id="selectByPgIdx" parameterType="Long" resultType="Program">
+        SELECT *
+        FROM program
+        WHERE pg_idx = #{param}
+    </select>
 
 </mapper>

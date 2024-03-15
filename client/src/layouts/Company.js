@@ -15,6 +15,7 @@ import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramInsert from "../views/company/ProgramInsert";
+import ProgramInfo from "../views/company/ProgramInfo";
 
 var ps;
 
@@ -123,9 +124,12 @@ function Company(props) {
                             <Routes>
                                 {getRoutes(routes)}
                                 <Route
+                                    path="/program-info/:pgIdx"
+                                    element={<ProgramInfo/>}
+                                />
+                                <Route
                                     path="/program-insert"
                                     element={<ProgramInsert/>}
-                                    exact
                                 />
                                 <Route
                                     path="/"
