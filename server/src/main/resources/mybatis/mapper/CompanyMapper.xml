@@ -12,4 +12,14 @@
     <select id="comCoverLetterInfo" resultType="ComCoverLetter" parameterType="Long">
         SELECT * FROM company_cover_letter WHERE ccl_com_idx = #{param}
     </select>
+
+    <update id="ComCoverLetterUpdate" parameterType="Map">
+        UPDATE company_cover_letter
+        SET ccl_letter_question = #{cclLetterQuestion} , ccl_min_length = #{cclMinLength} , ccl_max_length = #{cclMaxLength}
+        WHERE ccl_idx = #{cclIdx}
+    </update>
+
+    <delete id="ComCoverLetterDelete" parameterType="Map">
+        DELETE FROM company_cover_letter WHERE ccl_idx = #{cclIdx} and ccl_com_idx = #{cclComIdx}
+    </delete>
 </mapper>

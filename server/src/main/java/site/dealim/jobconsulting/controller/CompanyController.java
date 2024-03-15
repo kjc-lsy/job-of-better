@@ -22,7 +22,6 @@ public class CompanyController {
     @PostMapping("/cover-letter-save")
     public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
         Member user = customMember.getMember();
-        //System.out.println("values = " + values.get(0));
         companyService.comCoverLetterSave(values, user.getComIdx());
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
@@ -30,9 +29,14 @@ public class CompanyController {
     @GetMapping("/cover-letter-info")
     public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         Member user = customMember.getMember();
-        //List<ComCoverLetter> comCoverLetters = companyService.comCoverLetterInfo(user.getComIdx());
-        //System.out.println("user = " + comCoverLetters);
-        //return null;
         return companyService.comCoverLetterInfo(user.getComIdx());
+    }
+
+    @PostMapping("/cover-letter-delete")
+    public ResponseEntity<?> comCoverLetterDelete(@AuthenticationPrincipal CustomMember customMember, @RequestBody Long cclIdx) {
+        Member user = customMember.getMember();
+        System.out.println("cclIdx = " + cclIdx);
+       // companyService.comCoverLetterDelete(cclIdx,user);
+        return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 }

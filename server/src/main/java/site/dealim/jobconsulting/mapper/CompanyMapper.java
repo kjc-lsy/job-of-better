@@ -8,7 +8,11 @@ import java.util.List;
 
 @Mapper
 public interface CompanyMapper {
-    int ComCoverLetterinsert(HashMap map);
+    void ComCoverLetterinsert(HashMap map);
 
     List<ComCoverLetter> comCoverLetterInfo(Long comIdx);
+
+    int ComCoverLetterUpdate(HashMap map);
+
+    void ComCoverLetterDelete(HashMap map);
 }
