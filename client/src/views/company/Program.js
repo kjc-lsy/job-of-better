@@ -6,7 +6,7 @@ import {ThemeContext} from "../../contexts/ThemeWrapper";
 
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input, Row, Table,} from "reactstrap";
-import {getPrograms, programSave} from "../../apis/program";
+import {deleteProgram, getPrograms, programSave} from "../../apis/program";
 import {useAuth} from "../../contexts/AuthContextProvider";
 
 
@@ -20,14 +20,14 @@ function Program() {
 
     // 로그인 처리가 완료 되면 그 이후에 함수를 실행
     useEffect(() => {
-        if(isLogin) {
+        if (isLogin) {
             loadPrograms();
         }
     }, [isLogin]);
 
-    const loadPrograms= async () => {
+    const loadPrograms = async () => {
         const response = await getPrograms();
-        console.log(response.data);
+        setPrograms(response.data);
     }
 
     const onChangeGetHTML = () => {
@@ -39,10 +39,17 @@ function Program() {
         e.preventDefault();
         try {
             const response = await programSave(title, content);
+            loadPrograms();
             alert(response.data)
-        } catch(e) {
+        } catch (e) {
             alert(e.response.data)
             console.log(e)
+        }
+    }
+
+    const handleDeleteBtn = (id) => {
+        if(window.confirm('프로그램을 삭제합니다')){
+            deleteProgram(id);
         }
     }
 
@@ -59,9 +66,9 @@ function Program() {
                             <FormGroup>
                                 <Input
                                     value={title}
-                                    onChange={(e)=>setTitle(e.target.value)}
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
-                                <div className={theme.theme==='white-content'?'':'toastui-editor-dark'}>
+                                <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                     <Editor
                                         height="400px"
                                         previewStyle="vertical"
@@ -86,55 +93,28 @@ function Program() {
                         <Table className="tablesorter" responsive>
                             <thead className="text-primary">
                             <tr>
-                                <th>번호</th>
+                                <th className="text-center">번호</th>
                                 <th>제목</th>
                                 <th className="text-center">등록일</th>
                                 <th className="text-center">수정일</th>
+                                <th className="text-center"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Dakota Rice</td>
-                                <td>Niger</td>
-                                <td>Oud-Turnhout</td>
-                                <td className="text-center">$36,738</td>
-                            </tr>
-                            <tr>
-                                <td>Minerva Hooper</td>
-                                <td>Curaçao</td>
-                                <td>Sinaai-Waas</td>
-                                <td className="text-center">$23,789</td>
-                            </tr>
-                            <tr>
-                                <td>Sage Rodriguez</td>
-                                <td>Netherlands</td>
-                                <td>Baileux</td>
-                                <td className="text-center">$56,142</td>
-                            </tr>
-                            <tr>
-                                <td>Philip Chaney</td>
-                                <td>Korea, South</td>
-                                <td>Overland Park</td>
-                                <td className="text-center">$38,735</td>
-                            </tr>
-                            <tr>
-                                <td>Doris Greene</td>
-                                <td>Malawi</td>
-                                <td>Feldkirchen in Kärnten</td>
-                                <td className="text-center">$63,542</td>
-                            </tr>
-                            <tr>
-                                <td>Mason Porter</td>
-                                <td>Chile</td>
-                                <td>Gloucester</td>
-                                <td className="text-center">$78,615</td>
-                            </tr>
-                            <tr>
-                                <td>Jon Porter</td>
-                                <td>Portugal</td>
-                                <td>Gloucester</td>
-                                <td className="text-center">$98,615</td>
-                            </tr>
+                            {programs.map((program, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td className="text-center">{index + 1}</td>
+                                        <td>{program.pgTitle}</td>
+                                        <td className="text-center">{program.pgRegistrationDate.replace('T', ' ')}</td>
+                                        <td className="text-center">{program.pgModifiedDate.replace('T', ' ')}</td>
+                                        <td className="text-center">
+                                            <Button>수정</Button>
+                                            <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                             </tbody>
                         </Table>
                     </CardBody>

@@ -14,7 +14,12 @@
     <!-- program 등록 -->
     <insert id="insertProgram" parameterType="Program">
         INSERT INTO program (pg_title, pg_content, pg_com_idx)
-        VALUES (#{pg_title}, #{pg_content}, #{pg_com_idx})
+        VALUES (#{pgTitle}, #{pgContent}, #{pgComIdx})
     </insert>
+
+    <delete id="deleteByPgIdx" parameterType="int">
+        DELETE FROM program
+        WHERE pg_idx = #{param}
+    </delete>
 
 </mapper>

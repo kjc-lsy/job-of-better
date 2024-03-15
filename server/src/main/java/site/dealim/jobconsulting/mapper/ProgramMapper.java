@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProgramMapper {
     public int insertProgram(Program program);
     public List<Program> selectByComIdx(Long comIdx);
+    public int deleteByPgIdx(Long pgIdx);
 }
