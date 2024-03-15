@@ -114,7 +114,7 @@ const Auth = (props) => {
                             </Container>
                         </div>
                     </div>
-                    <FixedPlugin bgColor={color} handleBgClick={changeColor}/>
+                    {/*<FixedPlugin bgColor={color} handleBgClick={changeColor}/>*/}
                 </React.Fragment>
             )}
         </BackgroundColorContext.Consumer>

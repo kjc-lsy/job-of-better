@@ -120,6 +120,8 @@ function Company(props) {
                                 brandText={getBrandText(location.pathname)}
                                 toggleSidebar={toggleSidebar}
                                 sidebarOpened={sidebarOpened}
+                                changeColor={changeColor}
+                                sideColor={color}
                             />
                             <Routes>
                                 {getRoutes(routes)}
@@ -141,7 +143,6 @@ function Company(props) {
                             }
                         </div>
                     </div>
-                    <FixedPlugin bgColor={color} handleBgClick={changeColor}/>
                 </React.Fragment>
             )}
         </BackgroundColorContext.Consumer>

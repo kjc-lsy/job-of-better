@@ -25,21 +25,24 @@ public class CompanyController {
     public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
         Member user = customMember.getMember();
         companyService.comCoverLetterSave(values, user.getComIdx());
+        log.info("자소서 항목 등록 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
 
     @GetMapping("/cover-letter-info")
     public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
         return companyService.comCoverLetterInfo(user.getComIdx());
     }
 
-    @PostMapping("/cover-letter-delete")
-    public ResponseEntity<?> comCoverLetterDelete(@AuthenticationPrincipal CustomMember customMember, @RequestBody Long cclIdx) {
+    @DeleteMapping("/cover-letter-delete/{id}")
+    public ResponseEntity<?> comCoverLetterDelete(@AuthenticationPrincipal CustomMember customMember, @PathVariable Long id) {
         Member user = customMember.getMember();
-        System.out.println("cclIdx = " + cclIdx);
-       // companyService.comCoverLetterDelete(cclIdx,user);
+        //System.out.println("cclIdx = " + id);
+        companyService.comCoverLetterDelete(id,user);
+        log.info("자소서 항목 삭제 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 }

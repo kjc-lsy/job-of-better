@@ -1,19 +1,17 @@
+// 변수 정의
+$font-stack: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+$border-color: rgba(29, 37, 59, 0.3);
+$main-color: var(--main-color);
+$main-bgColor: var(--main-bgColor);
+$input-group-not-has-validation: ".input-group:not(.has-validation)";
+
+// 기본 스타일
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-body {
-  font-family: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+body, button, input, optgroup, select, textarea {
+  font-family: $font-stack;
 }
 
-/*.input-group-alternative {
-    .form-control {
-      &:hover {
-        background : var(--background)
-      }
-      &:focus {
-        background : var(--background)
-      }
-    }
-}*/
 .auth_wrap {
   display: flex;
   justify-content: center;
@@ -21,65 +19,7 @@ body {
 }
 
 .navbar {
-  background: #1e1e2f
-}
-
-.white-content {
-  h1 {
-    color: #000;
-  }
-
-  .navbar {
-    background: #f5f6fa;
-  }
-
-  .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus,
-  .navbar-dark .navbar-nav .nav-link {
-    color: #000;
-  }
-
-  .emailInput .btn-group > button, .custom-control-input:checked ~ .custom-control-label::before {
-    background: var(--main-color);
-  }
-
-  .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled.active, .btn-primary:disabled, .btn-primary:disabled:hover, .btn-primary:disabled:focus, .btn-primary:disabled.focus, .btn-primary:disabled:active, .btn-primary:disabled.active, .btn-primary[disabled], .btn-primary[disabled]:hover, .btn-primary[disabled]:focus, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary:hover, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary.active {
-    background-color: var(--main-color) !important;
-    background: var(--main-color) !important;
-    border-color: var(--main-color) !important;
-  }
-
-  .btn:hover, .btn:focus, .btn:active, .btn.active, .btn:active:focus, .btn:active:hover, .btn.active:focus, .btn.active:hover, .navbar .navbar-nav > a.btn:hover, .navbar .navbar-nav > a.btn:focus, .navbar .navbar-nav > a.btn:active, .navbar .navbar-nav > a.btn.active, .navbar .navbar-nav > a.btn:active:focus, .navbar .navbar-nav > a.btn:active:hover, .navbar .navbar-nav > a.btn.active:focus, .navbar .navbar-nav > a.btn.active:hover {
-    background-color: var(--main-color) !important;
-    background-image: var(--main-bgColor) !important;
-    color: #fff !important;
-    box-shadow: none;
-  }
-
-  .navbar.navbar-transparent .search-bar.input-group .btn:hover i {
-    color: #fff;
-  }
-
-  .form-control {
-    border-color: rgba(29, 37, 59, 0.3);
-  }
-
-  .card h3.title {
-    font-size: 24px
-  }
-
-
-  .nav-link.active {
-    color: var(--main-color);
-  }
-
-  .nav-link {
-    font-size: 0.8em
-  }
-
-  .form-control:focus {
-    border-color: var(--main-color)
-  }
-
+  background: #1e1e2f;
 }
 
 .form-register .form-group {
@@ -91,7 +31,7 @@ form.form-register label + .form-control {
 }
 
 @mixin ellipsis($lines: 1) {
-  @if ($lines==1) {
+  @if $lines == 1 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -123,6 +63,8 @@ form.form-register label + .form-control {
 
 .form-control {
   height: auto;
+  padding: 10px 18px; // input-group 관련 스타일로 통합
+  border: 1px solid $border-color; // input-group 관련 스타일로 통합
 }
 
 .custom-control {
@@ -133,20 +75,14 @@ form.form-register label + .form-control {
   left: -2em;
 }
 
-.form-group .form-control, .input-group .form-control {
-  padding: 10px 18px;
+// input-group 관련 스타일
+#{$input-group-not-has-validation} > .form-control:not(:last-child),
+#{$input-group-not-has-validation} > .custom-select:not(:last-child),
+#{$input-group-not-has-validation} > .custom-file:not(:last-child) .custom-file-label {
+  @extend .form-control;
 }
 
-.card label {
-  font-size: 1em
-}
-
-.input-group:not(.has-validation) > .form-control:not(:last-child), .input-group:not(.has-validation) > .custom-select:not(:last-child), .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label, .input-group:not(.has-validation) > .custom-file:not(:last-child) .custom-file-label::after {
-  border-radius: 5px;
-  border: 1px solid rgba(29, 37, 59, 0.3);
-  padding: 13px 18px;
-}
-
+// 기타 스타일
 input[type=radio], input[type=checkbox] {
   width: 20px;
   height: 20px;
@@ -176,52 +112,33 @@ input[type=radio], input[type=checkbox] {
 }
 
 a:hover, a:focus, a {
-  color: var(--main-color);
+  color: $main-color;
 }
 
 input[type=radio], input[type=checkbox] {
   display: none;
 }
 
-.white-content .custom-control-input ~ .custom-control-label::before {
-  border: 1px solid #999;
-  color: #999;
-  top: 50%;
-  transform: translateY(-45%);
-}
-
-.white-content .custom-control-input:checked ~ .custom-control-label::before {
-  content: '✔';
-  border: 1px solid var(--main-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff
-}
-
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
-  font-size: 0.8em
+  font-size: 0.8em;
 }
 
 .card .btn {
-  background: var(--main-color);
+  background: $main-color;
   margin: 0 4px;
 }
 
-.white-content .btn:hover, .white-content .btn:focus, .white-content .btn:active, .white-content .btn.active, .white-content .btn:active:focus, .white-content .btn:active:hover, .white-content .btn.active:focus, .white-content .btn.active:hover, .white-content .navbar .navbar-nav > a.btn:hover, .white-content .navbar .navbar-nav > a.btn:focus, .white-content .navbar .navbar-nav > a.btn:active, .white-content .navbar .navbar-nav > a.btn.active, .white-content .navbar .navbar-nav > a.btn:active:focus, .white-content .navbar .navbar-nav > a.btn:active:hover, .white-content .navbar .navbar-nav > a.btn.active:focus, .white-content .navbar .navbar-nav > a.btn.active:hover {
-  background: var(--main-bgColor);
-}
 
 .card .btn:hover {
-  background: var(--main-bgColor);
+  background: $main-bgColor;
 }
 
 .card form label + .form-control {
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .input-group, .form-group {
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .card ul li {
@@ -257,6 +174,236 @@ ul li .row {
 
   .form-control {
     padding: 10px 18px;
+  }
+}
+
+/************* company coverletter ************/
+
+.sm_input {
+  display: inline-block;
+  width: 70px;
+  margin-right: 10px;
+}
+.coverletter_row {
+  padding: 0 15px;
+
+  .row {
+    align-items: flex-start;
+  }
+
+  .btn{
+    padding: 0.625rem 1.25rem;
+  }
+
+  .listTitle {
+    border-radius: 10px 10px 0 0;
+    border:1px solid rgba(29, 37, 59, 0.1);
+    background: #f5f6fa;
+    font-size:16px;
+    font-weight: 500;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      padding: 5px 12px;
+      font-size:14px
+    }
+  }
+  .listCon {
+    padding: 10px 20px 30px;
+    border-radius: 0 0 10px 10px;
+    border:1px solid rgba(29, 37, 59, 0.1);
+    border-top: 0;
+    display: block;
+    .minmaxlength {
+      display: flex;
+      margin-bottom: 15px;
+      div + div {
+        margin-left: 5px;
+      }
+      input {
+        border-radius: 5px;
+      }
+    }
+    input[type="text"] {
+      padding: 0.4rem 0.75rem;
+    }
+    textarea.form-control {
+      max-height: 100px !important;
+      height: 100px;
+    }
+  }
+
+}
+.btngroup {
+  margin:50px 0 100px;
+}
+
+/*************** fixed plugin ****************/
+
+.changeThemeWrap {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  svg {
+    cursor: pointer;
+    margin:0 10px;
+  }
+  &.active {
+    transition: 0.3s;
+    #themeSwitch {
+      background: rgba(255, 255, 255, 0.2);
+      span {
+        left: calc(100% - 30px);
+        transition:left 0.3s ease;
+      }
+    }
+
+  }
+  #themeSwitch {
+    border: 0;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 25px;
+    height: 35px;
+    width: 80px;
+    position: relative;
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #fff;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      transition: 0.3s;
+    }
+  }
+}
+
+.navbar-expand-lg .navbar-nav {
+  align-items: center;
+}
+.fixed-plugin {
+  width: auto;
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  background: transparent;
+  top: auto;
+
+  img {
+    width: 26px;
+    height: auto;
+    max-width: inherit;
+    transform: rotate(-45deg);
+  }
+
+  .dropdown > div {
+    padding: 0;
+    cursor: pointer
+  }
+
+  .dropdown-menu {
+    right: -32px;
+    left: auto !important;
+    top: 50px !important;
+    width: 290px;
+    background: linear-gradient(#222a42, #1d253b);
+    padding-bottom: 20px;
+    box-shadow: 0px 10px 50px 0px ;
+  }
+  .badge {
+    border:0
+  }
+  .badge {
+    width: 15px;
+    height: 15px;
+  }
+  .badge.active , .badge:hover {
+    transform:scale(1.5)
+  }
+}
+
+.fixed-plugin .dropdown .dropdown-menu:before,
+.fixed-plugin .dropdown .dropdown-menu:after {
+  top: -13px;
+  right: 33px;
+  border-left: 0.4em solid #222a42;
+  transform: rotate(-90deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+/******************************************* white content ************************************************/
+
+
+.white-content {
+
+
+  .changeThemeWrap {
+    &.active {
+      transition: 0.3s;
+      #themeSwitch {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+    }
+    #themeSwitch {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    svg:last-of-type {
+      color:#ddd
+    }
+  }
+  .fixed-plugin li.header-title {
+    color: #000;
+  }
+  .fixed-plugin .dropdown .dropdown-menu:before,
+  .fixed-plugin .dropdown .dropdown-menu:after {
+    border-left: 0.4em solid #fff
+  }
+
+  .dropdown-menu {
+    background: linear-gradient(#fff, #fff);
+    box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
+  }
+  /*.fixed-plugin .badge {
+    border-color : #fff
+  }
+  .fixed-plugin .badge:hover {
+    border-color: #222a42;
+  }*/
+  h1 {
+    color: #000;
+  }
+
+  .navbar {
+    background: #f5f6fa;
+  }
+
+  .navbar-dark .navbar-nav .nav-link:hover,
+  .navbar-dark .navbar-nav .nav-link:focus,
+  .navbar-dark .navbar-nav .nav-link {
+    color: #000;
+  }
+
+  .emailInput .btn-group > button,
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background: $main-color;
   }
 
 }
