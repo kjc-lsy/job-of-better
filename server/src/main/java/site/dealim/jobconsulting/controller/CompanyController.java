@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.TestDto;
@@ -28,5 +25,14 @@ public class CompanyController {
         //System.out.println("values = " + values.get(0));
         companyService.comCoverLetterSave(values, user.getComIdx());
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+    }
+
+    @GetMapping("/cover-letter-info")
+    public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+        Member user = customMember.getMember();
+        //List<ComCoverLetter> comCoverLetters = companyService.comCoverLetterInfo(user.getComIdx());
+        //System.out.println("user = " + comCoverLetters);
+        //return null;
+        return companyService.comCoverLetterInfo(user.getComIdx());
     }
 }

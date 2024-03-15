@@ -8,4 +8,8 @@
         INSERT INTO company_cover_letter (ccl_com_idx,ccl_letter_question,ccl_min_length,ccl_max_length)
         values(#{cclComIdx},#{cclLetterQuestion},#{cclMinLength},#{cclMaxLength})
     </insert>
+
+    <select id="comCoverLetterInfo" resultType="ComCoverLetter" parameterType="Long">
+        SELECT * FROM company_cover_letter WHERE ccl_com_idx = #{param}
+    </select>
 </mapper>
