@@ -246,7 +246,17 @@ ul li .row {
   border: 1px solid #2b3553;
 }
 
-.enrollProg .form-group{
+.enrollProg .form-group {
   margin-bottom: 20px;
+}
+
+.program-info.card {
+  label + .form-control {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    padding: 10px 18px;
+  }
 
 }

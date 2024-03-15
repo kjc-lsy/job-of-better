@@ -1,22 +1,18 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import {Editor} from '@toast-ui/react-editor';
-import {ThemeContext} from "../../contexts/ThemeWrapper";
 
 // reactstrap components
-import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input, Row, Table,} from "reactstrap";
-import {deleteProgram, getPrograms, programSave} from "../../apis/program";
+import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Input, Row,} from "reactstrap";
+import {deleteProgram, getPrograms} from "../../apis/program";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import {useNavigate} from "react-router-dom";
 
 
 function Program() {
-    const editorRef = useRef();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const theme = useContext(ThemeContext);
     const {isLogin} = useAuth();
     const [programs, setPrograms] = useState([]);
+    const navigate = useNavigate();
 
     // 로그인 처리가 완료 되면 그 이후에 함수를 실행
     useEffect(() => {
@@ -25,100 +21,115 @@ function Program() {
         }
     }, [isLogin]);
 
+
     const loadPrograms = async () => {
         const response = await getPrograms();
         setPrograms(response.data);
     }
 
-    const onChangeGetHTML = () => {
-        const data = editorRef.current.getInstance().getHTML();
-        setContent(data);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await programSave(title, content);
+    const handleDeleteBtn = async (id) => {
+        if (window.confirm('프로그램을 삭제합니다')) {
+            await deleteProgram(id);
             loadPrograms();
-            alert(response.data)
-        } catch (e) {
-            alert(e.response.data)
-            console.log(e)
         }
     }
 
-    const handleDeleteBtn = (id) => {
-        if(window.confirm('프로그램을 삭제합니다')){
-            deleteProgram(id);
-        }
+    const handleAddBtn = () => {
+        navigate('/company/program-insert')
     }
 
     return (
         <div className="content">
             <Row>
-                <Card>
-                    <CardHeader>
-                        <h5 className="card-category">교육생들에게 소개할 프로그램 내용을 등록해주세요</h5>
-                        <CardTitle tag="h3">프로그램 등록</CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                        <Form className="enrollProg" onSubmit={handleSubmit}>
-                            <FormGroup>
-                                <Input
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                />
-                                <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
-                                    <Editor
-                                        height="400px"
-                                        previewStyle="vertical"
-                                        initialEditType="markdown"
-                                        ref={editorRef}
-                                        onChange={onChangeGetHTML}
-                                    />
-                                </div>
-                            </FormGroup>
-
-                            <Button type="submit"> 추가 </Button>
-                        </Form>
-                    </CardBody>
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <h5 className="card-category">프로그램들은 이곳에서 수정, 삭제, 조회가 가능합니다</h5>
-                        <CardTitle tag="h3">프로그램 목록</CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                        <Table className="tablesorter" responsive>
-                            <thead className="text-primary">
-                            <tr>
-                                <th className="text-center">번호</th>
-                                <th>제목</th>
-                                <th className="text-center">등록일</th>
-                                <th className="text-center">수정일</th>
-                                <th className="text-center"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {programs.map((program, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td className="text-center">{index + 1}</td>
-                                        <td>{program.pgTitle}</td>
-                                        <td className="text-center">{program.pgRegistrationDate.replace('T', ' ')}</td>
-                                        <td className="text-center">{program.pgModifiedDate.replace('T', ' ')}</td>
-                                        <td className="text-center">
-                                            <Button>수정</Button>
-                                            <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </Table>
-                    </CardBody>
-                </Card>
+                {programs.map((program, index) => {
+                    return (
+                        <Col md="6" key={index}>
+                            <Card className="program-info">
+                                <CardHeader>
+                                    <h5 className="card-category"></h5>
+                                    <CardTitle tag="h3">{program.pgTitle}</CardTitle>
+                                </CardHeader>
+                                <CardBody>
+                                    <Row>
+                                        <Col  md="6">
+                                            <label>수정일</label>
+                                            <Input
+                                                defaultValue={program.pgModifiedDate.replace('T', ' ')}
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                        <Col  md="6">
+                                            <label>등록일</label>
+                                            <Input
+                                                defaultValue={program.pgRegistrationDate.replace('T', ' ')}
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="6">
+                                            <label>교육기간</label>
+                                            <Input
+                                                defaultValue="???"
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                        <Col md="6">
+                                            <label>신청기간</label>
+                                            <Input
+                                                defaultValue="???"
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="7">
+                                            <label>장소</label>
+                                            <Input
+                                                defaultValue="???"
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                        <Col md="5">
+                                            <label>대상</label>
+                                            <Input
+                                                defaultValue="???"
+                                                placeholder="Company"
+                                                type="text"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="10">
+                                            <label>기타 사항</label>
+                                            <Input
+                                                cols="80"
+                                                defaultValue="???"
+                                                placeholder=""
+                                                rows="4"
+                                                type="textarea"
+                                            />
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                                <CardFooter >
+                                    <Button>수정</Button>
+                                    <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
+                                </CardFooter>
+                            </Card>
+                        </Col>
+                    )
+                })}
+                <Col md="6" className="text-center">
+                    <Card>
+                        <Button onClick={handleAddBtn}>+</Button>
+                    </Card>
+                </Col>
             </Row>
         </div>
     );

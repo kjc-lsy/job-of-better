@@ -17,7 +17,7 @@
         VALUES (#{pgTitle}, #{pgContent}, #{pgComIdx})
     </insert>
 
-    <delete id="deleteByPgIdx" parameterType="int">
+    <delete id="deleteByPgIdx" parameterType="Long">
         DELETE FROM program
         WHERE pg_idx = #{param}
     </delete>

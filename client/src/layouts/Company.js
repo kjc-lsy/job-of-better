@@ -14,6 +14,7 @@ import logo from "assets/img/react-logo.png";
 import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
+import ProgramInsert from "../views/company/ProgramInsert";
 
 var ps;
 
@@ -98,10 +99,10 @@ function Company(props) {
         }
         return "Brand";
     };
+
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
-
                 <React.Fragment>
                     <div className="wrapper">
                         <Sidebar
@@ -122,12 +123,16 @@ function Company(props) {
                             <Routes>
                                 {getRoutes(routes)}
                                 <Route
+                                    path="/program-insert"
+                                    element={<ProgramInsert/>}
+                                    exact
+                                />
+                                <Route
                                     path="/"
                                     element={<Navigate to="/company/home" replace/>}
                                 />
                             </Routes>
                             {
-                                // we don't want the Footer to be rendered on map page
                                 location.pathname === "/company/map" ? null : <Footer fluid/>
                             }
                         </div>
