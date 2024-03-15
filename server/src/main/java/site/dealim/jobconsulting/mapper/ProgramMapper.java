@@ -11,4 +11,5 @@ public interface ProgramMapper {
     public List<Program> selectPgsByComIdx(Long comIdx);
     public int deleteByPgIdx(Long pgIdx);
     public Program selectByPgIdx(Long pgIdx);
+    public int updateByPgIdx(Program program);
 }

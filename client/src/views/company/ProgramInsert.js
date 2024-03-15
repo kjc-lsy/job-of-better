@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useState} from 'react';
 import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input} from "reactstrap";
 import {Editor} from "@toast-ui/react-editor";
-import {programSave} from "../../apis/program";
+import {saveProgram} from "../../apis/program";
 import {ThemeContext} from "../../contexts/ThemeWrapper";
 import {useNavigate} from "react-router-dom";
 
@@ -19,7 +19,7 @@ const ProgramInsert = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await programSave(title, content);
+            const response = await saveProgram(title, content);
             alert(response.data)
             navigate('/company/program')
         } catch (e) {

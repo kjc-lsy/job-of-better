@@ -6,7 +6,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 // core components
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
@@ -15,7 +14,7 @@ import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramInsert from "../views/company/ProgramInsert";
-import ProgramInfo from "../views/company/ProgramInfo";
+import ProgramModify from "../views/company/ProgramInfo";
 
 var ps;
 
@@ -126,8 +125,8 @@ function Company(props) {
                             <Routes>
                                 {getRoutes(routes)}
                                 <Route
-                                    path="/program-info/:pgIdx"
-                                    element={<ProgramInfo/>}
+                                    path="/program-modify/:pgIdx"
+                                    element={<ProgramModify/>}
                                 />
                                 <Route
                                     path="/program-insert"

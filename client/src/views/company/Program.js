@@ -3,7 +3,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 // reactstrap components
-import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Input, Row,} from "reactstrap";
+import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row,} from "reactstrap";
 import {deleteProgram, getPrograms} from "../../apis/program";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useNavigate, useParams} from "react-router-dom";
@@ -39,8 +39,12 @@ function Program() {
         navigate('/company/program-insert')
     }
 
+    const handleModifyBtn = (pgIdx) => {
+        navigate('/company/program-modify/' + pgIdx)
+    }
+
     const handleInfoBtn = (pgIdx) => {
-        navigate('/company/program-info/' + pgIdx)
+        navigate('/company/program-modify/' + pgIdx)
     }
 
     return (
@@ -56,74 +60,39 @@ function Program() {
                                 </CardHeader>
                                 <CardBody>
                                     <Row>
-                                        <Col  md="6">
+                                        <Col md="6">
                                             <label>수정일</label>
-                                            <Input
-                                                defaultValue={program.pgModifiedDate.replace('T', ' ')}
-                                                placeholder="Company"
-                                                type="text"
-                                            />
+                                            <div className='form-control'>{program.pgModifiedDate.replace('T', ' ')}</div>
                                         </Col>
-                                        <Col  md="6">
+                                        <Col md="6">
                                             <label>등록일</label>
-                                            <Input
-                                                defaultValue={program.pgRegistrationDate.replace('T', ' ')}
-                                                placeholder="Company"
-                                                type="text"
-                                            />
+                                            <div className="form-control">{program.pgModifiedDate.replace('T', ' ')}</div>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md="6">
                                             <label>교육기간</label>
-                                            <Input
-                                                defaultValue="???"
-                                                placeholder="Company"
-                                                type="text"
-                                            />
+                                            <div className="form-control">asd</div>
                                         </Col>
                                         <Col md="6">
                                             <label>신청기간</label>
-                                            <Input
-                                                defaultValue="???"
-                                                placeholder="Company"
-                                                type="text"
-                                            />
+                                            <div className="form-control">asd</div>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md="7">
+                                        <Col md="6">
                                             <label>장소</label>
-                                            <Input
-                                                defaultValue="???"
-                                                placeholder="Company"
-                                                type="text"
-                                            />
+                                            <div className="form-control">asd</div>
                                         </Col>
-                                        <Col md="5">
+                                        <Col md="6">
                                             <label>대상</label>
-                                            <Input
-                                                defaultValue="???"
-                                                placeholder="Company"
-                                                type="text"
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col md="10">
-                                            <label>기타 사항</label>
-                                            <Input
-                                                cols="80"
-                                                defaultValue="???"
-                                                placeholder=""
-                                                rows="4"
-                                                type="textarea"
-                                            />
+                                            <div className="form-control">asd</div>
                                         </Col>
                                     </Row>
                                 </CardBody>
                                 <CardFooter >
-                                    <Button onClick={() => handleInfoBtn(program.pgIdx)}>수정</Button>
+                                    <Button onClick={() => handleInfoBtn(program.pgIdx)}>조회</Button>
+                                    <Button onClick={() => handleModifyBtn(program.pgIdx)}>수정</Button>
                                     <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
                                 </CardFooter>
                             </Card>

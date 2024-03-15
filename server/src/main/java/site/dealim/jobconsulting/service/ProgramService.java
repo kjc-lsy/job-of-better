@@ -28,4 +28,8 @@ public class ProgramService {
     public Program getProgramByPgIdx(Long pgIdx) {
         return programMapper.selectByPgIdx(pgIdx);
     }
+
+    public int updateByPgIdx(Program program) {
+        return programMapper.updateByPgIdx(program);
+    }
 }

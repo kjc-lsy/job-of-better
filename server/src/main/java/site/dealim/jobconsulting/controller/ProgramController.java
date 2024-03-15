@@ -57,20 +57,36 @@ public class ProgramController {
 
         try {
             programService.deleteByPgIdx(pgIdx);
+            return new ResponseEntity<>("프로그램 삭제 완료", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<>("프로그램 삭제 완료", HttpStatus.OK);
     }
 
     @Secured("ROLE_COMPANY")
     @GetMapping("/get-program")
     public ResponseEntity<?> getProgram(@RequestParam(value = "pgIdx") Long pgIdx) {
         log.info("프로그램 조회... : " + pgIdx);
+        try {
+            return new ResponseEntity<>(programService.getProgramByPgIdx(pgIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-        Program program = programService.getProgramByPgIdx(pgIdx);
-        return new ResponseEntity<>(program, HttpStatus.OK);
+    @Secured("ROLE_COMPANY")
+    @PutMapping("/update-program")
+    public ResponseEntity<?> updateProgram(@RequestBody Program program) {
+        log.info("프로그램 수정... : " + program.toString());
+
+        try {
+            programService.updateByPgIdx(program);
+            return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -45,7 +45,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 💍 JWT
         // Bearer + {jwt} ➡ "Bearer " 제거
         String jwt = header.replace(JwtConstants.TOKEN_PREFIX, "");
 

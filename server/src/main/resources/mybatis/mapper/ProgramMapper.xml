@@ -18,7 +18,8 @@
     </insert>
 
     <delete id="deleteByPgIdx" parameterType="Long">
-        DELETE FROM program
+        DELETE
+        FROM program
         WHERE pg_idx = #{param}
     </delete>
 
@@ -27,5 +28,12 @@
         FROM program
         WHERE pg_idx = #{param}
     </select>
+
+    <update id="updateByPgIdx" parameterType="Program">
+        UPDATE program
+        SET pg_title   = #{pgTitle},
+            pg_content = #{pgContent}
+        WHERE pg_idx = #{pgIdx}
+    </update>
 
 </mapper>

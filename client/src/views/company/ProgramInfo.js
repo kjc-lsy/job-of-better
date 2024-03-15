@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input} from "reactstrap";
 import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../contexts/ThemeWrapper";
-import {getProgram, programSave} from "../../apis/program";
+import {getProgram, updateProgram} from "../../apis/program";
 import {useAuth} from "../../contexts/AuthContextProvider";
 
 const ProgramInfo = () => {
@@ -21,7 +21,10 @@ const ProgramInfo = () => {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
                 setProgram(fetchedProgram);
-                editorRef.current.getInstance().setHTML(fetchedProgram.pgContent);
+
+                editorRef.current.getInstance().setHTML(fetchedProgram.pgContent); // 프로그램 내용 설정
+                setTitle(fetchedProgram.pgTitle)
+                setContent(fetchedProgram.pgContent)
             });
         }
     }, [isLogin]);
@@ -34,7 +37,7 @@ const ProgramInfo = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await programSave(title, content);
+            const response = await updateProgram(program.pgIdx, title, content);
             alert(response.data)
             navigate('/company/program')
         } catch (e) {
@@ -54,7 +57,7 @@ const ProgramInfo = () => {
                     <Form className="enrollProg" onSubmit={handleSubmit}>
                         <FormGroup>
                             <Input
-                                value={program.pgTitle}
+                                value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
@@ -67,7 +70,7 @@ const ProgramInfo = () => {
                                 />
                             </div>
                         </FormGroup>
-                        <Button type="submit"> 추가 </Button>
+                        <Button type="submit">수정</Button>
                     </Form>
                 </CardBody>
             </Card>
