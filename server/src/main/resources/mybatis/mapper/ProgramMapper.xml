@@ -5,15 +5,16 @@
 <mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
 
     <!-- program 조회 -->
-    <insert id="selectByComIdx" parameterType="Program">
-        INSERT INTO program (pg_title, pg_content, pg_com_idx)
-        VALUES (#{pg_title}, #{pg_content}, #{pg_com_idx})
-    </insert>
+    <select id="selectByComIdx" parameterType="Long" resultType="Program">
+        SELECT *
+        FROM program
+        WHERE pg_com_idx = #{param}
+    </select>
 
     <!-- program 등록 -->
     <insert id="insertProgram" parameterType="Program">
-    INSERT INTO program (pg_title, pg_content, pg_com_idx)
-    VALUES (#{pg_title}, #{pg_content}, #{pg_com_idx})
+        INSERT INTO program (pg_title, pg_content, pg_com_idx)
+        VALUES (#{pg_title}, #{pg_content}, #{pg_com_idx})
     </insert>
 
 </mapper>

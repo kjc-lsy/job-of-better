@@ -59,7 +59,7 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const setLoginUser = async () => {
-        // 로그인 성공시 쿠키에 있던 JWT 토큰 가져옴
+
         let accessToken = Cookies.get("accessToken");
         if(!accessToken) { // 토큰이 없을 시 로그아웃 처리하고 함수 실행 종료
             logoutSetting();
@@ -72,7 +72,6 @@ export const AuthContextProvider = ({children}) => {
 
             // 현재 로그인한 유저 정보 axios 요청
             let response = await auth.info()
-            console.log("로그인 유저 정보 가져오는 중")
 
             let data = response.data
 
@@ -110,8 +109,6 @@ export const AuthContextProvider = ({children}) => {
         </AuthContext.Provider>
     )
 };
-
-
 
 // 다른 컴포넌트에서 const {isLogin, login, logout} = useContext(AuthContext); 대신 const {isLogin, login, logout} = useAuth(); 가능
 export const useAuth = () => useContext(AuthContext);

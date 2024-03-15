@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Program {
-    private Long pg_idx;
-    private Long pg_com_idx;
-    private String pg_title;
-    private String pg_content;
-    private LocalDateTime pg_interview_date;
-    private LocalDateTime pg_registration_date;
+    private Long pgIdx;
+    private Long pgComIdx;
+    private String pgTitle;
+    private String pgContent;
+    private LocalDateTime pgInterviewDate;
+    private LocalDateTime pgRegistrationDate;
+    private LocalDateTime pgModifiedDate;
 }

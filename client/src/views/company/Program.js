@@ -1,12 +1,13 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import {Editor, Viewer} from '@toast-ui/react-editor';
+import {Editor} from '@toast-ui/react-editor';
 import {ThemeContext} from "../../contexts/ThemeWrapper";
 
 // reactstrap components
-import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Form, FormGroup, Input, Row,} from "reactstrap";
-import {programSave} from "../../apis/program";
+import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input, Row, Table,} from "reactstrap";
+import {getPrograms, programSave} from "../../apis/program";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 
 function Program() {
@@ -14,6 +15,20 @@ function Program() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const theme = useContext(ThemeContext);
+    const {isLogin} = useAuth();
+    const [programs, setPrograms] = useState([]);
+
+    // 로그인 처리가 완료 되면 그 이후에 함수를 실행
+    useEffect(() => {
+        if(isLogin) {
+            loadPrograms();
+        }
+    }, [isLogin]);
+
+    const loadPrograms= async () => {
+        const response = await getPrograms();
+        console.log(response.data);
+    }
 
     const onChangeGetHTML = () => {
         const data = editorRef.current.getInstance().getHTML();
@@ -64,11 +79,64 @@ function Program() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle tag="h4">등록된 프로그램</CardTitle>
-                        <CardSubtitle>프로그램 목록 조회, 삭제, 수정 기능 넣자잉, 페이징도</CardSubtitle>
+                        <h5 className="card-category">프로그램들은 이곳에서 수정, 삭제, 조회가 가능합니다</h5>
+                        <CardTitle tag="h3">프로그램 목록</CardTitle>
                     </CardHeader>
                     <CardBody>
-                        <Viewer initialValue={"<h2>으아아아아아</h2><br><p>놀라운 교육 시작합니다</p>"}/>
+                        <Table className="tablesorter" responsive>
+                            <thead className="text-primary">
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th className="text-center">등록일</th>
+                                <th className="text-center">수정일</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Dakota Rice</td>
+                                <td>Niger</td>
+                                <td>Oud-Turnhout</td>
+                                <td className="text-center">$36,738</td>
+                            </tr>
+                            <tr>
+                                <td>Minerva Hooper</td>
+                                <td>Curaçao</td>
+                                <td>Sinaai-Waas</td>
+                                <td className="text-center">$23,789</td>
+                            </tr>
+                            <tr>
+                                <td>Sage Rodriguez</td>
+                                <td>Netherlands</td>
+                                <td>Baileux</td>
+                                <td className="text-center">$56,142</td>
+                            </tr>
+                            <tr>
+                                <td>Philip Chaney</td>
+                                <td>Korea, South</td>
+                                <td>Overland Park</td>
+                                <td className="text-center">$38,735</td>
+                            </tr>
+                            <tr>
+                                <td>Doris Greene</td>
+                                <td>Malawi</td>
+                                <td>Feldkirchen in Kärnten</td>
+                                <td className="text-center">$63,542</td>
+                            </tr>
+                            <tr>
+                                <td>Mason Porter</td>
+                                <td>Chile</td>
+                                <td>Gloucester</td>
+                                <td className="text-center">$78,615</td>
+                            </tr>
+                            <tr>
+                                <td>Jon Porter</td>
+                                <td>Portugal</td>
+                                <td>Gloucester</td>
+                                <td className="text-center">$98,615</td>
+                            </tr>
+                            </tbody>
+                        </Table>
                     </CardBody>
                 </Card>
             </Row>
