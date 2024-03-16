@@ -104,7 +104,7 @@ function User(props) {
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
-                    <div className="wrapper">
+                    <div className={"wrapper " + getBrandText(location.pathname) + "_wrapper"}>
                         <Sidebar
                             routes={userRoutes}
                             logo={{
@@ -119,6 +119,8 @@ function User(props) {
                                 brandText={getBrandText(location.pathname)}
                                 toggleSidebar={toggleSidebar}
                                 sidebarOpened={sidebarOpened}
+                                changeColor={changeColor}
+                                sideColor={color}
                             />
                             <Routes>
                                 {getRoutes(routes)}

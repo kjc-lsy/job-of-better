@@ -75,7 +75,7 @@ const ProgramInfo = () => {
                             </Col>
                         </Row>
                     </div>
-                    
+
                     <div className='program-title'>프로그램 내용</div>
                     <div className='program-content'>
                         <Viewer

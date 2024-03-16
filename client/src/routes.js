@@ -8,6 +8,9 @@ import UserProfile from "./views/user/UserProfile";
 import React from "react";
 import Program from "./views/company/program/Program";
 import Typography from "./views/common/Typography";
+import RegisterChoice from "./views/auth/RegisterChoice";
+import RegisterCompany from "./views/auth/RegisterCompany";
+
 
 var routes = [
   {
@@ -22,6 +25,20 @@ var routes = [
     name: "Register",
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
+    layout: "/auth",
+  },
+  {
+    path: "/register-company",
+    name: "RegisterCompany",
+    icon: "ni ni-circle-08 text-pink",
+    component: <RegisterCompany />,
+    layout: "/auth",
+  },
+  {
+    path: "/register-choice",
+    name: "RegisterChoice",
+    icon: "ni ni-circle-08 text-pink",
+    component: <RegisterChoice />,
     layout: "/auth",
   },
   {

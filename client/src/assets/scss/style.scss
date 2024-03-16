@@ -11,23 +11,14 @@ $input-group-not-has-validation: ".input-group:not(.has-validation)";
 body, button, input, optgroup, select, textarea {
   font-family: $font-stack;
 }
-
-.auth_wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+a:hover, a:focus, a {
+  color: $main-color;
 }
-
-.navbar {
-  background: #1e1e2f;
+b {
+  font-weight: bold;
 }
-
-.form-register .form-group {
-  margin-bottom: 20px;
-}
-
-form.form-register label + .form-control {
-  margin-bottom: 0;
+p {
+  word-break: keep-all;
 }
 
 @mixin ellipsis($lines: 1) {
@@ -82,6 +73,98 @@ form.form-register label + .form-control {
   border: 1px solid $border-color; // input-group 관련 스타일로 통합
 }
 
+// 기타 스타일
+input[type=radio], input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  padding: 0.5rem !important;
+  position: static;
+  margin-top: 0;
+}
+input[type=radio], input[type=checkbox] {
+  display: none;
+}
+
+.input-group {
+  align-items: center;
+}
+
+
+/************* card ************/
+
+.card {
+  .btn {
+    background: $main-color;
+    margin: 0 4px;
+
+    &:hover {
+      background: $main-bgColor;
+    }
+  }
+  &:not(.card-white) label:not(.btn) {
+    padding: 0 !important;
+    display: flex;
+    align-items: end;
+  }
+
+  .btn2 {
+    border: 1px solid $main-color;
+    background: #fff;
+    color: $main-color;
+  }
+
+  form label + .form-control {
+    margin-bottom: 0;
+  }
+
+  .input-group, .form-group {
+    margin-bottom: 0;
+  }
+
+  ul li {
+    margin-bottom: 20px;
+  }
+
+  ul li .row {
+    align-items: end;
+  }
+
+  .enrollProg {
+    .image {
+      height: auto;
+    }
+
+    input {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+/*************** navbar, sidebar ****************/
+
+.navbar {
+  background: #1e1e2f;
+}
+
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+  font-size: 0.8em;
+}
+.nav {
+  align-items: center;
+  .nav-link {
+    font-size:16px
+  }
+}
+
+/****************************************** auth ******************************************/
+
+.auth_wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .custom-control {
   padding-left: 2em;
 }
@@ -97,19 +180,9 @@ form.form-register label + .form-control {
   @extend .form-control;
 }
 
-// 기타 스타일
-input[type=radio], input[type=checkbox] {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  padding: 0.5rem !important;
-  position: static;
-  margin-top: 0;
-}
 
-.input-group {
-  align-items: center;
-}
+
+/** register **/
 
 .emailInput span {
   padding: 0 5px;
@@ -120,60 +193,67 @@ input[type=radio], input[type=checkbox] {
   padding: 13px 18px;
 }
 
-.card:not(.card-white) label:not(.btn) {
-  padding: 0 !important;
-  display: flex;
-  align-items: end;
-}
-
-a:hover, a:focus, a {
-  color: $main-color;
-}
-
-input[type=radio], input[type=checkbox] {
-  display: none;
-}
-
-.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
-  font-size: 0.8em;
-}
-
-.card .btn {
-  background: $main-color;
-  margin: 0 4px;
-}
-
-
-.card .btn:hover {
-  background: $main-bgColor;
-}
-
-.card form label + .form-control {
-  margin-bottom: 0;
-}
-
-.input-group, .form-group {
-  margin-bottom: 0;
-}
-
-.card ul li {
+.form-register .form-group {
   margin-bottom: 20px;
 }
 
-ul li .row {
-  align-items: end;
+form.form-register label + .form-control {
+  margin-bottom: 0;
 }
 
-.card .enrollProg {
-  .image {
-    height: auto;
-  }
+/** register choice **/
 
-  input {
-    margin-bottom: 20px;
+.register_choice_con {
+
+  .card-body {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    a.btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border:2px solid #f1f1f1;
+
+      &:hover {
+        border:2px solid $main-color;
+        background: #fff !important;
+      }
+    }
+    img {
+      width: 50%;
+    }
+    h4 {
+      margin-bottom: 10px;
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.6em;
+    }
+    p {
+      font-size: 12px;
+      line-height: 1.4em;
+      span {
+        color: $main-color;
+        display: inline;
+      }
+    }
   }
 }
 
+/****************************************** company ******************************************/
+
+/** program **/
+
+.toastui-editor-toolbar-item-wrapper {
+  .scroll-sync {
+    display: inline-block !important;
+    margin-bottom: 0px;
+  }
+}
 .toastui-editor-dark .toastui-editor-defaultUI {
   border: 1px solid #2b3553;
 }
@@ -192,7 +272,7 @@ ul li .row {
   }
 }
 
-/************* company coverletter ************/
+/************ company cover letter ************/
 
 .sm_input {
   display: inline-block;
@@ -332,6 +412,13 @@ ul li .row {
     background: linear-gradient(#222a42, #1d253b);
     padding-bottom: 20px;
     box-shadow: 0px 10px 50px 0px ;
+
+    &::after , &::before {
+      top: -13px;
+      right: 33px;
+      border-left: 0.4em solid #222a42;
+      transform: rotate(-90deg);
+    }
   }
   .badge {
     border:0
@@ -345,43 +432,21 @@ ul li .row {
   }
 }
 
-.fixed-plugin .dropdown .dropdown-menu:before,
-.fixed-plugin .dropdown .dropdown-menu:after {
-  top: -13px;
-  right: 33px;
-  border-left: 0.4em solid #222a42;
-  transform: rotate(-90deg);
-}
-
-
-
-
-
-
-
-
-
-
-
-/******************************************* white content ************************************************/
-
+/********************************************* white content *********************************************/
 
 .white-content {
-
-
   .changeThemeWrap {
     &.active {
       transition: 0.3s;
       #themeSwitch {
         background: rgba(0, 0, 0, 0.1);
       }
-
     }
     #themeSwitch {
       background: rgba(0, 0, 0, 0.1);
     }
     svg:last-of-type {
-      color:#ddd
+      color: #ddd;
     }
   }
   .fixed-plugin li.header-title {
@@ -389,36 +454,23 @@ ul li .row {
   }
   .fixed-plugin .dropdown .dropdown-menu:before,
   .fixed-plugin .dropdown .dropdown-menu:after {
-    border-left: 0.4em solid #fff
+    border-left: 0.4em solid #fff;
   }
-
   .dropdown-menu {
     background: linear-gradient(#fff, #fff);
     box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   }
-  /*.fixed-plugin .badge {
-    border-color : #fff
-  }
-  .fixed-plugin .badge:hover {
-    border-color: #222a42;
-  }*/
-  h1 {
-    color: #000;
-  }
-
-  .navbar {
-    background: #f5f6fa;
-  }
-
+  h1,
   .navbar-dark .navbar-nav .nav-link:hover,
   .navbar-dark .navbar-nav .nav-link:focus,
   .navbar-dark .navbar-nav .nav-link {
     color: #000;
   }
-
+  .navbar {
+    background: #f5f6fa;
+  }
   .emailInput .btn-group > button,
   .custom-control-input:checked ~ .custom-control-label::before {
     background: $main-color;
   }
-
 }
