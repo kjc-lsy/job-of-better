@@ -37,7 +37,7 @@ const Register = () => {
         email: "",
         validEmail: false,
         emailUserName: "",
-        domain:"",
+        domain: "",
 
         birthDate: "",
 
@@ -74,8 +74,8 @@ const Register = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
 
-    useEffect(()=>{
-        if(RegExp(inputRegexs.usernameRegex).exec(inputValue.username)){
+    useEffect(() => {
+        if (RegExp(inputRegexs.usernameRegex).exec(inputValue.username)) {
             setInputValue({...inputValue, validUsername: true});
         } else {
             setInputValue({...inputValue, validUsername: false});
@@ -91,14 +91,14 @@ const Register = () => {
 
     }, [inputValue.password]);
 
-    useEffect(()=>{
-        if(inputValue.checkPassword === inputValue.password && inputValue.checkPassword.match(inputRegexs.pwRegex)){
+    useEffect(() => {
+        if (inputValue.checkPassword === inputValue.password && inputValue.checkPassword.match(inputRegexs.pwRegex)) {
             setInputValue({...inputValue, validCheckPassword: true});
         } else {
             setInputValue({...inputValue, validCheckPassword: false});
         }
 
-    },[inputValue.checkPassword])
+    }, [inputValue.checkPassword])
 
     useEffect(() => {
         if (inputValue.name.match(inputRegexs.nameRegex)) {
@@ -111,7 +111,7 @@ const Register = () => {
     useEffect(() => {
         inputValue.email = inputValue.emailUserName + '@' + inputValue.domain
 
-        if(inputValue.email.match(inputRegexs.emailRegex)){
+        if (inputValue.email.match(inputRegexs.emailRegex)) {
             setInputValue({...inputValue, validEmail: true});
         } else {
             setInputValue({...inputValue, validEmail: false});
@@ -130,10 +130,10 @@ const Register = () => {
     const handleDomainChange = (domain) => {
         if (domain === '직접 입력') {
             setIsReadOnly(false);
-            setInputValue({...inputValue, domain:''});
+            setInputValue({...inputValue, domain: ''});
         } else {
             setIsReadOnly(true);
-            setInputValue({...inputValue, domain:domain});
+            setInputValue({...inputValue, domain: domain});
         }
     };
 
@@ -153,7 +153,7 @@ const Register = () => {
         <Col lg="6" md="8">
             <Card>
                 <CardHeader className="text-center">
-                    <h3 className="title">Sign Up</h3>
+                    <h3 className="title">개인 회원 가입</h3>
                 </CardHeader>
                 {/*<CardHeader className="bg-transparent pb-5">*/}
                 {/*    <div className="text-muted text-center mt-2 mb-4">*/}
@@ -460,37 +460,49 @@ const Register = () => {
                         <FormGroup>
                             <label htmlFor="">성별</label>
                             <InputGroup>
-                                <Col>
+                                <div className="custom-gender custom-control custom-control-alternative custom-checkbox">
                                     <FormGroup check>
-                                        <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
-                                            <Input
-                                                type="radio"
-                                                name="gender"
-                                                value="m"
-                                                checked="checked"
-                                                onChange={e => setInputValue({
-                                                    ...inputValue,
-                                                    gender: e.target.value
-                                                })}
-                                            />남성
+                                        <Input
+                                            className="custom-control-input"
+                                            type="radio"
+                                            name="gender"
+                                            value="m"
+                                            id="registerMale"
+                                            checked="checked"
+                                            onChange={e => setInputValue({
+                                                ...inputValue,
+                                                gender: e.target.value
+                                            })}
+                                        />
+                                        <Label
+                                            className="custom-control-label"
+                                            htmlFor="registerMale"
+                                        >
+                                            <span className="text-muted">
+                                            남성
+                                            </span>
                                         </Label>
                                     </FormGroup>
-                                </Col>
-                                <Col>
                                     <FormGroup check>
-                                        <Label className="p-2 mb-0" style={{fontSize: "0.875rem"}}>
-                                            <Input
-                                                type="radio"
-                                                name="gender"
-                                                value="f"
-                                                onChange={e => setInputValue({
-                                                    ...inputValue,
-                                                    gender: e.target.value
-                                                })}
-                                            />여성
+                                        <Input
+                                            className="custom-control-input"
+                                            type="radio"
+                                            name="gender"
+                                            value="f"
+                                            id="registerFemale"
+                                            onChange={e => setInputValue({
+                                                ...inputValue,
+                                                gender: e.target.value
+                                            })}
+                                        />
+                                        <Label
+                                            className="custom-control-label"
+                                            htmlFor="registerFemale"
+                                        >
+                                            <span className="text-muted">여성</span>
                                         </Label>
                                     </FormGroup>
-                                </Col>
+                                </div>
                             </InputGroup>
                         </FormGroup>
                         <Row className="my-4">
@@ -522,7 +534,7 @@ const Register = () => {
                                     Create account
                                 </styled.ButtonBox>*/}
                             <Button className="my-4" color="primary" type="submit" disabled={!submitRequirement}>
-                                Create account
+                                회원가입
                             </Button>
                         </div>
 

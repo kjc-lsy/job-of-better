@@ -1,6 +1,6 @@
 // 변수 정의
 $font-stack: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-$border-color: rgba(29, 37, 59, 0.3);
+$border-color: rgba(29, 37, 59, 0.2);
 $main-color: var(--main-color);
 $main-bgColor: var(--main-bgColor);
 $input-group-not-has-validation: ".input-group:not(.has-validation)";
@@ -11,12 +11,15 @@ $input-group-not-has-validation: ".input-group:not(.has-validation)";
 body, button, input, optgroup, select, textarea {
   font-family: $font-stack;
 }
+
 a:hover, a:focus, a {
   color: $main-color;
 }
+
 b {
   font-weight: bold;
 }
+
 p {
   word-break: keep-all;
 }
@@ -70,7 +73,7 @@ p {
 .form-control {
   height: auto;
   padding: 10px 18px; // input-group 관련 스타일로 통합
-  border: 1px solid $border-color; // input-group 관련 스타일로 통합
+  border-color: $border-color ; // input-group 관련 스타일로 통합
 }
 
 // 기타 스타일
@@ -82,6 +85,7 @@ input[type=radio], input[type=checkbox] {
   position: static;
   margin-top: 0;
 }
+
 input[type=radio], input[type=checkbox] {
   display: none;
 }
@@ -102,6 +106,7 @@ input[type=radio], input[type=checkbox] {
       background: $main-bgColor;
     }
   }
+
   &:not(.card-white) label:not(.btn) {
     padding: 0 !important;
     display: flex;
@@ -150,10 +155,12 @@ input[type=radio], input[type=checkbox] {
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
   font-size: 0.8em;
 }
+
 .nav {
   align-items: center;
+
   .nav-link {
-    font-size:16px
+    font-size: 16px
   }
 }
 
@@ -165,14 +172,6 @@ input[type=radio], input[type=checkbox] {
   align-items: center;
 }
 
-.custom-control {
-  padding-left: 2em;
-}
-
-.custom-control-label::before {
-  left: -2em;
-}
-
 // input-group 관련 스타일
 #{$input-group-not-has-validation} > .form-control:not(:last-child),
 #{$input-group-not-has-validation} > .custom-select:not(:last-child),
@@ -181,16 +180,70 @@ input[type=radio], input[type=checkbox] {
 }
 
 
-
 /** register **/
 
-.emailInput span {
-  padding: 0 5px;
+.custom-control {
+  padding-left: 2em;
 }
 
-.emailInput button {
-  margin: 0 0 0 5px;
-  padding: 13px 18px;
+.custom-control-label::before {
+  left: -2em;
+  content: "";
+  text-align: center;
+  color: rgba(50, 50, 93, 0.15);
+}
+
+.custom-control-label::after {
+  left: -2em
+}
+
+.custom-gender {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding-left: 0;
+
+  label:not(.btn).custom-control-label {
+    padding-left: 2em !important
+  }
+
+  .custom-control-label::before {
+    content: "";
+    border-radius: 50%;
+    left: 0 !important
+  }
+
+  .custom-control-label::after {
+    content: "";
+    background: rgba(50, 50, 93, 0.15);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    left: 5px;
+    top: 5px;
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: none;
+    background: #fff
+  }
+}
+
+.emailInput {
+  span {
+    padding: 0 5px;
+
+  }
+
+  button {
+    margin: 0 0 0 5px;
+    padding: 10px 18px;
+  }
+
+  input {
+    border-radius: 0.4285rem !important;
+    border: 1px solid rgba(29, 37, 59, 0.3) !important;
+  }
 }
 
 .form-register .form-group {
@@ -216,16 +269,18 @@ form.form-register label + .form-control {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border:2px solid #f1f1f1;
+      border: 2px solid #f1f1f1;
 
       &:hover {
-        border:2px solid $main-color;
+        border: 2px solid $main-color;
         background: #fff !important;
       }
     }
+
     img {
       width: 50%;
     }
+
     h4 {
       margin-bottom: 10px;
       margin-top: 10px;
@@ -233,9 +288,11 @@ form.form-register label + .form-control {
       font-size: 22px;
       line-height: 1.6em;
     }
+
     p {
       font-size: 12px;
       line-height: 1.4em;
+
       span {
         color: $main-color;
         display: inline;
@@ -243,6 +300,54 @@ form.form-register label + .form-control {
     }
   }
 }
+
+/** register company **/
+
+.companyRegisterContainer {
+  .card:not(.card-white) {
+    box-shadow: none;
+    border-radius: 0;
+    background: transparent;
+    .card-header {
+      padding: 35px 15px 20px;
+    }
+    .card-body {
+      background: #fff;
+      box-shadow: 0 1px 15px 0 rgba(123, 123, 123, 0.05);
+      border-radius: 0.2857rem;
+
+      & + .card-body {
+        margin-top: 20px;
+      }
+    }
+
+    .register_file {
+      label {
+        display: block;
+        cursor: pointer;
+        div {
+          display: block;
+        }
+        .form-control {
+          cursor: pointer;
+          border:2px dashed $border-color;
+          text-align: center;
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap:10px;
+          margin-top: 5px;
+          img {
+            width: 100px;
+          }
+        }
+      }
+    }
+  }
+}
+
 
 /****************************************** company ******************************************/
 
@@ -254,6 +359,7 @@ form.form-register label + .form-control {
     margin-bottom: 0px;
   }
 }
+
 .toastui-editor-dark .toastui-editor-defaultUI {
   border: 1px solid #2b3553;
 }
@@ -279,6 +385,7 @@ form.form-register label + .form-control {
   width: 70px;
   margin-right: 10px;
 }
+
 .coverletter_row {
   padding: 0 15px;
 
@@ -286,15 +393,15 @@ form.form-register label + .form-control {
     align-items: flex-start;
   }
 
-  .btn{
+  .btn {
     padding: 0.625rem 1.25rem;
   }
 
   .listTitle {
     border-radius: 10px 10px 0 0;
-    border:1px solid rgba(29, 37, 59, 0.1);
+    border: 1px solid rgba(29, 37, 59, 0.1);
     background: #f5f6fa;
-    font-size:16px;
+    font-size: 16px;
     font-weight: 500;
     padding: 10px 20px;
     display: flex;
@@ -303,37 +410,43 @@ form.form-register label + .form-control {
 
     button {
       padding: 5px 12px;
-      font-size:14px
+      font-size: 14px
     }
   }
+
   .listCon {
     padding: 10px 20px 30px;
     border-radius: 0 0 10px 10px;
-    border:1px solid rgba(29, 37, 59, 0.1);
+    border: 1px solid rgba(29, 37, 59, 0.1);
     border-top: 0;
     display: block;
+
     .minmaxlength {
       display: flex;
       margin-bottom: 15px;
+
       div + div {
         margin-left: 5px;
       }
+
       input {
         border-radius: 5px;
       }
     }
+
     input[type="text"] {
       padding: 0.4rem 0.75rem;
     }
+
     textarea.form-control {
       max-height: 100px !important;
       height: 100px;
     }
   }
-
 }
+
 .btngroup {
-  margin:50px 0 100px;
+  margin: 50px 0 100px;
 }
 
 /*************** fixed plugin ****************/
@@ -343,21 +456,26 @@ form.form-register label + .form-control {
   gap: 10px;
   align-items: center;
   justify-content: center;
+
   svg {
     cursor: pointer;
-    margin:0 10px;
+    margin: 0 10px;
   }
+
   &.active {
     transition: 0.3s;
+
     #themeSwitch {
       background: rgba(255, 255, 255, 0.2);
+
       span {
         left: calc(100% - 30px);
-        transition:left 0.3s ease;
+        transition: left 0.3s ease;
       }
     }
 
   }
+
   #themeSwitch {
     border: 0;
     background: rgba(255, 255, 255, 0.6);
@@ -384,6 +502,7 @@ form.form-register label + .form-control {
 .navbar-expand-lg .navbar-nav {
   align-items: center;
 }
+
 .fixed-plugin {
   width: auto;
   display: inline-block;
@@ -411,66 +530,83 @@ form.form-register label + .form-control {
     width: 290px;
     background: linear-gradient(#222a42, #1d253b);
     padding-bottom: 20px;
-    box-shadow: 0px 10px 50px 0px ;
+    box-shadow: 0px 10px 50px 0px;
 
-    &::after , &::before {
+    &::after, &::before {
       top: -13px;
       right: 33px;
       border-left: 0.4em solid #222a42;
       transform: rotate(-90deg);
     }
   }
+
   .badge {
-    border:0
+    border: 0
   }
+
   .badge {
     width: 15px;
     height: 15px;
   }
-  .badge.active , .badge:hover {
-    transform:scale(1.5)
+
+  .badge.active, .badge:hover {
+    transform: scale(1.5)
   }
 }
+
 
 /********************************************* white content *********************************************/
 
 .white-content {
+  .form-control {
+    border-color: $border-color;
+  }
   .changeThemeWrap {
     &.active {
       transition: 0.3s;
+
       #themeSwitch {
         background: rgba(0, 0, 0, 0.1);
       }
     }
+
     #themeSwitch {
       background: rgba(0, 0, 0, 0.1);
     }
+
     svg:last-of-type {
       color: #ddd;
     }
   }
+
   .fixed-plugin li.header-title {
     color: #000;
   }
+
   .fixed-plugin .dropdown .dropdown-menu:before,
   .fixed-plugin .dropdown .dropdown-menu:after {
     border-left: 0.4em solid #fff;
   }
+
   .dropdown-menu {
     background: linear-gradient(#fff, #fff);
     box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);
   }
+
   h1,
   .navbar-dark .navbar-nav .nav-link:hover,
   .navbar-dark .navbar-nav .nav-link:focus,
   .navbar-dark .navbar-nav .nav-link {
     color: #000;
   }
+
   .navbar {
     background: #f5f6fa;
   }
+
   .emailInput .btn-group > button,
   .custom-control-input:checked ~ .custom-control-label::before {
     background: $main-color;
   }
+
 }
