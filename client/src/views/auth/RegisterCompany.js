@@ -20,6 +20,7 @@ import React, {useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
+import Postcode from "../../components/AddrPlugin";
 
 const CompanyRegister = () => {
     const navigate = useNavigate();
@@ -148,6 +149,7 @@ const CompanyRegister = () => {
             });
     }
 
+
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
             <Card>
@@ -155,8 +157,32 @@ const CompanyRegister = () => {
                 <CardBody>
                     <CardHeader className="text-center">
                         <h3 className="title">기업 회원 가입</h3>
+                        <p>모든 정보를 입력 후 회원가입을 눌러주세요.</p>
                     </CardHeader>
                     <h4>기업 인증</h4>
+                    <FormGroup>
+                        <label>회사명</label>
+                        <Input
+                            value={inputValue.username}
+                            name="username"
+                            placeholder="회사명"
+                            type="text"
+                            onChange={e => {
+                                setInputValue({...inputValue, username: e.target.value})
+                            }}
+                        />
+                        <div className="text-muted font-italic">
+                            <small>
+                                {" "}
+                                {inputValue.validUsername && inputValue.username !== ""
+                                    ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                    : inputValue.username !== ""
+                                        ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                        : <span>사업자등록원에 등록된 회사명을 입력해주세요.</span>
+                                }
+                            </small>
+                        </div>
+                    </FormGroup>
                     <FormGroup>
                         <label>사업자 등록 번호</label>
                         <Input
@@ -185,7 +211,7 @@ const CompanyRegister = () => {
                             <div>사업자등록증명원</div>
                             <div className="file form-control">
                                 <img src={companyPaper} alt=""/>
-                                <Button>파일선택</Button>
+                                <Button type="button">파일선택</Button>
                                 <p>사업자등록증명원의 발급서류를 첨부해주세요.</p>
                             </div>
                         </label>
@@ -198,6 +224,61 @@ const CompanyRegister = () => {
                                 setInputValue({...inputValue, username: e.target.value})
                             }}
                         />
+                    </FormGroup>
+                    <FormGroup className="register_addr">
+                        <label>회사 주소</label>
+                        <Row>
+                            <Col md={7}>
+                                    <Input
+                                        id="exampleCity"
+                                        name="address"
+                                        placeholder="도로명주소"
+                                    />
+                            </Col>
+                            <Col md={3}>
+                                    <Input
+                                        id="exampleState"
+                                        name="zip"
+                                        placeholder="우편번호"
+                                        disabled
+                                    />
+                            </Col>
+                            <Col>
+                                <Postcode />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                    <Input
+                                        id="exampleAddress"
+                                        name="detailAddress"
+                                        placeholder="상세주소"
+                                    />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>대표자명</label>
+                        <Input
+                            value={inputValue.username}
+                            name="username"
+                            placeholder="대표자명"
+                            type="text"
+                            onChange={e => {
+                                setInputValue({...inputValue, username: e.target.value})
+                            }}
+                        />
+                        <div className="text-muted font-italic">
+                            <small>
+                                {" "}
+                                {inputValue.validUsername && inputValue.username !== ""
+                                    ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                    : inputValue.username !== ""
+                                        ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                        : <span>사업자증명원에 등록된 대표자명을 입력해주세요.</span>
+                                }
+                            </small>
+                        </div>
                     </FormGroup>
                 </CardBody>
                     <CardBody>
@@ -377,6 +458,12 @@ const CompanyRegister = () => {
 
 
 
+
+
+
+                </CardBody>
+                    <CardBody>
+                        <h4>약관</h4>
                         <Row className="my-4">
                             <Col xs="12">
                                 <div className="custom-control custom-control-alternative custom-checkbox">
@@ -406,9 +493,7 @@ const CompanyRegister = () => {
                                 회원가입
                             </Button>
                         </div>
-
-
-                </CardBody>
+                    </CardBody>
             </Form>
             </Card>
         </Col>
