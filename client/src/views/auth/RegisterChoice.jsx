@@ -20,7 +20,7 @@ const RegisterChoice = () => {
                         >
                             <img src={userImg} alt="개인회원가입에 대한 이미지"/>
                             <h4>개인 회원</h4>
-                            <p>14세 이상 <b>일반회원</b></p>
+                            <p>14세 이상 <span>일반회원</span></p>
                         </Button>
                         <Button
                             className="btn2"
@@ -29,7 +29,7 @@ const RegisterChoice = () => {
                         >
                             <img src={companyImg} alt="기업회원가입에 대한 이미지"/>
                             <h4>기업 회원</h4>
-                            <p>기업회원으로 가입하기 위해선 반드시 1명이상의 기업담당자 정보를 입력해야 하며 <b>기업담당자는 사전에 <span>개인회원으로 가입</span>되어있어야합니다.</b></p>
+                            <p>취업 컨설팅을 등록할 <span>기업회원</span><br/>(가입 전 <b>사업자등록증</b>을 준비해주세요.)</p>
                         </Button>
                     </CardBody>
                 </Card>
