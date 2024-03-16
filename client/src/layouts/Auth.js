@@ -67,8 +67,10 @@ const Auth = (props) => {
                 <React.Fragment>
                     <CommonNavbar
                         brandText={getBrandText(location.pathname)}
+                        changeColor={changeColor}
+                        sideColor={color}
                     />
-                    <div className="wrapper">
+                    <div className={"wrapper " + getBrandText(location.pathname) + "_wrapper"}>
                         <div className="main-panel auth_wrap p-6" ref={mainContent} data={color}>
 
                             {/*<div className="main-content " ref={mainContent} data={color}>*/}

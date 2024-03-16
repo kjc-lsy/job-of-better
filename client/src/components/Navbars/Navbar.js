@@ -185,12 +185,17 @@ function CommonNavbar(props) {
                         </Collapse>
                         : <Nav>
                             <NavItem>
+                            <InputGroup className="search-bar">
+                                <FixedPlugin bgColor={color} sideColor={props.sideColor} handleBgClick={props.changeColor}/>
+                            </InputGroup>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink active={pathPage === "login" ? true : false} href="/auth/login">
                                     로그인
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={pathPage === "register" ? true : false} href="/auth/register">
+                                <NavLink active={pathPage.includes("register") ? true : false} href="/auth/register-choice">
                                     회원가입
                                 </NavLink>
                             </NavItem>

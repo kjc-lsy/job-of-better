@@ -150,7 +150,7 @@ const Login = () => {
                 <Col className="text-right" xs="6">
                     <a
                         className="text-light"
-                        href="/auth/register"
+                        href="/auth/register-choice"
                     >
                         <small>Create new account</small>
                     </a>

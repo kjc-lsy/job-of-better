@@ -104,7 +104,8 @@ function Company(props) {
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
-                    <div className="wrapper">
+
+                    <div className={"wrapper " + getBrandText(location.pathname)+"_wrapper"}>
                         <Sidebar
                             routes={companyRoutes}
                             logo={{
