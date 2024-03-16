@@ -53,6 +53,21 @@ form.form-register label + .form-control {
   }
 }
 
+.program-info {
+  .program-title{
+    border-radius: 10px 10px 0 0;
+    border: 1px solid rgba(29, 37, 59, 0.1);
+    background: #f5f6fa;
+    padding: 10px 20px;
+  }
+  .program-content {
+    padding: 10px 20px 30px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid rgba(29, 37, 59, 0.1);
+    border-top: 0;
+  }
+}
+
 .text {
   @include ellipsis;
 }
@@ -167,7 +182,7 @@ ul li .row {
   margin-bottom: 20px;
 }
 
-.program-info.card {
+.program.card {
   label + .form-control {
     margin-bottom: 20px;
   }

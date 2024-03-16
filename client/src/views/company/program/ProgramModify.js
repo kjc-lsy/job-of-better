@@ -1,16 +1,34 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input} from "reactstrap";
 import {Editor} from "@toast-ui/react-editor";
-import {saveProgram} from "../../apis/program";
-import {ThemeContext} from "../../contexts/ThemeWrapper";
-import {useNavigate} from "react-router-dom";
+import {ThemeContext} from "../../../contexts/ThemeWrapper";
+import {getProgram, updateProgram} from "../../../apis/program";
+import {useAuth} from "../../../contexts/AuthContextProvider";
 
-const ProgramInsert = () => {
+const ProgramInfo = () => {
+    const {pgIdx} = useParams();
+    const [program, setProgram] = useState({});
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const editorRef = useRef();
     const theme = useContext(ThemeContext);
     const navigate = useNavigate();
+    const {isLogin} = useAuth();
+
+    useEffect(() => {
+        if(isLogin) {
+            getProgram(pgIdx).then((response) => {
+                const fetchedProgram = response.data;
+                setProgram(fetchedProgram);
+
+                editorRef.current.getInstance().setHTML(fetchedProgram.pgContent); // 프로그램 내용 설정
+                setTitle(fetchedProgram.pgTitle)
+                setContent(fetchedProgram.pgContent)
+            });
+        }
+    }, [isLogin]);
+
     const onChangeGetHTML = () => {
         const data = editorRef.current.getInstance().getHTML();
         setContent(data);
@@ -19,20 +37,20 @@ const ProgramInsert = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await saveProgram(title, content);
+            const response = await updateProgram(program.pgIdx, title, content);
             alert(response.data)
-            navigate('/company/program')
+            navigate('/company/program-info/' + program.pgIdx)
         } catch (e) {
             alert(e.response.data)
             console.log(e)
         }
     }
+
     return (
         <div className="content">
             <Card>
                 <CardHeader>
-                    <h5 className="card-category">교육생들에게 소개할 프로그램 내용을 등록해주세요</h5>
-                    <CardTitle tag="h3">프로그램 등록</CardTitle>
+                    <CardTitle tag="h3">프로그램 수정</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form className="enrollProg" onSubmit={handleSubmit}>
@@ -51,7 +69,7 @@ const ProgramInsert = () => {
                                 />
                             </div>
                         </FormGroup>
-                        <Button type="submit"> 추가 </Button>
+                        <Button type="submit">수정완료</Button>
                     </Form>
                 </CardBody>
             </Card>
@@ -59,4 +77,4 @@ const ProgramInsert = () => {
     );
 };
 
-export default ProgramInsert;
+export default ProgramInfo;

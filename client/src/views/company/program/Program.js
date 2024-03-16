@@ -4,8 +4,8 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 // reactstrap components
 import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row,} from "reactstrap";
-import {deleteProgram, getPrograms} from "../../apis/program";
-import {useAuth} from "../../contexts/AuthContextProvider";
+import {deleteProgram, getPrograms} from "../../../apis/program";
+import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate, useParams} from "react-router-dom";
 
 
@@ -39,12 +39,9 @@ function Program() {
         navigate('/company/program-insert')
     }
 
-    const handleModifyBtn = (pgIdx) => {
-        navigate('/company/program-modify/' + pgIdx)
-    }
 
     const handleInfoBtn = (pgIdx) => {
-        navigate('/company/program-modify/' + pgIdx)
+        navigate('/company/program-info/' + pgIdx)
     }
 
     return (
@@ -53,46 +50,51 @@ function Program() {
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>
-                            <Card className="program-info">
+                            <Card className="program">
                                 <CardHeader>
-                                    <h5 className="card-category">교육 프로그램</h5>
-                                    <CardTitle tag="h3">{program.pgTitle}</CardTitle>
+                                    <span className="card-category">회사이름</span>
+                                    <CardTitle tag="h1">{program.pgTitle}</CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Row>
-                                        <Col md="6">
-                                            <label>수정일</label>
-                                            <div className='form-control'>{program.pgModifiedDate.replace('T', ' ')}</div>
-                                        </Col>
-                                        <Col md="6">
-                                            <label>등록일</label>
-                                            <div className="form-control">{program.pgModifiedDate.replace('T', ' ')}</div>
+                                        <Col>
+                                            <label>현재상태</label>
+                                            <h2>면접 진행중</h2>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md="6">
-                                            <label>교육기간</label>
-                                            <div className="form-control">asd</div>
+                                        <Col md='4'>
+                                            <label>총 신청 수</label>
+                                            <h3>9명</h3>
                                         </Col>
+                                        <Col md='4'>
+                                            <label>면접 참여 수</label>
+                                            <h3>6명</h3>
+                                        </Col>
+                                        <Col md='4'>
+                                            <label>합격자 수</label>
+                                            <h3>4명</h3>
+                                        </Col>
+                                    </Row>
+                                    <Row>
                                         <Col md="6">
                                             <label>신청기간</label>
-                                            <div className="form-control">asd</div>
+                                            <div className="form-control">2023. 12. 01 ~ 2023. 12. 30</div>
+                                        </Col>
+                                        <Col md="6">
+                                            <label>교육기간</label>
+                                            <div className="form-control">2024. 01. 01 ~ 2024. 01. 30</div>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md="6">
-                                            <label>장소</label>
-                                            <div className="form-control">asd</div>
-                                        </Col>
-                                        <Col md="6">
-                                            <label>대상</label>
-                                            <div className="form-control">asd</div>
+                                        <Col md="12">
+                                            <label>교육내용</label>
+                                            <div className="form-control">짧은 교육내용 요약을 여기에 입력</div>
                                         </Col>
                                     </Row>
                                 </CardBody>
                                 <CardFooter >
-                                    <Button onClick={() => handleInfoBtn(program.pgIdx)}>조회</Button>
-                                    <Button onClick={() => handleModifyBtn(program.pgIdx)}>수정</Button>
+                                    <Button onClick={() => handleInfoBtn(program.pgIdx)}>상세정보</Button>
                                     <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
                                 </CardFooter>
                             </Card>

@@ -6,7 +6,7 @@ import Icons from "./views/common/Icons";
 import Home from "./views/common/Home";
 import UserProfile from "./views/user/UserProfile";
 import React from "react";
-import Program from "./views/company/Program";
+import Program from "./views/company/program/Program";
 import Typography from "./views/common/Typography";
 
 var routes = [

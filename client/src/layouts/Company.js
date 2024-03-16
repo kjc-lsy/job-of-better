@@ -13,8 +13,8 @@ import logo from "assets/img/react-logo.png";
 import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
-import ProgramInsert from "../views/company/ProgramInsert";
-import ProgramModify from "../views/company/ProgramInfo";
+import ProgramModify from "../views/company/program/ProgramModify";
+import ProgramInfo from "../views/company/program/ProgramInfo";
 
 var ps;
 
@@ -125,12 +125,16 @@ function Company(props) {
                             <Routes>
                                 {getRoutes(routes)}
                                 <Route
+                                    path="/program-info/:pgIdx"
+                                    element={<ProgramInfo/>}
+                                />
+                                <Route
                                     path="/program-modify/:pgIdx"
                                     element={<ProgramModify/>}
                                 />
                                 <Route
                                     path="/program-insert"
-                                    element={<ProgramInsert/>}
+                                    element={<ProgramModify/>}
                                 />
                                 <Route
                                     path="/"
