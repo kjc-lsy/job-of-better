@@ -6,7 +6,6 @@ WORKDIR /app
 
 # 현재 디렉토리의 package.json 파일과 package-lock.json 파일을 컨테이너의 작업 디렉토리(/app)로 복사합니다.
 COPY package.json ./
-COPY package-lock.json ./
 
 # npm을 사용하여 package.json에 정의된 의존성을 설치합니다.
 RUN npm install --legacy-peer-deps
