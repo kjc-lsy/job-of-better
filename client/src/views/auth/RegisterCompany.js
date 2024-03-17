@@ -184,10 +184,6 @@ const CompanyRegister = () => {
         }
     }
 
-
-
-
-
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
             <Card>
@@ -213,8 +209,10 @@ const CompanyRegister = () => {
                                 <small><span>사업자등록원에 등록된 회사명을 입력해주세요.</span></small>
                             </div>
                         </FormGroup>
-                        <FormGroup>
+                        <FormGroup className="register_addr">
                             <label>사업자 등록 번호</label>
+                            <Row>
+                                <Col md={10}>
                             <Input
                                 value={inputValue.b_no}
                                 name="username"
@@ -235,7 +233,10 @@ const CompanyRegister = () => {
                                     }
                                 </small>
                             </div>
-                            <Button onClick={getJsonData}>test</Button>
+                                </Col>
+                                <Col md={2}><Button onClick={getJsonData}>인증하기</Button></Col>
+                            </Row>
+
                         </FormGroup>
                         <FormGroup className="register_file">
                             <label>

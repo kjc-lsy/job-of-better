@@ -141,6 +141,11 @@ input[type=radio], input[type=checkbox] {
     font-size: 16px
   }
 }
+.footer {
+  .nav-link {
+    font-size:0.7500000025rem
+  }
+}
 
 /****************************************** auth ******************************************/
 
@@ -157,6 +162,15 @@ input[type=radio], input[type=checkbox] {
   @extend .form-control;
 }
 
+/** Login **/
+
+.Login_wrapper {
+  .card {
+    .form-group {
+      margin-bottom: 20px;
+    }
+  }
+}
 
 /** register **/
 
@@ -340,7 +354,6 @@ form.form-register label + .form-control {
         max-width: 58.33333333%;
       }
       .row {
-        align-items: center;
         padding: 0 15px;
         gap:5px;
         flex-wrap: nowrap;
