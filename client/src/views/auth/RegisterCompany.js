@@ -39,12 +39,17 @@ const CompanyRegister = () => {
         email: "",
         validEmail: false,
         emailUserName: "",
-        domain:"",
-
-        birthDate: "",
+        domain: "",
 
         phone: "",
         validPhone: false,
+
+        b_no: "",
+        validBNo: false,
+
+        b_name: "",
+        b_img: "",
+        b_detailAddr: "",
 
         agree: false
     });
@@ -61,21 +66,21 @@ const CompanyRegister = () => {
         emailRegex: /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-za-z0-9\-]+/,
     };
 
-    const submitRequirement = inputValue.validUsername &&
+    const submitRequirement =
+        inputValue.validBNo &&
+        inputValue.validUsername &&
         inputValue.validCheckPassword &&
         inputValue.validPassword &&
         inputValue.validName &&
         inputValue.validEmail &&
-        inputValue.birthDate !== "" &&
         inputValue.validPhone &&
-        inputValue.gender !== "" &&
         inputValue.agree;
 
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
 
-    useEffect(()=>{
-        if(RegExp(inputRegexs.usernameRegex).exec(inputValue.username)){
+    useEffect(() => {
+        if (RegExp(inputRegexs.usernameRegex).exec(inputValue.username)) {
             setInputValue({...inputValue, validUsername: true});
         } else {
             setInputValue({...inputValue, validUsername: false});
@@ -91,14 +96,14 @@ const CompanyRegister = () => {
 
     }, [inputValue.password]);
 
-    useEffect(()=>{
-        if(inputValue.checkPassword === inputValue.password && inputValue.checkPassword.match(inputRegexs.pwRegex)){
+    useEffect(() => {
+        if (inputValue.checkPassword === inputValue.password && inputValue.checkPassword.match(inputRegexs.pwRegex)) {
             setInputValue({...inputValue, validCheckPassword: true});
         } else {
             setInputValue({...inputValue, validCheckPassword: false});
         }
 
-    },[inputValue.checkPassword])
+    }, [inputValue.checkPassword])
 
     useEffect(() => {
         if (inputValue.name.match(inputRegexs.nameRegex)) {
@@ -111,7 +116,7 @@ const CompanyRegister = () => {
     useEffect(() => {
         inputValue.email = inputValue.emailUserName + '@' + inputValue.domain
 
-        if(inputValue.email.match(inputRegexs.emailRegex)){
+        if (inputValue.email.match(inputRegexs.emailRegex)) {
             setInputValue({...inputValue, validEmail: true});
         } else {
             setInputValue({...inputValue, validEmail: false});
@@ -130,10 +135,10 @@ const CompanyRegister = () => {
     const handleDomainChange = (domain) => {
         if (domain === '직접 입력') {
             setIsReadOnly(false);
-            setInputValue({...inputValue, domain:''});
+            setInputValue({...inputValue, domain: ''});
         } else {
             setIsReadOnly(true);
-            setInputValue({...inputValue, domain:domain});
+            setInputValue({...inputValue, domain: domain});
         }
     };
 
@@ -149,138 +154,144 @@ const CompanyRegister = () => {
             });
     }
 
+    const getJsonData = async () => {
+        const data = {
+            "b_no": [inputValue.b_no] // inputValue로부터 b_no 값을 가져옵니다.
+        };
+
+        try {
+            const response = await fetch("https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=vXG2ZQwLkIqqESDl%2BCqEtOM9nkKJcMvZOTu1%2F4SLsCLfVm%2FKMFiQc1jVDOjHs9ttLpMGl%2FfuNldQUP%2FOekqJjA%3D%3D", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            console.log(result);
+            if(result.data[0].b_stt !== ""){
+                setInputValue({...inputValue, validBNo: true});
+            }else {
+                setInputValue({...inputValue, validBNo: false});
+            }
+            //console.log(result.data[0].b_stt);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
+
 
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
             <Card>
                 <Form role="form" className="form-register" onSubmit={handleJoin}>
-                <CardBody>
-                    <CardHeader className="text-center">
-                        <h3 className="title">기업 회원 가입</h3>
-                        <p>모든 정보를 입력 후 회원가입을 눌러주세요.</p>
-                    </CardHeader>
-                    <h4>기업 인증</h4>
-                    <FormGroup>
-                        <label>회사명</label>
-                        <Input
-                            value={inputValue.username}
-                            name="username"
-                            placeholder="회사명"
-                            type="text"
-                            onChange={e => {
-                                setInputValue({...inputValue, username: e.target.value})
-                            }}
-                        />
-                        <div className="text-muted font-italic">
-                            <small>
-                                {" "}
-                                {inputValue.validUsername && inputValue.username !== ""
-                                    ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                    : inputValue.username !== ""
-                                        ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                        : <span>사업자등록원에 등록된 회사명을 입력해주세요.</span>
-                                }
-                            </small>
-                        </div>
-                    </FormGroup>
-                    <FormGroup>
-                        <label>사업자 등록 번호</label>
-                        <Input
-                            value={inputValue.username}
-                            name="username"
-                            placeholder="사업자 등록 번호"
-                            type="text"
-                            onChange={e => {
-                                setInputValue({...inputValue, username: e.target.value})
-                            }}
-                        />
-                        <div className="text-muted font-italic">
-                            <small>
-                                {" "}
-                                {inputValue.validUsername && inputValue.username !== ""
-                                    ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                    : inputValue.username !== ""
-                                        ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                        : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
-                                }
-                            </small>
-                        </div>
-                    </FormGroup>
-                    <FormGroup className="register_file">
-                        <label>
-                            <div>사업자등록증명원</div>
-                            <div className="file form-control">
-                                <img src={companyPaper} alt=""/>
-                                <Button type="button">파일선택</Button>
-                                <p>사업자등록증명원의 발급서류를 첨부해주세요.</p>
+                    <CardBody>
+                        <CardHeader className="text-center">
+                            <h3 className="title">기업 회원 가입</h3>
+                            <p>모든 정보를 입력 후 회원가입을 눌러주세요.</p>
+                        </CardHeader>
+                        <h4>기업 인증</h4>
+                        <FormGroup>
+                            <label>회사명</label>
+                            <Input
+                                value={inputValue.b_name}
+                                name="b_name"
+                                placeholder="회사명"
+                                type="text"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_name: e.target.value})
+                                }}
+                            />
+                            <div className="text-muted font-italic">
+                                <small><span>사업자등록원에 등록된 회사명을 입력해주세요.</span></small>
                             </div>
-                        </label>
-                        <Input
-                            value={inputValue.username}
-                            name="username"
-                            placeholder="사업자 등록 번호"
-                            type="file"
-                            onChange={e => {
-                                setInputValue({...inputValue, username: e.target.value})
-                            }}
-                        />
-                    </FormGroup>
-                    <FormGroup className="register_addr">
-                        <label>회사 주소</label>
-                        <Row>
-                            <Col md={7}>
+                        </FormGroup>
+                        <FormGroup>
+                            <label>사업자 등록 번호</label>
+                            <Input
+                                value={inputValue.b_no}
+                                name="username"
+                                placeholder="사업자 등록 번호"
+                                type="text"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_no: e.target.value})
+                                }}
+                            />
+                            <div className="text-muted font-italic">
+                                <small>
+                                    {" "}
+                                    {inputValue.validBNo && inputValue.b_no !== ""
+                                        ? <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>
+                                        : inputValue.b_no !== ""
+                                            ? <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>
+                                            : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
+                                    }
+                                </small>
+                            </div>
+                            <Button onClick={getJsonData}>test</Button>
+                        </FormGroup>
+                        <FormGroup className="register_file">
+                            <label>
+                                <div>사업자등록증명원</div>
+                                <div className="file form-control">
+                                    <img src={companyPaper} alt=""/>
+                                    <Button type="button">파일선택</Button>
+                                    <p>사업자등록증명원의 발급서류를 첨부해주세요.</p>
+                                </div>
+                            </label>
+                            <Input
+                                value={inputValue.b_img}
+                                name="b_img"
+                                type="file"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_img: e.target.value})
+                                }}
+                            />
+                        </FormGroup>
+                        <FormGroup className="register_addr">
+                            <label>회사 주소</label>
+                            <Postcode/>
+                            <Row>
+                                <Col md={12}>
                                     <Input
-                                        id="exampleCity"
-                                        name="address"
-                                        placeholder="도로명주소"
-                                    />
-                            </Col>
-                            <Col md={3}>
-                                    <Input
-                                        id="exampleState"
-                                        name="zip"
-                                        placeholder="우편번호"
-                                        disabled
-                                    />
-                            </Col>
-                            <Col>
-                                <Postcode />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12}>
-                                    <Input
-                                        id="exampleAddress"
-                                        name="detailAddress"
+                                        id="b_detailAddr"
+                                        name="b_detailAddr"
                                         placeholder="상세주소"
                                     />
-                            </Col>
-                        </Row>
-                    </FormGroup>
-                    <FormGroup>
-                        <label>대표자명</label>
-                        <Input
-                            value={inputValue.username}
-                            name="username"
-                            placeholder="대표자명"
-                            type="text"
-                            onChange={e => {
-                                setInputValue({...inputValue, username: e.target.value})
-                            }}
-                        />
-                        <div className="text-muted font-italic">
-                            <small>
-                                {" "}
-                                {inputValue.validUsername && inputValue.username !== ""
-                                    ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                    : inputValue.username !== ""
-                                        ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                        : <span>사업자증명원에 등록된 대표자명을 입력해주세요.</span>
-                                }
-                            </small>
-                        </div>
-                    </FormGroup>
-                </CardBody>
+                                </Col>
+                            </Row>
+                        </FormGroup>
+                        <FormGroup>
+                            <label>대표자명</label>
+                            <Input
+                                value={inputValue.b_ceoname}
+                                name="b_ceoname"
+                                placeholder="대표자명"
+                                type="text"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_ceoname: e.target.value})
+                                }}
+                            />
+                            <div className="text-muted font-italic">
+                                <small>
+                                    {" "}
+                                    {inputValue.validUsername && inputValue.b_ceoname !== ""
+                                        ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                        : inputValue.b_ceoname !== ""
+                                            ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                            : <span>사업자증명원에 등록된 대표자명을 입력해주세요.</span>
+                                    }
+                                </small>
+                            </div>
+                        </FormGroup>
+                    </CardBody>
                     <CardBody>
                         <h4>담당자 정보</h4>
                         <FormGroup>
@@ -454,14 +465,7 @@ const CompanyRegister = () => {
                                 </small>
                             </div>
                         </FormGroup>
-
-
-
-
-
-
-
-                </CardBody>
+                    </CardBody>
                     <CardBody>
                         <h4>약관</h4>
                         <Row className="my-4">
@@ -494,7 +498,7 @@ const CompanyRegister = () => {
                             </Button>
                         </div>
                     </CardBody>
-            </Form>
+                </Form>
             </Card>
         </Col>
     );
