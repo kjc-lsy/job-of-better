@@ -38,14 +38,10 @@ out/
 .vscode/
 
 ### member secure info ###
-.env
 sql-scripts/*
 
 ### env ###
-.envv
+.env
 
 ### react buildfiles ###
 /src/main/resources/static/**
-
-### nginx ###
-/nginx/*.pem

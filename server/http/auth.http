@@ -1,0 +1,28 @@
+###
+POST http://localhost:9090/api/user/join
+Content-Type: application/json
+
+{
+  "username": "company",
+  "password": "0000"
+}
+
+###
+POST http://localhost:9090/login
+Content-Type: application/json
+
+{
+  "username": "company",
+  "password": "0000"
+}
+
+###
+POST http://localhost:9090/logout
+
+
+###
+GET http://localhost:9090/login?username=user&password=0000
+
+###
+GET http://localhost:9090/info
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MDk4OTc4MzksInVubyI6IjE2IiwidWlkIjoiYXNvcmRrQG5hdmVyLmNvbSIsInJvbCI6WyJST0xFX1VTRVIiXX0.TOFksi1KRLYU4gUAHvxIhYbgorZefWiYkLXpnhej0MNfOPyf6KHOLTxaPyKXFCWefmGAHMDrmUQ9gmC_C2PC8Q

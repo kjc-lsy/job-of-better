@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
+
+    <!-- program 조회 -->
+    <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
+        SELECT *
+        FROM program
+        WHERE pg_com_idx = #{param}
+    </select>
+
+    <!-- program 등록 -->
+    <insert id="insertProgram" parameterType="Program">
+        INSERT INTO program (pg_title, pg_content, pg_com_idx)
+        VALUES (#{pgTitle}, #{pgContent}, #{pgComIdx})
+    </insert>
+
+    <delete id="deleteByPgIdx" parameterType="Long">
+        DELETE
+        FROM program
+        WHERE pg_idx = #{param}
+    </delete>
+
+    <select id="selectByPgIdx" parameterType="Long" resultType="Program">
+        SELECT *
+        FROM program
+        WHERE pg_idx = #{param}
+    </select>
+
+    <update id="updateByPgIdx" parameterType="Program">
+        UPDATE program
+        SET pg_title   = #{pgTitle},
+            pg_content = #{pgContent}
+        WHERE pg_idx = #{pgIdx}
+    </update>
+
+</mapper>
