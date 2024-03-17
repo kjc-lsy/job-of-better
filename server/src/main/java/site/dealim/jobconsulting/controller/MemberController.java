@@ -28,6 +28,8 @@ public class MemberController {
     @Secured("ROLE_USER")           // USER 권한 설정
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("로그인 유저 조회...");
+
         Member user = customMember.getMember();
 
         // 인증된 사용자가 있으면

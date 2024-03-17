@@ -12,9 +12,9 @@ export const AuthContextProvider = ({children}) => {
     // 로그인 유저 정보
     const [user, setUser] = useState(null);
     // 권한 정보
-    const [roles, setRoles] = useState({isUser : false, isCompany : false});
+    const [roles, setRoles] = useState({isUser: false, isCompany: false});
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
-    useEffect(()=>{
+    useEffect(() => {
         setLoginUser();
     }, [])
 
@@ -31,7 +31,8 @@ export const AuthContextProvider = ({children}) => {
             // axios 객체(api.js 에서 정의됨)의 기본 헤더 설정
             api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
-            await setLoginUser() // 로그인 설정이 완료 될 때 까지 기다림
+            // 로그인 유저 세팅
+            setLoginUser()
         } catch (error) {
             alert(error.response.status + " : 로그인에 실패하였습니다")
         }
@@ -61,15 +62,16 @@ export const AuthContextProvider = ({children}) => {
     const setLoginUser = async () => {
 
         let accessToken = Cookies.get("accessToken");
-        if(!accessToken) { // 토큰이 없을 시 로그아웃 처리하고 함수 실행 종료
+
+        if (!accessToken) { // 토큰이 없을 시 로그아웃 처리하고 함수 실행 종료
             logoutSetting();
             return;
         }
 
-        try {
-            // axios 객체(api.js 에서 정의됨)의 기본 헤더 설정
-            api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+        // axios 객체(api.js 에서 정의됨)의 기본 헤더 설정
+        api.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
+        try {
             // 현재 로그인한 유저 정보 axios 요청
             let response = await auth.info()
 
@@ -77,8 +79,12 @@ export const AuthContextProvider = ({children}) => {
 
             loginSetting(data) // 로그인 유저 정보를 변수에 세팅
 
-        }catch (error) {
-            console.log(error.response.status + " : 로그인 유저 정보 불러오기 실패")
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.status + " : 로그인 유저 정보 불러오기 실패")
+            } else {
+                console.log('서버에 응답이 없습니다')
+            }
         }
     }
 
@@ -93,17 +99,17 @@ export const AuthContextProvider = ({children}) => {
         setUser({idx, username, authList})
 
         // 권한 정보 세팅
-        const updatedRoles = {isUser : false, isCompany : false};
-        roleList.forEach((role)=> {
-            if(role.roleName === 'ROLE_USER') updatedRoles.isUser = true
-            if(role.roleName === 'ROLE_COMPANY') updatedRoles.isCompany = true
+        const updatedRoles = {isUser: false, isCompany: false};
+        roleList.forEach((role) => {
+            if (role.roleName === 'ROLE_USER') updatedRoles.isUser = true
+            if (role.roleName === 'ROLE_COMPANY') updatedRoles.isCompany = true
         });
         setRoles(updatedRoles);
     }
 
-    const value = { user, isLogin, roles, login, logoutSetting}; // 전역으로 넘길 함수들
+    const value = {user, isLogin, roles, login, logoutSetting}; // 전역으로 넘길 함수들
 
-    return(
+    return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
