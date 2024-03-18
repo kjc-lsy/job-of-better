@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import {Button} from "reactstrap";
-const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+import { Button, Col, Input, Row } from "reactstrap";
+
+const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
 const Postcode = () => {
+    const [address, setAddress] = useState('');
     const open = useDaumPostcodePopup(scriptUrl);
 
     const handleComplete = (data) => {
@@ -19,8 +21,9 @@ const Postcode = () => {
             }
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
+        console.log(data);
+        setAddress(data);
 
-        console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     };
 
     const handleClick = () => {
@@ -28,10 +31,31 @@ const Postcode = () => {
     };
 
     return (
-        <Button type='button' onClick={handleClick}>
-            Open
-        </Button>
+        <Row>
+            <Col md={7}>
+                <Input
+                    id="exampleCity"
+                    name="address"
+                    value={address.address ? address.address : ''}
+                    placeholder="도로명주소"
+                />
+            </Col>
+            <Col md={3}>
+                <Input
+                    id="exampleState"
+                    name="zip"
+                    value={address.zonecode ? address.zonecode : ''}
+                    placeholder="우편번호"
+                    disabled
+                />
+            </Col>
+            <Col>
+                <Button type='button' onClick={handleClick}>
+                    우편번호 찾기
+                </Button>
+            </Col>
+        </Row>
     );
 };
 
-export default Postcode ;
+export default Postcode;

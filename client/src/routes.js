@@ -10,6 +10,7 @@ import Program from "./views/company/program/Program";
 import Typography from "./views/common/Typography";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
+import CoverLetter from "./views/user/CoverLetter";
 
 
 var routes = [
@@ -104,6 +105,14 @@ var routes = [
     component: <UserProfile />,
     layout: "/user",
   },
+  {
+    path: "/cover-letter",
+    name: "자기소개서",
+    icon: "tim-icons icon-single-copy-04",
+    component: <CoverLetter />,
+    layout: "/user",
+  },
+
   {
     path: "/icons",
     name: "Icons",
