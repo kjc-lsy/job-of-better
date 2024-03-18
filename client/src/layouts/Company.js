@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-
+import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
 // core components
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
@@ -81,7 +81,7 @@ function Company(props) {
         document.documentElement.classList.toggle("nav-open");
         setsidebarOpened(!sidebarOpened);
     };
-    const getRoutes = (routes) => {
+    /*const getRoutes = (routes) => {
         return routes.map((prop, key) => {
             if (prop.layout === "/company") {
                 return (
@@ -100,13 +100,21 @@ function Company(props) {
         }
         return "Brand";
     };
+    const getPathname = (path) => {
+        for (let i = 0; i < routes.length; i++) {
+            if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
+                return (routes[i].path).slice(1);
+            }
+        }
+        return "";
+    };*/
 
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
 
-                    <div className={"wrapper " + getBrandText(location.pathname)+"_wrapper"}>
+                    <div className={"wrapper " + getPathname(location) + "-wrapper"}>
                         <Sidebar
                             routes={companyRoutes}
                             logo={{
@@ -118,14 +126,14 @@ function Company(props) {
                         />
                         <div className="main-panel" ref={mainPanelRef} data={color}>
                             <CommonNavbar
-                                brandText={getBrandText(location.pathname)}
+                                brandText={getBrandText(location)}
                                 toggleSidebar={toggleSidebar}
                                 sidebarOpened={sidebarOpened}
                                 changeColor={changeColor}
                                 sideColor={color}
                             />
                             <Routes>
-                                {getRoutes(routes)}
+                                {getRoutes(routes,location)}
                                 <Route
                                     path="/program-info/:pgIdx"
                                     element={<ProgramInfo/>}

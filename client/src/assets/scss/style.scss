@@ -82,7 +82,7 @@ input[type=radio], input[type=checkbox] {
     margin: 0 4px;
 
     &:hover {
-      background: $main-bgColor;
+      background: $main-color !important
     }
   }
 
@@ -96,6 +96,16 @@ input[type=radio], input[type=checkbox] {
     border: 1px solid $main-color;
     background: transparent;
     color: $main-color;
+  }
+
+  .greyBtn {
+    background: rgb(240, 240, 240);
+    color: #000;
+    font-weight: 500;
+    border: 1px solid rgba(29, 37, 59, 0.2);
+  }
+  .greyBtn:hover {
+    color: #fff;
   }
 
   form label + .form-control {
@@ -156,7 +166,7 @@ input[type=radio], input[type=checkbox] {
 
 /** Login **/
 
-.Login_wrapper {
+.login_wrapper {
   .card {
     .form-group {
       margin-bottom: 20px;
@@ -364,7 +374,28 @@ form.form-register label + .form-control {
     }
   }
 }
+/****************************************** user ******************************************/
 
+.cover-letter-wrapper {
+  .row {
+    margin-bottom: 30px;
+    padding-right: 0;
+  }
+  .coverletter_user {
+    font-size:18px;
+    margin-bottom: 5px;
+    b {
+      font-size:16px
+    }
+  }
+  textarea {
+    max-height: 150px !important;
+    height: 150px;
+  }
+  small {
+    padding-left: 5px;
+  }
+}
 
 /****************************************** company ******************************************/
 
@@ -488,15 +519,25 @@ form.form-register label + .form-control {
   }
 
   .listCon {
-    padding: 10px 20px 30px;
+    padding: 15px 20px 30px;
     border-radius: 0 0 10px 10px;
     border: 1px solid rgba(29, 37, 59, 0.1);
     border-top: 0;
     display: block;
+    h5 {
+      margin-bottom: 0;
+      font-size:16px
+    }
+    .listTt {
+      margin-bottom: 10px;
 
+      p {
+        font-size:12px
+      }
+    }
     .minmaxlength {
       display: flex;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
 
       div + div {
         margin-left: 5px;

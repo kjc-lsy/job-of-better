@@ -3,11 +3,11 @@ import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-do
 import {Container, Row} from "reactstrap";
 import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
+import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
 
 import routes from "routes.js";
 import {BackgroundColorContext} from "../contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
-import FixedPlugin from "../components/FixedPlugin/FixedPlugin";
 
 const Auth = (props) => {
     const mainContent = React.useRef(null);
@@ -41,36 +41,17 @@ const Auth = (props) => {
         mainContent.current.scrollTop = 0;
     }, [location]);
 
-    const getRoutes = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.layout === "/auth") {
-                return (
-                    <Route path={prop.path} element={prop.component} key={key} exact/>
-                );
-            } else {
-                return null;
-            }
-        });
-    };
-    const getBrandText = (path) => {
-        for (let i = 0; i < routes.length; i++) {
-            if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-                return routes[i].name;
-            }
-        }
-        return "Brand";
-    };
 
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
                     <CommonNavbar
-                        brandText={getBrandText(location.pathname)}
+                        brandText={getBrandText(location)}
                         changeColor={changeColor}
                         sideColor={color}
                     />
-                    <div className={"wrapper " + getBrandText(location.pathname) + "_wrapper"}>
+                    <div className={"wrapper " + getPathname(location) + "-wrapper"}>
                         <div className="main-panel auth_wrap p-6" ref={mainContent} data={color}>
 
                             {/*<div className="main-content " ref={mainContent} data={color}>*/}
@@ -109,7 +90,7 @@ const Auth = (props) => {
                             <Container className="">
                                 <Row className="justify-content-center">
                                     <Routes>
-                                        {getRoutes(routes)}
+                                        {getRoutes(routes,location)}
                                         <Route path="*" element={<Navigate to="/auth/login" replace/>}/>
                                     </Routes>
                                 </Row>

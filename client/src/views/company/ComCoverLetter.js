@@ -126,14 +126,18 @@ function ComCoverLetter() {
                                                         <span>
                                                             자소서 질문 항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}
                                                         </span>
-                                                        <Button type="button"
+                                                        <Button type="button" className="greyBtn"
                                                                 onClick={() => deleteInput({num, id})}>삭제</Button>
                                                     </Row>
                                                     <Row className="listCon">
+                                                        <div className="listTt">
+                                                            <h5>글자수 제한</h5>
+                                                            <p>* 0 또는 공란 입력시 글자 수 제한 없이 설정됩니다.</p>
+                                                        </div>
                                                         <div className="minmaxlength">
                                                             <div>
                                                                 <Label htmlFor={"minleng" + index}>
-                                                                    <span className="text-muted">최소 글자수</span>
+                                                                    <span className="text-muted">최소</span>
                                                                 </Label>
                                                                 <Input
                                                                     id={"minleng" + index}
@@ -150,7 +154,7 @@ function ComCoverLetter() {
                                                             </div>
                                                             <div>
                                                                 <Label htmlFor={"maxleng" + index}>
-                                                                    <span className="text-muted">최대 글자수</span>
+                                                                    <span className="text-muted">최대</span>
                                                                 </Label>
                                                                 <Input
                                                                     id={"maxleng" + index}
@@ -168,7 +172,7 @@ function ComCoverLetter() {
                                                         </div>
                                                         <div className="coverletterTxt">
                                                             <FormGroup>
-                                                                <label htmlFor={"text" + index}>자소서 질문</label>
+                                                                <label htmlFor={"text" + index}><h5>자소서 질문</h5></label>
                                                                 <Input
                                                                     id={"text" + index}
                                                                     type="textarea"
