@@ -14,6 +14,8 @@ import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
 
+import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
+
 var ps;
 
 function User(props) {
@@ -79,32 +81,12 @@ function User(props) {
         document.documentElement.classList.toggle("nav-open");
         setsidebarOpened(!sidebarOpened);
     };
-    const getRoutes = (routes) => {
-        return routes.map((prop, key) => {
-            if (prop.layout === "/user") {
-                return (
-                    <Route path={prop.path} element={prop.component} key={key} exact/>
-                );
-            } else {
-                return null;
-            }
-        });
-    };
-
-    const getBrandText = (path) => {
-        for (let i = 0; i < routes.length; i++) {
-            if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-                return routes[i].name;
-            }
-        }
-        return "Brand";
-    };
 
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
-                    <div className={"wrapper " + getBrandText(location.pathname) + "_wrapper"}>
+                    <div className={"wrapper " + getPathname(location) + "-wrapper"}>
                         <Sidebar
                             routes={userRoutes}
                             logo={{
@@ -116,14 +98,14 @@ function User(props) {
                         />
                         <div className="main-panel" ref={mainPanelRef} data={color}>
                             <CommonNavbar
-                                brandText={getBrandText(location.pathname)}
+                                brandText={getBrandText(location)}
                                 toggleSidebar={toggleSidebar}
                                 sidebarOpened={sidebarOpened}
                                 changeColor={changeColor}
                                 sideColor={color}
                             />
                             <Routes>
-                                {getRoutes(routes)}
+                                {getRoutes(routes,location)}
                                 <Route
                                     path="/"
                                     element={<Navigate to="/user/home" replace/>}
