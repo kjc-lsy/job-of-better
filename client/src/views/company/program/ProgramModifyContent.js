@@ -6,7 +6,7 @@ import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 
-const ProgramInfo = () => {
+const ProgramModifyContent = () => {
     const {pgIdx} = useParams();
     const [program, setProgram] = useState({});
     const [title, setTitle] = useState('');
@@ -50,7 +50,7 @@ const ProgramInfo = () => {
         <div className="content">
             <Card>
                 <CardHeader>
-                    <CardTitle tag="h3">프로그램 수정</CardTitle>
+                    <CardTitle tag="h3">프로그램 내용 수정</CardTitle>
                 </CardHeader>
                 <CardBody>
                     <Form className="enrollProg" onSubmit={handleSubmit}>
@@ -61,8 +61,8 @@ const ProgramInfo = () => {
                             />
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
-                                    height="400px"
-                                    previewStyle="vertical"
+                                    height="600px"
+                                    previewStyle={window.innerWidth < 991 ? 'tab' : 'vertical'}
                                     initialEditType="markdown"
                                     ref={editorRef}
                                     onChange={onChangeGetHTML}
@@ -77,4 +77,4 @@ const ProgramInfo = () => {
     );
 };
 
-export default ProgramInfo;
+export default ProgramModifyContent;

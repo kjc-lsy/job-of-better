@@ -49,6 +49,12 @@ const ProgramInfo = () => {
                     </div>
                     <div className='program-content'>
                         <Row>
+                            <Col>
+                                <label>프로그램 제목</label>
+                                <h4>{program.pgTitle}</h4>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col md="6">
                                 <label>등록일</label>
                                 <h4>{program.pgModifiedDate.replace('T', ' ')}</h4>
@@ -68,13 +74,8 @@ const ProgramInfo = () => {
                                 <h4>2024.01.01 ~ 2024.01.01</h4>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col>
-                                <label>프로그램 제목</label>
-                                <h4>{program.pgTitle}</h4>
-                            </Col>
-                        </Row>
                     </div>
+                    <Button onClick={() => handleModifyBtn(program.pgIdx)}>수정하기</Button>
 
                     <div className='program-title'>프로그램 내용</div>
                     <div className='program-content'>

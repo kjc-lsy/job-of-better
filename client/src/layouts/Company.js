@@ -13,8 +13,9 @@ import logo from "assets/img/react-logo.png";
 import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
-import ProgramModify from "../views/company/program/ProgramModify";
+import ProgramModifyContent from "../views/company/program/ProgramModifyContent";
 import ProgramInfo from "../views/company/program/ProgramInfo";
+import ProgramInsert from "../views/company/program/ProgramInsert";
 
 var ps;
 
@@ -109,8 +110,8 @@ function Company(props) {
                         <Sidebar
                             routes={companyRoutes}
                             logo={{
-                                outterLink: "https://www.creative-tim.com/",
-                                text: "Creative Tim",
+                                outterLink: "/",
+                                text: "Company",
                                 imgSrc: logo,
                             }}
                             toggleSidebar={toggleSidebar}
@@ -131,11 +132,11 @@ function Company(props) {
                                 />
                                 <Route
                                     path="/program-modify/:pgIdx"
-                                    element={<ProgramModify/>}
+                                    element={<ProgramModifyContent/>}
                                 />
                                 <Route
                                     path="/program-insert"
-                                    element={<ProgramModify/>}
+                                    element={<ProgramInsert/>}
                                 />
                                 <Route
                                     path="/"

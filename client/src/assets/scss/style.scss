@@ -40,29 +40,6 @@ p {
   }
 }
 
-.toastui-editor-toolbar-item-wrapper {
-  .scroll-sync {
-    display: inline-block !important;
-    margin-bottom: 0px;
-  }
-}
-
-.program-info {
-  .program-title {
-    border-radius: 10px 10px 0 0;
-    border: 1px solid rgba(29, 37, 59, 0.1);
-    background: #f5f6fa;
-    padding: 10px 20px;
-  }
-
-  .program-content {
-    padding: 10px 20px 30px;
-    border-radius: 0 0 10px 10px;
-    border: 1px solid rgba(29, 37, 59, 0.1);
-    border-top: 0;
-  }
-}
-
 .text {
   @include ellipsis;
 }
@@ -387,7 +364,7 @@ form.form-register label + .form-control {
 
 /****************************************** company ******************************************/
 
-/** program **/
+/************* program *************/
 
 .toastui-editor-toolbar-item-wrapper {
   .scroll-sync {
@@ -409,8 +386,46 @@ form.form-register label + .form-control {
     margin-bottom: 20px;
   }
 
+  label {
+    font-size: 14px;
+  }
+
   .form-control {
     padding: 10px 18px;
+  }
+
+  .company-name {
+    font-size: 14px;
+    color: $gray-600;
+  }
+
+  .card-title {
+    word-break: keep-all;
+  }
+}
+
+.program-info {
+  .program-title {
+    border-radius: 10px 10px 0 0;
+    border: 1px solid $gray-400;
+    background: #f5f6fa;
+    padding: 10px 20px;
+  }
+
+  .program-content {
+    padding: 20px 20px 20px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid $gray-400;
+    border-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .btn.btn-secondary {
+    margin-bottom: 20px;
+  }
+
+  .btn.btn-secondary:last-of-type  {
+    margin-bottom: 0px;
   }
 }
 

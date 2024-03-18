@@ -19,7 +19,7 @@
 import React from "react";
 
 // reactstrap components
-import { Container, Nav, NavItem, NavLink } from "reactstrap";
+import {Container, Nav, NavItem, NavLink} from "reactstrap";
 
 function Footer() {
   return (
@@ -27,31 +27,28 @@ function Footer() {
       <Container fluid>
         <Nav>
           <NavItem>
-            <NavLink href="https://www.creative-tim.com/?ref=bdr-user-archive-footer">
-              Creative Tim
+            <NavLink href="/">
+              job-consulting
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://www.creative-tim.com/presentation?ref=bdr-user-archive-footer">
-              About Us
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="https://www.creative-tim.com/blog?ref=bdr-user-archive-footer">
-              Blog
+            <NavLink
+                href="https://github.com/dealim/job-consulting"
+                target="_blank"
+            >
+              Github
             </NavLink>
           </NavItem>
         </Nav>
         <div className="copyright">
-          © {new Date().getFullYear()} made with{" "}
-          <i className="tim-icons icon-heart-2" /> by{" "}
+          © {new Date().getFullYear()} made by{" "}
           <a
-            href="https://www.creative-tim.com/?ref=bdr-user-archive-footer"
+            href=""
             target="_blank"
           >
-            Creative Tim
+            kjc, lsy
           </a>{" "}
-          for a better web.
+          for a better job consulting.
         </div>
       </Container>
     </footer>

@@ -4,7 +4,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 
@@ -108,8 +107,8 @@ function User(props) {
                         <Sidebar
                             routes={userRoutes}
                             logo={{
-                                outterLink: "https://www.creative-tim.com/",
-                                text: "Creative Tim",
+                                outterLink: "/",
+                                text: "Member",
                                 imgSrc: logo,
                             }}
                             toggleSidebar={toggleSidebar}

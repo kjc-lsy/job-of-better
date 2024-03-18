@@ -52,7 +52,7 @@ function Program() {
                         <Col md="6" key={index}>
                             <Card className="program">
                                 <CardHeader>
-                                    <span className="card-category">회사이름</span>
+                                    <span className="company-name">AddinEdu</span>
                                     <CardTitle tag="h1">{program.pgTitle}</CardTitle>
                                 </CardHeader>
                                 <CardBody>
@@ -79,11 +79,11 @@ function Program() {
                                     <Row>
                                         <Col md="6">
                                             <label>신청기간</label>
-                                            <div className="form-control">2023. 12. 01 ~ 2023. 12. 30</div>
+                                            <div className="form-control"><span>2023. 12. 01</span> ~ <span>2023. 12. 01</span></div>
                                         </Col>
                                         <Col md="6">
                                             <label>교육기간</label>
-                                            <div className="form-control">2024. 01. 01 ~ 2024. 01. 30</div>
+                                            <div className="form-control"><span>2023. 12. 01</span> ~ <span>2023. 12. 01</span></div>
                                         </Col>
                                     </Row>
                                     <Row>
