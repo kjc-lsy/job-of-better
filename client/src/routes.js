@@ -50,17 +50,17 @@ var routes = [
     layout: "/company",
   },
   {
-    path: "/program",
-    name: "교육 프로그램",
-    icon: "tim-icons icon-components",
-    component: <Program />,
-    layout: "/company",
-  },
-  {
     path: "/member-list",
     name: "학생목록",
     icon: "tim-icons icon-bullet-list-67",
     component: <MemberList />,
+    layout: "/company",
+  },
+  {
+    path: "/program",
+    name: "교육 프로그램",
+    icon: "tim-icons icon-components",
+    component: <Program />,
     layout: "/company",
   },
   {

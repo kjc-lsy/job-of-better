@@ -114,15 +114,6 @@ input[type=radio], input[type=checkbox] {
     align-items: end;
   }
 
-  .enrollProg {
-    .image {
-      height: auto;
-    }
-
-    input {
-      margin-bottom: 20px;
-    }
-  }
 }
 
 /*************** navbar, sidebar ****************/
@@ -390,8 +381,26 @@ form.form-register label + .form-control {
   border: 1px solid #2b3553;
 }
 
-.enrollProg .form-group {
-  margin-bottom: 20px;
+.enrollProg.card {
+  .row:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    margin-bottom: 20px;
+  }
+
+  .image {
+    height: auto;
+  }
+
+  label+.rs-picker {
+    margin-bottom: 10px;
+  }
+
+  label+.form-control {
+    margin-bottom: 10px;
+  }
 }
 
 .program.card {
