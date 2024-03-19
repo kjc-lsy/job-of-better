@@ -16,7 +16,17 @@ public class Program {
     private Long pgComIdx;
     private String pgTitle;
     private String pgContent;
-    private LocalDateTime pgInterviewDate;
-    private LocalDateTime pgRegistrationDate;
+    private LocalDateTime pgProgStartDate;
+    private LocalDateTime pgProgEndDate;
+    private LocalDateTime pgEduStartDate;
+    private LocalDateTime pgEduEndDate;
+    private LocalDateTime pgRegValStartDate;
+    private LocalDateTime pgRegValEndDate;
+    private LocalDateTime pgInterviewValStartDate;
+    private LocalDateTime pgInterviewValEndDate;
+    private LocalDateTime pgInterviewValStartTime;
+    private LocalDateTime pgInterviewValEndTime;
+    private LocalDateTime pgCreatedDate;
     private LocalDateTime pgModifiedDate;
+    private Character pgIsWithdrawn;
 }

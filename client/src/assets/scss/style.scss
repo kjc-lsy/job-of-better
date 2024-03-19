@@ -9,7 +9,7 @@ $input-group-not-has-validation: ".input-group:not(.has-validation)";
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 body, button, input, optgroup, select, textarea {
-  font-family: $font-stack;
+  font-family: $font-stack !important;
 }
 
 a:hover, a:focus, a {
@@ -412,28 +412,6 @@ form.form-register label + .form-control {
   border: 1px solid #2b3553;
 }
 
-.enrollProg.card {
-  .row:not(:last-child) {
-    margin-bottom: 20px;
-  }
-
-  .form-control {
-    margin-bottom: 20px;
-  }
-
-  .image {
-    height: auto;
-  }
-
-  label+.rs-picker {
-    margin-bottom: 10px;
-  }
-
-  label+.form-control {
-    margin-bottom: 10px;
-  }
-}
-
 .program.card {
   label + .form-control {
     margin-bottom: 20px;
@@ -456,6 +434,48 @@ form.form-register label + .form-control {
     word-break: keep-all;
   }
 }
+
+.program-enroll.card {
+  .row:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    margin-bottom: 20px;
+  }
+
+  label+.rs-picker {
+    margin-bottom: 10px;
+  }
+
+  label+.form-control {
+    margin-bottom: 10px;
+  }
+
+}
+
+.program-modify.card {
+  .form-group {
+      margin-bottom: 20px;
+  }
+}
+
+.toastui-editor-defaultUI-toolbar .image {
+  height: auto;
+}
+
+//.rs-calendar-time-dropdown-column {
+//
+//  li[data-key^="minutes-"] {
+//    display: none;
+//
+//    &.rs-calendar-time-dropdown-cell-active,
+//    &[data-key="minutes-0"],
+//    &[data-key="minutes-30"] {
+//      display: block;
+//    }
+//  }
+//}
 
 .program-info {
   .program-title {

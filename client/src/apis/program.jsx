@@ -1,6 +1,6 @@
 import api from "./api";
 
-export const saveProgram = (title, content) => api.post('/api/program/insert-program', {title, content})
+export const saveProgram = (inputValues) => api.post('/api/program/insert-program', inputValues)
 
 export const getPrograms = () => api.post('/api/program/get-programs')
 
@@ -8,4 +8,4 @@ export const deleteProgram = (pgIdx) => api.delete('/api/program/delete-program/
 
 export const getProgram = (pgIdx) => api.get(`/api/program/get-program?pgIdx=${pgIdx}`)
 
-export const updateProgram = (pgIdx, pgTitle, pgContent) => api.put('/api/program/update-program', {pgIdx, pgTitle, pgContent})
+export const updateProgram = (pgIdx, pgContent) => api.put('/api/program/update-program-cont', {pgIdx, pgContent})

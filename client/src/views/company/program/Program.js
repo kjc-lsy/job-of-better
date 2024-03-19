@@ -22,7 +22,6 @@ function Program() {
         }
     }, [isLogin]);
 
-
     const loadPrograms = async () => {
         const response = await getPrograms();
         setPrograms(response.data);
@@ -38,7 +37,6 @@ function Program() {
     const handleAddBtn = () => {
         navigate('/company/program-insert')
     }
-
 
     const handleInfoBtn = (pgIdx) => {
         navigate('/company/program-info/' + pgIdx)

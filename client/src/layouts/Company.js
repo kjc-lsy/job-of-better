@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
+import {getBrandText, getPathname, getRoutes} from "../contexts/GetRouteProvider";
 // core components
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
@@ -16,6 +16,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModifyContent from "../views/company/program/ProgramModifyContent";
 import ProgramInfo from "../views/company/program/ProgramInfo";
 import ProgramInsert from "../views/company/program/ProgramInsert";
+import ProgramModifyOverview from "../views/company/program/ProgramModifyOverview";
 
 var ps;
 
@@ -139,7 +140,11 @@ function Company(props) {
                                     element={<ProgramInfo/>}
                                 />
                                 <Route
-                                    path="/program-modify/:pgIdx"
+                                    path="/program-modify-overview/:pgIdx"
+                                    element={<ProgramModifyOverview/>}
+                                />
+                                <Route
+                                    path="/program-modify-content/:pgIdx"
                                     element={<ProgramModifyContent/>}
                                 />
                                 <Route

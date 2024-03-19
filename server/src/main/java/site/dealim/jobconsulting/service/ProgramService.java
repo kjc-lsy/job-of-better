@@ -29,7 +29,7 @@ public class ProgramService {
         return programMapper.selectByPgIdx(pgIdx);
     }
 
-    public int updateByPgIdx(Program program) {
-        return programMapper.updateByPgIdx(program);
+    public int updateContByPgIdx(Program program) {
+        return programMapper.updateContByPgIdx(program);
     }
 }

@@ -33,8 +33,12 @@ const ProgramInfo = () => {
         }
     }, [isLogin]);
 
-    const handleModifyBtn = (pgIdx) => {
-        navigate('/company/program-modify/' + pgIdx)
+    const handleModifyOvrBtn = (pgIdx) => {
+        navigate('/company/program-modify-overview/' + pgIdx)
+    }
+
+    const handleModifyContBtn = (pgIdx) => {
+        navigate('/company/program-modify-content/' + pgIdx)
     }
 
     return (
@@ -45,7 +49,7 @@ const ProgramInfo = () => {
                 </CardHeader>
                 <CardBody>
                     <div className='program-title'>
-                        개요
+                        프로그램 정보
                     </div>
                     <div className='program-content'>
                         <Row>
@@ -75,7 +79,7 @@ const ProgramInfo = () => {
                             </Col>
                         </Row>
                     </div>
-                    <Button onClick={() => handleModifyBtn(program.pgIdx)}>수정하기</Button>
+                    <Button onClick={() => handleModifyOvrBtn(program.pgIdx)}>수정하기</Button>
 
                     <div className='program-title'>프로그램 내용</div>
                     <div className='program-content'>
@@ -84,7 +88,7 @@ const ProgramInfo = () => {
                             initialValue={program.pgContent}
                         />
                     </div>
-                    <Button onClick={() => handleModifyBtn(program.pgIdx)}>수정하기</Button>
+                    <Button onClick={() => handleModifyContBtn(program.pgIdx)}>수정하기</Button>
                 </CardBody>
             </Card>
         </div>

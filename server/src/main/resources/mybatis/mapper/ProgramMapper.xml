@@ -11,11 +11,35 @@
         WHERE pg_com_idx = #{param}
     </select>
 
-    <!-- program 등록 -->
     <insert id="insertProgram" parameterType="Program">
-        INSERT INTO program (pg_title, pg_content, pg_com_idx)
-        VALUES (#{pgTitle}, #{pgContent}, #{pgComIdx})
+        INSERT INTO program (pg_com_idx,
+                             pg_prog_start_date,
+                             pg_prog_end_date,
+                             pg_edu_start_date,
+                             pg_edu_end_date,
+                             pg_reg_val_start_date,
+                             pg_reg_val_end_date,
+                             pg_interview_val_start_date,
+                             pg_interview_val_end_date,
+                             pg_interview_val_start_time,
+                             pg_interview_val_end_time,
+                             pg_title,
+                             pg_content)
+        VALUES (#{pgComIdx},
+                #{pgProgStartDate},
+                #{pgProgEndDate},
+                #{pgEduStartDate},
+                #{pgEduEndDate},
+                #{pgRegValStartDate},
+                #{pgRegValEndDate},
+                #{pgInterviewValStartDate},
+                #{pgInterviewValEndDate},
+                #{pgInterviewValStartTime},
+                #{pgInterviewValEndTime},
+                #{pgTitle},
+                #{pgContent})
     </insert>
+
 
     <delete id="deleteByPgIdx" parameterType="Long">
         DELETE
@@ -29,10 +53,15 @@
         WHERE pg_idx = #{param}
     </select>
 
-    <update id="updateByPgIdx" parameterType="Program">
+    <update id="updateContByPgIdx" parameterType="Program">
         UPDATE program
-        SET pg_title   = #{pgTitle},
-            pg_content = #{pgContent}
+        SET pg_content = #{pgContent}
+        WHERE pg_idx = #{pgIdx}
+    </update>
+
+    <update id="updateContByPgIdx" parameterType="Program">
+        UPDATE program
+        SET pg_content = #{pgContent}
         WHERE pg_idx = #{pgIdx}
     </update>
 

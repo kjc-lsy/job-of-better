@@ -8,7 +8,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Program;
-import site.dealim.jobconsulting.dto.ProgramInsertDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ProgramService;
 
@@ -22,17 +21,12 @@ public class ProgramController {
     private ProgramService programService;
     @Secured("ROLE_COMPANY")
     @PostMapping("/insert-program")
-    public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody ProgramInsertDto programDto) {
-        log.info("프로그램 등록...");
-
-        Program program = Program.builder()
-                .pgComIdx(customMember.getMember().getComIdx())
-                .pgContent(programDto.getContent())
-                .pgTitle(programDto.getTitle())
-                .build();
+    public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody Program program) {
+        log.info("프로그램 추가... : " + program.toString());
+        program.setPgComIdx(customMember.getMember().getComIdx());
 
         try {
-            int result = programService.insertProgram(program);
+            programService.insertProgram(program);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,12 +71,26 @@ public class ProgramController {
     }
 
     @Secured("ROLE_COMPANY")
-    @PutMapping("/update-program")
+    @PutMapping("/update-program-cont")
     public ResponseEntity<?> updateProgram(@RequestBody Program program) {
-        log.info("프로그램 수정... : " + program.toString());
+        log.info("프로그램 내용 수정... : " + program.toString());
 
         try {
-            programService.updateByPgIdx(program);
+            programService.updateContByPgIdx(program);
+            return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Secured("ROLE_COMPANY")
+    @PutMapping("/update-program-overview")
+    public ResponseEntity<?> updateProgramOverview(@RequestBody Program program) {
+        log.info("프로그램 정보 수정... : " + program.toString());
+
+        try {
+            programService.updateContByPgIdx(program);
             return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
