@@ -61,13 +61,18 @@ const CoverLetter = () => {
     }, [isLogin]);
 
     useEffect(() => {
-        setInputValue(prevInputValue => prevInputValue.map(item => ({
+        setInputValue(inputValue => inputValue.map(item => ({
             ...item,
-            answerValid: item.maxlength > 0 ?
-                item.answer.length >= item.minlength && item.answer.length <= item.maxlength
-               : item.minlength > 0? item.answer.length >= item.minlength : item.maxlength <= 0 && item.minlength <= 0 ? true : false
+            answerValid: (item.maxlength !== 0 || item.maxlength !== null)
+                ? (item.minlength !== 0 || item.minlength !== null)
+                    ? item.answer.length >= item.minlength && item.answer.length <= item.maxlength
+                    : item.answer.length <= item.maxlength
+                : (item.minlength !== 0 || item.minlength !== null)
+                    ? item.answer.length >= item.minlength
+                    : true
         })));
-    }, [inputValue.answer]);
+
+    }, [inputValue]);
 
     return (
         <div className="content">
@@ -85,7 +90,12 @@ const CoverLetter = () => {
                                         <FormGroup>
                                             {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                             <div className="coverletter_user">
+                                                <div>
                                                <b>{index+1}.</b> {value.question}
+                                                </div>
+                                                <div className="cl_length">
+                                                    <span>{value.answer.length}</span>자
+                                                </div>
                                             </div>
                                             <Input
                                                 type="textarea"
@@ -101,17 +111,26 @@ const CoverLetter = () => {
                                             <div className="text-muted font-italic">
                                                 <small>
                                                     {" "}
+                                                    {value.answerValid ? "true" : "false"}
                                                     {value.answerValid && value.answer !== "" ? (
                                                         <span className="text-success font-weight-700">등록가능합니다.</span>
                                                     ) : (
                                                         value.maxlength <= 0 ? (
-                                                            <span className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상 작성해주세요.</span>
-                                                        ) : value.minlength <= 0 ? (
-                                                            "글자 제한이 없습니다. 자유롭게 입력해주세요."
+                                                            value.minlength <= 0 ? (
+                                                                <span>글자 제한이 없습니다. 자유롭게 입력해주세요.</span>
+                                                                ): (
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상 작성해주세요.</span>
+                                                            )
                                                         ) : (
-                                                            <span className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
+                                                            value.minlength <= 0 ?
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.maxlength}자 이하로 작성해주세요.</span>
+                                                                :
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
                                                         )
-                                                    ) }
+                                                    )}
                                                 </small>
                                             </div>
                                         </FormGroup>
