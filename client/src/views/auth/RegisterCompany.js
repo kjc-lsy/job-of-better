@@ -22,6 +22,7 @@ import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
 import fileOk from "../../assets/img/fileok.gif";
 import Postcode from "../../components/AddrPlugin";
+import {DatePicker} from "rsuite";
 
 const CompanyRegister = () => {
     const [isActive, setIsActive] = useState(false);
@@ -81,6 +82,7 @@ const CompanyRegister = () => {
         validBImg : false,
         b_detailAddr: "",
         validBDetailAddr: false,
+        b_openingDate : "",
 
         agree: false
     });
@@ -345,24 +347,24 @@ const CompanyRegister = () => {
                             </Row>
                         </FormGroup>
                         <FormGroup>
-                            <label>업태</label>
+                            <label>개업일</label>
                             <Input
-                                value={inputValue.b_ceoname}
-                                name="b_ceoname"
-                                placeholder="대표자명"
+                                value={inputValue.b_openingDate}
+                                name="b_openingDate"
+                                placeholder="개업일(YYYY/MM/DD)"
                                 type="text"
                                 onChange={e => {
-                                    setInputValue({...inputValue, b_ceoname: e.target.value})
+                                    setInputValue({...inputValue, b_openingDate: e.target.value})
                                 }}
                             />
                             <div className="text-muted font-italic">
                                 <small>
                                     {" "}
-                                    {inputValue.validUsername && inputValue.b_ceoname !== ""
+                                    {inputValue.validUsername && inputValue.b_openingDate !== ""
                                         ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                        : inputValue.b_ceoname !== ""
+                                        : inputValue.b_openingDate !== ""
                                             ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                            : <span>사업자증명원에 등록된 대표자명을 입력해주세요.</span>
+                                            : <span></span>
                                     }
                                 </small>
                             </div>
