@@ -16,13 +16,42 @@ import {
     Label,
     Row,
 } from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
+import fileOk from "../../assets/img/fileok.gif";
 import Postcode from "../../components/AddrPlugin";
 
 const CompanyRegister = () => {
+    const [isActive, setIsActive] = useState(false);
+    const [uploadedInfo, setUploadedInfo] = useState(null);
+
+    const handleDragStart = () => setIsActive(true);
+    const handleDragEnd = () => setIsActive(false);
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    const setFileInfo = (file) => {
+        const { name, size: byteSize, type } = file;
+        const size = (byteSize / (1024 * 1024)).toFixed(2) + 'mb';
+        setUploadedInfo({ name, size, type }); // name, size, type 정보를 uploadedInfo에 저장
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        setIsActive(false);
+
+        const file = event.dataTransfer.files[0];
+        setFileInfo(file);
+    };
+
+    const handleUpload = ({ target }) => {
+        const file = target.files[0];
+        setFileInfo(file);
+    };
+
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         username: "",
@@ -46,10 +75,12 @@ const CompanyRegister = () => {
 
         b_no: "",
         validBNo: false,
-
         b_name: "",
+        validBName: false,
         b_img: "",
+        validBImg : false,
         b_detailAddr: "",
+        validBDetailAddr: false,
 
         agree: false
     });
@@ -184,6 +215,8 @@ const CompanyRegister = () => {
         }
     }
 
+
+
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
             <Card>
@@ -194,28 +227,13 @@ const CompanyRegister = () => {
                             <p>모든 정보를 입력 후 회원가입을 눌러주세요.</p>
                         </CardHeader>
                         <h4>기업 인증</h4>
-                        <FormGroup>
-                            <label>회사명</label>
-                            <Input
-                                value={inputValue.b_name}
-                                name="b_name"
-                                placeholder="회사명"
-                                type="text"
-                                onChange={e => {
-                                    setInputValue({...inputValue, b_name: e.target.value})
-                                }}
-                            />
-                            <div className="text-muted font-italic">
-                                <small><span>사업자등록원에 등록된 회사명을 입력해주세요.</span></small>
-                            </div>
-                        </FormGroup>
                         <FormGroup className="register_addr">
                             <label>사업자 등록 번호</label>
                             <Row>
                                 <Col md={10}>
                             <Input
                                 value={inputValue.b_no}
-                                name="username"
+                                name="b_no"
                                 placeholder="사업자 등록 번호"
                                 type="text"
                                 onChange={e => {
@@ -239,24 +257,79 @@ const CompanyRegister = () => {
 
                         </FormGroup>
                         <FormGroup className="register_file">
-                            <label>
+                            <label htmlFor="b_img" className={`preview${isActive ? ' active' : ''}`}
+                                   onDragEnter={handleDragStart}
+                                   onDragOver={handleDragOver}
+                                   onDragLeave={handleDragEnd}
+                                   onDrop={handleDrop}>
+                                <Input
+                                    id="b_img"
+                                    value={inputValue.b_img}
+                                    name="b_img"
+                                    type="file"
+                                    accept=".jpg, .jpeg, .png"
+                                    onChange={e => {
+                                        handleUpload(e.target.value) ;
+                                        setInputValue({...inputValue, b_img: e.target.value})
+                                    }}
+                                />
+
                                 <div>사업자등록증명원</div>
                                 <div className="file form-control">
-                                    <img src={companyPaper} alt=""/>
+                                    {uploadedInfo  ?
+                                        <>
+                                            <img src={fileOk} alt=""/>
+                                            <p>업로드가 완료되었습니다.</p>
+                                        </>
+                                        :
+                                    <>
+                                    <img src={companyPaper}  alt=""/>
                                     <Button type="button">파일선택</Button>
-                                    <p>사업자등록증명원의 발급서류를 첨부해주세요.</p>
+                                    <p>사업자등록증명원의 발급서류를 첨부해주세요.
+                                    <span>최대 : 3mb</span></p>
+                                    </>
+                                    }
                                 </div>
                             </label>
-                            <Input
-                                value={inputValue.b_img}
-                                name="b_img"
-                                type="file"
-                                accept=".jpg, .jpeg, .png"
-                                onChange={e => {
 
-                                    setInputValue({...inputValue, b_img: e.target.value})
+                        </FormGroup>
+                        <FormGroup>
+                            <label>회사명</label>
+                            <Input
+                                value={inputValue.b_name}
+                                name="b_name"
+                                placeholder="회사명"
+                                type="text"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_name: e.target.value})
                                 }}
                             />
+                            <div className="text-muted font-italic">
+                                <small><span>사업자등록원에 등록된 회사명을 입력해주세요.</span></small>
+                            </div>
+                        </FormGroup>
+                        <FormGroup>
+                            <label>대표자명</label>
+                            <Input
+                                value={inputValue.b_ceoname}
+                                name="b_ceoname"
+                                placeholder="대표자명"
+                                type="text"
+                                onChange={e => {
+                                    setInputValue({...inputValue, b_ceoname: e.target.value})
+                                }}
+                            />
+                            <div className="text-muted font-italic">
+                                <small>
+                                    {" "}
+                                    {inputValue.validUsername && inputValue.b_ceoname !== ""
+                                        ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                        : inputValue.b_ceoname !== ""
+                                            ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                            : <span>사업자증명원에 등록된 대표자명을 입력해주세요.</span>
+                                    }
+                                </small>
+                            </div>
                         </FormGroup>
                         <FormGroup className="register_addr">
                             <label>회사 주소</label>
@@ -272,7 +345,7 @@ const CompanyRegister = () => {
                             </Row>
                         </FormGroup>
                         <FormGroup>
-                            <label>대표자명</label>
+                            <label>업태</label>
                             <Input
                                 value={inputValue.b_ceoname}
                                 name="b_ceoname"
