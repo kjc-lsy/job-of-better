@@ -8,7 +8,6 @@ import TimeRange30Picker from "../../../components/TimeRange30Picker";
 
 const ProgramModifyOverview = () => {
     const {pgIdx} = useParams();
-    const [program, setProgram] = useState({});
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
     const {isLogin} = useAuth();
@@ -26,37 +25,55 @@ const ProgramModifyOverview = () => {
         pgTitle: '',
         pgContent: '',
     });
+    const [progDateRange, setProgDateRange] = useState([null,null]);
+    const [eduDateRange, setEduDateRange] = useState([null,null]);
+    const [regValDateRange, setRegValDateRange] = useState([null,null]);
+    const [interviewValDateRange, setInterviewValDateRange] = useState([null,null]);
+    const [interviewValTimeRange, setInterviewValTimeRange] = useState([null,null]);
 
     useEffect(() => {
         console.log(inputValue)
-
     }, [inputValue]);
 
     useEffect(() => {
-        if(isLogin) {
+        if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
-                console.log(fetchedProgram)
 
-                // Object.keys(fetchedProgram).forEach(key => {
-                //     if (key.includes('Date') || key.includes('Time')) {
-                //         fetchedProgram[key] = fetchedProgram[key] ? new Date(fetchedProgram[key]) : null;
-                //     }
-                // });
-                //
-
-                setProgram(fetchedProgram);
                 setTitle(fetchedProgram.pgTitle);
+                setInputValue({ ...fetchedProgram });
+
+                setProgDateRange([
+                    fetchedProgram.pgProgStartDate ? new Date(fetchedProgram.pgProgStartDate) : null,
+                    fetchedProgram.pgProgEndDate ? new Date(fetchedProgram.pgProgEndDate) : null
+                ]);
+                setEduDateRange([
+                    fetchedProgram.pgEduStartDate ? new Date(fetchedProgram.pgEduStartDate) : null,
+                    fetchedProgram.pgEduEndDate ? new Date(fetchedProgram.pgEduEndDate) : null
+                ]);
+                setRegValDateRange([
+                    fetchedProgram.pgRegValStartDate ? new Date(fetchedProgram.pgRegValStartDate) : null,
+                    fetchedProgram.pgRegValEndDate ? new Date(fetchedProgram.pgRegValEndDate) : null
+                ]);
+                setInterviewValDateRange([
+                    fetchedProgram.pgInterviewValStartDate ? new Date(fetchedProgram.pgInterviewValStartDate) : null,
+                    fetchedProgram.pgInterviewValEndDate ? new Date(fetchedProgram.pgInterviewValEndDate) : null
+                ]);
+                setInterviewValTimeRange([
+                    fetchedProgram.pgInterviewValStartTime ? new Date(fetchedProgram.pgInterviewValStartTime) : null,
+                    fetchedProgram.pgInterviewValEndTime ? new Date(fetchedProgram.pgInterviewValEndTime) : null
+                ]);
             });
         }
     }, [isLogin, pgIdx]);
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await updateProgram(program.pgIdx, title);
+            const response = await updateProgram(inputValue);
             alert(response.data)
-            navigate('/company/program-info/' + program.pgIdx)
+            navigate('/company/program-info/' + pgIdx)
         } catch (e) {
             alert(e.response.data)
             console.log(e)
@@ -64,54 +81,40 @@ const ProgramModifyOverview = () => {
     }
 
     const handleProgDate = (values) => {
-        console.log("value",values);
-        if(values === null) {
-            setInputValue({...inputValue, pgProgStartDate: null, pgProgEndDate: null});
-            return;
-        }
+        setProgDateRange(values);
 
-        const [startDate, endDate] = values;
-        setInputValue({...inputValue, pgProgStartDate: startDate, pgProgEndDate: endDate});
+        if(values !== null) {
+            setInputValue({...inputValue, pgProgStartDate: values[0], pgProgEndDate: values[1]});
+        }
     }
 
     const handleEduDate = (values) => {
-        if(values === null) {
-            setInputValue({...inputValue, pgEduStartDate: null, pgEduEndDate: null});
-            return;
+        setEduDateRange(values);
+        if(values !== null) {
+            setInputValue({...inputValue, pgEduStartDate: values[0], pgEduEndDate: values[1]});
         }
-
-        const [startDate, endDate] = values;
-        setInputValue({...inputValue, pgEduStartDate: startDate, pgEduEndDate: endDate});
     }
 
     const handleRegValDate = (values) => {
-        if(values === null) {
-            setInputValue({...inputValue, pgRegValStartDate: null, pgRegValEndDate: null});
-            return;
+        setRegValDateRange(values);
+        if(values !== null) {
+            setInputValue({...inputValue, pgRegValStartDate: values[0], pgRegValEndDate: values[1]});
         }
-
-        const [startDate, endDate] = values;
-        setInputValue({...inputValue, pgRegValStartDate: startDate, pgRegValEndDate: endDate});
     }
 
     const handleInterviewValDate = (values) => {
-        if(values === null) {
-            setInputValue({...inputValue, pgInterviewValStartDate: null, pgInterviewValEndDate: null});
-            return;
+        setInterviewValDateRange(values);
+        if(values !== null) {
+            setInputValue({...inputValue, pgInterviewValStartDate: values[0], pgInterviewValEndDate: values[1]});
         }
-
-        const [startDate, endDate] = values;
-        setInputValue({...inputValue, pgInterviewValStartDate: startDate, pgInterviewValEndDate: endDate});
     }
 
     const handleInterviewValTime = (values) => {
+        setInterviewValTimeRange(values);
         if(values === null) {
             setInputValue({...inputValue, pgInterviewValStartTime: null, pgInterviewValEndTime: null});
             return;
         }
-
-        const [startTime, endTime] = values;
-        setInputValue({...inputValue, pgInterviewValStartTime: startTime, pgInterviewValEndTime: endTime});
     }
 
     return (
@@ -138,12 +141,12 @@ const ProgramModifyOverview = () => {
                                     <div>
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
-                                            value={[program.pgProgStartDate, program.pgProgEndDate]}
+                                            value={progDateRange}
                                             onChange={handleProgDate}
                                         />
                                         <label>교육 진행 기간</label>
                                         <ProgDateRangePicker
-                                            value={[program.pgEduStartDate, program.pgEduEndDate]}
+                                            value={eduDateRange}
                                             onChange={handleEduDate}
                                         />
                                     </div>
@@ -153,17 +156,17 @@ const ProgramModifyOverview = () => {
                                     <div>
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
-                                            value={[program.pgRegValStartDate, program.pgRegValEndDate]}
+                                            value={regValDateRange}
                                             onChange={handleRegValDate}
                                         />
                                         <label>면접 가능 기간</label>
                                         <ProgDateRangePicker
-                                            value={[program.pgInterviewValStartDate, program.pgInterviewValEndDate]}
+                                            value={interviewValDateRange}
                                             onChange={handleInterviewValDate}
                                         />
                                         <label>면접 가능 시간</label>
                                         <TimeRange30Picker
-                                            value={[program.pgInterviewValStartTime, program.pgInterviewValEndTime]}
+                                            value={interviewValTimeRange}
                                             onChange={handleInterviewValTime}
                                         />
                                     </div>

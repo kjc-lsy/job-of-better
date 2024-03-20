@@ -71,26 +71,12 @@ public class ProgramController {
     }
 
     @Secured("ROLE_COMPANY")
-    @PutMapping("/update-program-cont")
+    @PutMapping("/update-program")
     public ResponseEntity<?> updateProgram(@RequestBody Program program) {
         log.info("프로그램 내용 수정... : " + program.toString());
 
         try {
-            programService.updateContByPgIdx(program);
-            return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("프로그램 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @Secured("ROLE_COMPANY")
-    @PutMapping("/update-program-overview")
-    public ResponseEntity<?> updateProgramOverview(@RequestBody Program program) {
-        log.info("프로그램 정보 수정... : " + program.toString());
-
-        try {
-            programService.updateContByPgIdx(program);
+            programService.updateProgram(program);
             return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

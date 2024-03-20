@@ -53,16 +53,56 @@
         WHERE pg_idx = #{param}
     </select>
 
-    <update id="updateContByPgIdx" parameterType="Program">
+    <update id="updateProgram" parameterType="Program">
         UPDATE program
-        SET pg_content = #{pgContent}
+        <set>
+            <trim suffixOverrides=",">
+                <if test="pgTitle != null">
+                    pg_title = #{pgTitle},
+                </if>
+                <if test="pgContent != null">
+                    pg_content = #{pgContent},
+                </if>
+                <if test="pgProgStartDate != null">
+                    pg_prog_start_date = #{pgProgStartDate},
+                </if>
+                <if test="pgProgEndDate != null">
+                    pg_prog_end_date = #{pgProgEndDate},
+                </if>
+                <if test="pgEduStartDate != null">
+                    pg_edu_start_date = #{pgEduStartDate},
+                </if>
+                <if test="pgEduEndDate != null">
+                    pg_edu_end_date = #{pgEduEndDate},
+                </if>
+                <if test="pgRegValStartDate != null">
+                    pg_reg_val_start_date = #{pgRegValStartDate},
+                </if>
+                <if test="pgRegValEndDate != null">
+                    pg_reg_val_end_date = #{pgRegValEndDate},
+                </if>
+                <if test="pgInterviewValStartDate != null">
+                    pg_interview_val_start_date = #{pgInterviewValStartDate},
+                </if>
+                <if test="pgInterviewValEndDate != null">
+                    pg_interview_val_end_date = #{pgInterviewValEndDate},
+                </if>
+                <if test="pgInterviewValStartTime != null">
+                    pg_interview_val_start_time = #{pgInterviewValStartTime},
+                </if>
+                <if test="pgInterviewValEndTime != null">
+                    pg_interview_val_end_time = #{pgInterviewValEndTime},
+                </if>
+                <if test="pgIsWithdrawn != null">
+                    pg_is_withdrawn = #{pgIsWithdrawn},
+                </if>
+                <if test="pgModifiedDate != null">
+                    pg_modified_date = #{pgModifiedDate},
+                </if>
+            </trim>
+        </set>
         WHERE pg_idx = #{pgIdx}
     </update>
 
-    <update id="updateTitleByPgIdx" parameterType="Program">
-        UPDATE program
-        SET pg_title = #{pgTitle}
-        WHERE pg_idx = #{pgIdx}
-    </update>
 
 </mapper>

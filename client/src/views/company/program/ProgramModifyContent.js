@@ -5,6 +5,7 @@ import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
+import KorDatePicker from "../../../components/KorDatePicker";
 
 const ProgramModifyContent = () => {
     const {pgIdx} = useParams();
@@ -35,7 +36,7 @@ const ProgramModifyContent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await updateProgram(program.pgIdx, content);
+            const response = await updateProgram({pgIdx : program.pgIdx, pgContent: content});
             alert(response.data)
             navigate('/company/program-info/' + program.pgIdx)
         } catch (e) {
@@ -49,6 +50,7 @@ const ProgramModifyContent = () => {
             <Card className="program-modify">
                 <CardHeader>
                     <CardTitle tag="h3">프로그램 내용 수정</CardTitle>
+                    <KorDatePicker/>
                 </CardHeader>
                 <CardBody>
                     <Form onSubmit={handleSubmit}>

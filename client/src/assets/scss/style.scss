@@ -478,18 +478,18 @@ form.form-register label + .form-control {
   height: auto;
 }
 
-//.rs-calendar-time-dropdown-column {
-//
-//  li[data-key^="minutes-"] {
-//    display: none;
-//
-//    &.rs-calendar-time-dropdown-cell-active,
-//    &[data-key="minutes-0"],
-//    &[data-key="minutes-30"] {
-//      display: block;
-//    }
-//  }
-//}
+.rs-calendar-time-dropdown-column {
+
+  li[data-key^="minutes-"] {
+    display: none;
+
+    &.rs-calendar-time-dropdown-cell-active,
+    &[data-key="minutes-0"],
+    &[data-key="minutes-30"] {
+      display: block;
+    }
+  }
+}
 
 .program-info {
   .program-title {

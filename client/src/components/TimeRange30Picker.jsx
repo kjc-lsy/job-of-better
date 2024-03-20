@@ -30,19 +30,13 @@ const TimeRange30Picker = (props) => {
     ]);
     const now = new Date();
     now.setMinutes(0);
-    now.setSeconds(0);
-    now.setMilliseconds(0);
 
     useEffect(() => {
 
     }, []);
 
-    const handleOnOpen = (values) => {
-    };
-
     return (
             <DateRangePicker
-                onOpen={handleOnOpen}
                 defaultValue={[now, now]}
                 placeholder='면접 가능 시간'
                 format="HH:mm"
