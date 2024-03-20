@@ -18,25 +18,38 @@ const CoverLetter = () => {
         answerValid: false
     }]);
 
-    const save = (e) => {
+    const save = (e, type) => {
         e.preventDefault();
         if (inputValue[0].answer === "") {
             alert("항목을 하나 이상 입력해주세요：)");
         } else {
-            //inputValue.map(value => value.question)
-            user.userCoverLetterSave(inputValue)
-                .then(response => {
-                    //navigate('/auth/login')
-                    if (response.data === "SUCCESS") {
-                        alert("등록이 완료되었습니다.");
-                    }
-                    //alert(response.data)
-                })
-                .catch(error => {
-                    console.error("error", error.response.data);
-                });
+            if(type === "save") {
+                if(window.confirm("제출하시면 기업 담당자에게 전달됩니다. \n 제출하시겠습니까?")) {
+                    axiosSave(inputValue , type);
+                }
+            }else {
+                axiosSave(inputValue , type);
+            }
         }
     };
+
+    function axiosSave(inputValue , type) {
+        user.userCoverLetterSave(inputValue,type)
+            .then(response => {
+                //navigate('/auth/login')
+                if (response.data === "SUCCESS") {
+                    if(response.data.type === "save") {
+                        alert("등록이 완료되었습니다.");
+                    }else {
+                        alert("임시저장되었습니다. \n 작성 완료 후 제출버튼을 눌러주세요.")
+                    }
+                }
+                //alert(response.data)
+            })
+            .catch(error => {
+                console.error("error", error.response.data);
+            });
+    }
 
     // 자소서 항목 들고오기
     useEffect(() => {
@@ -47,6 +60,7 @@ const CoverLetter = () => {
                         return {
                             num: index + 1,
                             id: item.cclIdx,
+                            comIdx : item.cclComIdx,
                             maxlength: item.cclMaxLength,
                             minlength: item.cclMinLength,
                             question: item.cclLetterQuestion,
@@ -61,12 +75,17 @@ const CoverLetter = () => {
     }, [isLogin]);
 
     useEffect(() => {
-        setInputValue(prevInputValue => prevInputValue.map(item => ({
+        setInputValue(inputValue => inputValue.map(item => ({
             ...item,
-            answerValid: item.maxlength > 0 ?
-                item.answer.length >= item.minlength && item.answer.length <= item.maxlength
-               : item.minlength > 0? item.answer.length >= item.minlength : item.maxlength <= 0 && item.minlength <= 0 ? true : false
+            answerValid: (item.maxlength !== 0 || item.maxlength !== null)
+                ? (item.minlength !== 0 || item.minlength !== null)
+                    ? item.answer.length >= item.minlength && item.answer.length <= item.maxlength
+                    : item.answer.length <= item.maxlength
+                : (item.minlength !== 0 || item.minlength !== null)
+                    ? item.answer.length >= item.minlength
+                    : true
         })));
+
     }, [inputValue.answer]);
 
     return (
@@ -85,7 +104,12 @@ const CoverLetter = () => {
                                         <FormGroup>
                                             {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                             <div className="coverletter_user">
+                                                <div>
                                                <b>{index+1}.</b> {value.question}
+                                                </div>
+                                                <div className="cl_length">
+                                                    <span>{value.answer.length}</span>자
+                                                </div>
                                             </div>
                                             <Input
                                                 type="textarea"
@@ -105,13 +129,21 @@ const CoverLetter = () => {
                                                         <span className="text-success font-weight-700">등록가능합니다.</span>
                                                     ) : (
                                                         value.maxlength <= 0 ? (
-                                                            <span className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상 작성해주세요.</span>
-                                                        ) : value.minlength <= 0 ? (
-                                                            "글자 제한이 없습니다. 자유롭게 입력해주세요."
+                                                            value.minlength <= 0 ? (
+                                                                <span>글자 제한이 없습니다. 자유롭게 입력해주세요.</span>
+                                                                ): (
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상 작성해주세요.</span>
+                                                            )
                                                         ) : (
-                                                            <span className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
+                                                            value.minlength <= 0 ?
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.maxlength}자 이하로 작성해주세요.</span>
+                                                                :
+                                                                <span
+                                                                    className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
                                                         )
-                                                    ) }
+                                                    )}
                                                 </small>
                                             </div>
                                         </FormGroup>
@@ -120,8 +152,8 @@ const CoverLetter = () => {
                             )
                         })}
                         <div className="btngroup">
-                            <Button className="greyBtn">임시저장</Button>
-                            <Button>제출</Button>
+                            <Button className="greyBtn" onClick={(e) => save(e,"temp")}>임시저장</Button>
+                            <Button onClick={(e) => save(e,"save")}>제출</Button>
                         </div>
                     </Form>
                 </CardBody>

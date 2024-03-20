@@ -72,6 +72,10 @@ input[type=radio], input[type=checkbox] {
 .input-group {
   align-items: center;
 }
+.form-control {
+  font-size:0.9rem
+}
+
 
 
 /************* card ************/
@@ -379,11 +383,21 @@ form.form-register label + .form-control {
 .cover-letter-wrapper {
   .row {
     margin-bottom: 30px;
-    padding-right: 0;
+    margin-right: 0;
   }
   .coverletter_user {
     font-size:18px;
     margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    .cl_length {
+      font-size:16px;
+
+      span {
+        color: $main-color;
+      }
+    }
     b {
       font-size:16px
     }
