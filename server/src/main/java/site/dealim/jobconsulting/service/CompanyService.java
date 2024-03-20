@@ -22,7 +22,7 @@ public class CompanyService {
             map.put("cclMinLength", comCoverLetter.getCclMinLength());
             map.put("cclMaxLength", comCoverLetter.getCclMaxLength());
             Long cclIdx = comCoverLetter.getCclIdx();
-            if(cclIdx != null) {
+            if(cclIdx != null && cclIdx > 0) {
                 map.put("cclIdx", cclIdx);
                 companyMapper.ComCoverLetterUpdate(map);
             }else {
