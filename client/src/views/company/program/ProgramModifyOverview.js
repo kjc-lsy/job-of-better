@@ -28,15 +28,22 @@ const ProgramModifyOverview = () => {
     });
 
     useEffect(() => {
+        console.log(inputValue)
+
+    }, [inputValue]);
+
+    useEffect(() => {
         if(isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
+                console.log(fetchedProgram)
 
-                Object.keys(fetchedProgram).forEach(key => {
-                    if (key.includes('Date') || key.includes('Time')) {
-                        fetchedProgram[key] = fetchedProgram[key] ? new Date(fetchedProgram[key]) : null;
-                    }
-                });
+                // Object.keys(fetchedProgram).forEach(key => {
+                //     if (key.includes('Date') || key.includes('Time')) {
+                //         fetchedProgram[key] = fetchedProgram[key] ? new Date(fetchedProgram[key]) : null;
+                //     }
+                // });
+                //
 
                 setProgram(fetchedProgram);
                 setTitle(fetchedProgram.pgTitle);
@@ -57,6 +64,7 @@ const ProgramModifyOverview = () => {
     }
 
     const handleProgDate = (values) => {
+        console.log("value",values);
         if(values === null) {
             setInputValue({...inputValue, pgProgStartDate: null, pgProgEndDate: null});
             return;

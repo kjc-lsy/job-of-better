@@ -49,7 +49,8 @@ const ProgramInfo = () => {
                 </CardHeader>
                 <CardBody>
                     <div className='program-title'>
-                        프로그램 정보
+                        <span>프로그램 정보</span>
+                        <Button onClick={() => handleModifyOvrBtn(program.pgIdx)}>수정하기</Button>
                     </div>
                     <div className='program-content'>
                         <Row>
@@ -79,16 +80,17 @@ const ProgramInfo = () => {
                             </Col>
                         </Row>
                     </div>
-                    <Button onClick={() => handleModifyOvrBtn(program.pgIdx)}>수정하기</Button>
 
-                    <div className='program-title'>프로그램 내용</div>
+                    <div className='program-title'>
+                        <span>프로그램 내용</span>
+                        <Button onClick={() => handleModifyContBtn(program.pgIdx)}>수정하기</Button>
+                    </div>
                     <div className='program-content'>
                         <Viewer
                             key={program.pgContent}
                             initialValue={program.pgContent}
                         />
                     </div>
-                    <Button onClick={() => handleModifyContBtn(program.pgIdx)}>수정하기</Button>
                 </CardBody>
             </Card>
         </div>

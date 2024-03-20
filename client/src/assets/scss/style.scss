@@ -166,7 +166,7 @@ input[type=radio], input[type=checkbox] {
 
 /** Login **/
 
-.login_wrapper {
+.login-wrapper {
   .card {
     .form-group {
       margin-bottom: 20px;
@@ -499,6 +499,12 @@ form.form-register label + .form-control {
 
   .btn.btn-secondary:last-of-type  {
     margin-bottom: 0px;
+  }
+
+  .program-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 

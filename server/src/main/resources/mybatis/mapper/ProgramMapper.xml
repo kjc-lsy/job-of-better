@@ -59,9 +59,9 @@
         WHERE pg_idx = #{pgIdx}
     </update>
 
-    <update id="updateContByPgIdx" parameterType="Program">
+    <update id="updateTitleByPgIdx" parameterType="Program">
         UPDATE program
-        SET pg_content = #{pgContent}
+        SET pg_title = #{pgTitle}
         WHERE pg_idx = #{pgIdx}
     </update>
 
