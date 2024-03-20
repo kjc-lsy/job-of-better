@@ -9,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
+import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,9 +25,15 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/user-cover-letter-save")
-    public ResponseEntity<?> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
-        //userService.userCoverLetterSave(values, customMember.getMember().getMemIdx());
-        return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<MemberCoverLetter> values) {
+        Member user = customMember.getMember();
+        userService.userCoverLetterSave(values, user.getIdx(), user.getComIdx());
+
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("type", values.get(0).getMclIsConfirm()); // 클라이언트에서 받은 mclIsConfirm 값으로 설정
+        responseMap.put("SUCCESS", "true"); // 성공 여부 설정
+
+        return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
     @GetMapping("user-cover-letter-info")

@@ -695,11 +695,17 @@ form.form-register label + .form-control {
   .register_choice_con .card-body a.btn {
     border:1px solid $border-color;
   }
-  .companyRegisterContainer .card:not(.card-white) .card-body {
-    background: #fff;
-  }
-  .companyRegisterContainer .card:not(.card-white) .register_file label .form-control {
-    border: 2px dashed $border-color;
+
+  .companyRegisterContainer .card:not(.card-white) {
+    .card-body {
+      background: #fff;
+    }
+    .register_file label .form-control {
+      border: 2px dashed $border-color;
+      &:hover {
+        border:2px dashed $main-color;
+      }
+    }
   }
 
   .form-control {

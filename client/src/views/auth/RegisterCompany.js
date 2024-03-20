@@ -251,7 +251,9 @@ const CompanyRegister = () => {
                                 value={inputValue.b_img}
                                 name="b_img"
                                 type="file"
+                                accept=".jpg, .jpeg, .png"
                                 onChange={e => {
+
                                     setInputValue({...inputValue, b_img: e.target.value})
                                 }}
                             />
