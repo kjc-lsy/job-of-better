@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup, Input} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, CardTitle, Form, FormGroup} from "reactstrap";
 import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
+import KorDatePicker from "../../../components/KorDatePicker";
 
 const ProgramModifyContent = () => {
     const {pgIdx} = useParams();
     const [program, setProgram] = useState({});
-    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const editorRef = useRef();
     const theme = useContext(ThemeContext);
@@ -17,13 +17,12 @@ const ProgramModifyContent = () => {
     const {isLogin} = useAuth();
 
     useEffect(() => {
-        if(isLogin) {
+        if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
                 setProgram(fetchedProgram);
 
                 editorRef.current.getInstance().setHTML(fetchedProgram.pgContent); // 프로그램 내용 설정
-                setTitle(fetchedProgram.pgTitle)
                 setContent(fetchedProgram.pgContent)
             });
         }
@@ -37,7 +36,7 @@ const ProgramModifyContent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await updateProgram(program.pgIdx, title, content);
+            const response = await updateProgram({pgIdx : program.pgIdx, pgContent: content});
             alert(response.data)
             navigate('/company/program-info/' + program.pgIdx)
         } catch (e) {
@@ -48,17 +47,14 @@ const ProgramModifyContent = () => {
 
     return (
         <div className="content">
-            <Card>
+            <Card className="program-modify">
                 <CardHeader>
                     <CardTitle tag="h3">프로그램 내용 수정</CardTitle>
+                    <KorDatePicker/>
                 </CardHeader>
                 <CardBody>
-                    <Form className="enrollProg" onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit}>
                         <FormGroup>
-                            <Input
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
                                     height="600px"

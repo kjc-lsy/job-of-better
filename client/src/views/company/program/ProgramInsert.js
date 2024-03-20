@@ -4,53 +4,124 @@ import {Editor} from "@toast-ui/react-editor";
 import {saveProgram} from "../../../apis/program";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {useNavigate} from "react-router-dom";
-import {FaClock} from 'react-icons/fa';
 
 // date-range-rsuite
 import 'rsuite/dist/rsuite.min.css';
 import ProgDateRangePicker from "../../../components/ProgDateRangePicker";
-import {DateRangePicker} from "rsuite";
+import TimeRange30Picker from "../../../components/TimeRange30Picker";
 
 const ProgramInsert = () => {
-    const now = new Date();
     const [inputValue, setInputValue] = useState({
-        progStartDate: now,
-        progEndDate: now,
-        eduStartDate: now,
-        eduEndDate: now,
-        regValStartDate: now,
-        regValEndDate: now,
-        interviewValStartDate: now,
-        interviewValEndDate: now,
-        interviewValStartTime: now,
-        interviewValEndTime: now,
-        title: '',
-        content: '',
+        pgProgStartDate: null,
+        pgProgEndDate: null,
+        pgEduStartDate: null,
+        pgEduEndDate: null,
+        pgRegValStartDate: null,
+        pgRegValEndDate: null,
+        pgInterviewValStartDate: null,
+        pgInterviewValEndDate: null,
+        pgInterviewValStartTime: null,
+        pgInterviewValEndTime: null,
+        pgTitle: '',
+        pgContent: '',
     });
-
     const editorRef = useRef();
     const {theme} = useContext(ThemeContext);
     const navigate = useNavigate();
 
     const onChangeGetHTML = () => {
         const data = editorRef.current.getInstance().getHTML();
-        setInputValue({...inputValue, content: data});
+        setInputValue({...inputValue, pgContent: data});
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // 필요한 값 정의
+        const requiredFields = {
+            pgProgStartDate: '전체 프로그램 기간',
+            pgEduStartDate: '교육 진행 기간',
+            pgRegValStartDate: '신청 가능 기간',
+            pgTitle: '프로그램 제목',
+            pgContent: '프로그램 내용',
+        };
+
+        let missingFields = [];
+
+        for (const [key, label] of Object.entries(requiredFields)) {
+            if (!inputValue[key] || (typeof inputValue[key] === 'string' && inputValue[key].trim() === '')) {
+                missingFields.push(label);
+            }
+        }
+
+        if (missingFields.length > 0) {
+            alert(`다음 정보를 입력해야 합니다: ${missingFields.join(', ')}`);
+            return;
+        }
+
         try {
-            const response = await saveProgram(inputValue.title, inputValue.content);
-            alert(response.data)
-            navigate('/company/program')
+            const response = await saveProgram(inputValue);
+            alert(response.data);
+            navigate('/company/program');
         } catch (e) {
-            alert(e.response.data)
-            console.log(e)
+            alert(e.response.data);
+            console.log(e);
         }
     }
+
+    const handleProgDate = (values) => {
+        if(values === null) {
+            setInputValue({...inputValue, pgProgStartDate: null, pgProgEndDate: null});
+            return;
+        }
+
+        const [startDate, endDate] = values;
+        setInputValue({...inputValue, pgProgStartDate: startDate, pgProgEndDate: endDate});
+    }
+
+    const handleEduDate = (values) => {
+        if(values === null) {
+            setInputValue({...inputValue, pgEduStartDate: null, pgEduEndDate: null});
+            return;
+        }
+
+        const [startDate, endDate] = values;
+        setInputValue({...inputValue, pgEduStartDate: startDate, pgEduEndDate: endDate});
+    }
+
+    const handleRegValDate = (values) => {
+        if(values === null) {
+            setInputValue({...inputValue, pgRegValStartDate: null, pgRegValEndDate: null});
+            return;
+        }
+
+        const [startDate, endDate] = values;
+        setInputValue({...inputValue, pgRegValStartDate: startDate, pgRegValEndDate: endDate});
+    }
+
+    const handleInterviewValDate = (values) => {
+        if(values === null) {
+            setInputValue({...inputValue, pgInterviewValStartDate: null, pgInterviewValEndDate: null});
+            return;
+        }
+
+        const [startDate, endDate] = values;
+        setInputValue({...inputValue, pgInterviewValStartDate: startDate, pgInterviewValEndDate: endDate});
+    }
+
+    const handleInterviewValTime = (values) => {
+        if(values === null) {
+            setInputValue({...inputValue, pgInterviewValStartTime: null, pgInterviewValEndTime: null});
+            return;
+        }
+
+        const [startTime, endTime] = values;
+        setInputValue({...inputValue, pgInterviewValStartTime: startTime, pgInterviewValEndTime: endTime});
+    }
+
     return (
         <div className="content">
-            <Card className="enrollProg">
+            <Card className="program-enroll">
                 <CardHeader>
                     <h5 className="card-category">교육생들에게 소개할 프로그램 내용을 등록해주세요</h5>
                     <CardTitle tag="h3">프로그램 등록</CardTitle>
@@ -64,35 +135,40 @@ const ProgramInsert = () => {
                                     <div>
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
+                                            onChange={handleProgDate}
                                         />
                                         <label>교육 진행 기간</label>
-                                        <ProgDateRangePicker/>
+                                        <ProgDateRangePicker
+                                            onChange={handleEduDate}
+                                        />
                                     </div>
                                 </Col>
                                 <Col md='6'>
                                     <h4>학생모집 기간</h4>
                                     <div>
                                         <label>신청 가능 기간</label>
-                                        <ProgDateRangePicker/>
+                                        <ProgDateRangePicker
+                                            onChange={handleRegValDate}
+                                        />
                                         <label>면접 가능 기간</label>
-                                        <ProgDateRangePicker/>
-                                        <label>면접가능 세부 시간</label>
-                                        <DateRangePicker
-                                            placeholder='면접 가능 시간'
-                                            format="HH:mm"
-                                            caretAs={FaClock}
+                                        <ProgDateRangePicker
+                                        onChange={handleInterviewValDate}
+                                        />
+                                        <label>면접 가능 시간</label>
+                                        <TimeRange30Picker
+                                            onChange={handleInterviewValTime}
                                         />
                                     </div>
                                 </Col>
                             </Row>
                             <Row>
-                            <Col>
+                                <Col>
                                     <h4>프로그램 세부정보</h4>
                                     <div>
                                         <label>프로그램 제목</label>
                                         <Input
-                                            value={inputValue.title}
-                                            onChange={(e) => setInputValue({...inputValue, title: e.target.value})}
+                                            value={inputValue.PgTitle}
+                                            onChange={(e) => setInputValue({...inputValue, pgTitle: e.target.value})}
                                         />
                                         <label>프로그램 내용</label>
                                         <div className={theme === 'white-content' ? '' : 'toastui-editor-dark'}>
