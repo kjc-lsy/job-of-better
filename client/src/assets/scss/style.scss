@@ -81,6 +81,9 @@ input[type=radio], input[type=checkbox] {
 /************* card ************/
 
 .card {
+  label {
+    font-size:1rem
+  }
   .btn {
     background: $main-color;
     margin: 0 4px;
@@ -229,6 +232,13 @@ input[type=radio], input[type=checkbox] {
   .custom-control-input:checked ~ .custom-control-label::after {
     background-image: none;
     background: #fff
+  }
+
+}
+.register-wrapper {
+  .rs-picker-toggle-wrapper {
+    display: block;
+    cursor:pointer
   }
 }
 
@@ -740,6 +750,9 @@ form.form-register label + .form-control {
 /********************************************* white content *********************************************/
 
 .white-content {
+  .main-panel {
+    background: #f2f5fd;
+  }
   .register_choice_con .card-body p {
     color: #1d253b;
     span {

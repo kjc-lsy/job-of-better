@@ -13,7 +13,7 @@ import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
 
-import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
+import {getPathname, getRoutes , getBrandText} from "../components/GetRouteProvider";
 
 var ps;
 
