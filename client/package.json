@@ -73,6 +73,7 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "6.21.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.8",
     "rsuite": "^5.56.0",
     "sass": "1.69.5",
     "styled-components": "^6.1.8"

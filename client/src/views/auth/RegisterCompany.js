@@ -24,8 +24,10 @@ import companyPaper from "../../assets/img/company_registration.png";
 import fileOk from "../../assets/img/fileok.gif";
 import Postcode from "../../components/AddrPlugin";
 import KorDatePicker from "../../components/KorDatePicker";
+import Loading from "../../components/Loading";
 
 const CompanyRegister = () => {
+    const [loading, setLoading] = useState(false);
 
     // file drap & drop
     const [isActive, setIsActive] = useState(false);
@@ -51,8 +53,9 @@ const CompanyRegister = () => {
         setFileInfo(file);
     };
 
-    const handleUpload = ({ target }) => {
-        const file = target.files[0];
+    const handleUpload = (event) => {
+        console.log("fileupload");
+        const file = event.target.files[0];
         setFileInfo(file);
     };
 
@@ -78,13 +81,13 @@ const CompanyRegister = () => {
         validPhone: false,
 
         b_no: "",
-        validBNo: false,
+        validBNo: "",
         b_name: "",
         b_ceoName: "",
         validBCeoName: false,
         b_img: "",
         b_detailAddr: "",
-        b_openingDate : "",
+        b_openingDate : new Date(),
 
         agree: false
     });
@@ -103,7 +106,7 @@ const CompanyRegister = () => {
 
     const submitRequirement =
         Object.values(inputValue).some(value => value.trim() === '') &&
-        inputValue.validBNo &&
+        inputValue.validBNo === "true" &&
         inputValue.validBCeoName &&
         inputValue.validUsername &&
         inputValue.validCheckPassword &&
@@ -189,6 +192,7 @@ const CompanyRegister = () => {
     
     // 사업자등록번호 조회
     const getJsonData = async () => {
+        setLoading(true);
         const data = {
             "b_no": [(inputValue.b_no).replaceAll("-","")] // inputValue로부터 b_no 값을 가져옵니다.
         };
@@ -202,19 +206,22 @@ const CompanyRegister = () => {
                 },
                 body: JSON.stringify(data)
             });
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
             console.log(result);
             if(result.data[0].b_stt !== ""){
-                setInputValue({...inputValue, validBNo: true});
+                setInputValue({...inputValue, validBNo: "true"});
             }else {
-                setInputValue({...inputValue, validBNo: false});
+                setInputValue({...inputValue, validBNo: "false"});
             }
             //console.log(result.data[0].b_stt);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -229,7 +236,7 @@ const CompanyRegister = () => {
                 formattedValue = match.slice(1).filter(Boolean).join("-");
             }
         }
-        setInputValue({...inputValue, b_no: formattedValue})
+        setInputValue({...inputValue, b_no: formattedValue , validBNo: ""});
     };
 
     // 회원가입
@@ -248,6 +255,7 @@ const CompanyRegister = () => {
 
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
+            <Loading loading={loading}/>
             <Card>
                 <Form role="form" className="form-register" onSubmit={handleJoin}>
                     <CardBody>
@@ -276,9 +284,9 @@ const CompanyRegister = () => {
                             <div className="text-muted font-italic">
                                 <small>
                                     {" "}
-                                    {inputValue.validBNo && inputValue.b_no !== ""
+                                    {inputValue.validBNo === "true" && inputValue.b_no !== ""
                                         ? <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>
-                                        : inputValue.b_no !== ""
+                                        : inputValue.b_no !== "" && inputValue.validBNo === "false"
                                             ? <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>
                                             : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
                                     }
@@ -290,38 +298,39 @@ const CompanyRegister = () => {
 
                         </FormGroup>
                         <FormGroup className="register_file">
+                            <Input
+                                id="b_img"
+                                value={inputValue.b_img}
+                                name="b_img"
+                                type="file"
+                                accept=".jpg, .jpeg, .png"
+                                onChange={e => {
+                                    handleUpload(e.target);
+                                    setInputValue({...inputValue, b_img: e.target.value});
+                                }}
+                            />
                             <label htmlFor="b_img" className={`preview${isActive ? ' active' : ''}`}
                                    onDragEnter={handleDragStart}
                                    onDragOver={handleDragOver}
                                    onDragLeave={handleDragEnd}
                                    onDrop={handleDrop}>
-                                <Input
-                                    id="b_img"
-                                    value={inputValue.b_img}
-                                    name="b_img"
-                                    type="file"
-                                    accept=".jpg, .jpeg, .png"
-                                    onChange={e => {
-                                        handleUpload(e.target.value) ;
-                                        setInputValue({...inputValue, b_img: e.target.value})
-                                    }}
-                                />
 
                                 <div>사업자등록증명원</div>
                                 <div className="file form-control">
-                                    {uploadedInfo  ?
+                                    {uploadedInfo ? (
                                         <>
                                             <img src={fileOk} alt=""/>
                                             <p>업로드가 완료되었습니다.</p>
                                         </>
-                                        :
-                                    <>
-                                    <img src={companyPaper}  alt=""/>
-                                    <Button type="button">파일선택</Button>
-                                    <p>사업자등록증명원의 발급서류를 첨부해주세요.
-                                    <span>최대 : 3mb</span></p>
-                                    </>
-                                    }
+                                    ) : (
+                                        <>
+                                            <img src={companyPaper} alt=""/>
+                                            <Button type="button"
+                                                    onClick={(e) => document.getElementById("b_img").click()}>파일선택</Button>
+                                            <p>사업자등록증명원의 발급서류를 첨부해주세요.
+                                                <span>최대 : 3MB</span></p>
+                                        </>
+                                    )}
                                 </div>
                             </label>
 
