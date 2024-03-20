@@ -18,25 +18,38 @@ const CoverLetter = () => {
         answerValid: false
     }]);
 
-    const save = (e) => {
+    const save = (e, type) => {
         e.preventDefault();
         if (inputValue[0].answer === "") {
             alert("항목을 하나 이상 입력해주세요：)");
         } else {
-            //inputValue.map(value => value.question)
-            user.userCoverLetterSave(inputValue)
-                .then(response => {
-                    //navigate('/auth/login')
-                    if (response.data === "SUCCESS") {
-                        alert("등록이 완료되었습니다.");
-                    }
-                    //alert(response.data)
-                })
-                .catch(error => {
-                    console.error("error", error.response.data);
-                });
+            if(type === "save") {
+                if(window.confirm("제출하시면 기업 담당자에게 전달됩니다. \n 제출하시겠습니까?")) {
+                    axiosSave(inputValue , type);
+                }
+            }else {
+                axiosSave(inputValue , type);
+            }
         }
     };
+
+    function axiosSave(inputValue , type) {
+        user.userCoverLetterSave(inputValue,type)
+            .then(response => {
+                //navigate('/auth/login')
+                if (response.data === "SUCCESS") {
+                    if(response.data.type === "save") {
+                        alert("등록이 완료되었습니다.");
+                    }else {
+                        alert("임시저장되었습니다. \n 작성 완료 후 제출버튼을 눌러주세요.")
+                    }
+                }
+                //alert(response.data)
+            })
+            .catch(error => {
+                console.error("error", error.response.data);
+            });
+    }
 
     // 자소서 항목 들고오기
     useEffect(() => {
@@ -47,6 +60,7 @@ const CoverLetter = () => {
                         return {
                             num: index + 1,
                             id: item.cclIdx,
+                            comIdx : item.cclComIdx,
                             maxlength: item.cclMaxLength,
                             minlength: item.cclMinLength,
                             question: item.cclLetterQuestion,
@@ -72,7 +86,7 @@ const CoverLetter = () => {
                     : true
         })));
 
-    }, [inputValue]);
+    }, [inputValue.answer]);
 
     return (
         <div className="content">
@@ -111,7 +125,6 @@ const CoverLetter = () => {
                                             <div className="text-muted font-italic">
                                                 <small>
                                                     {" "}
-                                                    {value.answerValid ? "true" : "false"}
                                                     {value.answerValid && value.answer !== "" ? (
                                                         <span className="text-success font-weight-700">등록가능합니다.</span>
                                                     ) : (
@@ -139,8 +152,8 @@ const CoverLetter = () => {
                             )
                         })}
                         <div className="btngroup">
-                            <Button className="greyBtn">임시저장</Button>
-                            <Button>제출</Button>
+                            <Button className="greyBtn" onClick={(e) => save(e,"temp")}>임시저장</Button>
+                            <Button onClick={(e) => save(e,"save")}>제출</Button>
                         </div>
                     </Form>
                 </CardBody>
