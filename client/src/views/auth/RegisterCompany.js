@@ -305,11 +305,12 @@ const CompanyRegister = () => {
                                 type="file"
                                 accept=".jpg, .jpeg, .png"
                                 onChange={e => {
-                                    handleUpload(e.target);
+                                    handleUpload(e);
                                     setInputValue({...inputValue, b_img: e.target.value});
                                 }}
                             />
-                            <label htmlFor="b_img" className={`preview${isActive ? ' active' : ''}`}
+                            <label htmlFor="b_img"
+                                   className={`preview${isActive ? ' active' : ''}`}
                                    onDragEnter={handleDragStart}
                                    onDragOver={handleDragOver}
                                    onDragLeave={handleDragEnd}

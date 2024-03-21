@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { BeatLoader } from "react-spinners";
 
 const override = {
@@ -15,11 +15,24 @@ const override = {
 };
 
 const Loading = ({ loading }) => {
+    const [load, setLoad] = useState(false);
+
+    useEffect(() => {
+        if (loading) {
+            const timer = setTimeout(() => {
+                setLoad(loading);
+            }, 10);
+
+            return () => clearTimeout(timer);
+        }else {
+            setLoad(loading);
+        }
+    }, [loading]);
     return (
         <div>
             <BeatLoader
                 color="#36d7b7"
-                loading={loading}
+                loading={load}
                 cssOverride={override}
                 size={15}
             />

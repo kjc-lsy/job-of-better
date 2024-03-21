@@ -4,8 +4,8 @@ import {useNavigate} from "react-router-dom";
 import companyImg from "../../assets/img/register_company.png";
 import userImg from "../../assets/img/register_user.png";
 const RegisterChoice = () => {
+    const navigate = useNavigate();
     return (
-        <>
             <Col lg="8" md="8" className="register_choice_con">
                 <Card>
                     <CardHeader className="text-center">
@@ -14,8 +14,8 @@ const RegisterChoice = () => {
                     </CardHeader>
                     <CardBody>
                         <Button
+                            onClick={() => navigate("/auth/register")}
                             className="btn2"
-                            href="/auth/register"
                             block
                         >
                             <img src={userImg} alt="개인회원가입에 대한 이미지"/>
@@ -23,8 +23,8 @@ const RegisterChoice = () => {
                             <p>14세 이상 <span>일반회원</span></p>
                         </Button>
                         <Button
+                            onClick={() => navigate("/auth/register-company")}
                             className="btn2"
-                            href="/auth/register-company"
                             block
                         >
                             <img src={companyImg} alt="기업회원가입에 대한 이미지"/>
@@ -34,7 +34,6 @@ const RegisterChoice = () => {
                     </CardBody>
                 </Card>
             </Col>
-        </>
     );
 }
 
