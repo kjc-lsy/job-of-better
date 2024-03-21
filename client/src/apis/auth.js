@@ -1,5 +1,6 @@
 import api from './api';
 
+
 // 로그인
 export const login = (username, password) => api.post(`/login?username=${username}&password=${password}`)
 
@@ -17,3 +18,6 @@ export const remove = (userId) => api.delete(`/api/user/delete/${userId}`)
 
 // 로그아웃
 export const logout = () => api.get('/api/logout')
+
+// 기업 가입
+export const companyJoin = (data) => api.post(`/api/user/company-join`, data)

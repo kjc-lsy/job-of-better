@@ -81,6 +81,9 @@ input[type=radio], input[type=checkbox] {
 /************* card ************/
 
 .card {
+  label {
+    font-size:1rem
+  }
   .btn {
     background: $main-color;
     margin: 0 4px;
@@ -230,8 +233,24 @@ input[type=radio], input[type=checkbox] {
     background-image: none;
     background: #fff
   }
+
+}
+.register-wrapper {
+  .rs-picker-toggle-wrapper {
+    display: block;
+    cursor:pointer
+  }
 }
 
+
+@keyframes round {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .emailInput {
   span {
     padding: 0 5px;
@@ -375,7 +394,7 @@ form.form-register label + .form-control {
           }
         }
         input[type=file] {
-          display: none;
+          opacity:0
         }
 
       }
@@ -744,6 +763,9 @@ form.form-register label + .form-control {
 /********************************************* white content *********************************************/
 
 .white-content {
+  /*.main-panel {
+    background: #f2f5fd;
+  }*/
   .register_choice_con .card-body p {
     color: #1d253b;
     span {

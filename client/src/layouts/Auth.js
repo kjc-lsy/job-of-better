@@ -3,7 +3,7 @@ import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-do
 import {Container, Row} from "reactstrap";
 import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
-import {getPathname, getRoutes , getBrandText} from "../contexts/GetRouteProvider";
+import {getPathname, getRoutes , getBrandText} from "../components/GetRouteProvider";
 
 import routes from "routes.js";
 import {BackgroundColorContext} from "../contexts/BackgroundColorWrapper";

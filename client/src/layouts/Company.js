@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import {getBrandText, getPathname, getRoutes} from "../contexts/GetRouteProvider";
+import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
 // core components
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
