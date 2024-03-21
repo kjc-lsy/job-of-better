@@ -13,21 +13,20 @@ import {
     FormGroup,
     Input,
     InputGroup,
-    Label,
     Row,
 } from "reactstrap";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
 import fileOk from "../../assets/img/fileok.gif";
 import Postcode from "../../components/AddrPlugin";
 import KorDatePicker from "../../components/KorDatePicker";
-import Loading from "../../components/Loading";
+import {LoadingContext} from "../../contexts/LoadingProvider";
 
 const CompanyRegister = () => {
-    const [loading, setLoading] = useState(false);
+    const {loading, setLoading} = useContext(LoadingContext)
 
     // file drap & drop
     const [isActive, setIsActive] = useState(false);
@@ -105,7 +104,7 @@ const CompanyRegister = () => {
     };
 
     const submitRequirement =
-        Object.values(inputValue).some(value => value.trim() === '') &&
+        Object.values(inputValue).every(value => value) &&
         inputValue.validBNo === "true" &&
         inputValue.validBCeoName &&
         inputValue.validUsername &&
@@ -128,11 +127,21 @@ const CompanyRegister = () => {
     }, [inputValue.b_ceoName]);
 
     useEffect(() => {
+
         if (RegExp(inputRegexs.usernameRegex).exec(inputValue.username)) {
             setInputValue({...inputValue, validUsername: true});
         } else {
             setInputValue({...inputValue, validUsername: false});
         }
+        auth.checkDuplicateUsername(inputValue.username).then(response => {
+            if (response.data.isDuplicate) {
+                setInputValue({...inputValue, validUsername: false});
+            }else {
+                setInputValue({...inputValue, validUsername: true});
+            }
+        }).error(error => {
+          consoleError("checkDuplicateUsername error : ",error);
+        });
     }, [inputValue.username])
 
     useEffect(() => {
@@ -255,7 +264,6 @@ const CompanyRegister = () => {
 
     return (
         <Col lg="6" md="8" className="companyRegisterContainer">
-            <Loading loading={loading}/>
             <Card>
                 <Form role="form" className="form-register" onSubmit={handleJoin}>
                     <CardBody>

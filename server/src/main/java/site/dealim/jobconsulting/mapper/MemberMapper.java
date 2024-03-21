@@ -25,4 +25,5 @@ public interface MemberMapper {
     // 회원 삭제
     public int deleteMember(String username);
 
+    int checkDuplicateUsername(String username);
 }

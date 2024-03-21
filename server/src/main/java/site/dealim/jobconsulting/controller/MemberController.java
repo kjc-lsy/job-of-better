@@ -95,4 +95,10 @@ public class MemberController {
 
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
+
+    @PostMapping("/check-duplicate-username")
+    public ResponseEntity<?> checkDuplicateUsername(@RequestBody Member member) {
+        log.info("로그인 유저 확인...");
+        return new ResponseEntity<>(memberServiceImpl.checkDuplicateUsername(member.getUsername()), HttpStatus.OK);
+    }
 }

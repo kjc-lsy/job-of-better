@@ -497,6 +497,7 @@ form.form-register label + .form-control {
   .card-title {
     word-break: keep-all;
   }
+
 }
 
 .program-enroll.card {
@@ -559,6 +560,9 @@ form.form-register label + .form-control {
     .row:not(:last-child) {
       margin-bottom: 20px;
     }
+    table label {
+      font-size:0.75rem
+    }
   }
 
   .btn.btn-secondary {
@@ -573,6 +577,45 @@ form.form-register label + .form-control {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .ppl-info {
+    background: #f5f6fa;
+    padding: 20px 40px;
+    align-items:center;
+    .col {
+      padding: 0;
+    }
+    span {
+      display:flex;
+      width: 80px;
+      height: 80px;
+      background: #fff;
+      border-radius: 50%;
+      margin-right:10px;
+      justify-content: center;
+      align-items:center;
+      font-size:34px;
+      color: rgba(0,0,0,0.2);
+    }
+  }
+  .ppl-info-row {
+    display: flex;
+    gap:10px;
+    padding: 0 20px;
+  }
+  .ppl-num {
+    font-size:24px
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+  }
+  .card-subtitle {
+    margin-top:10px;
+    color: #999;
   }
 }
 
@@ -598,7 +641,7 @@ form.form-register label + .form-control {
   .listTitle {
     border-radius: 10px 10px 0 0;
     border: 1px solid rgba(29, 37, 59, 0.1);
-    background: #f5f6fa;
+    background: #f5f6fa24;
     font-size: 16px;
     font-weight: 500;
     padding: 10px 20px;
@@ -780,6 +823,10 @@ form.form-register label + .form-control {
     &:hover {
       border:1px solid $main-color;
     }
+  }
+
+  .coverletter_row .listTitle {
+    background: #f5f6fa;
   }
 
   .companyRegisterContainer .card:not(.card-white) {

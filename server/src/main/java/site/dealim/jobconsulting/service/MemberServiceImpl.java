@@ -101,4 +101,8 @@ public class MemberServiceImpl implements MemberService {
         // 시큐리티 컨텍스트에 인증정보 등록
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
+    public boolean checkDuplicateUsername(String username) {
+        return memberMapper.checkDuplicateUsername(username) > 0;
+    }
 }

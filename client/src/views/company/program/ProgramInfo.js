@@ -5,6 +5,8 @@ import {Viewer} from "@toast-ui/react-editor";
 import {getProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -37,10 +39,15 @@ const ProgramInfo = () => {
         <div className="content">
             <Card className='program-info'>
                 <CardHeader>
-                    <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
-                    <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + ", 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
-                    <Button onClick={() => handleModifyOvrBtn(pgIdx)}>수정하기</Button>
-                    <Button onClick={() => handleModifyContBtn(pgIdx)}>수정하기</Button>
+                    <div className="program-info-tt">
+                        <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
+                        <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
+                    </div>
+                    {/*<Button onClick={() => handleModifyOvrBtn(pgIdx)}>수정하기</Button>*/}
+                    <Button onClick={() => {
+                        handleModifyContBtn(pgIdx)
+                        handleModifyOvrBtn(pgIdx)
+                    }}>수정하기</Button>
                 </CardHeader>
                 <CardBody>
                     <Row>
@@ -55,37 +62,58 @@ const ProgramInfo = () => {
                                         <div className="h3">면접 진행중</div>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className="ppl-info-row">
                                     <Col>
-                                        <Row>
+                                        <Row className="ppl-info">
                                             <Col>
-                                                <img src="" alt="이미지 넣기"/>
+                                                <span>
+                                                <FontAwesomeIcon icon={faUsers}/>
+                                                    </span>
                                             </Col>
                                             <Col>
                                                 <label>총 참여자 수</label>
-                                                <div className="h3">9명</div>
+                                                <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
                                     </Col>
                                     <Col>
-                                        <Row>
+                                        <Row className="ppl-info">
                                             <Col>
-                                                <img src="" alt="이미지 넣기"/>
+                                                <span>
+                                                    <FontAwesomeIcon icon={faUserCheck}/>
+                                                </span>
                                             </Col>
                                             <Col>
                                                 <label>면접 참여 수</label>
-                                                <div className="h3">9명</div>
+                                                <div className="ppl-num">9명</div>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                <Row className="ppl-info-row">
+                                    <Col>
+                                        <Row className="ppl-info">
+                                            <Col>
+                                                <span>
+                                                    <FontAwesomeIcon icon={faUserClock}/>
+                                                </span>
+                                            </Col>
+                                            <Col>
+                                                <label>미확인 수</label>
+                                                <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
                                     </Col>
                                     <Col>
-                                        <Row>
+                                        <Row className="ppl-info">
                                             <Col>
-                                                <img src="" alt="이미지 넣기"/>
+                                                <span>
+                                                    <FontAwesomeIcon icon={faUserSlash}/>
+                                                </span>
                                             </Col>
                                             <Col>
-                                                <label>미확인 수</label>
-                                                <div className="h3">9명</div>
+                                                <label>탈락자 수</label>
+                                                <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
                                     </Col>
@@ -137,8 +165,8 @@ const ProgramInfo = () => {
                                         </td>
                                     </tr>
                                 </Table>
+                                <label>면접 기간</label>
                                 <Table>
-                                    <label>면접 기간</label>
                                     <tr>
                                         <th>신청 가능 기간</th>
                                         <td>
@@ -189,7 +217,7 @@ const ProgramInfo = () => {
                                                 <Col>
                                                     <div className="">
                                                         <label htmlFor="">종료시간</label>
-                                                        <h4>{program ? program.pgInterviewValEndTime.substr(0,5) : null}</h4>
+                                                        <h4>{program ? program.pgInterviewValEndTime.substr(0, 5) : null}</h4>
                                                     </div>
                                                 </Col>
                                             </Row>

@@ -123,4 +123,8 @@
         WHERE username = #{username}
     </delete>
 
+    <!-- 회원 중복 확인 -->
+    <select id="checkDuplicateUsername">
+        SELECT * FROM member WHERE username = #{username}
+    </select>
 </mapper>
