@@ -39,7 +39,9 @@ p {
     height: $lines * 1.2em;
   }
 }
-
+.form-group input[type=file] {
+  height: 0;
+}
 .text {
   @include ellipsis;
 }
@@ -152,7 +154,8 @@ input[type=radio], input[type=checkbox] {
   align-items: center;
 
   .nav-link {
-    font-size: 16px
+    font-size: 16px;
+    cursor: pointer;
   }
 }
 .footer {
@@ -285,7 +288,7 @@ form.form-register label + .form-control {
     justify-content: center;
     gap: 10px;
 
-    a.btn {
+    .btn {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -772,8 +775,11 @@ form.form-register label + .form-control {
       color: $main-color;
     }
   }
-  .register_choice_con .card-body a.btn {
+  .register_choice_con .card-body .btn {
     border:1px solid $border-color;
+    &:hover {
+      border:1px solid $main-color;
+    }
   }
 
   .companyRegisterContainer .card:not(.card-white) {

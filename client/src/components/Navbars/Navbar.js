@@ -190,12 +190,12 @@ function CommonNavbar(props) {
                             </InputGroup>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={pathPage === "login" ? true : false} href="/auth/login">
+                                <NavLink active={pathPage === "login" ? true : false} onClick={()=>navigate("/auth/login")} >
                                     로그인
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink active={pathPage.includes("register") ? true : false} href="/auth/register-choice">
+                                <NavLink active={pathPage.includes("register") ? true : false} onClick={()=>navigate("/auth/register-choice")}>
                                     회원가입
                                 </NavLink>
                             </NavItem>
