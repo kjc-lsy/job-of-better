@@ -5,7 +5,6 @@ import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
-import KorDatePicker from "../../../components/KorDatePicker";
 
 const ProgramModifyContent = () => {
     const {pgIdx} = useParams();
@@ -50,7 +49,6 @@ const ProgramModifyContent = () => {
             <Card className="program-modify">
                 <CardHeader>
                     <CardTitle tag="h3">프로그램 내용 수정</CardTitle>
-                    <KorDatePicker/>
                 </CardHeader>
                 <CardBody>
                     <Form onSubmit={handleSubmit}>

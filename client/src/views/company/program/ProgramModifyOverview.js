@@ -11,20 +11,6 @@ const ProgramModifyOverview = () => {
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
     const {isLogin} = useAuth();
-    const [inputValue, setInputValue] = useState({
-        pgProgStartDate: null,
-        pgProgEndDate: null,
-        pgEduStartDate: null,
-        pgEduEndDate: null,
-        pgRegValStartDate: null,
-        pgRegValEndDate: null,
-        pgInterviewValStartDate: null,
-        pgInterviewValEndDate: null,
-        pgInterviewValStartTime: null,
-        pgInterviewValEndTime: null,
-        pgTitle: '',
-        pgContent: '',
-    });
     const [progDateRange, setProgDateRange] = useState([null,null]);
     const [eduDateRange, setEduDateRange] = useState([null,null]);
     const [regValDateRange, setRegValDateRange] = useState([null,null]);
@@ -32,16 +18,11 @@ const ProgramModifyOverview = () => {
     const [interviewValTimeRange, setInterviewValTimeRange] = useState([null,null]);
 
     useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);
-
-    useEffect(() => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
 
                 setTitle(fetchedProgram.pgTitle);
-                setInputValue({ ...fetchedProgram });
 
                 setProgDateRange([
                     fetchedProgram.pgProgStartDate ? new Date(fetchedProgram.pgProgStartDate) : null,
@@ -65,55 +46,40 @@ const ProgramModifyOverview = () => {
                 ]);
             });
         }
-    }, [isLogin, pgIdx]);
+    }, [isLogin]);
 
+    useEffect(() => {
+        console.log(progDateRange)
+    }, [progDateRange]);
+
+    const addNineHours = (date) => {
+        if (!date) return null; // date가 null이거나 undefined인 경우, null을 반환
+        const newDate = new Date(date.getTime() + (9 * 60 * 60 * 1000)); // 9시간을 밀리초로 환산하여 더함
+        return newDate;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await updateProgram(inputValue);
+            const response = await updateProgram({
+                pgProgStartDate: addNineHours(progDateRange[0]),
+                pgProgEndDate: addNineHours(progDateRange[1]),
+                pgEduStartDate: addNineHours(eduDateRange[0]),
+                pgEduEndDate: addNineHours(eduDateRange[1]),
+                pgRegValStartDate: addNineHours(regValDateRange[0]),
+                pgRegValEndDate: addNineHours(regValDateRange[1]),
+                pgInterviewValStartDate: addNineHours(interviewValDateRange[0]),
+                pgInterviewValEndDate: addNineHours(interviewValDateRange[1]),
+                pgInterviewValStartTime: addNineHours(interviewValTimeRange[0]),
+                pgInterviewValEndTime: addNineHours(interviewValTimeRange[1]),
+                pgTitle: title,
+                pgIdx: pgIdx
+            });
             alert(response.data)
             navigate('/company/program-info/' + pgIdx)
         } catch (e) {
             alert(e.response.data)
             console.log(e)
-        }
-    }
-
-    const handleProgDate = (values) => {
-        setProgDateRange(values);
-
-        if(values !== null) {
-            setInputValue({...inputValue, pgProgStartDate: values[0], pgProgEndDate: values[1]});
-        }
-    }
-
-    const handleEduDate = (values) => {
-        setEduDateRange(values);
-        if(values !== null) {
-            setInputValue({...inputValue, pgEduStartDate: values[0], pgEduEndDate: values[1]});
-        }
-    }
-
-    const handleRegValDate = (values) => {
-        setRegValDateRange(values);
-        if(values !== null) {
-            setInputValue({...inputValue, pgRegValStartDate: values[0], pgRegValEndDate: values[1]});
-        }
-    }
-
-    const handleInterviewValDate = (values) => {
-        setInterviewValDateRange(values);
-        if(values !== null) {
-            setInputValue({...inputValue, pgInterviewValStartDate: values[0], pgInterviewValEndDate: values[1]});
-        }
-    }
-
-    const handleInterviewValTime = (values) => {
-        setInterviewValTimeRange(values);
-        if(values === null) {
-            setInputValue({...inputValue, pgInterviewValStartTime: null, pgInterviewValEndTime: null});
-            return;
         }
     }
 
@@ -142,12 +108,12 @@ const ProgramModifyOverview = () => {
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
                                             value={progDateRange}
-                                            onChange={handleProgDate}
+                                            onChange={setProgDateRange}
                                         />
                                         <label>교육 진행 기간</label>
                                         <ProgDateRangePicker
                                             value={eduDateRange}
-                                            onChange={handleEduDate}
+                                            onChange={setEduDateRange}
                                         />
                                     </div>
                                 </Col>
@@ -157,17 +123,17 @@ const ProgramModifyOverview = () => {
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
                                             value={regValDateRange}
-                                            onChange={handleRegValDate}
+                                            onChange={setRegValDateRange}
                                         />
                                         <label>면접 가능 기간</label>
                                         <ProgDateRangePicker
                                             value={interviewValDateRange}
-                                            onChange={handleInterviewValDate}
+                                            onChange={setInterviewValDateRange}
                                         />
                                         <label>면접 가능 시간</label>
                                         <TimeRange30Picker
                                             value={interviewValTimeRange}
-                                            onChange={handleInterviewValTime}
+                                            onChange={setInterviewValTimeRange}
                                         />
                                     </div>
                                 </Col>

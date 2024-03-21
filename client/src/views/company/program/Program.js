@@ -63,15 +63,15 @@ function Program() {
                                     <Row>
                                         <Col md='4'>
                                             <label>총 신청 수</label>
-                                            <h3>9명</h3>
+                                            <div className="h3">9명</div>
                                         </Col>
                                         <Col md='4'>
                                             <label>면접 참여 수</label>
-                                            <h3>6명</h3>
+                                            <div className="h3">6명</div>
                                         </Col>
                                         <Col md='4'>
                                             <label>합격자 수</label>
-                                            <h3>4명</h3>
+                                            <div className="h3">4명</div>
                                         </Col>
                                     </Row>
                                     <Row>

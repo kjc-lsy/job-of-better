@@ -533,6 +533,10 @@ form.form-register label + .form-control {
     border: 1px solid $gray-400;
     border-top: 0;
     margin-bottom: 20px;
+
+    .row:not(:last-child) {
+      margin-bottom: 20px;
+    }
   }
 
   .btn.btn-secondary {

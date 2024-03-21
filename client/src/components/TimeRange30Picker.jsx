@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {DateRangePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 
@@ -31,13 +31,8 @@ const TimeRange30Picker = (props) => {
     const now = new Date();
     now.setMinutes(0);
 
-    useEffect(() => {
-
-    }, []);
-
     return (
             <DateRangePicker
-                defaultValue={[now, now]}
                 placeholder='면접 가능 시간'
                 format="HH:mm"
                 ranges={[]}

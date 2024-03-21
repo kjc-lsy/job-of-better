@@ -3,8 +3,8 @@ import CompanyLayout from "./layouts/Company";
 import AuthLayout from "./layouts/Auth";
 import UserLayout from "./layouts/User";
 import React from "react";
-const App = () => {
 
+const App = () => {
     return (
         <>
             <Routes>

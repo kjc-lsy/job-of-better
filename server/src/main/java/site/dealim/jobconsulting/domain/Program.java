@@ -5,7 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -16,17 +17,17 @@ public class Program {
     private Long pgComIdx;
     private String pgTitle;
     private String pgContent;
-    private LocalDateTime pgProgStartDate;
-    private LocalDateTime pgProgEndDate;
-    private LocalDateTime pgEduStartDate;
-    private LocalDateTime pgEduEndDate;
-    private LocalDateTime pgRegValStartDate;
-    private LocalDateTime pgRegValEndDate;
-    private LocalDateTime pgInterviewValStartDate;
-    private LocalDateTime pgInterviewValEndDate;
-    private LocalDateTime pgInterviewValStartTime;
-    private LocalDateTime pgInterviewValEndTime;
-    private LocalDateTime pgCreatedDate;
-    private LocalDateTime pgModifiedDate;
+    private LocalDate pgProgStartDate;
+    private LocalDate pgProgEndDate;
+    private LocalDate pgEduStartDate;
+    private LocalDate pgEduEndDate;
+    private LocalDate pgRegValStartDate;
+    private LocalDate pgRegValEndDate;
+    private LocalDate pgInterviewValStartDate;
+    private LocalDate pgInterviewValEndDate;
+    private LocalTime pgInterviewValStartTime;
+    private LocalTime pgInterviewValEndTime;
+    private LocalDate pgCreatedDate;
+    private LocalDate pgModifiedDate;
     private Character pgIsWithdrawn;
 }
