@@ -97,8 +97,8 @@ public class MemberController {
     }
 
     @PostMapping("/check-duplicate-username")
-    public ResponseEntity<?> checkDuplicateUsername(@RequestBody Member member) {
-        log.info("로그인 유저 확인...");
-        return new ResponseEntity<>(memberServiceImpl.checkDuplicateUsername(member.getUsername()), HttpStatus.OK);
+    public ResponseEntity<?> checkDuplicateUsername(@RequestParam(value = "username") String username) {
+        log.info("로그인 중복 유저 확인..."+username);
+        return new ResponseEntity<>(memberServiceImpl.checkDuplicateUsername(username), HttpStatus.OK);
     }
 }

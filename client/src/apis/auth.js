@@ -1,7 +1,7 @@
 import api from './api';
 
 // 회원 확인
-export const checkDuplicateUsername = (username) => api.post('/api/user/check-duplicate-username', {username: username})
+export const checkDuplicateUsername = (username) => api.post(`/api/user/check-duplicate-username?username=${username}`)
 
 // 로그인
 export const login = (username, password) => api.post(`/login?username=${username}&password=${password}`)

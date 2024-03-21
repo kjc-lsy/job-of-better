@@ -124,7 +124,7 @@
     </delete>
 
     <!-- 회원 중복 확인 -->
-    <select id="checkDuplicateUsername">
-        SELECT * FROM member WHERE username = #{username}
+    <select id="checkDuplicateUsername" resultType="int">
+        SELECT count(*) FROM member WHERE username = #{username}
     </select>
 </mapper>

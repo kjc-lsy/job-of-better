@@ -39,9 +39,9 @@ const CompanyRegister = () => {
     };
 
     const setFileInfo = (file) => {
-        const { name, size: byteSize, type } = file;
+        const {name, size: byteSize, type} = file;
         const size = (byteSize / (1024 * 1024)).toFixed(2) + 'mb';
-        setUploadedInfo({ name, size, type }); // name, size, type 정보를 uploadedInfo에 저장
+        setUploadedInfo({name, size, type}); // name, size, type 정보를 uploadedInfo에 저장
     };
 
     const handleDrop = (event) => {
@@ -62,6 +62,7 @@ const CompanyRegister = () => {
     const [inputValue, setInputValue] = useState({
         username: "",
         validUsername: false,
+        validDuplicateUsername: "",
 
         password: "",
         validPassword: false,
@@ -86,7 +87,7 @@ const CompanyRegister = () => {
         validBCeoName: false,
         b_img: "",
         b_detailAddr: "",
-        b_openingDate : new Date(),
+        b_openingDate: new Date(),
 
         agree: false
     });
@@ -108,6 +109,7 @@ const CompanyRegister = () => {
         inputValue.validBNo === "true" &&
         inputValue.validBCeoName &&
         inputValue.validUsername &&
+        inputValue.validDuplicateUsername === "true" &&
         inputValue.validCheckPassword &&
         inputValue.validPassword &&
         inputValue.validName &&
@@ -119,7 +121,7 @@ const CompanyRegister = () => {
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
 
     useEffect(() => {
-        if(RegExp(inputRegexs.nameRegex).exec(inputValue.b_ceoName)) {
+        if (RegExp(inputRegexs.nameRegex).exec(inputValue.b_ceoName)) {
             setInputValue({...inputValue, validBCeoName: true});
         } else {
             setInputValue({...inputValue, validBCeoName: false});
@@ -133,16 +135,21 @@ const CompanyRegister = () => {
         } else {
             setInputValue({...inputValue, validUsername: false});
         }
-        auth.checkDuplicateUsername(inputValue.username).then(response => {
-            if (response.data.isDuplicate) {
-                setInputValue({...inputValue, validUsername: false});
-            }else {
-                setInputValue({...inputValue, validUsername: true});
-            }
-        }).error(error => {
-          consoleError("checkDuplicateUsername error : ",error);
-        });
+
     }, [inputValue.username])
+
+    const validateDuplicateUsername = () => {
+        auth.checkDuplicateUsername(inputValue.username)
+            .then(response => {
+                if (response.data) {
+                    setInputValue({...inputValue, validDuplicateUsername: "false"});
+                } else {
+                    setInputValue({...inputValue, validDuplicateUsername: "true"});
+                }
+            }).catch(error => {
+            console.error("checkDuplicateUsername error : ", error);
+        });
+    }
 
     useEffect(() => {
         if (RegExp(inputRegexs.pwRegex).exec(inputValue.password)) {
@@ -197,13 +204,13 @@ const CompanyRegister = () => {
             setInputValue({...inputValue, domain: domain});
         }
     };
-    
-    
+
+
     // 사업자등록번호 조회
     const getJsonData = async () => {
         setLoading(true);
         const data = {
-            "b_no": [(inputValue.b_no).replaceAll("-","")] // inputValue로부터 b_no 값을 가져옵니다.
+            "b_no": [(inputValue.b_no).replaceAll("-", "")] // inputValue로부터 b_no 값을 가져옵니다.
         };
 
         try {
@@ -220,13 +227,11 @@ const CompanyRegister = () => {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
-            console.log(result);
-            if(result.data[0].b_stt !== ""){
+            if (result.data[0].b_stt !== "") {
                 setInputValue({...inputValue, validBNo: "true"});
-            }else {
+            } else {
                 setInputValue({...inputValue, validBNo: "false"});
             }
-            //console.log(result.data[0].b_stt);
         } catch (error) {
             console.error(error);
         } finally {
@@ -238,14 +243,14 @@ const CompanyRegister = () => {
         let sanitizedValue = e.target.value.replace(/[^0-9.-]/g, '');
 
         let formattedValue = "";
-        if(sanitizedValue) {
+        if (sanitizedValue) {
             sanitizedValue = sanitizedValue.replace(/-/g, '');
             const match = sanitizedValue.match(/^(\d{1,3})(\d{1,2})?(\d{1,5})?$/);
-            if(match) {
+            if (match) {
                 formattedValue = match.slice(1).filter(Boolean).join("-");
             }
         }
-        setInputValue({...inputValue, b_no: formattedValue , validBNo: ""});
+        setInputValue({...inputValue, b_no: formattedValue, validBNo: ""});
     };
 
     // 회원가입
@@ -276,30 +281,32 @@ const CompanyRegister = () => {
                             <label>사업자 등록 번호</label>
                             <Row>
                                 <Col md={10}>
-                            <Input
-                                value={inputValue.b_no}
-                                name="b_no"
-                                placeholder="사업자 등록 번호"
-                                type="text"
-                                maxLength="12"
-                                onChange={handleChange}
-                                /*onChange={e => {
-                                    let sanitizedValue = e.target.value.replace(/[^0-9.-]/g, '');
-                                    e.target.value = sanitizedValue;
-                                    setInputValue({...inputValue, b_no: sanitizedValue})
-                                }}*/
-                            />
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {" "}
-                                    {inputValue.validBNo === "true" && inputValue.b_no !== ""
-                                        ? <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>
-                                        : inputValue.b_no !== "" && inputValue.validBNo === "false"
-                                            ? <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>
-                                            : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
-                                    }
-                                </small>
-                            </div>
+                                    <Input
+                                        value={inputValue.b_no}
+                                        name="b_no"
+                                        placeholder="사업자 등록 번호"
+                                        type="text"
+                                        maxLength="12"
+                                        onChange={handleChange}
+
+                                        /*onChange={e => {
+                                            let sanitizedValue = e.target.value.replace(/[^0-9.-]/g, '');
+                                            e.target.value = sanitizedValue;
+                                            setInputValue({...inputValue, b_no: sanitizedValue})
+                                        }}*/
+                                    />
+                                    <div className="text-muted font-italic">
+                                        <small>
+                                            {" "}
+                                            {inputValue.validBNo === "true" && inputValue.b_no !== ""
+                                                ?
+                                                <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>
+                                                : inputValue.b_no !== "" && inputValue.validBNo === "false"
+                                                    ? <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>
+                                                    : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
+                                            }
+                                        </small>
+                                    </div>
                                 </Col>
                                 <Col md={2}><Button onClick={getJsonData}>인증하기</Button></Col>
                             </Row>
@@ -416,17 +423,34 @@ const CompanyRegister = () => {
                                 placeholder="아이디"
                                 type="text"
                                 onChange={e => {
-                                    setInputValue({...inputValue, username: e.target.value})
+                                    setInputValue({
+                                        ...inputValue,
+                                        username: e.target.value,
+                                        validDuplicateUsername: "false"
+                                    })
                                 }}
+                                onBlur={e => validateDuplicateUsername()}
                             />
                             <div className="text-muted font-italic">
                                 <small>
                                     {" "}
                                     {inputValue.validUsername && inputValue.username !== ""
-                                        ? <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                        : inputValue.username !== ""
-                                            ? <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                            : <span> 문자, 영문자, 숫자를 사용해주세요</span>
+                                        ?
+                                        inputValue.validDuplicateUsername === "true"
+                                            ?
+                                            <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                            :
+                                            inputValue.validDuplicateUsername === "false"
+                                                ?
+                                                <span className="text-danger font-weight-700">중복된 아이디 입니다.</span>
+                                                :
+                                                <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                        :
+                                        inputValue.username !== ""
+                                            ?
+                                            <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                            :
+                                            <span> 문자, 영문자, 숫자를 사용해주세요</span>
                                     }
                                 </small>
                             </div>
