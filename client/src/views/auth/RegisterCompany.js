@@ -86,6 +86,8 @@ const CompanyRegister = () => {
         b_ceoName: "",
         validBCeoName: false,
         b_img: "",
+        b_address: "",
+        b_zipCode: "",
         b_detailAddr: "",
         b_openingDate: new Date(),
 
@@ -129,14 +131,27 @@ const CompanyRegister = () => {
     }, [inputValue.b_ceoName]);
 
     useEffect(() => {
-
         if (RegExp(inputRegexs.usernameRegex).exec(inputValue.username)) {
-            setInputValue({...inputValue, validUsername: true});
+            setInputValue(prevState => ({
+                ...prevState,
+                validUsername: true
+            }));
         } else {
-            setInputValue({...inputValue, validUsername: false});
+            setInputValue(prevState => ({
+                ...prevState,
+                validUsername: false
+            }));
         }
-
     }, [inputValue.username])
+
+    const handleInputChange = (e) => {
+        const {name, value} = e.target;
+        setInputValue(prevState => ({
+            ...prevState,
+            [name]: value,
+            validDuplicateUsername: ""
+        }));
+    };
 
     const validateDuplicateUsername = () => {
         auth.checkDuplicateUsername(inputValue.username)
@@ -387,14 +402,21 @@ const CompanyRegister = () => {
                             </div>
                         </FormGroup>
                         <FormGroup className="register_addr">
-                            <label>회사 주소</label>
-                            <Postcode/>
+                            <label htmlFor="b_detailAddr">회사 주소</label>
+                            <Postcode
+                                inputValue={inputValue}
+                                setInputValue={setInputValue}
+                            />
                             <Row>
                                 <Col md={12}>
                                     <Input
                                         id="b_detailAddr"
                                         name="b_detailAddr"
                                         placeholder="상세주소"
+                                        value={inputValue.b_detailAddr}
+                                        onChange={e =>{
+                                            setInputValue({...inputValue, b_detailAddr: e.target.value})
+                                        }}
                                     />
                                 </Col>
                             </Row>
@@ -415,45 +437,44 @@ const CompanyRegister = () => {
                     </CardBody>
                     <CardBody>
                         <h4>담당자 정보</h4>
-                        <FormGroup>
+                        <FormGroup className="register_addr">
                             <label>아이디</label>
-                            <Input
-                                value={inputValue.username}
-                                name="username"
-                                placeholder="아이디"
-                                type="text"
-                                onChange={e => {
-                                    setInputValue({
-                                        ...inputValue,
-                                        username: e.target.value,
-                                        validDuplicateUsername: "false"
-                                    })
-                                }}
-                                onBlur={e => validateDuplicateUsername()}
-                            />
-                            <div className="text-muted font-italic">
-                                <small>
-                                    {" "}
-                                    {inputValue.validUsername && inputValue.username !== ""
-                                        ?
-                                        inputValue.validDuplicateUsername === "true"
-                                            ?
-                                            <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                            :
-                                            inputValue.validDuplicateUsername === "false"
+                            <Row>
+                                <Col md={10}>
+                                    <Input
+                                        value={inputValue.username}
+                                        name="username"
+                                        placeholder="아이디"
+                                        type="text"
+                                        onInput={handleInputChange}
+                                    />
+                                    <div className="text-muted font-italic">
+                                        <small>
+                                            {inputValue.validUsername && inputValue.username !== ""
                                                 ?
-                                                <span className="text-danger font-weight-700">중복된 아이디 입니다.</span>
+                                                inputValue.validDuplicateUsername === "true"
+                                                    ?
+                                                    <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                                    :
+                                                    inputValue.validDuplicateUsername === "false"
+                                                        ?
+                                                        <span
+                                                            className="text-danger font-weight-700">중복된 아이디 입니다.</span>
+                                                        :
+                                                        <span
+                                                            className="text-danger font-weight-700">아이디 중복 확인해주세요,</span>
                                                 :
-                                                <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                        :
-                                        inputValue.username !== ""
-                                            ?
-                                            <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                            :
-                                            <span> 문자, 영문자, 숫자를 사용해주세요</span>
-                                    }
-                                </small>
-                            </div>
+                                                inputValue.username !== ""
+                                                    ?
+                                                    <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                                    :
+                                                    <span> 문자, 영문자, 숫자를 사용해주세요</span>
+                                            }
+                                        </small>
+                                    </div>
+                                </Col>
+                                <Col md={2}><Button onClick={validateDuplicateUsername}>중복확인</Button></Col>
+                            </Row>
                         </FormGroup>
 
                         <FormGroup>

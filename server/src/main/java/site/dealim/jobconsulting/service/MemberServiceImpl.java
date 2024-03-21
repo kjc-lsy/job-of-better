@@ -11,13 +11,14 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
 @Slf4j
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -31,15 +32,14 @@ public class MemberServiceImpl implements MemberService {
      * 2. 회원 등록
      * 3. 권한 등록
      */
-    @Override
-    public int insert(Member member) {
+    public Long insert(Member member) {
         // 비밀번호 암호화
         String memberPwd = member.getPassword();
         String encodedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encodedPwd);
 
         //회원 등록
-        int result = memberMapper.insertMember(member);
+        Long result = memberMapper.insertMember(member);
 
         //권한 등록
         if (result > 0) {
@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
         return result;
     }
 
-    @Override
+    
     public int update(Member member) {
         String memberPwd = member.getPassword();
         String encondedPwd = passwordEncoder.encode(memberPwd);
@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
     /**
      * 회원 삭제 (회원 탈퇴)
      */
-    @Override
+    
     public int delete(String username) {
         return memberMapper.deleteMember(username);
     }
@@ -72,12 +72,12 @@ public class MemberServiceImpl implements MemberService {
     /**
      * idx로 회원 조회
      */
-    @Override
+    
     public Member select(long idx) {
         return memberMapper.selectMember(idx);
     }
 
-    @Override
+    
     public void login(Member member, HttpServletRequest request) {
         String username = member.getUsername();
         String password = member.getPassword();
@@ -104,5 +104,10 @@ public class MemberServiceImpl implements MemberService {
 
     public boolean checkDuplicateUsername(String username) {
         return memberMapper.checkDuplicateUsername(username) > 0;
+    }
+
+
+    public void companyJoin(long idx, Company company) {
+        memberMapper.companyJoin(idx, company);
     }
 }

@@ -1,6 +1,7 @@
 package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
@@ -8,7 +9,7 @@ import site.dealim.jobconsulting.domain.MemberRole;
 public interface MemberMapper {
 
     // 회원 등록
-    public int insertMember(Member member);
+    public Long insertMember(Member member);
 
     // 회원 조회
     public Member selectMember(long idx);
@@ -17,7 +18,7 @@ public interface MemberMapper {
     public Member login(String username);
 
     // 회원 권한 등록
-    public int insertMemberRole(MemberRole memberRole);
+    public Long insertMemberRole(MemberRole memberRole);
 
     // 회원 수정
     public int updateMember(Member member);
@@ -26,4 +27,6 @@ public interface MemberMapper {
     public int deleteMember(String username);
 
     int checkDuplicateUsername(String username);
+
+    void companyJoin(long idx, Company company);
 }

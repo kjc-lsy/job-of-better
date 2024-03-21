@@ -4,7 +4,7 @@ import { Button, Col, Input, Row } from "reactstrap";
 
 const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-const Postcode = () => {
+const Postcode = ({inputValue,setInputValue}) => {
     const [address, setAddress] = useState('');
     const open = useDaumPostcodePopup(scriptUrl);
 
@@ -23,7 +23,7 @@ const Postcode = () => {
         }
         console.log(data);
         setAddress(data);
-
+        setInputValue({...inputValue ,b_address: fullAddress, b_zipCode: data.zonecode});
     };
 
     const handleClick = () => {
