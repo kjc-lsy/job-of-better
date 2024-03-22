@@ -426,7 +426,7 @@ const CompanyRegister = () => {
                                     setInputValue({
                                         ...inputValue,
                                         username: e.target.value,
-                                        validDuplicateUsername: "false"
+                                        validDuplicateUsername: ""
                                     })
                                 }}
                                 onBlur={e => validateDuplicateUsername()}

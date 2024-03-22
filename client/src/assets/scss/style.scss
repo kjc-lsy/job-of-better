@@ -4,6 +4,7 @@ $border-color: rgba(29, 37, 59, 0.2);
 $main-color: var(--main-color);
 $main-bgColor: var(--main-bgColor);
 $input-group-not-has-validation: ".input-group:not(.has-validation)";
+$dark-category-bg: rgba(245, 246, 250, 0.1411764706);
 
 // 기본 스타일
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -39,9 +40,11 @@ p {
     height: $lines * 1.2em;
   }
 }
+
 .form-group input[type=file] {
   height: 0;
 }
+
 .text {
   @include ellipsis;
 }
@@ -54,7 +57,7 @@ p {
   height: auto;
   padding: 10px 18px; // input-group 관련 스타일로 통합
   border-color: $border-color; // input-group 관련 스타일로 통합
-  border-color: #2b3553 ; // input-group 관련 스타일로 통합
+  border-color: #2b3553; // input-group 관련 스타일로 통합
 }
 
 // 기타 스타일
@@ -74,18 +77,19 @@ input[type=radio], input[type=checkbox] {
 .input-group {
   align-items: center;
 }
-.form-control {
-  font-size:0.9rem
-}
 
+.form-control {
+  font-size: 0.9rem
+}
 
 
 /************* card ************/
 
 .card {
   label {
-    font-size:1rem
+    font-size: 1rem
   }
+
   .btn {
     background: $main-color;
     margin: 0 4px;
@@ -113,6 +117,7 @@ input[type=radio], input[type=checkbox] {
     font-weight: 500;
     border: 1px solid rgba(29, 37, 59, 0.2);
   }
+
   .greyBtn:hover {
     color: #fff;
   }
@@ -158,9 +163,10 @@ input[type=radio], input[type=checkbox] {
     cursor: pointer;
   }
 }
+
 .footer {
   .nav-link {
-    font-size:0.7500000025rem
+    font-size: 0.7500000025rem
   }
 }
 
@@ -238,10 +244,11 @@ input[type=radio], input[type=checkbox] {
   }
 
 }
+
 .register-wrapper {
   .rs-picker-toggle-wrapper {
     display: block;
-    cursor:pointer
+    cursor: pointer
   }
 }
 
@@ -254,6 +261,7 @@ input[type=radio], input[type=checkbox] {
     transform: rotate(360deg);
   }
 }
+
 .emailInput {
   span {
     padding: 0 5px;
@@ -317,7 +325,8 @@ form.form-register label + .form-control {
     p {
       font-size: 12px;
       line-height: 1.4em;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
+
       span {
         color: #fff;
 
@@ -333,6 +342,7 @@ form.form-register label + .form-control {
   h3 {
     margin-bottom: 5px;
   }
+
   .card:not(.card-white) {
     box-shadow: none;
     border-radius: 0;
@@ -362,6 +372,7 @@ form.form-register label + .form-control {
             border-color: #111;
           }
         }
+
         &.active {
           .form-control {
             background-color: #efeef3;
@@ -389,15 +400,17 @@ form.form-register label + .form-control {
           img {
             width: 100px;
           }
+
           p span {
             display: block;
-            font-size:14px;
+            font-size: 14px;
             margin-top: 5px;
             color: #999;
           }
         }
+
         input[type=file] {
-          opacity:0
+          opacity: 0
         }
 
       }
@@ -409,25 +422,29 @@ form.form-register label + .form-control {
         padding: 10px 13px;
         margin: 0;
       }
+
       .col-md-7 {
         flex: 0 0 52.333333%;
         max-width: 58.33333333%;
       }
+
       .row {
         padding: 0 15px;
-        gap:5px;
+        gap: 5px;
         flex-wrap: nowrap;
 
         div {
           padding: 0;
         }
       }
+
       .row + .row {
         margin-top: 5px;
       }
     }
   }
 }
+
 /****************************************** user ******************************************/
 
 .cover-letter-wrapper {
@@ -435,27 +452,32 @@ form.form-register label + .form-control {
     margin-bottom: 30px;
     margin-right: 0;
   }
+
   .coverletter_user {
-    font-size:18px;
+    font-size: 18px;
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
     padding: 0 5px;
+
     .cl_length {
-      font-size:16px;
+      font-size: 16px;
 
       span {
         color: $main-color;
       }
     }
+
     b {
-      font-size:16px
+      font-size: 16px
     }
   }
+
   textarea {
     max-height: 150px !important;
     height: 150px;
   }
+
   small {
     padding-left: 5px;
   }
@@ -464,6 +486,29 @@ form.form-register label + .form-control {
 /****************************************** company ******************************************/
 
 /************* program *************/
+
+.rs-input-group.rs-input-group-inside {
+  background-color: transparent;
+  input {
+    background-color: transparent;
+  }
+}
+
+.program-subcategory {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.program-subcategory::before {
+  vertical-align: -2px;
+  display: inline-block;
+  width: 4px;
+  height: 15px;
+  background-color: rgb(29, 66, 137);
+  margin-right: 6px;
+  content: "";
+}
 
 .toastui-editor-toolbar-item-wrapper {
   .scroll-sync {
@@ -476,9 +521,56 @@ form.form-register label + .form-control {
   border: 1px solid #2b3553;
 }
 
-.program.card {
-  label + .form-control {
+.card .curr-status {
+  font-size : 24px;
+  color: rgba(255,255,255,0.8);
+}
+
+.program.row {
+  row-gap: 30px;
+
+  .card {
+    margin-bottom: 0;
+  }
+
+  .row:not(:last-child) {
     margin-bottom: 20px;
+  }
+
+  .num-info-section {
+    background-color: $dark-category-bg;
+    padding: 40px 20px;
+    margin: 0 0 20px;
+    border-radius: calc(0.2857rem - 0.0625rem);
+    justify-content: space-around;
+    text-align: center;
+
+    svg {
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.8)
+    }
+
+    label {
+      display: inline-block;
+    }
+
+    .num-info {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.8)
+    }
+  }
+
+  .card-header {
+    padding: 50px 30px 0;
+  }
+
+  .card-body {
+    padding: 15px 30px;
+  }
+
+  .card-footer {
+    padding: 15px 30px;
   }
 
   label {
@@ -500,6 +592,45 @@ form.form-register label + .form-control {
 
 }
 
+.program-add.card{
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  justify-content: space-around;
+  align-items: center;
+
+  img {
+    width: 200px;
+    margin: 20px 0;
+  }
+
+  .btn{
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  .btn:hover{
+    background-color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .btn>.inner-btn {
+    width: auto;
+    height: auto;
+    background-color: $main-color;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  .btn>.inner-btn:hover {
+    background-color: $main-color !important;
+  }
+
+
+}
+
 .program-enroll.card {
   .row:not(:last-child) {
     margin-bottom: 20px;
@@ -509,20 +640,30 @@ form.form-register label + .form-control {
     margin-bottom: 20px;
   }
 
-  label+.rs-picker {
+  label + .rs-picker {
     margin-bottom: 10px;
   }
 
-  label+.form-control {
+  label + .form-control {
     margin-bottom: 10px;
   }
 
 }
 
 .program-modify.card {
-  .form-group {
-      margin-bottom: 20px;
+  label:not(.scroll-sync){
+    font-size: 14px;
+    margin-bottom: 10px;
   }
+
+  .rs-picker-toggle-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
 }
 
 .toastui-editor-defaultUI-toolbar .image {
@@ -530,6 +671,9 @@ form.form-register label + .form-control {
 }
 
 .rs-calendar-time-dropdown-column {
+  ul[data-type="minutes"] {
+    overflow-y: inherit;
+  }
 
   li[data-key^="minutes-"] {
     display: none;
@@ -560,8 +704,9 @@ form.form-register label + .form-control {
     .row:not(:last-child) {
       margin-bottom: 20px;
     }
+
     table label {
-      font-size:0.75rem
+      font-size: 0.75rem
     }
   }
 
@@ -569,7 +714,7 @@ form.form-register label + .form-control {
     margin-bottom: 20px;
   }
 
-  .btn.btn-secondary:last-of-type  {
+  .btn.btn-secondary:last-of-type {
     margin-bottom: 0px;
   }
 
@@ -582,39 +727,49 @@ form.form-register label + .form-control {
   .ppl-info {
     background: #f5f6fa;
     padding: 20px 40px;
-    align-items:center;
+    align-items: center;
+    border-radius: 10px;
+
     .col {
       padding: 0;
     }
+
     span {
-      display:flex;
+      display: flex;
       width: 80px;
       height: 80px;
       background: #fff;
       border-radius: 50%;
-      margin-right:10px;
+      margin-right: 10px;
       justify-content: center;
-      align-items:center;
-      font-size:34px;
-      color: rgba(0,0,0,0.2);
+      align-items: center;
+      font-size: 34px;
+      svg {
+        color: $default;
+        opacity: 0.8;
+      }
     }
   }
+
   .ppl-info-row {
     display: flex;
-    gap:10px;
+    gap: 10px;
     padding: 0 20px;
   }
+
   .ppl-num {
-    font-size:24px
+    font-size: 24px
   }
+
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 50px;
   }
+
   .card-subtitle {
-    margin-top:10px;
+    margin-top: 10px;
     color: #999;
   }
 }
@@ -661,17 +816,20 @@ form.form-register label + .form-control {
     border: 1px solid rgba(29, 37, 59, 0.1);
     border-top: 0;
     display: block;
+
     h5 {
       margin-bottom: 0;
-      font-size:16px
+      font-size: 16px
     }
+
     .listTt {
       margin-bottom: 10px;
 
       p {
-        font-size:12px
+        font-size: 12px
       }
     }
+
     .minmaxlength {
       display: flex;
       margin-bottom: 25px;
@@ -812,16 +970,20 @@ form.form-register label + .form-control {
   /*.main-panel {
     background: #f2f5fd;
   }*/
+
   .register_choice_con .card-body p {
     color: #1d253b;
+
     span {
       color: $main-color;
     }
   }
+
   .register_choice_con .card-body .btn {
-    border:1px solid $border-color;
+    border: 1px solid $border-color;
+
     &:hover {
-      border:1px solid $main-color;
+      border: 1px solid $main-color;
     }
   }
 
@@ -833,10 +995,12 @@ form.form-register label + .form-control {
     .card-body {
       background: #fff;
     }
+
     .register_file label .form-control {
       border: 2px dashed $border-color;
+
       &:hover {
-        border:2px dashed $main-color;
+        border: 2px dashed $main-color;
       }
     }
   }
@@ -891,6 +1055,43 @@ form.form-register label + .form-control {
   .emailInput .btn-group > button,
   .custom-control-input:checked ~ .custom-control-label::before {
     background: $main-color;
+  }
+
+  // program
+  .program.row {
+    .num-info-section {
+      background-color: $light-bg;
+
+      svg {
+        color: $default;
+      }
+    }
+
+    .num-info {
+      font-size: 24px;
+      color: $default;
+    }
+
+    .curr-status {
+      color: $default;
+      font-size: 24px;
+    }
+  }
+
+  .program-add.card{
+    .btn{
+      color: $default;
+    }
+
+    .btn:hover{
+      background-color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .btn>.inner-btn {
+      color: white;
+      background-color: $main-color !important;
+    }
+
   }
 
 }

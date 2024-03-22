@@ -17,6 +17,7 @@ public class Program {
     private Long pgComIdx;
     private String pgTitle;
     private String pgContent;
+    private String pgContentSummary;
     private LocalDate pgProgStartDate;
     private LocalDate pgProgEndDate;
     private LocalDate pgEduStartDate;

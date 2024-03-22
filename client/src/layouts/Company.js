@@ -13,10 +13,9 @@ import logo from "assets/img/react-logo.png";
 import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
-import ProgramModifyContent from "../views/company/program/ProgramModifyContent";
+import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramInfo from "../views/company/program/ProgramInfo";
 import ProgramInsert from "../views/company/program/ProgramInsert";
-import ProgramModifyOverview from "../views/company/program/ProgramModifyOverview";
 
 var ps;
 
@@ -114,7 +113,6 @@ function Company(props) {
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
                 <React.Fragment>
-
                     <div className={"wrapper " + getPathname(location) + "-wrapper"}>
                         <Sidebar
                             routes={companyRoutes}
@@ -140,12 +138,8 @@ function Company(props) {
                                     element={<ProgramInfo/>}
                                 />
                                 <Route
-                                    path="/program-modify-overview/:pgIdx"
-                                    element={<ProgramModifyOverview/>}
-                                />
-                                <Route
-                                    path="/program-modify-content/:pgIdx"
-                                    element={<ProgramModifyContent/>}
+                                    path="/program-modify/:pgIdx"
+                                    element={<ProgramModify/>}
                                 />
                                 <Route
                                     path="/program-insert"

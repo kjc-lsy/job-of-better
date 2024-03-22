@@ -35,10 +35,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filter(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        log.info("시큐리티 설정 시작......");
+        log.info("시큐리티 설정 시작...");
 
         // 폼 기반 로그인 비활성화
-        http.formLogin(login -> login.loginProcessingUrl("/api/login").disable());
+        http.formLogin(login -> login.loginProcessingUrl("/api/login"));
 
         // 로그아웃 설정
         http.logout(auth -> auth.logoutUrl("/api/logout")
@@ -70,7 +70,7 @@ public class SecurityConfig {
                 authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
-                        .requestMatchers("/api/user/**").hasAnyRole("USER")
+                        .requestMatchers("/api/auth/**").hasAnyRole("USER")
                         .requestMatchers("/api/company/**").hasAnyRole("COMPANY")
                         .anyRequest().authenticated()
         );

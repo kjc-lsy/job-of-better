@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import 'rsuite/dist/rsuite.min.css';
 import ProgDateRangePicker from "../../../components/ProgDateRangePicker";
 import TimeRange30Picker from "../../../components/TimeRange30Picker";
+import {format} from "date-fns";
 
 const ProgramInsert = () => {
     const [inputValue, setInputValue] = useState({
@@ -37,7 +38,6 @@ const ProgramInsert = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // 필요한 값 정의
         const requiredFields = {
             pgProgStartDate: '전체 프로그램 기간',
             pgEduStartDate: '교육 진행 기간',
@@ -116,7 +116,8 @@ const ProgramInsert = () => {
         }
 
         const [startTime, endTime] = values;
-        setInputValue({...inputValue, pgInterviewValStartTime: startTime, pgInterviewValEndTime: endTime});
+        setInputValue({...inputValue, pgInterviewValStartTime: format(startTime, 'HH:mm'), pgInterviewValEndTime: format(endTime, 'HH:mm')});
+        console.log(format(startTime, 'HH:mm'))
     }
 
     return (
@@ -131,7 +132,7 @@ const ProgramInsert = () => {
                         <FormGroup>
                             <Row>
                                 <Col md='6' className='mb-4 mb-md-0'>
-                                    <h4>프로그램 기간</h4>
+                                    <div className="program-subcategory">프로그램 기간</div>
                                     <div>
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
@@ -144,7 +145,7 @@ const ProgramInsert = () => {
                                     </div>
                                 </Col>
                                 <Col md='6'>
-                                    <h4>학생모집 기간</h4>
+                                    <div className="program-subcategory">학생모집 기간</div>
                                     <div>
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
@@ -163,7 +164,7 @@ const ProgramInsert = () => {
                             </Row>
                             <Row>
                                 <Col>
-                                    <h4>프로그램 세부정보</h4>
+                                    <div className="program-subcategory">프로그램 세부정보</div>
                                     <div>
                                         <label>프로그램 제목</label>
                                         <Input

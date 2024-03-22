@@ -18,21 +18,14 @@ const ProgramInfo = () => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data
+                console.log(fetchedProgram)
                 setProgram({...fetchedProgram})
             });
         }
     }, [isLogin]);
 
-    useEffect(() => {
-        console.log(program)
-    }, [program]);
-
-    const handleModifyOvrBtn = (pgIdx) => {
-        navigate('/company/program-modify-overview/' + pgIdx)
-    }
-
-    const handleModifyContBtn = (pgIdx) => {
-        navigate('/company/program-modify-content/' + pgIdx)
+    const handleModifyBtn = (pgIdx) => {
+        navigate('/company/program-modify/' + pgIdx)
     }
 
     return (
@@ -43,10 +36,8 @@ const ProgramInfo = () => {
                         <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
                     </div>
-                    {/*<Button onClick={() => handleModifyOvrBtn(pgIdx)}>수정하기</Button>*/}
                     <Button onClick={() => {
-                        handleModifyContBtn(pgIdx)
-                        handleModifyOvrBtn(pgIdx)
+                        handleModifyBtn(pgIdx)
                     }}>수정하기</Button>
                 </CardHeader>
                 <CardBody>
@@ -59,7 +50,7 @@ const ProgramInfo = () => {
                                 <Row>
                                     <Col>
                                         <label>현재 상태</label>
-                                        <div className="h3">면접 진행중</div>
+                                        <div className="curr-status">면접 진행중</div>
                                     </Col>
                                 </Row>
                                 <Row className="ppl-info-row">
@@ -112,10 +103,16 @@ const ProgramInfo = () => {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <label>탈락자 수</label>
+                                                <label>불합격자 수</label>
                                                 <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <label>AI 교육요약</label>
+                                        <div className="form-control">{program ? program.pgContentSummary : null}</div>
                                     </Col>
                                 </Row>
                             </div>
@@ -127,6 +124,7 @@ const ProgramInfo = () => {
                             <div className='program-content'>
                                 <label>프로그램 기간</label>
                                 <Table>
+                                    <tbody>
                                     <tr>
                                         <th>전체 프로그램 기간</th>
                                         <td>
@@ -164,9 +162,11 @@ const ProgramInfo = () => {
                                             </Row>
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </Table>
                                 <label>면접 기간</label>
                                 <Table>
+                                    <tbody>
                                     <tr>
                                         <th>신청 가능 기간</th>
                                         <td>
@@ -211,18 +211,19 @@ const ProgramInfo = () => {
                                                 <Col>
                                                     <div className="">
                                                         <label htmlFor="">시작시간</label>
-                                                        <h4>{program ? program.pgInterviewValStartTime.substr(0, 5) : null}</h4>
+                                                        <h4>{program ? (program.pgInterviewValStartTime ? program.pgInterviewValStartTime.substr(0, 5) : "시작 시간이 설정되지 않았습니다.") : null}</h4>
                                                     </div>
                                                 </Col>
                                                 <Col>
                                                     <div className="">
                                                         <label htmlFor="">종료시간</label>
-                                                        <h4>{program ? program.pgInterviewValEndTime.substr(0, 5) : null}</h4>
+                                                        <h4>{program ? (program.pgInterviewValEndTime ? program.pgInterviewValEndTime.substr(0, 5) : "시작 시간이 설정되지 않았습니다.") : null}</h4>
                                                     </div>
                                                 </Col>
                                             </Row>
                                         </td>
                                     </tr>
+                                    </tbody>
                                 </Table>
                             </div>
                         </Col>

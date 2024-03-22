@@ -30,14 +30,15 @@ const TimeRange30Picker = (props) => {
     ]);
     const now = new Date();
     now.setMinutes(0);
+    now.setSeconds(0);
 
     return (
             <DateRangePicker
                 placeholder='면접 가능 시간'
                 format="HH:mm"
-                ranges={[]}
                 caretAs={FaClock}
                 locale={calendarLocaleType}
+                defaultCalendarValue={[now, now]}
                 {...props}
             />
     );

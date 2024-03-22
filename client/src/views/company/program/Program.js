@@ -7,6 +7,9 @@ import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row,} fr
 import {deleteProgram, getPrograms} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate, useParams} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCheck, faUserClock, faUsers} from "@fortawesome/free-solid-svg-icons";
+import programAddImg from "../../../assets/img/program-add.png";
 
 
 function Program() {
@@ -44,11 +47,11 @@ function Program() {
 
     return (
         <div className="content">
-            <Row>
+            <Row className="program">
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>
-                            <Card className="program">
+                            <Card>
                                 <CardHeader>
                                     <span className="company-name">AddinEdu</span>
                                     <CardTitle tag="h1">{program.pgTitle}</CardTitle>
@@ -57,21 +60,30 @@ function Program() {
                                     <Row>
                                         <Col>
                                             <label>현재상태</label>
-                                            <h2>면접 진행중</h2>
+                                            <div className="curr-status">면접 진행중</div>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col md='4'>
-                                            <label>총 신청 수</label>
-                                            <div className="h3">9명</div>
+                                    <Row className="num-info-section">
+                                        <Col md='3'>
+                                            <div>
+                                                <FontAwesomeIcon icon={faUsers}/>
+                                            </div>
+                                            <label>총 참여자 수</label>
+                                            <div className="num-info">9명</div>
                                         </Col>
-                                        <Col md='4'>
+                                        <Col md='3'>
+                                            <div>
+                                                <FontAwesomeIcon icon={faUserCheck}/>
+                                            </div>
                                             <label>면접 참여 수</label>
-                                            <div className="h3">6명</div>
+                                            <div className="num-info">6명</div>
                                         </Col>
-                                        <Col md='4'>
-                                            <label>합격자 수</label>
-                                            <div className="h3">4명</div>
+                                        <Col md='3'>
+                                            <div>
+                                                <FontAwesomeIcon icon={faUserClock}/>
+                                            </div>
+                                            <label>미확인 수</label>
+                                            <div className="num-info">4명</div>
                                         </Col>
                                     </Row>
                                     <Row>
@@ -100,8 +112,12 @@ function Program() {
                     )
                 })}
                 <Col md="6" className="text-center">
-                    <Card>
-                        <Button onClick={handleAddBtn}>+</Button>
+                    <Card className="program-add">
+                        <Button onClick={handleAddBtn}>
+                            <img src={programAddImg} alt="프로그램 추가"/>
+                            <div>학생들을 모집, 교육할 프로그램을 기획해주세요</div>
+                            <Button className="inner-btn">프로그램 추가</Button>
+                        </Button>
                     </Card>
                 </Col>
             </Row>
