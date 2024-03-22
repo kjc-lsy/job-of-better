@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import {createGlobalStyle} from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
   :root {
       --main-color : ${themes => themes.theme.colors};
       --main-bgColor : ${themes => themes.theme.bgColor};
+      --bg-color : ${themes => themes.theme.backColor};
+      --bg-title-color : ${themes => themes.theme.backTitleColor};
+      --font-color : ${themes => themes.theme.fontColor};
+      --border-color: ${themes => themes.theme.border};
   }
   
 `;

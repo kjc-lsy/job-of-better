@@ -1,10 +1,26 @@
 /*import { ThemeContext, themes } from "contexts/ThemeWrapper";*/
 import React, {createContext, useEffect, useState} from "react";
+import GlobalStyle from "../theme/GlobalStyle";
+import {ThemeProvider} from "styled-components";
 
 export const themes = {
   dark: "",
   light: "white-content",
 };
+export const darkValue = {
+  fontColor: "#000000",
+  backTitleColor: "rgba(245, 246, 250, 0.1411764706)",
+  backColor:"#1e1e2f",
+  border : "rgba(255,255,255,0.1)"
+}
+
+export const lightValue = {
+  fontColor: "#000000",
+  backTitleColor: "#f5f6fa",
+  backColor:"#f5f6fa",
+  border : "rgba(29, 37, 59, 0.2)"
+}
+
 
 export const ThemeContext = createContext({
   theme: themes.light,
@@ -26,13 +42,18 @@ export default function ThemeContextWrapper(props) {
     }
   }, [theme]);
 
-  function changeTheme(theme) {
+  const themeColor = theme === themes.light ? lightValue : darkValue;
+
+      function changeTheme(theme) {
     setTheme(theme);
   }
 
   return (
-    <ThemeContext.Provider value={{ theme: theme, changeTheme: changeTheme }}>
-      {props.children}
-    </ThemeContext.Provider>
+      <ThemeProvider theme={themeColor}>
+        <GlobalStyle/>
+        <ThemeContext.Provider value={{ theme: theme, changeTheme: changeTheme }}>
+          {props.children}
+        </ThemeContext.Provider>
+      </ThemeProvider>
   );
 }

@@ -164,6 +164,7 @@ const ProgramModify = () => {
                             </Row>
                         </FormGroup>
                         <FormGroup>
+                            <div className="program-subcategory">프로그램 내용</div>
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
                                     height="600px"

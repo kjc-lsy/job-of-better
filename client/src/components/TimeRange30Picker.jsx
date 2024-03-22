@@ -38,7 +38,7 @@ const TimeRange30Picker = (props) => {
                 format="HH:mm"
                 caretAs={FaClock}
                 locale={calendarLocaleType}
-                defaultCalendarValue={[now, now]}
+                defaultValue={[now, now]}
                 {...props}
             />
     );
