@@ -39,15 +39,22 @@
     </resultMap>
 
     <!-- 회원 등록 -->
-    <insert id="insertMember" parameterType="Member">
+    <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="idx">
+        <selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
+            SELECT LAST_INSERT_ID() AS idx
+        </selectKey>
+
         INSERT INTO member (name, username, password, email, birth_date, gender, phone, com_idx, resume_file,
-                            desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
-                            is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
+        desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
+        is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
         VALUES (#{name}, #{username}, #{password}, #{email}, #{birthDate}, #{gender}, #{phone}, #{comIdx},
-                #{resumeFile}, #{desiredInterviewDate}, #{assignedInterviewDate}, #{isInterviewDate},
-                #{interviewComment}, #{isCoverLetter}, #{isResume}, #{joinDate}, #{modifiedDate}, #{withdrawnDate},
-                #{isWithdrawn})
+        #{resumeFile}, #{desiredInterviewDate}, #{assignedInterviewDate}, #{isInterviewDate},
+        #{interviewComment}, #{isCoverLetter}, #{isResume}, #{joinDate}, #{modifiedDate}, #{withdrawnDate},
+        #{isWithdrawn})
     </insert>
+
+
+
 
     <!-- 회원 조회 -->
     <select id="selectMember" resultMap="memberMap">
@@ -87,7 +94,12 @@
     </select>
 
     <!-- 회원 권한 등록 -->
-    <insert id="insertMemberRole">
+    <insert id="insertMemberRole" parameterType="MemberRole">
+        <!-- 가입된 회원의 idx 값을 얻기 위해 selectKey 사용 -->
+        <selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
+            SELECT LAST_INSERT_ID() AS idx
+        </selectKey>
+
         INSERT INTO member_role (role_name, username)
         VALUES (#{roleName}, #{username})
     </insert>
@@ -127,4 +139,10 @@
     <select id="checkDuplicateUsername" resultType="int">
         SELECT count(*) FROM member WHERE username = #{username}
     </select>
+
+    <!-- 기업 회원 가입 -->
+    <insert id="companyJoin" parameterType="Company">
+        INSERT INTO company (com_mem_idx, com_name, com_ceo_name, com_license_num, com_address, com_zipCode, com_opening_date)
+        VALUES (#{comMemIdx}, #{comName}, #{comCeoName}, #{comLicenseNum},#{comAddress},#{comZipcode},#{comOpeningDate})
+    </insert>
 </mapper>

@@ -56,8 +56,8 @@ p {
 .form-control {
   height: auto;
   padding: 10px 18px; // input-group 관련 스타일로 통합
-  border-color: $border-color; // input-group 관련 스타일로 통합
-  border-color: #2b3553; // input-group 관련 스타일로 통합
+  /*border-color: $border-color; // input-group 관련 스타일로 통합*/
+  border-color: rgba(255,255,255,0.1) // input-group 관련 스타일로 통합
 }
 
 // 기타 스타일
@@ -249,6 +249,16 @@ input[type=radio], input[type=checkbox] {
   .rs-picker-toggle-wrapper {
     display: block;
     cursor: pointer
+  }
+
+  .btn.domainSelect {
+    background:transparent !important;
+    border:1px solid $border-color !important;
+    color: #252525;
+    padding: 11px 18px;
+    svg {
+      margin-left: 10px;
+    }
   }
 }
 

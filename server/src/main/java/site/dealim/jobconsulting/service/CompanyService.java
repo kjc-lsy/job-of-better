@@ -3,6 +3,7 @@ package site.dealim.jobconsulting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.domain.Member;
 
@@ -42,4 +43,5 @@ public class CompanyService {
         map.put("cclComIdx", user.getComIdx());
         companyMapper.ComCoverLetterDelete(map);
     }
+
 }
