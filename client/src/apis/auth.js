@@ -31,7 +31,7 @@ export const companyJoin = (data) => api.post(`/api/user/company-join`, {
         phone : data.phone
     },
     company : {
-        comName : data.comName,
+        comName : data.b_name,
         comCeoName : data.b_ceoName,
         comAddress : data.b_address + " " + data.b_detailAddr,
         comZipcode : data.b_zipCode,

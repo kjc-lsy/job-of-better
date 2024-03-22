@@ -17,7 +17,7 @@ public class Company {
     private String comAddress;
     private int comZipcode;
     private String comLogo;
-    private String comMemIdx;
+    private Long comMemIdx;
     private String comLicenseNum;
     private String comLicenseFile;
     private LocalDate comOpeningDate;

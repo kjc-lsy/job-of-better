@@ -5,6 +5,8 @@ import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
+import java.util.HashMap;
+
 @Mapper
 public interface MemberMapper {
 
@@ -28,5 +30,5 @@ public interface MemberMapper {
 
     int checkDuplicateUsername(String username);
 
-    void companyJoin(long idx, Company company);
+    void companyJoin(Company company);
 }

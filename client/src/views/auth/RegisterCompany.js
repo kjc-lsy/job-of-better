@@ -24,9 +24,11 @@ import fileOk from "../../assets/img/fileok.gif";
 import Postcode from "../../components/AddrPlugin";
 import KorDatePicker from "../../components/KorDatePicker";
 import {LoadingContext} from "../../contexts/LoadingProvider";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 
 const CompanyRegister = () => {
-    const {loading, setLoading} = useContext(LoadingContext)
+    const {setLoading} = useContext(LoadingContext)
 
     // file drap & drop
     const [isActive, setIsActive] = useState(false);
@@ -242,6 +244,7 @@ const CompanyRegister = () => {
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
+            console.log(result);
             if (result.data[0].b_stt !== "") {
                 setInputValue({...inputValue, validBNo: "true"});
             } else {
@@ -304,11 +307,6 @@ const CompanyRegister = () => {
                                         maxLength="12"
                                         onChange={handleChange}
 
-                                        /*onChange={e => {
-                                            let sanitizedValue = e.target.value.replace(/[^0-9.-]/g, '');
-                                            e.target.value = sanitizedValue;
-                                            setInputValue({...inputValue, b_no: sanitizedValue})
-                                        }}*/
                                     />
                                     <div className="text-muted font-italic">
                                         <small>
@@ -598,14 +596,18 @@ const CompanyRegister = () => {
                                 <ButtonDropdown isOpen={dropdownOpen} toggle={() => {
                                     setDropdownOpen(!dropdownOpen)
                                 }}>
-                                    <DropdownToggle caret>
-                                        직접 입력
+                                    <DropdownToggle caret className="domainSelect">
+                                        선택 <FontAwesomeIcon icon={faChevronDown}/>
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem
                                             onClick={() => handleDomainChange('gmail.com')}>gmail.com</DropdownItem>
                                         <DropdownItem
                                             onClick={() => handleDomainChange('naver.com')}>naver.com</DropdownItem>
+                                        <DropdownItem
+                                            onClick={() => handleDomainChange('daum.com')}>daum.com</DropdownItem>
+                                        <DropdownItem
+                                            onClick={() => handleDomainChange('nate.com')}>nate.com</DropdownItem>
                                         <DropdownItem divider/>
                                         <DropdownItem onClick={() => handleDomainChange('직접 입력')}>직접
                                             입력</DropdownItem>

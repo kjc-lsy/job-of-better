@@ -16,6 +16,8 @@ import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
+import java.util.HashMap;
+
 @Slf4j
 @Service
 public class MemberServiceImpl {
@@ -108,6 +110,23 @@ public class MemberServiceImpl {
 
 
     public void companyJoin(long idx, Company company) {
-        memberMapper.companyJoin(idx, company);
+        company.setComMemIdx(idx);
+       /* HashMap map = new HashMap();
+        map.put("idx", idx);
+        map.put("comName", company.getComName());
+        map.put("comCeoName", company.getComCeoName());
+        map.put("comLicenseNum", company.getComLicenseNum());
+        map.put("comAddress", company.getComAddress());
+        map.put("comZipcode", company.getComZipcode());*/
+        memberMapper.companyJoin(company);
+    }
+
+    public Long MemberInsert(Member member) {
+        // 비밀번호 암호화
+        String memberPwd = member.getPassword();
+        String encodedPwd = passwordEncoder.encode(memberPwd);
+        member.setPassword(encodedPwd);
+
+        return memberMapper.insertMember(member);
     }
 }
