@@ -39,4 +39,9 @@ export const companyJoin = (data) => api.post(`/api/auth/company-join`, {
         comOpeningDate : data.b_openingDate
     }
 
-})
+});
+
+//사업자 번호 확인
+export const checkDuplicateBNo = (value) => {
+    return api.post('/api/auth/check-duplicate-bno?comLicenseNum=' + value);
+};

@@ -43,4 +43,6 @@ public class CompanyController {
         log.info("자소서 항목 삭제 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
+    
+
 }

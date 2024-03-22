@@ -16,4 +16,6 @@ public interface CompanyMapper {
     int ComCoverLetterUpdate(HashMap map);
 
     void ComCoverLetterDelete(HashMap map);
+
+
 }

@@ -24,4 +24,6 @@
     <delete id="ComCoverLetterDelete" parameterType="Map">
         DELETE FROM company_cover_letter WHERE ccl_idx = #{cclIdx} and ccl_com_idx = #{cclComIdx}
     </delete>
+
+
 </mapper>

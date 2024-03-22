@@ -129,4 +129,8 @@ public class MemberServiceImpl {
 
         return memberMapper.insertMember(member);
     }
+
+    public boolean checkDuplicateBno(String comLicenseNum) {
+        return memberMapper.checkDuplicateBno(comLicenseNum) > 0;
+    }
 }

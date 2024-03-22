@@ -18,6 +18,7 @@ import {
 
 import React, {useContext, useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
+import * as company from '../../apis/company';
 import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
 import fileOk from "../../assets/img/fileok.gif";
@@ -84,6 +85,7 @@ const CompanyRegister = () => {
 
         b_no: "",
         validBNo: "",
+        validDuplicateBNo: "",
         b_name: "",
         b_ceoName: "",
         validBCeoName: false,
@@ -111,6 +113,7 @@ const CompanyRegister = () => {
     const submitRequirement =
         Object.values(inputValue).every(value => value) &&
         inputValue.validBNo === "true" &&
+        inputValue.validDuplicateBNo === "true" &&
         inputValue.validBCeoName &&
         inputValue.validUsername &&
         inputValue.validDuplicateUsername === "true" &&
@@ -222,6 +225,10 @@ const CompanyRegister = () => {
         }
     };
 
+    useEffect(() => {
+        console.log(inputValue.validBNo);
+    }, [inputValue.validBNo , inputValue.validDuplicateBNo]);
+
 
     // 사업자등록번호 조회
     const getJsonData = async () => {
@@ -251,10 +258,50 @@ const CompanyRegister = () => {
             }
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
+        }
+
+    }
+
+    const handleDuplicateBNo = () => {
+        //console.log("handleDuplicateBNo")
+        //console.log(inputValue)
+        auth.checkDuplicateBNo(inputValue.b_no)
+            .then(response => {
+                if(response.data){
+                    setInputValue({...inputValue, validDuplicateBNo: "true"});
+                }else {
+                    setInputValue({...inputValue, validDuplicateBNo: "false"});
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+            }).finally(
+            () => {
+                setLoading(false);
+            })
+    };
+
+    const validateBNoMsg = () => {
+        if (inputValue.b_no !== "") {
+            if (inputValue.validBNo === "true") {
+                if(inputValue.validDuplicateBNo === "true"){
+                    return <span className="text-danger font-weight-700">중복된 사업자 등록 번호 입니다.</span>;
+                }else if(inputValue.validDuplicateBNo === "false"){
+                    return <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>;
+                }else {
+                    return <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>;
+                }
+            } else if (inputValue.validBNo === "false") {
+                return <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>;
+            } else {
+                return <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>;
+            }
+        } else {
+            return <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>;
         }
     }
+
 
     const handleChange = (e) => {
         let sanitizedValue = e.target.value.replace(/[^0-9.-]/g, '');
@@ -267,7 +314,7 @@ const CompanyRegister = () => {
                 formattedValue = match.slice(1).filter(Boolean).join("-");
             }
         }
-        setInputValue({...inputValue, b_no: formattedValue, validBNo: ""});
+        setInputValue({...inputValue, b_no: formattedValue , validBNo: "", validDuplicateBNo: ""});
     };
 
     // 회원가입
@@ -308,19 +355,13 @@ const CompanyRegister = () => {
 
                                     />
                                     <div className="text-muted font-italic">
-                                        <small>
-                                            {" "}
-                                            {inputValue.validBNo === "true" && inputValue.b_no !== ""
-                                                ?
-                                                <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>
-                                                : inputValue.b_no !== "" && inputValue.validBNo === "false"
-                                                    ? <span className="text-danger font-weight-700">유효하지 않은 사업자 등록 번호 입니다</span>
-                                                    : <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>
-                                            }
-                                        </small>
+                                        <small>{validateBNoMsg()}</small>
                                     </div>
                                 </Col>
-                                <Col md={2}><Button onClick={getJsonData}>인증하기</Button></Col>
+                                <Col md={2}><Button type="button" onClick={async () => {
+                                    await getJsonData()
+                                    handleDuplicateBNo() }
+                                }>인증하기</Button></Col>
                             </Row>
 
                         </FormGroup>
@@ -450,22 +491,22 @@ const CompanyRegister = () => {
                                             {inputValue.validUsername && inputValue.username !== ""
                                                 ?
                                                 inputValue.validDuplicateUsername === "true"
-                                                    ?
-                                                    <span className="text-success font-weight-700">유효한 아이디 입니다</span>
-                                                    :
-                                                    inputValue.validDuplicateUsername === "false"
-                                                        ?
-                                                        <span
-                                                            className="text-danger font-weight-700">중복된 아이디 입니다.</span>
-                                                        :
-                                                        <span
-                                                            className="text-danger font-weight-700">아이디 중복 확인해주세요,</span>
+                                                ?
+                                                <span className="text-success font-weight-700">유효한 아이디 입니다</span>
+                                                :
+                                                inputValue.validDuplicateUsername === "false"
+                                                ?
+                                                <span
+                                                className="text-danger font-weight-700">중복된 아이디 입니다.</span>
+                                                :
+                                                <span
+                                                className="text-danger font-weight-700">아이디 중복 확인해주세요,</span>
                                                 :
                                                 inputValue.username !== ""
-                                                    ?
-                                                    <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
-                                                    :
-                                                    <span> 문자, 영문자, 숫자를 사용해주세요</span>
+                                                ?
+                                                <span className="text-danger font-weight-700">유효하지 않은 아이디 입니다</span>
+                                                :
+                                                <span> 문자, 영문자, 숫자를 사용해주세요</span>
                                             }
                                         </small>
                                     </div>
