@@ -5,8 +5,10 @@ $main-color: var(--main-color);
 $main-bgColor: var(--main-bgColor);
 $input-group-not-has-validation: ".input-group:not(.has-validation)";
 $dark-category-bg: rgba(245, 246, 250, 0.1411764706);
-$bg-color: var(--bg-title-color);
 $dark-category-bg-light: rgba(245, 246, 250, 0.8);
+$bg-color: var(--bg-title-color);
+$font-color: var(--font-color);
+$label-color: var(--label-color);
 
 // 기본 스타일
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -507,13 +509,19 @@ form.form-register label + .form-control {
 
 /************* program *************/
 
-.rs-input-group.rs-input-group-inside {
-  background-color: transparent;
-  border-color: rgba(255, 255, 255, 0.1);
+.rs-calendar-time-dropdown-column {
+  ul[data-type="minutes"] {
+    overflow-y: inherit;
+  }
 
-  input {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: transparent;
+  li[data-key^="minutes-"] {
+    display: none;
+
+    &.rs-calendar-time-dropdown-cell-active,
+    &[data-key="minutes-0"],
+    &[data-key="minutes-30"] {
+      display: block;
+    }
   }
 }
 
@@ -525,8 +533,10 @@ form.form-register label + .form-control {
 
   .rs-input-group.rs-input-group-inside {
     background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.1);
 
     input {
+      color: rgba(255, 255, 255, 0.8);
       background-color: transparent;
     }
   }
@@ -735,17 +745,21 @@ form.form-register label + .form-control {
   }
 
   .program-info {
-    .program-title {
-      border-radius: 10px 10px 0 0;
-      border: 1px solid $gray-400;
-      background: $bg-color;
-      padding: 10px 20px;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-subtitle {
+      margin-top: 10px;
     }
 
     .program-content {
       padding: 20px 20px 20px;
       border-radius: 0 0 10px 10px;
-      border: 1px solid $gray-400;
       border-top: 0;
       margin-bottom: 20px;
 
@@ -774,7 +788,7 @@ form.form-register label + .form-control {
         border-radius: 10px;
 
         label {
-          color: rgba(255, 255, 255, 0.6);
+          color: $label-color;
         }
 
         .ppl-num {
@@ -814,41 +828,9 @@ form.form-register label + .form-control {
         font-size: 24px
       }
 
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 50px;
-      }
-
-      .card-subtitle {
-        margin-top: 10px;
-      }
     }
   }
 
-  .rs-calendar-time-dropdown-column {
-    ul[data-type="minutes"] {
-      overflow-y: inherit;
-    }
-
-    li[data-key^="minutes-"] {
-      display: none;
-
-      &.rs-calendar-time-dropdown-cell-active,
-      &[data-key="minutes-0"],
-      &[data-key="minutes-30"] {
-        display: block;
-      }
-    }
-  }
 }
 
 /************ company cover letter ************/
@@ -1137,15 +1119,25 @@ form.form-register label + .form-control {
   /* white-program */
   .program {
 
+    .rs-input-group.rs-input-group-inside {
+      background-color: transparent;
+      border-color: $border-color;
+
+      input {
+        color: $font-color;
+        background-color: transparent;
+      }
+    }
+
     .curr-status {
-      color: $black;
+      color: $font-color;
       font-size: 24px;
     }
 
     .program-title {
-      background-color: $light-bg;
       border: 1px solid $border-color;
-      color: $black;
+      color: $font-color;
+      background-color: $bg-color;
     }
 
     .program-content {
@@ -1154,29 +1146,34 @@ form.form-register label + .form-control {
 
       .table {
         th {
-          color: $black;
+          color: $font-color;
         }
       }
 
       .ppl-info {
-        background-color: $light-bg;
+        background-color: $bg-color;
+
+        label {
+          color: $default;
+        }
 
         span {
           background-color: $white;
         }
+
+        .ppl-num {
+          color: $font-color;
+        }
       }
 
-      .ppl-num {
-        color: $black
-      }
     }
 
     .num-info-section {
-      background-color: $light-bg;
+      background-color: $bg-color;
       border-radius: calc(0.2857rem - 0.0625rem);
 
       .num-info {
-        color: $black;
+        color: $font-color;
       }
 
       svg {
@@ -1215,7 +1212,7 @@ form.form-register label + .form-control {
 
     .program-enroll.card, .program-modify.card {
       .program-subcategory {
-        color: $black;
+        color: $font-color;
       }
     }
   }

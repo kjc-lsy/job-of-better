@@ -4,7 +4,6 @@ import {ThemeProvider} from "styled-components";
 
 export const backgroundColors = {
     primary: "primary",
-    //blue: "blue",
     green: "green",
     pink: "pink",
 };
@@ -21,12 +20,10 @@ export const greenValue = {
     bgColor: "linear-gradient(0deg, #0098f0 0%, #00f2c3 100%)"
 }
 
-
 export const BackgroundColorContext = createContext({
     color: backgroundColors.primary,
     changeColor: (color) => {
     },
-
 });
 
 export default function BackgroundColorWrapper(props) {
@@ -47,7 +44,6 @@ export default function BackgroundColorWrapper(props) {
     }, [theme]);*/
 
     return (
-
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
             <BackgroundColorContext.Provider value={{color: color, changeColor: changeColor}}>

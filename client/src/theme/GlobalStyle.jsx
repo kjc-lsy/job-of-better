@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
       --bg-color : ${themes => themes.theme.backColor};
       --bg-title-color : ${themes => themes.theme.backTitleColor};
       --font-color : ${themes => themes.theme.fontColor};
+      --label-color : ${themes => themes.theme.labelColor};
       --border-color: ${themes => themes.theme.border};
   }
   
