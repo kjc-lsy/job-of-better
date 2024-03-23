@@ -145,4 +145,8 @@
         INSERT INTO company (com_mem_idx, com_name, com_ceo_name, com_license_num, com_address, com_zipCode, com_opening_date)
         VALUES (#{comMemIdx}, #{comName}, #{comCeoName}, #{comLicenseNum},#{comAddress},#{comZipcode},#{comOpeningDate})
     </insert>
+
+    <select id="checkDuplicateBno" resultType="int">
+        SELECT count(*) FROM company WHERE com_license_num = #{comLicenseNum}
+    </select>
 </mapper>

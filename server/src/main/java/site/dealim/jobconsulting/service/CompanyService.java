@@ -44,4 +44,5 @@ public class CompanyService {
         companyMapper.ComCoverLetterDelete(map);
     }
 
+
 }

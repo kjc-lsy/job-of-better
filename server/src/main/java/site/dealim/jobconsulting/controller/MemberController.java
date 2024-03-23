@@ -129,4 +129,9 @@ public class MemberController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
+    @PostMapping("/check-duplicate-bno")
+    public ResponseEntity<?> checkDuplicateBno(@RequestParam(value = "comLicenseNum") String comLicenseNum) {
+        log.info("사업자등록번호 중복 확인...");
+        return new ResponseEntity<>(memberServiceImpl.checkDuplicateBno(comLicenseNum), HttpStatus.OK);
+    }
 }
