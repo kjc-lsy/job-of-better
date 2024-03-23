@@ -104,7 +104,7 @@ const ProgramModify = () => {
     }
 
     return (
-        <div className="content">
+        <div className="content program">
             <Card className="program-modify">
                 <CardHeader>
                     <h5 className="card-category">프로그램을 수정합니다</h5>

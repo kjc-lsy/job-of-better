@@ -121,7 +121,7 @@ const ProgramInsert = () => {
     }
 
     return (
-        <div className="content">
+        <div className="content program">
             <Card className="program-enroll">
                 <CardHeader>
                     <h5 className="card-category">교육생들에게 소개할 프로그램 내용을 등록해주세요</h5>

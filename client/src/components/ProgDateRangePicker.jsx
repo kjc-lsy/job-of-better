@@ -23,6 +23,7 @@ const ProgDateRangePicker = (props) => {
 
     return (
         <DateRangePicker
+            showOneCalendar={true}
             format="yyyy년 MM월 dd일"
             placeholder="날짜를 선택해주세요"
             locale={calendarLocaleType}

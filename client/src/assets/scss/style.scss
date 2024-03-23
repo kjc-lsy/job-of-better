@@ -5,7 +5,9 @@ $main-color: var(--main-color);
 $main-bgColor: var(--main-bgColor);
 $input-group-not-has-validation: ".input-group:not(.has-validation)";
 $dark-category-bg: rgba(245, 246, 250, 0.1411764706);
-$bg-color : var(--bg-title-color);
+$bg-color: var(--bg-title-color);
+$dark-category-bg-light: rgba(245, 246, 250, 0.8);
+
 // 기본 스타일
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
@@ -40,12 +42,14 @@ p {
     height: $lines * 1.2em;
   }
 }
+
 @mixin border-box() {
   padding: 10px 18px;
   border: 1px solid $border-color;
   border-radius: 0.2857rem;
   background: transparent;
 }
+
 .form-group input[type=file] {
   height: 0;
 }
@@ -120,7 +124,7 @@ input[type=radio], input[type=checkbox] {
     background: rgb(240, 240, 240);
     color: #000;
     font-weight: 500;
-    border: 1px solid rgba(29, 37, 59, 0.2);
+    border: 1px solid $border-color;
   }
 
   .greyBtn:hover {
@@ -257,10 +261,11 @@ input[type=radio], input[type=checkbox] {
   }
 
   .btn.domainSelect {
-    background:transparent !important;
-    border:1px solid $border-color !important;
+    background: transparent !important;
+    border: 1px solid $border-color !important;
     color: #252525;
     padding: 11px 18px;
+
     svg {
       margin-left: 10px;
     }
@@ -512,40 +517,79 @@ form.form-register label + .form-control {
   }
 }
 
-.program-subcategory {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  margin-bottom: 15px;
-}
+.program {
 
-.program-subcategory::before {
-  vertical-align: -2px;
-  display: inline-block;
-  width: 4px;
-  height: 15px;
-  background-color: rgba(255, 255, 255, 0.8);
-  margin-right: 6px;
-  content: "";
-}
-
-.toastui-editor-toolbar-item-wrapper {
-  .scroll-sync {
-    display: inline-block !important;
-    margin-bottom: 0px;
+  .row {
+    row-gap: 30px;
   }
-}
 
-.toastui-editor-dark .toastui-editor-defaultUI {
-  border: 1px solid #2b3553;
-}
+  .rs-input-group.rs-input-group-inside {
+    background-color: transparent;
 
-.card .curr-status {
-  font-size : 24px;
-  color: rgba(255,255,255,0.8);
-}
+    input {
+      background-color: transparent;
+    }
+  }
 
-.program.row {
-  row-gap: 30px;
+
+  .program-title {
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px 10px 0 0;
+    border: 1px solid $dark-category-bg;
+    padding: 10px 20px;
+    background-color: $dark-category-bg;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .program-content {
+    padding: 20px 20px 20px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid $dark-category-bg;
+    border-top: 0;
+    margin-bottom: 20px;
+
+    .row:not(:last-child) {
+      margin-bottom: 20px;
+    }
+
+    table label {
+      font-size: 0.75rem
+    }
+  }
+
+  .program-subcategory {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .program-subcategory::before {
+    vertical-align: -2px;
+    display: inline-block;
+    width: 4px;
+    height: 15px;
+    background-color: rgb(29, 66, 137);
+    margin-right: 6px;
+    content: "";
+  }
+
+  .toastui-editor-toolbar-item-wrapper {
+    .scroll-sync {
+      display: inline-block !important;
+      margin-bottom: 0px;
+    }
+  }
+
+  .toastui-editor-dark .toastui-editor-defaultUI {
+    border: 1px solid #2b3553;
+  }
+
+  .card .curr-status {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.8);
+  }
 
   .card {
     margin-bottom: 0;
@@ -570,7 +614,7 @@ form.form-register label + .form-control {
     }
 
     label {
-      display: inline-block;
+      display: inline-block !important;
     }
 
     .num-info {
@@ -608,193 +652,202 @@ form.form-register label + .form-control {
     word-break: keep-all;
   }
 
-}
-
-.program-add.card{
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  justify-content: space-around;
-  align-items: center;
-
-  img {
-    width: 200px;
-    margin: 20px 0;
-  }
-
-  .btn{
-    color: white;
-    width: 100%;
+  .program-add.card {
     height: 100%;
-    background-color: rgba(255, 255, 255, 0);
-    font-weight: 400;
-    font-size: 18px;
-  }
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    justify-content: space-around;
+    align-items: center;
 
-  .btn:hover{
-    background-color: rgba(255, 255, 255, 0.6) !important;
-  }
+    img {
+      width: 200px;
+      margin: 20px 0;
+    }
 
-  .btn>.inner-btn {
-    width: auto;
-    height: auto;
-    background-color: $main-color;
-    margin: 20px 0;
-    font-size: 14px;
-  }
+    .btn {
+      color: white;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0);
+      font-weight: 400;
+      font-size: 18px;
+    }
 
-  .btn>.inner-btn:hover {
-    background-color: $main-color !important;
-  }
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.6) !important;
+    }
 
+    .btn > .inner-btn {
+      width: auto;
+      height: auto;
+      background-color: $main-color;
+      margin: 20px 0;
+      font-size: 14px;
+    }
 
-}
-
-.program-enroll.card {
-
-  label:not(.scroll-sync){
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-
-  .row:not(:last-child) {
-    margin-bottom: 20px;
-  }
-
-  .form-control {
-    margin-bottom: 20px;
-  }
-
-  label + .rs-picker {
-    margin-bottom: 10px;
-  }
-
-  label + .form-control {
-    margin-bottom: 10px;
-  }
-
-}
-
-.program-modify.card {
-  label:not(.scroll-sync){
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-
-  .rs-picker-toggle-wrapper {
-    margin-bottom: 10px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-}
-
-.toastui-editor-defaultUI-toolbar .image {
-  height: auto;
-}
-
-.rs-calendar-time-dropdown-column {
-  ul[data-type="minutes"] {
-    overflow-y: inherit;
-  }
-
-  li[data-key^="minutes-"] {
-    display: none;
-
-    &.rs-calendar-time-dropdown-cell-active,
-    &[data-key="minutes-0"],
-    &[data-key="minutes-30"] {
-      display: block;
+    .btn > .inner-btn:hover {
+      background-color: $main-color !important;
     }
   }
-}
 
-.program-info {
-  .program-title {
-    border-radius: 10px 10px 0 0;
-    border: 1px solid $gray-400;
-    background: $bg-color;
-    padding: 10px 20px;
-  }
+  .program-enroll.card {
 
-  .program-content {
-    padding: 20px 20px 20px;
-    border-radius: 0 0 10px 10px;
-    border: 1px solid $gray-400;
-    border-top: 0;
-    margin-bottom: 20px;
+    label:not(.scroll-sync) {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
 
     .row:not(:last-child) {
       margin-bottom: 20px;
     }
 
-    table label {
-      font-size: 0.75rem
-    }
-  }
-
-  .btn.btn-secondary {
-    margin-bottom: 20px;
-  }
-
-  .btn.btn-secondary:last-of-type {
-    margin-bottom: 0px;
-  }
-
-  .program-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .ppl-info {
-    background: #f5f6fa;
-    padding: 20px 40px;
-    align-items: center;
-    border-radius: 10px;
-
-    .col {
-      padding: 0;
+    .form-control {
+      margin-bottom: 20px;
     }
 
-    span {
-      display: flex;
-      width: 80px;
-      height: 80px;
-      background: #fff;
-      border-radius: 50%;
-      margin-right: 10px;
-      justify-content: center;
-      align-items: center;
-      font-size: 34px;
-      svg {
-        color: $default;
-        opacity: 0.8;
+    label + .rs-picker {
+      margin-bottom: 10px;
+    }
+
+    label + .form-control {
+      margin-bottom: 10px;
+    }
+
+  }
+
+  .program-modify.card {
+    label:not(.scroll-sync) {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .rs-picker-toggle-wrapper {
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+  }
+
+  .toastui-editor-defaultUI-toolbar .image {
+    height: auto;
+  }
+
+  .program-info {
+    .program-title {
+      border-radius: 10px 10px 0 0;
+      border: 1px solid $gray-400;
+      background: $bg-color;
+      padding: 10px 20px;
+    }
+
+    .program-content {
+      padding: 20px 20px 20px;
+      border-radius: 0 0 10px 10px;
+      border: 1px solid $gray-400;
+      border-top: 0;
+      margin-bottom: 20px;
+
+      .row:not(:last-child) {
+        margin-bottom: 20px;
+      }
+
+      .table {
+        th {
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+
+      .btn.btn-secondary {
+        margin-bottom: 20px;
+      }
+
+      .btn.btn-secondary:last-of-type {
+        margin-bottom: 0px;
+      }
+
+      .ppl-info {
+        background: $dark-category-bg;
+        padding: 20px 40px;
+        align-items: center;
+        border-radius: 10px;
+
+        label {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        .ppl-num {
+          font-size: 24px;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        .col {
+          padding: 0;
+        }
+
+        span {
+          display: flex;
+          width: 80px;
+          height: 80px;
+          background-color: $dark-category-bg-light;
+          border-radius: 50%;
+          margin-right: 10px;
+          justify-content: center;
+          align-items: center;
+          font-size: 34px;
+
+          svg {
+            color: $default;
+            opacity: 0.8;
+          }
+        }
+      }
+
+      .ppl-info-row {
+        display: flex;
+        gap: 10px;
+        padding: 0 20px;
+      }
+
+      .ppl-num {
+        font-size: 24px
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+      }
+
+      .card-subtitle {
+        margin-top: 10px;
       }
     }
   }
 
-  .ppl-info-row {
-    display: flex;
-    gap: 10px;
-    padding: 0 20px;
-  }
+  .rs-calendar-time-dropdown-column {
+    ul[data-type="minutes"] {
+      overflow-y: inherit;
+    }
 
-  .ppl-num {
-    font-size: 24px
-  }
+    li[data-key^="minutes-"] {
+      display: none;
 
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .card-subtitle {
-    margin-top: 10px;
-    color: #999;
+      &.rs-calendar-time-dropdown-cell-active,
+      &[data-key="minutes-0"],
+      &[data-key="minutes-30"] {
+        display: block;
+      }
+    }
   }
 }
 
@@ -1081,21 +1134,50 @@ form.form-register label + .form-control {
     background: $main-color;
   }
 
-  /***** program *****/
+  /* white-program */
+  .program {
 
-  .rs-input-group.rs-input-group-inside {
-    background-color: transparent;
-    border-color: $border-color;
+    .curr-status {
+      color: $black;
+      font-size: 24px;
+    }
 
-    input {
-      background-color: transparent;
+    .program-title {
+      background-color: $light-bg;
+      border: 1px solid $border-color;
       color: $black;
     }
-  }
 
-  .program.row {
+    .program-content {
+      border: 1px solid $border-color;
+      border-top: none;
+
+      .table {
+        th {
+          color: $black;
+        }
+      }
+
+      .ppl-info {
+        background-color: $light-bg;
+
+        span {
+          background-color: $white;
+        }
+      }
+
+      .ppl-num {
+        color: $black
+      }
+    }
+
     .num-info-section {
       background-color: $light-bg;
+      border-radius: calc(0.2857rem - 0.0625rem);
+
+      .num-info {
+        color: $black;
+      }
 
       svg {
         color: $default;
@@ -1107,41 +1189,34 @@ form.form-register label + .form-control {
       color: $default;
     }
 
-    .curr-status {
-      color: $default;
-      font-size: 24px;
-    }
-  }
+    .program-add.card {
 
-  .program-subcategory {
-    color: $default
-  }
+      .btn {
+        color: $default;
+        background-color: $white;
+      }
 
-  .program-subcategory::before {
-    vertical-align: -2px;
-    display: inline-block;
-    width: 4px;
-    height: 15px;
-    background-color: $default;
-    margin-right: 6px;
-    content: "";
-  }
+      .btn:hover {
+        background-color: rgba(255, 255, 255, 0.8) !important;
+      }
 
-  .program-add.card{
+      .btn > .inner-btn {
+        color: white;
+        background-color: $main-color !important;
+      }
 
-    .btn{
-      color: $default;
     }
 
-    .btn:hover{
-      background-color: rgba(255, 255, 255, 0.8) !important;
+    .program-enroll.card {
+      label {
+        font-size: 14px;
+      }
     }
 
-    .btn>.inner-btn {
-      color: white;
-      background-color: $main-color !important;
+    .program-enroll.card, .program-modify.card {
+      .program-subcategory {
+        color: $black;
+      }
     }
-
   }
-
 }

@@ -29,7 +29,7 @@ const ProgramInfo = () => {
     }
 
     return (
-        <div className="content">
+        <div className="content program">
             <Card className='program-info'>
                 <CardHeader>
                     <div className="program-info-tt">

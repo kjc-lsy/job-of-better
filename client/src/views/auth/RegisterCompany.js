@@ -424,7 +424,7 @@ const CompanyRegister = () => {
                                 value={inputValue.b_openingDate}
                                 name="b_openingDate"
                                 placeholder="개업일(YYYY/MM/DD)"
-                                oneTap
+                                oneTapㅡ
                                 shouldDisableDate={date => date > new Date()}
                                 onChange={date => {
                                     setInputValue({...inputValue, b_openingDate: date})

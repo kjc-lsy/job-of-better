@@ -46,8 +46,8 @@ function Program() {
     }
 
     return (
-        <div className="content">
-            <Row className="program">
+        <div className="content program">
+            <Row>
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>

@@ -4030,7 +4030,7 @@ input[type="button"].btn-block {
   box-shadow: none;
 }
 .custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: none, none;
+  box-shadow: none;
 }
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
   border-color: rgba(50, 151, 211, 0.25);
@@ -4092,7 +4092,6 @@ input[type="button"].btn-block {
   ~ .custom-control-label::before {
   border-color: #e14eca;
   background-color: #e14eca;
-  box-shadow: ;
 }
 
 .custom-checkbox
