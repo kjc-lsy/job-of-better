@@ -16,11 +16,9 @@ import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
-import java.util.HashMap;
-
 @Slf4j
 @Service
-public class MemberServiceImpl {
+public class AuthServiceImpl {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired

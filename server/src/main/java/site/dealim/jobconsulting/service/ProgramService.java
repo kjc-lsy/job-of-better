@@ -32,4 +32,6 @@ public class ProgramService {
     public int updateProgram(Program program) {
         return programMapper.updateProgram(program);
     }
+
+    public List<Program> getAllPrograms() { return programMapper.selectAllPrograms();}
 }

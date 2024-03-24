@@ -104,5 +104,12 @@
         WHERE pg_idx = #{pgIdx}
     </update>
 
+    <select id="selectAllPrograms" resultType="Program">
+        SELECT * FROM program
+        WHERE DATE(pg_prog_start_date) &lt;= DATE(NOW())
+          AND DATE(pg_prog_end_date) &gt;= DATE(NOW());
+    </select>
+
+
 
 </mapper>

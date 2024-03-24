@@ -9,3 +9,5 @@ export const deleteProgram = (pgIdx) => api.delete('/api/program/delete-program/
 export const getProgram = (pgIdx) => api.get(`/api/program/get-program?pgIdx=${pgIdx}`)
 
 export const updateProgram = (program) => api.put('/api/program/update-program', program)
+
+export const getAllPrograms = () => api.post('/api/program/get-all-programs')

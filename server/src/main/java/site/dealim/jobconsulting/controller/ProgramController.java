@@ -83,4 +83,11 @@ public class ProgramController {
             return new ResponseEntity<>("프로그램 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/get-all-programs")
+    public ResponseEntity<?> getAllPrograms() {
+        log.info("프로그램 전체 목록 조회...");
+
+        return new ResponseEntity<>(programService.getAllPrograms(), HttpStatus.OK);
+    }
 }

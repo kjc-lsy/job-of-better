@@ -225,10 +225,6 @@ const CompanyRegister = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(inputValue.validBNo);
-    }, [inputValue.validBNo , inputValue.validDuplicateBNo]);
-
 
     // 사업자등록번호 조회
     const getJsonData = async () => {
@@ -258,9 +254,15 @@ const CompanyRegister = () => {
             }
         } catch (error) {
             console.error(error);
+        } finally {
+            //handleDuplicateBNo(); // handleDuplicateBNo 함수 호출
         }
-
     }
+
+    useEffect(() => {
+        handleDuplicateBNo();
+    },[inputValue.validBNo]);
+
 
     const handleDuplicateBNo = () => {
         //console.log("handleDuplicateBNo")
@@ -359,8 +361,7 @@ const CompanyRegister = () => {
                                     </div>
                                 </Col>
                                 <Col md={2}><Button type="button" onClick={async () => {
-                                    await getJsonData()
-                                    handleDuplicateBNo() }
+                                    await getJsonData();}
                                 }>인증하기</Button></Col>
                             </Row>
 
