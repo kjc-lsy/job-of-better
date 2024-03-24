@@ -34,7 +34,7 @@ public class ProgramController {
         return new ResponseEntity<>("프로그램을 추가 하였습니다", HttpStatus.OK);
     }
 
-    @Secured("ROLE_COMPANY")
+    @Secured({"ROLE_COMPANY", "ROLE_USER"})
     @PostMapping("/get-programs")
     public ResponseEntity<?> getPrograms(@AuthenticationPrincipal CustomMember customMember) {
         log.info("프로그램 목록 조회...");
@@ -58,7 +58,7 @@ public class ProgramController {
         }
     }
 
-    @Secured("ROLE_COMPANY")
+    @Secured({"ROLE_COMPANY", "ROLE_USER"})
     @GetMapping("/get-program")
     public ResponseEntity<?> getProgram(@RequestParam(value = "pgIdx") Long pgIdx) {
         log.info("프로그램 조회... : " + pgIdx);

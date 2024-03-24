@@ -6,11 +6,12 @@ import Icons from "./views/common/Icons";
 import Home from "./views/common/Home";
 import UserProfile from "./views/user/UserProfile";
 import React from "react";
-import Program from "./views/company/program/Program";
 import Typography from "./views/common/Typography";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
 import CoverLetter from "./views/user/CoverLetter";
+import UserProgram from "./views/user/program/Program";
+import CompanyProgram from "./views/company/program/Program";
 
 
 var routes = [
@@ -60,7 +61,7 @@ var routes = [
     path: "/program",
     name: "교육 프로그램",
     icon: "tim-icons icon-components",
-    component: <Program />,
+    component: <CompanyProgram />,
     layout: "/company",
   },
   {
@@ -86,23 +87,23 @@ var routes = [
   },
   {
     path: "/user-profile",
-    name: "User Profile",
+    name: "회사 프로필",
     icon: "tim-icons icon-single-02",
     component: <UserProfile />,
     layout: "/company",
   },
   {
-    path: "/home",
-    name: "Home",
-    icon: "tim-icons icon-chart-pie-36",
-    component: <Home />,
+    path: "/user-profile",
+    name: "유저 프로필",
+    icon: "tim-icons icon-single-02",
+    component: <UserProfile />,
     layout: "/user",
   },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "tim-icons icon-single-02",
-    component: <UserProfile />,
+    path: "/program",
+    name: "교육 프로그램",
+    icon: "tim-icons icon-components",
+    component: <UserProgram />,
     layout: "/user",
   },
   {

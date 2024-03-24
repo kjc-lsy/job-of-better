@@ -112,50 +112,48 @@ function Company(props) {
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
-                <React.Fragment>
-                    <div className={"wrapper " + getPathname(location) + "-wrapper"}>
-                        <Sidebar
-                            routes={companyRoutes}
-                            logo={{
-                                outterLink: "/",
-                                text: "Company",
-                                imgSrc: logo,
-                            }}
+                <div className={"wrapper " + getPathname(location) + "-wrapper"}>
+                    <Sidebar
+                        routes={companyRoutes}
+                        logo={{
+                            outterLink: "/",
+                            text: "Company",
+                            imgSrc: logo,
+                        }}
+                        toggleSidebar={toggleSidebar}
+                    />
+                    <div className="main-panel" ref={mainPanelRef} data={color}>
+                        <CommonNavbar
+                            brandText={getBrandText(location)}
                             toggleSidebar={toggleSidebar}
+                            sidebarOpened={sidebarOpened}
+                            changeColor={changeColor}
+                            sideColor={color}
                         />
-                        <div className="main-panel" ref={mainPanelRef} data={color}>
-                            <CommonNavbar
-                                brandText={getBrandText(location)}
-                                toggleSidebar={toggleSidebar}
-                                sidebarOpened={sidebarOpened}
-                                changeColor={changeColor}
-                                sideColor={color}
+                        <Routes>
+                            {getRoutes(routes, location)}
+                            <Route
+                                path="/program-info/:pgIdx"
+                                element={<ProgramInfo/>}
                             />
-                            <Routes>
-                                {getRoutes(routes,location)}
-                                <Route
-                                    path="/program-info/:pgIdx"
-                                    element={<ProgramInfo/>}
-                                />
-                                <Route
-                                    path="/program-modify/:pgIdx"
-                                    element={<ProgramModify/>}
-                                />
-                                <Route
-                                    path="/program-insert"
-                                    element={<ProgramInsert/>}
-                                />
-                                <Route
-                                    path="/"
-                                    element={<Navigate to="/company/home" replace/>}
-                                />
-                            </Routes>
-                            {
-                                location.pathname === "/company/map" ? null : <Footer fluid/>
-                            }
-                        </div>
+                            <Route
+                                path="/program-modify/:pgIdx"
+                                element={<ProgramModify/>}
+                            />
+                            <Route
+                                path="/program-insert"
+                                element={<ProgramInsert/>}
+                            />
+                            <Route
+                                path="/"
+                                element={<Navigate to="/company/home" replace/>}
+                            />
+                        </Routes>
+                        {
+                            location.pathname === "/company/map" ? null : <Footer fluid/>
+                        }
                     </div>
-                </React.Fragment>
+                </div>
             )}
         </BackgroundColorContext.Consumer>
     );

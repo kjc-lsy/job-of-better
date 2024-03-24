@@ -7,8 +7,8 @@ import {useNavigate} from "react-router-dom";
 
 // date-range-rsuite
 import 'rsuite/dist/rsuite.min.css';
-import ProgDateRangePicker from "../../../components/ProgDateRangePicker";
-import TimeRange30Picker from "../../../components/TimeRange30Picker";
+import ProgDateRangePicker from "../../../components/Program/ProgDateRangePicker";
+import TimeRange30Picker from "../../../components/Program/TimeRange30Picker";
 import {format} from "date-fns";
 
 const ProgramInsert = () => {

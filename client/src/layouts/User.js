@@ -13,7 +13,8 @@ import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
 
-import {getPathname, getRoutes , getBrandText} from "../components/GetRouteProvider";
+import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
+import ProgramInfo from "../views/user/program/ProgramInfo";
 
 var ps;
 
@@ -84,39 +85,41 @@ function User(props) {
     return (
         <BackgroundColorContext.Consumer>
             {({color, changeColor}) => (
-                <React.Fragment>
-                    <div className={"wrapper " + getPathname(location) + "-wrapper"}>
-                        <Sidebar
-                            routes={userRoutes}
-                            logo={{
-                                outterLink: "/",
-                                text: "Member",
-                                imgSrc: logo,
-                            }}
+                <div className={"wrapper " + getPathname(location) + "-wrapper"}>
+                    <Sidebar
+                        routes={userRoutes}
+                        logo={{
+                            outterLink: "/",
+                            text: "Member",
+                            imgSrc: logo,
+                        }}
+                        toggleSidebar={toggleSidebar}
+                    />
+                    <div className="main-panel" ref={mainPanelRef} data={color}>
+                        <CommonNavbar
+                            brandText={getBrandText(location)}
                             toggleSidebar={toggleSidebar}
+                            sidebarOpened={sidebarOpened}
+                            changeColor={changeColor}
+                            sideColor={color}
                         />
-                        <div className="main-panel" ref={mainPanelRef} data={color}>
-                            <CommonNavbar
-                                brandText={getBrandText(location)}
-                                toggleSidebar={toggleSidebar}
-                                sidebarOpened={sidebarOpened}
-                                changeColor={changeColor}
-                                sideColor={color}
+                        <Routes>
+                            {getRoutes(routes, location)}
+                            <Route
+                                path="/program-info/:pgIdx"
+                                element={<ProgramInfo/>}
                             />
-                            <Routes>
-                                {getRoutes(routes,location)}
-                                <Route
-                                    path="/"
-                                    element={<Navigate to="/user/home" replace/>}
-                                />
-                            </Routes>
-                            {
-                                // we don't want the Footer to be rendered on map page
-                                location.pathname === "/company/map" ? null : <Footer fluid/>
-                            }
-                        </div>
+                            <Route
+                                path="/"
+                                element={<Navigate to="/user/program" replace/>}
+                            />
+                        </Routes>
+                        {
+                            // we don't want the Footer to be rendered on map page
+                            location.pathname === "/company/map" ? null : <Footer fluid/>
+                        }
                     </div>
-                </React.Fragment>
+                </div>
             )}
         </BackgroundColorContext.Consumer>
     );

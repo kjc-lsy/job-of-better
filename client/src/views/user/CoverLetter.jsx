@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import * as user from "../../apis/user";
 import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
-import {userCoverLetterSave} from "../../apis/user";
 
 const CoverLetter = () => {
     const {isLogin} = useAuth();
@@ -15,7 +14,7 @@ const CoverLetter = () => {
         minlength: 0,
         question: "",
         answer: "",
-        type:"",
+        type: "",
         answerValid: false
     }]);
 
@@ -29,13 +28,13 @@ const CoverLetter = () => {
                         return {
                             num: index + 1,
                             id: item.cclIdx,
-                            comIdx : item.cclComIdx,
+                            comIdx: item.cclComIdx,
                             maxlength: item.cclMaxLength,
                             minlength: item.cclMinLength,
                             question: item.cclLetterQuestion,
-                            answer:"",
+                            answer: "",
                             answerValid: false,
-                            type:item.mclIsConfirm ? item.mclIsConfirm : ""
+                            type: item.mclIsConfirm ? item.mclIsConfirm : ""
                         }
                     }));
             })
@@ -44,7 +43,7 @@ const CoverLetter = () => {
             });
     }, [isLogin]);
 
-    const onChange = ({target,index})=> {
+    const onChange = ({target, index}) => {
         let updatedInputValue = [...inputValue];
         updatedInputValue[index].answer = target.value;
         setInputValue(updatedInputValue);
@@ -78,11 +77,11 @@ const CoverLetter = () => {
             setInputValue((s) => s.map((v) => ({
                 ...v, type: type
             })));
-            if(type === "Y") {
-                if(window.confirm("제출하시면 기업 담당자에게 전달됩니다. \n제출하시겠습니까?")) {
+            if (type === "Y") {
+                if (window.confirm("제출하시면 기업 담당자에게 전달됩니다. \n제출하시겠습니까?")) {
                     axiosSave(inputValue);
                 }
-            }else {
+            } else {
                 axiosSave(inputValue);
             }
         }
@@ -93,9 +92,9 @@ const CoverLetter = () => {
             .then(response => {
                 //navigate('/auth/login')
                 if (response.data === "SUCCESS") {
-                    if(response.data.type === "Y") {
+                    if (response.data.type === "Y") {
                         alert("등록이 완료되었습니다.");
-                    }else {
+                    } else {
                         alert("임시저장되었습니다. \n작성 완료 후 제출버튼을 눌러주세요.")
                     }
                 }
@@ -122,7 +121,7 @@ const CoverLetter = () => {
                                             {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                             <div className="coverletter_user">
                                                 <div>
-                                               <b>{index+1}.</b> {value.question}
+                                                    <b>{index + 1}.</b> {value.question}
                                                 </div>
                                                 <div className="cl_length">
                                                     <span>{value.answer.length}</span>자
@@ -143,7 +142,7 @@ const CoverLetter = () => {
                                                         value.maxlength <= 0 ? (
                                                             value.minlength <= 0 ? (
                                                                 <span>글자 제한이 없습니다. 자유롭게 입력해주세요.</span>
-                                                                ): (
+                                                            ) : (
                                                                 <span
                                                                     className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상 작성해주세요.</span>
                                                             )
@@ -164,8 +163,8 @@ const CoverLetter = () => {
                             )
                         })}
                         <div className="btngroup">
-                            <Button className="greyBtn" onClick={(e) => save(e,"N")}>임시저장</Button>
-                            <Button onClick={(e) => save(e,"Y")}>제출</Button>
+                            <Button className="greyBtn" onClick={(e) => save(e, "N")}>임시저장</Button>
+                            <Button onClick={(e) => save(e, "Y")}>제출</Button>
                         </div>
                     </Form>
                 </CardBody>

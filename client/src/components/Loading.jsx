@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { BeatLoader } from "react-spinners";
+import {BeatLoader} from "react-spinners";
 
 const override = {
     position: "fixed",
