@@ -225,10 +225,6 @@ const CompanyRegister = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(inputValue.validBNo);
-    }, [inputValue.validBNo , inputValue.validDuplicateBNo]);
-
 
     // 사업자등록번호 조회
     const getJsonData = async () => {

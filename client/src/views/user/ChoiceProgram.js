@@ -67,7 +67,7 @@ function ChoiceProgram() {
                                             <div dangerouslySetInnerHTML={{ __html: program.pgContentSummary }} />
                                             <ul>
                                                 <li><b>인원</b> 10명</li>
-                                                <li><b>프로그램 기간</b> </li>
+                                                <li><b>프로그램 기간</b> {program.pgProgStartDate} ~ {program.pgProgEndDate}</li>
                                             </ul>
                                         </Button>
                                     </Col>
