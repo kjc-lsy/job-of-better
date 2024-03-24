@@ -505,6 +505,25 @@ form.form-register label + .form-control {
   }
 }
 
+/************* program *************/
+
+.choice-program-wrapper {
+  .btn{
+    background:transparent;
+    border:1px solid $border-color;
+    width: 100%;
+    &:hover {
+      background: transparent
+    }
+  }
+  .card .card-body {
+    padding-bottom: 50px;
+  }
+}
+
+
+
+
 /****************************************** company ******************************************/
 
 /************* program *************/

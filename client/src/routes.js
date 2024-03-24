@@ -3,7 +3,7 @@ import Register from "./views/auth/Register";
 import MemberList from "./views/company/MemberList";
 import ComCoverLetter from "./views/company/ComCoverLetter";
 import Icons from "./views/common/Icons";
-import Home from "./views/common/Home";
+import Home from "./views/user/Home";
 import UserProfile from "./views/user/UserProfile";
 import React from "react";
 import Program from "./views/company/program/Program";
@@ -11,6 +11,7 @@ import Typography from "./views/common/Typography";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
 import CoverLetter from "./views/user/CoverLetter";
+import ChoiceProgram from "./views/user/ChoiceProgram";
 
 
 var routes = [
@@ -96,6 +97,13 @@ var routes = [
     name: "Home",
     icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
+    layout: "/user",
+  },
+  {
+    path: "/choice-program",
+    name: "교육 프로그램 선택",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <ChoiceProgram />,
     layout: "/user",
   },
   {
