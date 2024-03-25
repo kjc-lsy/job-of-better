@@ -12,4 +12,4 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:80" # nginx 서버의 기본 http 포트 사용
+      - "3000:433" 
