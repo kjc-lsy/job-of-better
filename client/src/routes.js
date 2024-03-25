@@ -5,11 +5,13 @@ import ComCoverLetter from "./views/company/ComCoverLetter";
 import Icons from "./views/common/Icons";
 import Home from "./views/user/Home";
 import UserProfile from "./views/user/UserProfile";
+import UserModify from "./views/user/UserModify";
 import React from "react";
 import Typography from "./views/common/Typography";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
 import CoverLetter from "./views/user/CoverLetter";
+import Resume from "./views/user/Resume";
 import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
 import ChoiceProgram from "./views/user/ChoiceProgram";
@@ -96,6 +98,7 @@ var routes = [
   {
     path: "/home",
     name: "Home",
+    cate: "",
     icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
     layout: "/user",
@@ -103,20 +106,15 @@ var routes = [
   {
     path: "/choice-program",
     name: "교육 프로그램 선택",
+    cate: "",
     icon: "tim-icons icon-chart-pie-36",
     component: <ChoiceProgram />,
     layout: "/user",
   },
   {
-    path: "/user-profile",
-    name: "유저 프로필",
-    icon: "tim-icons icon-single-02",
-    component: <UserProfile />,
-    layout: "/user",
-  },
-  {
     path: "/program",
     name: "교육 프로그램",
+    cate: "",
     icon: "tim-icons icon-components",
     component: <UserProgram />,
     layout: "/user",
@@ -124,8 +122,17 @@ var routes = [
   {
     path: "/cover-letter",
     name: "자기소개서",
+    cate: "myJobInfo",
     icon: "tim-icons icon-single-copy-04",
     component: <CoverLetter />,
+    layout: "/user",
+  },
+  {
+    path: "/resume",
+    name: "이력서",
+    cate: "myJobInfo",
+    icon: "tim-icons icon-single-copy-04",
+    component: <Resume />,
     layout: "/user",
   },
   {
@@ -133,6 +140,22 @@ var routes = [
     name: "Icons",
     icon: "tim-icons icon-puzzle-10",
     component: <Icons />,
+    layout: "/user",
+  },
+  {
+    path: "/user-profile",
+    name: "마이페이지",
+    cate: "mypg",
+    icon: "tim-icons icon-single-02",
+    component: <UserProfile />,
+    layout: "/user",
+  },
+  {
+    path: "/user-modify",
+    name: "내 정보 수정",
+    cate: "mypg",
+    icon: "tim-icons icon-single-02",
+    component: <UserModify />,
     layout: "/user",
   },
 ];

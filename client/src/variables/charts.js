@@ -389,6 +389,7 @@ const chartExample4 = {
   },
 };
 
+
 module.exports = {
   chartExample1, // used inside src/views/DashBoard.js
   chartExample2, // used inside src/views/DashBoard.js
