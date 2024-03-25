@@ -26,6 +26,7 @@ const KorDatePicker = (props) => {
             locale={calendarLocaleType}
             placeholder='날짜를 선택해주세요'
             format="yyyy/MM/dd"
+            oneTap
             {...props}
         />
     );

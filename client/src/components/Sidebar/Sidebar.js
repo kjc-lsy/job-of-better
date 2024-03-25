@@ -13,10 +13,13 @@ import {
     BackgroundColorContext,
     backgroundColors,
 } from "contexts/BackgroundColorWrapper";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 
 var ps;
 
 function Sidebar(props) {
+
     const location = useLocation();
     const currentPath = location.pathname;
     const sidebarRef = React.useRef(null);
@@ -46,6 +49,28 @@ function Sidebar(props) {
     };
 
     const {routes, rtlActive, logo} = props;
+
+    const dupArr = routes.map(route => route.cate);
+    const routeArr = dupArr.filter((element, index) => {
+        return dupArr.indexOf(element) === index;
+    });
+    function renderRoutesCategory(prop, key,depth) {
+        return (
+            <li
+                className={activeRoute(prop.path) + (prop.pro ? " active-pro" : "") + (depth === 1 ? "depth1" : "depth2")}
+                key={key}
+            >
+                <NavLink
+                    to={prop.layout + prop.path}
+                    className="nav-link"
+                    onClick={props.toggleSidebar}
+                >
+                    <i className={prop.icon}/>
+                <p>{rtlActive ? prop.rtlName : prop.name}</p>
+                </NavLink>
+            </li>
+        );
+    }
 
     // 로고 설정
     let logoImg = null;
@@ -111,33 +136,26 @@ function Sidebar(props) {
                             :
                             null}
                         <Nav>
-                            {routes.map((prop, key) => {
-                                return (
-                                    <li
-                                        className={
-                                            activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
-                                        }
-                                        key={key}
-                                    >
-                                        <NavLink
-                                            to={prop.layout + prop.path}
-                                            className="nav-link"
-                                            onClick={props.toggleSidebar}
-                                        >
-                                            <i className={prop.icon}/>
-                                            <p>{rtlActive ? prop.rtlName : prop.name}</p>
-                                        </NavLink>
-                                    </li>
-                                );
+                            {routeArr.map((item, index) => {
+                                if (item === "" || item === null || item === undefined) {
+                                    return routes.map((prop, key) => {
+                                        if (prop.cate === item) {
+                                            return renderRoutesCategory(prop, key, 1);
+                                        } })} else {
+                                    return (
+                                        <li key={index}>
+                                            <div className="navSubTit">{/*<i className={routes.filter(prop => prop.cate === item)[0].icon}></i>*/}{item}</div>
+                                            <ul>
+                                                {routes.map((prop, key) => {
+                                                    if (prop.cate === item) {
+                                                       return renderRoutesCategory(prop, key,2)}})}
+                                            </ul>
+                                        </li>
+                                    );
+                                }
                             })}
-                            {/*                            <li className="active-pro">
-                                <ReactstrapNavLink
-                                    href="https://www.creative-tim.com/product/black-dashboard-pro-react?ref=bdr-user-archive-sidebar-upgrade-pro">
-                                    <i className="tim-icons icon-spaceship"/>
-                                    <p>Upgrade to PRO</p>
-                                </ReactstrapNavLink>
-                            </li>*/}
-                        </Nav>
+                        </Nav>;
+
                     </div>
                 </div>
             )}

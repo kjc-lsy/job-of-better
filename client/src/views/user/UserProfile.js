@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 // reactstrap components
 import {
@@ -12,137 +12,37 @@ import {
     Form,
     Input,
     Row,
-    Col,
+    Col, NavLink, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, CardTitle, Table,
 } from "reactstrap";
+import {Navigate, useNavigate} from "react-router-dom";
+import KorDatePicker from "../../components/KorDatePicker";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 
 function UserProfile() {
+    const [inputValue, setInputValue] = React.useState({
+        email: "",
+        validEmail: false,
+        emailUserName: "",
+        domain: "",
+    });
+    const [dropdownOpen, setDropdownOpen] = React.useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
+
+    const handleDomainChange = (domain) => {
+        if (domain === '직접 입력') {
+            setIsReadOnly(false);
+            setInputValue({...inputValue, domain: ''});
+        } else {
+            setIsReadOnly(true);
+            setInputValue({...inputValue, domain: domain});
+        }
+    };
+
+    const navigate = useNavigate();
     return (
         <div className="content">
             <Row>
-                <Col md="8">
-                    <Card>
-                        <CardHeader>
-                            <h5 className="title">Edit Profile</h5>
-                        </CardHeader>
-                        <CardBody>
-                            <Form>
-                                <Row>
-                                    <Col className="pr-md-1" md="5">
-                                        <FormGroup>
-                                            <label>Company (disabled)</label>
-                                            <Input
-                                                defaultValue="Creative Code Inc."
-                                                disabled
-                                                placeholder="Company"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="px-md-1" md="3">
-                                        <FormGroup>
-                                            <label>Username</label>
-                                            <Input
-                                                defaultValue="michael23"
-                                                placeholder="Username"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="pl-md-1" md="4">
-                                        <FormGroup>
-                                            <label htmlFor="exampleInputEmail1">
-                                                Email address
-                                            </label>
-                                            <Input placeholder="mike@email.com" type="email"/>
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="pr-md-1" md="6">
-                                        <FormGroup>
-                                            <label>First Name</label>
-                                            <Input
-                                                defaultValue="Mike"
-                                                placeholder="Company"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="pl-md-1" md="6">
-                                        <FormGroup>
-                                            <label>Last Name</label>
-                                            <Input
-                                                defaultValue="Andrew"
-                                                placeholder="Last Name"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md="12">
-                                        <FormGroup>
-                                            <label>Address</label>
-                                            <Input
-                                                defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                                                placeholder="Home Address"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col className="pr-md-1" md="4">
-                                        <FormGroup>
-                                            <label>City</label>
-                                            <Input
-                                                defaultValue="Mike"
-                                                placeholder="City"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="px-md-1" md="4">
-                                        <FormGroup>
-                                            <label>Country</label>
-                                            <Input
-                                                defaultValue="Andrew"
-                                                placeholder="Country"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="pl-md-1" md="4">
-                                        <FormGroup>
-                                            <label>Postal Code</label>
-                                            <Input placeholder="ZIP Code" type="number"/>
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md="8">
-                                        <FormGroup>
-                                            <label>About Me</label>
-                                            <Input
-                                                cols="80"
-                                                defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                            that two seat Lambo."
-                                                placeholder="Here can be your description"
-                                                rows="4"
-                                                type="textarea"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                            </Form>
-                        </CardBody>
-                        <CardFooter>
-                            <Button className="btn-fill" color="primary" type="submit">
-                                Save
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                </Col>
                 <Col md="4">
                     <Card className="card-user">
                         <CardBody>
@@ -152,23 +52,90 @@ function UserProfile() {
                                 <div className="block block-two"/>
                                 <div className="block block-three"/>
                                 <div className="block block-four"/>
-                                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                                    <img
-                                        alt="..."
-                                        className="avatar"
-                                        src={require("assets/img/emilyz.jpg")}
-                                    />
-                                    <h5 className="title">Mike Andrew</h5>
-                                </a>
+                                <input type="file" id="profile-img"/>
+                                <label htmlFor="profile-img">
+                                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                                        <img
+                                            alt="..."
+                                            className="avatar"
+                                            src={require("assets/img/emilyz.jpg")}
+                                        />
+
+                                    </a>
+                                </label>
+                                <h5 className="title">Mike Andrew</h5>
                                 <p className="description">Ceo/Co-Founder</p>
                             </div>
-                            <div className="card-description">
+                            {/*<div className="card-description">
                                 Do not be scared of the truth because we need to restart the
                                 human foundation in truth And I love you like Kanye loves
                                 Kanye I love Rick Owens’ bed design but the back is...
-                            </div>
+                            </div>*/}
                         </CardBody>
                         <CardFooter>
+                            <h4>이력서 / 자기소개서</h4>
+                            <Row>
+                                <Col md={6}>
+                                    <b>이력서</b>
+                                    <div className="percent">
+                                        <span>80%</span>
+                                    </div>
+                                    <a onClick={(e) => {
+                                        e.preventDefault()
+                                        navigate("/user/resume")
+                                    }}>
+                                        바로가기
+                                    </a>
+                                </Col>
+                                <Col md={6}></Col>
+                            </Row>
+                            {/*<Table>
+                                <thead>
+                                <tr>
+                                    <th>이력서 / 자기소개서</th>
+                                    <th>진행도</th>
+                                    <th>상태</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a onClick={(e)=> {
+                                            e.preventDefault()
+                                            navigate("/user/resume")}}>
+                                            이력서 바로가기
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div className="range">
+                                            <span className="box8">80%</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        제출
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a onClick={(e) => {
+                                            e.preventDefault()
+                                            navigate("/user/cover-letter")
+                                        }}>
+                                            자기소개서 바로가기
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div className="range">
+                                            <span className="box2">20%</span>
+                                        </div>
+                                    </td>
+                                    <td>임시저장</td>
+                                </tr>
+                                </tbody>
+                            </Table>*/}
+
+                        </CardFooter>
+                        {/*<CardFooter>
                             <div className="button-container">
                                 <Button className="btn-icon btn-round" color="facebook">
                                     <i className="fab fa-facebook"/>
@@ -180,9 +147,40 @@ function UserProfile() {
                                     <i className="fab fa-google-plus"/>
                                 </Button>
                             </div>
-                        </CardFooter>
+                        </CardFooter>*/}
+                    </Card>
+
+                </Col>
+                <Col md="8">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle tag="h4">프로그램</CardTitle>
+                            <p className="category">신청한 프로그램 정보입니다. 면접시간 등 확인해주세요.</p>
+                        </CardHeader>
+                        <CardBody>
+                            <Table className="tablesorter">
+                                <thead className="text-primary">
+                                <tr>
+                                    <th>프로그램명</th>
+                                    <th>기관명</th>
+                                    <th>전화번호</th>
+                                    <th className="text-center">면접시간</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Dakota Rice</td>
+                                    <td>Niger</td>
+                                    <td>Oud-Turnhout</td>
+                                    <td className="text-center">$36,738</td>
+                                </tr>
+
+                                </tbody>
+                            </Table>
+                        </CardBody>
                     </Card>
                 </Col>
+
             </Row>
         </div>
     );
