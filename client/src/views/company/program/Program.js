@@ -6,16 +6,14 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import {Button, Card, Col, Row,} from "reactstrap";
 import {getPrograms} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import programAddImg from "../../../assets/img/program-add.png";
 import ProgramCard from "../../../components/Program/ProgramCard";
-
 
 function Program() {
     const {isLogin} = useAuth();
     const [programs, setPrograms] = useState([]);
     const navigate = useNavigate();
-    const {pgIdx} = useParams();
 
     // 로그인 처리가 완료 되면 그 이후에 함수를 실행
     useEffect(() => {
@@ -43,7 +41,6 @@ function Program() {
                                 program={program}
                                 loadPrograms={loadPrograms}
                             />
-
                         </Col>
                     )
                 })}
