@@ -21,7 +21,6 @@ export const AuthContextProvider = ({children}) => {
     const login = async (username, password) => {
         try {
             const response = await auth.login(username, password) // 로그인 axios 요청
-            console.log(response)
             const headers = response.headers
             const authorization = headers.authorization;
             const accessToken = authorization.replace("Bearer ", "")

@@ -38,7 +38,7 @@ public class SecurityConfig {
         log.info("시큐리티 설정 시작...");
 
         // 폼 기반 로그인 비활성화
-        http.formLogin(login -> login.loginProcessingUrl("/api/login"));
+        http.formLogin(login -> login.loginProcessingUrl("/api/login").disable());
 
         // 로그아웃 설정
         http.logout(auth -> auth.logoutUrl("/api/logout")
