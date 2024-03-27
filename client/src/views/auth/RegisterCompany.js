@@ -18,7 +18,6 @@ import {
 
 import React, {useContext, useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
-import * as company from '../../apis/company';
 import {useNavigate} from "react-router-dom";
 import companyPaper from "../../assets/img/company_registration.png";
 import fileOk from "../../assets/img/fileok.gif";
@@ -256,6 +255,7 @@ const CompanyRegister = () => {
             console.error(error);
         } finally {
             //handleDuplicateBNo(); // handleDuplicateBNo 함수 호출
+            setLoading(false);
         }
     }
 

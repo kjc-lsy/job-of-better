@@ -15,7 +15,7 @@ function Program() {
     const [programs, setPrograms] = useState([]);
     const navigate = useNavigate();
 
-    // 로그인 처리가 완료 되면 그 이후에 함수를 실행
+    // 로그인 처리가 완료 되면 실행
     useEffect(() => {
         if (isLogin) {
             loadPrograms();
