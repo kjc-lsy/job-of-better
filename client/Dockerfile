@@ -26,15 +26,11 @@ COPY --from=build /app/build /usr/share/nginx/html
 # 기본 nginx 설정 파일을 삭제한다. (custom 설정과 충돌 방지)
 RUN rm /etc/nginx/conf.d/default.conf
 
-# SSL/TLS 인증서 및 개인 키 파일 복사
-# COPY /nginx/cert.pem /etc/nginx/cert.pem
-# COPY /nginx/privkey.pem /etc/nginx/privkey.pem
-
 # Nginx 설정 파일 복사
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Nginx 포트 개방
-EXPOSE 80 443
+EXPOSE 80
 
 # Nginx 서버를 포그라운드에서 실행합니다. 이 명령어는 컨테이너가 시작될 때 실행됩니다.
 CMD ["nginx", "-g", "daemon off;"]

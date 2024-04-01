@@ -12,9 +12,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:443"
-    volumes:
-      - ./client:/app
+      - "3000:80"
     environment:
       - REACT_APP_ENV=production
       - REACT_APP_PROXY=https://springboot-app:9090
