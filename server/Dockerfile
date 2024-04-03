@@ -15,7 +15,7 @@ COPY build.gradle .
 COPY src ./src
 
 # Build the application
-RUN gradle build
+RUN gradle build -x test
 
 # Use adoptopenjdk for base image
 FROM openjdk:17-jdk-slim

@@ -6,6 +6,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9090:9090"
+    environment:
+      - MYSQL_URL=${MYSQL_URL}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - TOMCAT_PORT=${TOMCAT_PORT}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
 
   react-app:
     build:
@@ -14,5 +21,19 @@ services:
     ports:
       - "3000:80"
     environment:
-      - REACT_APP_ENV=production
-      - REACT_APP_PROXY=https://springboot-app:9090
+      - REACT_APP_ENV=${REACT_APP_ENV}
+      - REACT_APP_PROXY=${REACT_APP_PROXY}
+
+  mysql-server:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}

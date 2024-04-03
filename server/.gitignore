@@ -4,7 +4,6 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-src/main/resources/application.properties
 
 ### STS ###
 .apt_generated
@@ -41,7 +40,7 @@ out/
 sql-scripts/*
 
 ### env ###
-.env
+../.env
 
 ### react buildfiles ###
 /src/main/resources/static/**

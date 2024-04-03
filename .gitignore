@@ -38,10 +38,11 @@ out/
 .vscode/
 
 ### member secure info ###
-.env
+server/.env
 sql-scripts/*
 
 ### env ###
+.env
 .envv
 
 ### react buildfiles ###
