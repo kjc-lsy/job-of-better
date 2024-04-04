@@ -15,6 +15,7 @@ public class MemberCoverLetter {
     Long mclMemberIdx;
     Long mclAnswer;
     String mclIsConfirm;
+    String mclTitle;
     LocalDateTime mclRegistrationDate;
     LocalDateTime mclModifiedDate;
 }

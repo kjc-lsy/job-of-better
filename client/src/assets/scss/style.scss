@@ -531,7 +531,7 @@ $base-width: 10%;*/
   border-radius:100%;
   background: conic-gradient($main-color var(--angle) , var(--bg-color) 0 360deg);
   position: relative;
-  animation:0.5s roll 0.5s linear alternate both;
+  /*animation:0.5s roll 0.5s linear alternate both;*/
   margin: 10px;
   span {
     display: flex;
@@ -574,6 +574,45 @@ $base-width: 10%;*/
     }*/
   }
 }
+@mixin rollAnimation($angle) {
+  .percent#{$angle} {
+    animation: 0.5s roll#{$angle} 0.5s linear alternate both;
+  }
+  @keyframes roll#{$angle} {
+    to {
+      --angle: #{$angle}deg;
+    }
+  }
+}
+
+@for $i from 0 through 360 {
+  @include rollAnimation(#{$i});
+}
+.programInfo {
+  border:1px solid $border-color;
+  padding: 15px;
+  .rs-picker{
+    margin-right: 10px;
+  }
+  span {
+    font-size:13px
+  }
+  p {
+    font-size:18px;
+    margin-bottom: 20px;
+  }
+}
+.card-user-box.card {
+  .card-title {
+    margin-bottom: 0;
+  }
+  .card-header {
+    padding: 30px 15px 0;
+  }
+  .table {
+    margin-bottom: 0;
+  }
+}
 @keyframes roll {
  to {
    --angle: 288deg;
@@ -608,6 +647,11 @@ $base-width: 10%;*/
     b {
       font-size: 16px
     }
+
+
+  }
+  .coverLetterTitle {
+    margin-bottom: 50px;
   }
 
   textarea {
@@ -623,6 +667,13 @@ $base-width: 10%;*/
 
 }
 .user-profile-wrapper {
+  .tablesorter {
+    td {
+      font-size:16px;
+      color: $font-color !important
+    }
+
+  }
   .card-footer .row {
     display: flex;
     justify-content: center;
@@ -634,13 +685,22 @@ $base-width: 10%;*/
     flex-direction: column;
 
   }
+  .btn {
+    padding: 8px 30px;
+  }
+}
+.card-user .avatar {
+  object-fit: cover;
 }
 .profile_img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
+.card-user .author .block {
+  background: linear-gradient(to right, $main-color 0%, transparent 100%) !important;
+  opacity:0.7 !important;
+}
 
 /************* program *************/
 
