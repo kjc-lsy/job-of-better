@@ -20,6 +20,8 @@ public class Member {
     private LocalDate birthDate;
     private String gender;
     private String phone;
+    private String address;
+    private String profileImg;
     private Long comIdx;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;

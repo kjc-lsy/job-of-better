@@ -529,12 +529,14 @@ $base-width: 10%;*/
   width: 100px;
   height: 100px;
   border-radius:100%;
-  background: conic-gradient($main-color 80% , $bg-color 20%);
+  background: conic-gradient($main-color var(--angle) , var(--bg-color) 0 360deg);
   position: relative;
+  animation:0.5s roll 0.5s linear alternate both;
+  margin: 10px;
   span {
     display: flex;
-    width: 98px;
-    height: 98px;
+    width: 95px;
+    height: 95px;
     border-radius: 100%;
     position: absolute;
     top: 50%;
@@ -545,15 +547,15 @@ $base-width: 10%;*/
     font-size: 18px;
     font-weight: 600;
     color: $main-color;
-    background:#fff;
-    &:after {
+    background: var(--bg-color);
+    /*&:after {
       content:"";
       display: block;
       border-radius: 50%;
       width: 5px;
       height: 5px;
       background: $main-color;
-      top: 0;
+      top: -1px ;
       left: 50%;
       transform: translate(-50%,-50%);
       position: absolute;
@@ -565,14 +567,23 @@ $base-width: 10%;*/
       width: 5px;
       height: 5px;
       background: $main-color;
-      top: 0;
+      top: -1px;
       left: 50%;
       transform: translate(-50%,-50%);
       position: absolute;
-    }
+    }*/
   }
 }
-
+@keyframes roll {
+ to {
+   --angle: 288deg;
+ }
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 .cover-letter-wrapper {
   .row {
     margin-bottom: 30px;
@@ -607,7 +618,29 @@ $base-width: 10%;*/
   small {
     padding-left: 5px;
   }
+
+
+
 }
+.user-profile-wrapper {
+  .card-footer .row {
+    display: flex;
+    justify-content: center;
+  }
+  .card-footer .row > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+  }
+}
+.profile_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 /************* program *************/
 
@@ -967,6 +1000,7 @@ $base-width: 10%;*/
   width: 70px;
   margin-right: 10px;
 }
+
 
 .coverletter_row {
   padding: 0 15px;
