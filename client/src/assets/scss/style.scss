@@ -1,9 +1,9 @@
 // 변수 정의
+$input-group-not-has-validation: ".input-group:not(.has-validation)";
 $font-stack: Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
 $border-color: var(--border-color);
 $main-color: var(--main-color);
 $main-bgColor: var(--main-bgColor);
-$input-group-not-has-validation: ".input-group:not(.has-validation)";
 $dark-category-bg: rgba(245, 246, 250, 0.1411764706);
 $dark-category-bg-light: rgba(245, 246, 250, 0.8);
 $bg-color: var(--bg-title-color);

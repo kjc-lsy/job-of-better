@@ -3,6 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site.dealim.jobconsulting.mapper.CompanyMapper">
+    <!-- 회사 정보 조회 -->
+    <select id="selectComNameByIdx" resultType="String" parameterType="Long">
+        SELECT com_name FROM company WHERE com_idx = #{param}
+    </select>
 
     <!-- 자소서 질문 등록 -->
     <insert id="ComCoverLetterinsert" parameterType="java.util.Map">

@@ -1,12 +1,13 @@
 import React from 'react';
-import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row} from "reactstrap";
+import {Button, Card, CardBody, CardFooter, Col, Row} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCheck, faUserClock, faUsers, faUserTie} from "@fortawesome/free-solid-svg-icons";
 import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import ProgramCardHeader from "./ProgramCardHeader";
 
-const ProgramCard = ({program, loadPrograms}) => {
+const ComProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
     const {roles} = useAuth();
     const handleDeleteBtn = async (id) => {
@@ -17,15 +18,14 @@ const ProgramCard = ({program, loadPrograms}) => {
     }
 
     const handleInfoBtn = (pgIdx) => {
-        navigate( '../program-info/' + pgIdx)
+        navigate('../program-info/' + pgIdx)
     }
 
     return (
         <Card>
-            <CardHeader>
-                <span className="company-name">AddinEdu</span>
-                <CardTitle tag="h1">{program.pgTitle}</CardTitle>
-            </CardHeader>
+            <ProgramCardHeader
+                program={program}
+            />
             <CardBody>
                 <Row>
                     <Col>
@@ -48,25 +48,20 @@ const ProgramCard = ({program, loadPrograms}) => {
                         <label>신청자 수</label>
                         <div className="num-info">6명</div>
                     </Col>
-
-                    {roles.isCompany
-                        ?
-                        <Col md='3'>
-                            <div>
-                                <FontAwesomeIcon icon={faUserClock}/>
-                            </div>
-                            <label>미확인 수</label>
-                            <div className="num-info">4명</div>
-                        </Col>
-                        :
-                        <Col md='3'>
-                            <div>
-                                <FontAwesomeIcon icon={faUserTie}/>
-                            </div>
-                            <label>면접 참여자 수</label>
-                            <div className="num-info">4명</div>
-                        </Col>
-                    }
+                    <Col md='3'>
+                        <div>
+                            <FontAwesomeIcon icon={faUserClock}/>
+                        </div>
+                        <label>미확인 수</label>
+                        <div className="num-info">4명</div>
+                    </Col>
+                    <Col md='3'>
+                        <div>
+                            <FontAwesomeIcon icon={faUserTie}/>
+                        </div>
+                        <label>면접 참여자 수</label>
+                        <div className="num-info">4명</div>
+                    </Col>
                 </Row>
                 <Row>
                     <Col md="6">
@@ -85,7 +80,7 @@ const ProgramCard = ({program, loadPrograms}) => {
                     </Col>
                 </Row>
             </CardBody>
-            <CardFooter >
+            <CardFooter>
                 <Button onClick={() => handleInfoBtn(program.pgIdx)}>상세정보</Button>
                 {roles.isCompany ? <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button> : null}
             </CardFooter>
@@ -93,4 +88,4 @@ const ProgramCard = ({program, loadPrograms}) => {
     );
 };
 
-export default ProgramCard;
+export default ComProgramCard;

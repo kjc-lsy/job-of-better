@@ -5,10 +5,8 @@ import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
-import java.util.HashMap;
-
 @Mapper
-public interface MemberMapper {
+public interface AuthMapper {
 
     // 회원 등록
     public Long insertMember(Member member);

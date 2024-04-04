@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
 import {getProgram} from "../../../apis/program";
@@ -7,27 +7,32 @@ import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
+import {getComNameByComIdx} from "../../../apis/company";
+import {setPgIdxOnUser} from "../../../apis/user";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
-    const navigate = useNavigate();
     const {isLogin} = useAuth();
     const [program, setProgram] = useState();
+    const [comName, setComName] = useState("");
 
     useEffect(() => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data
-                console.log(fetchedProgram)
                 setProgram({...fetchedProgram})
             });
+            getComNameByComIdx().then((response) => {
+                setComName(response.data);
+            })
         }
     }, [isLogin]);
 
     const handleSubmitBtn = (pgIdx) => {
-        if(window.confirm("프로그램을 신청할까요?")) {
-            alert("yes")
+        if(window.confirm('프로그램을 신청할까요?')){
+            setPgIdxOnUser(pgIdx);
         }
+
     }
 
     return (
@@ -35,6 +40,7 @@ const ProgramInfo = () => {
             <Card className='program-info'>
                 <CardHeader>
                     <div className="program-info-tt">
+                        <span className="company-name">{comName}</span>
                         <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
                     </div>

@@ -1,5 +1,8 @@
 import api from "./api";
 
+export const getComNameByComIdx = () => api.get('/api/company/get-com-name')
+
+
 export const coverLetterSave = (value) => {
     return api.post('/api/company/cover-letter-save', value.map(value => {
         return {

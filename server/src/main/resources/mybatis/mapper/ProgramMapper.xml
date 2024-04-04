@@ -40,7 +40,6 @@
                 #{pgContent})
     </insert>
 
-
     <delete id="deleteByPgIdx" parameterType="Long">
         DELETE
         FROM program

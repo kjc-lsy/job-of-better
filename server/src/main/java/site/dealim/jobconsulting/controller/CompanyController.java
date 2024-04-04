@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
@@ -43,6 +44,12 @@ public class CompanyController {
         log.info("자소서 항목 삭제 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
-    
+
+    @Secured("ROLE_USER")
+    @GetMapping("/get-com-name")
+    public ResponseEntity<?> getComNameByComIdx(@AuthenticationPrincipal CustomMember customMember) {
+        Long comIdx = customMember.getMember().getComIdx();
+        return new ResponseEntity<>(companyService.getComNameByComIdx(comIdx), HttpStatus.OK);
+    }
 
 }

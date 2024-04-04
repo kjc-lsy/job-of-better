@@ -7,8 +7,7 @@ import {Col, Row,} from "reactstrap";
 import {getPrograms} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate} from "react-router-dom";
-import ProgramCard from "../../../components/Program/ProgramCard";
-
+import UserProgramCard from "../../../components/Card/UserProgramCard";
 
 function Program() {
     const {isLogin} = useAuth();
@@ -33,7 +32,7 @@ function Program() {
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>
-                            <ProgramCard
+                            <UserProgramCard
                                 program={program}
                                 loadPrograms={loadPrograms}
                             />

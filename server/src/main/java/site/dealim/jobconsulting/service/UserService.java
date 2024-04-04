@@ -21,4 +21,8 @@ public class UserService {
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx, Long comIdx) {
         userMapper.userCoverLetterSave(values, idx, comIdx);
     }
+
+    public int updatePgIdx(Long pgIdx, Long memIdx) {
+        return userMapper.updatePgIdx(pgIdx, memIdx);
+    }
 }

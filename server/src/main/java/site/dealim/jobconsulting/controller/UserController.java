@@ -41,4 +41,18 @@ public class UserController {
         Member user = customMember.getMember();
         return userService.userCoverLetterInfo(user.getComIdx());
     }
+
+    @PutMapping("/set-pg-idx")
+    public ResponseEntity<?> updatePgIdx(@AuthenticationPrincipal CustomMember customMember, @RequestParam("pgIdx") Long pgIdx) {
+        log.info("프로그램 신청 시작 : " + pgIdx);
+        int result = userService.updatePgIdx(pgIdx, customMember.getMember().getIdx());
+
+        if (result == 1) {
+            log.info("프로그램 신청 성공");
+            return new ResponseEntity<>("프로그램 신청 성공", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("프로그램 신청 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

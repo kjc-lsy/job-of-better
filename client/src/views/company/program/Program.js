@@ -8,7 +8,7 @@ import {getPrograms} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate} from "react-router-dom";
 import programAddImg from "../../../assets/img/program-add.png";
-import ProgramCard from "../../../components/Program/ProgramCard";
+import ComProgramCard from "../../../components/Card/ComProgramCard";
 
 function Program() {
     const {isLogin} = useAuth();
@@ -37,7 +37,7 @@ function Program() {
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>
-                            <ProgramCard
+                            <ComProgramCard
                                 program={program}
                                 loadPrograms={loadPrograms}
                             />

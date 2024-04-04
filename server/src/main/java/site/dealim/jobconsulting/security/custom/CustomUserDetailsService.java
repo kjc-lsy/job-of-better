@@ -7,18 +7,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.Member;
-import site.dealim.jobconsulting.mapper.MemberMapper;
+import site.dealim.jobconsulting.mapper.AuthMapper;
 
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private MemberMapper memberMapper;
+    private AuthMapper authMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
         log.info("로그인 시도 - loadUserByUsername : " + username);
-        Member member = memberMapper.login(username);
+        Member member = authMapper.login(username);
 
         if (member == null) {
             log.info("로그인 시도 - 사용자 없음");

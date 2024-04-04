@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
-import site.dealim.jobconsulting.mapper.MemberMapper;
+import site.dealim.jobconsulting.mapper.AuthMapper;
 
 @Slf4j
 @Service
@@ -22,7 +22,7 @@ public class AuthServiceImpl {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private MemberMapper memberMapper;
+    private AuthMapper authMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -39,14 +39,14 @@ public class AuthServiceImpl {
         member.setPassword(encodedPwd);
 
         //회원 등록
-        Long result = memberMapper.insertMember(member);
+        Long result = authMapper.insertMember(member);
 
         //권한 등록
         if (result > 0) {
             MemberRole memberRole = new MemberRole();
             memberRole.setUsername(member.getUsername());
             memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
-            result = memberMapper.insertMemberRole(memberRole);
+            result = authMapper.insertMemberRole(memberRole);
         }
 
         return result;
@@ -58,7 +58,7 @@ public class AuthServiceImpl {
         String encondedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encondedPwd);
 
-        return memberMapper.updateMember(member);
+        return authMapper.updateMember(member);
     }
 
     /**
@@ -66,7 +66,7 @@ public class AuthServiceImpl {
      */
     
     public int delete(String username) {
-        return memberMapper.deleteMember(username);
+        return authMapper.deleteMember(username);
     }
 
     /**
@@ -74,7 +74,7 @@ public class AuthServiceImpl {
      */
     
     public Member select(long idx) {
-        return memberMapper.selectMember(idx);
+        return authMapper.selectMember(idx);
     }
 
     
@@ -103,7 +103,7 @@ public class AuthServiceImpl {
     }
 
     public boolean checkDuplicateUsername(String username) {
-        return memberMapper.checkDuplicateUsername(username) > 0;
+        return authMapper.checkDuplicateUsername(username) > 0;
     }
 
 
@@ -116,7 +116,7 @@ public class AuthServiceImpl {
         map.put("comLicenseNum", company.getComLicenseNum());
         map.put("comAddress", company.getComAddress());
         map.put("comZipcode", company.getComZipcode());*/
-        memberMapper.companyJoin(company);
+        authMapper.companyJoin(company);
     }
 
     public Long MemberInsert(Member member) {
@@ -125,10 +125,10 @@ public class AuthServiceImpl {
         String encodedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encodedPwd);
 
-        return memberMapper.insertMember(member);
+        return authMapper.insertMember(member);
     }
 
     public boolean checkDuplicateBno(String comLicenseNum) {
-        return memberMapper.checkDuplicateBno(comLicenseNum) > 0;
+        return authMapper.checkDuplicateBno(comLicenseNum) > 0;
     }
 }

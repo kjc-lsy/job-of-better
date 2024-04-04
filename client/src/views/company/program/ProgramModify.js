@@ -5,8 +5,8 @@ import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
-import ProgDateRangePicker from "../../../components/Program/ProgDateRangePicker";
-import TimeRange30Picker from "../../../components/Program/TimeRange30Picker";
+import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker";
+import TimeRange30Picker from "../../../components/Picker/TimeRange30Picker";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
