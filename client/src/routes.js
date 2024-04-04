@@ -95,14 +95,15 @@ var routes = [
     component: <UserProfile />,
     layout: "/company",
   },
-  {
+  /*{
     path: "/home",
     name: "Home",
     cate: "",
     icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
     layout: "/user",
-  },
+  },*/
+
   {
     path: "/choice-program",
     name: "교육 프로그램 선택",
@@ -117,6 +118,22 @@ var routes = [
     cate: "",
     icon: "tim-icons icon-components",
     component: <UserProgram />,
+    layout: "/user",
+  },
+  {
+    path: "/user-profile",
+    name: "my Home",
+    cate: "mypg",
+    icon: "tim-icons icon-single-02",
+    component: <UserProfile />,
+    layout: "/user",
+  },
+  {
+    path: "/user-modify",
+    name: "내 정보 수정",
+    cate: "mypg",
+    icon: "tim-icons icon-single-02",
+    component: <UserModify />,
     layout: "/user",
   },
   {
@@ -142,22 +159,7 @@ var routes = [
     component: <Icons />,
     layout: "/user",
   },
-  {
-    path: "/user-profile",
-    name: "마이페이지",
-    cate: "mypg",
-    icon: "tim-icons icon-single-02",
-    component: <UserProfile />,
-    layout: "/user",
-  },
-  {
-    path: "/user-modify",
-    name: "내 정보 수정",
-    cate: "mypg",
-    icon: "tim-icons icon-single-02",
-    component: <UserModify />,
-    layout: "/user",
-  },
+
 ];
 
 export default routes;
