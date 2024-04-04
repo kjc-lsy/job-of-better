@@ -8,7 +8,7 @@ export const themes = {
     light: "white-content",
 };
 export const darkValue = {
-    fontColor: "rgba(255,255,255,0.8)",
+    fontColor: "rgba(255,255,255,0.9)",
     labelColor: "rgba(255,255,255,0.6)",
     backTitleColor: "rgba(245, 246, 250, 0.1411764)",
     backColor: "#1e1e2f",

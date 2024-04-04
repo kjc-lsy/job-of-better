@@ -6,7 +6,7 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 
 const CoverLetter = () => {
     const {isLogin} = useAuth();
-
+    const [mclTitle, setMclTitle] = useState("");
     let [inputValue, setInputValue] = useState([{
         num: 1,
         id: 0,
@@ -15,7 +15,7 @@ const CoverLetter = () => {
         question: "",
         answer: "",
         type: "",
-        answerValid: false
+        answerValid: false,
     }]);
 
     // 자소서 항목 들고오기
@@ -69,6 +69,14 @@ const CoverLetter = () => {
         });
     }, [inputValue]);
 
+    // 제목 변경 핸들러
+    const handleMclTitleChange = (e) => {
+        const inputValue = e.target.value; // 입력된 값
+        if (inputValue.length <= 100) { // 최대 길이를 초과하지 않는지 확인
+            setMclTitle(inputValue); // 상태를 업데이트합니다.
+        }
+    };
+
     const save = (e, type) => {
         e.preventDefault();
         if (inputValue[0].answer === "") {
@@ -113,6 +121,23 @@ const CoverLetter = () => {
                 </CardHeader>
                 <CardBody>
                     <Form role="form" name="" aria-label="coverletter save">
+                        <FormGroup className="coverLetterTitle">
+                            <div className="coverletter_user">
+                                <div>제목</div>
+                                <div className="cl_length">
+                                    <span>{mclTitle.length}</span>자
+                                </div>
+                            </div>
+                            <Input
+                                type="text"
+                                value={mclTitle}
+                                name="mclTitle"
+                                id="mclTitle"
+                                maxLength="50"
+                                placeholder="제목을 입력해주세요. (100자이내)"
+                                onChange={handleMclTitleChange}
+                            />
+                        </FormGroup>
                         {inputValue.map((value, index) => {
                             return (
                                 <Row key={value.num}>
