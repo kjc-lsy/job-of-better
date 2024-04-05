@@ -23,6 +23,7 @@ public class Member {
     private String address;
     private String profileImg;
     private Long comIdx;
+    private Long pgIdx;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;

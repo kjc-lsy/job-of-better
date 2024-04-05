@@ -41,4 +41,5 @@ public interface MemberMapper {
 
     // 불합격자 회원 수 조회
     Integer getRejectedCntByPgIdx(Long pgIdx);
+
 }

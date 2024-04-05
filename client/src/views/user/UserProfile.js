@@ -16,6 +16,8 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 
 function UserProfile() {
 
+    const navigate = useNavigate();
+
     const imgRef = useRef();
     const {isLogin} = useAuth();
 
@@ -69,7 +71,9 @@ function UserProfile() {
     };
     useEffect(() => {
         userInfo();
+        pgInfo();
     }, [isLogin]);
+    //사용자 정보 불러오기
     const userInfo = () => {
         user.userProfileInfo()
             .then((response) => {
@@ -83,6 +87,31 @@ function UserProfile() {
                 console.log(error.response.data);
             });
     }
+    
+    //프로그램 정보 불러오기
+    const pgInfo = () => {
+        user.pgInfo()
+            .then((response) => {
+                setInputValue({
+                    ...inputValue,
+                    pgTitle : response.data.pgTitle,
+                    pgComName : response.data.pgComName,
+                    pgComTel : response.data.pgComTel,
+                    pgProgStartDate : response.data.pgProgStartDate,
+                    pgProgEndDate : response.data.pgProgEndDate,
+                    pgEduStartDate : response.data.pgEduStartDate,
+                    pgEduEndDate : response.data.pgEduEndDate,
+                    pgRegValStartDate : response.data.pgRegValStartDate,
+                    pgRegValEndDate : response.data.pgRegValEndDate,
+                    pgInterviewValStartDate : response.data.pgInterviewValStartDate,
+                    pgInterviewValEndDate : response.data.pgInterviewValEndDate
+                });
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
+    }
+    
 
 
     const save =() => {
@@ -96,7 +125,7 @@ function UserProfile() {
             });
 
     }
-    const navigate = useNavigate();
+
 
     return (
         <div className="content">
@@ -116,8 +145,7 @@ function UserProfile() {
                                         e.preventDefault();
                                         changeProfileImg(e); // changeProfileImg 함수 호출 시 이벤트 객체 전달
                                     }}>
-                                        <img
-                                            alt="profile image"
+                                        <img alt="profile image"
                                             ref={imgRef}
                                             name="profileImg"
                                             className="avatar"
@@ -248,7 +276,7 @@ function UserProfile() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><b>AI(인공지능)&빅데이터응용 SW개발자 양성과정</b></td>
+                                    <td><b>{inputValue.pgTitle}</b></td>
                                     <td>(주) 안녕하세요</td>
                                     <td>010-1234-5678</td>
                                     {/*<td className="text-center">24.04.15 14:30</td>
