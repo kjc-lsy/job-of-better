@@ -1255,6 +1255,9 @@ td {
 /********************************************* white content *********************************************/
 
 .white-content {
+  .table > tbody > tr > td {
+    color: $font-color !important
+  }
   /*.main-panel {
     background: #f2f5fd;
   }*/

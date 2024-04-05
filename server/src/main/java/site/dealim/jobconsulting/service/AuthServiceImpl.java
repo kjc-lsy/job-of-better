@@ -17,6 +17,9 @@ import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Service
 public class AuthServiceImpl {
@@ -124,22 +127,25 @@ public class AuthServiceImpl {
     }
 
     public Long MemberInsert(Member member) {
+        log.info("회원가입 서비스 시작");
         // 비밀번호 암호화
         String memberPwd = member.getPassword();
         String encodedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encodedPwd);
 
+        //회원 등록
         Long result = memberMapper.insertMember(member);
 
         if(result > 0) {
+            log.info("회원가입 권한(ROLE_USER) 등록 시작");
             MemberRole memberRole = new MemberRole();
             memberRole.setUsername(member.getUsername());
             memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
-            memberMapper.insertMemberRole(memberRole);
 
+            log.info("회원가입 권한(ROLE_COMPANY) 등록 시작");
             memberRole.setUsername(member.getUsername());
             memberRole.setRoleName("ROLE_COMPANY"); // 기본 권한 : 사용자 권한 (ROLE_COMPANY)
-            memberMapper.insertMemberRole(memberRole);
+            result = memberMapper.insertMemberRole(memberRole);
         }
 
         return result;
@@ -147,5 +153,12 @@ public class AuthServiceImpl {
 
     public boolean checkDuplicateBno(String comLicenseNum) {
         return companyMapper.checkDuplicateBno(comLicenseNum) > 0;
+    }
+
+    public void addCompanyIdx(Long comIdx, long idx) {
+        Map map = new HashMap();
+        map.put("comIdx", comIdx);
+        map.put("idx", idx);
+        companyMapper.addCompanyIdx(map);
     }
 }
