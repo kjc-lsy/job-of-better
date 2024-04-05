@@ -1,6 +1,10 @@
 package site.dealim.jobconsulting.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,7 +19,6 @@ public class Member {
     private String username;
     private String password;
     private String name;
-    private List<MemberRole> roleList = new ArrayList<>();
     private String email;
     private LocalDate birthDate;
     private String gender;
@@ -23,6 +26,7 @@ public class Member {
     private String address;
     private String profileImg;
     private Long comIdx;
+    private String regStatus;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;
@@ -34,4 +38,5 @@ public class Member {
     private LocalDateTime modifiedDate = LocalDateTime.now();
     private LocalDateTime withdrawnDate;
     private String isWithdrawn = "N";
+    private List<MemberRole> roleList = new ArrayList<>();
 }

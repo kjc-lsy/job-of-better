@@ -94,4 +94,48 @@ public class ComProgramController {
         return new ResponseEntity<>(comProgramService.getAllPrograms(), HttpStatus.OK);
     }
 
+    @GetMapping("/get-all-mem-num")
+    public ResponseEntity<?> getAllMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 전체 회원 수 가져오기...");
+        try {
+            return new ResponseEntity<>(comProgramService.getTotalCntByPgIdx(pgIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 전체 회원 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-approved-mem-num")
+    public ResponseEntity<?> getApprovedMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 승인된 회원 수 가져오기...");
+        try {
+            return new ResponseEntity<>(comProgramService.getApprovedCntByPgIdx(pgIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 승인된 회원 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-pending-mem-num")
+    public ResponseEntity<?> getPendingMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 대기 회원 수 가져오기...");
+        try {
+            return new ResponseEntity<>(comProgramService.getPendingCntByPgIdx(pgIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 대기 회원 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-rejected-mem-num")
+    public ResponseEntity<?> getRejectedMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 불합격자 회원 수 가져오기...");
+        try {
+            return new ResponseEntity<>(comProgramService.getRejectedCntByPgIdx(pgIdx), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("프로그램 불합격자 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

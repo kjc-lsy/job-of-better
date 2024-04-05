@@ -16,6 +16,8 @@
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
         <result property="comIdx" column="com_idx"/>
+        <result property="pgIdx" column="pg_idx"/>
+        <result property="regStatus" column="reg_status"/>
         <result property="resumeFile" column="resume_file"/>
         <result property="desiredInterviewDate" column="desired_interview_date"/>
         <result property="assignedInterviewDate" column="assigned_interview_date"/>
@@ -71,6 +73,8 @@
              , m.gender
              , m.phone
              , m.com_idx
+             , m.pg_idx
+             , m.reg_status
              , m.resume_file
              , m.desired_interview_date
              , m.assigned_interview_date
@@ -149,32 +153,24 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updateByPgIdx" parameterType="Long">
-
+    <update id="updateRegStatusByPgIdx" parameterType="Long" >
+        
     </update>
 
-    <!-- 프로그램 별 승인된 멤버 수 -->
-    <select id="getApprovedCntByPgIdx" resultType="Integer" parameterType="Long">
+    <!-- 총 신청자 수 -->
+    <select id="getRegCntByPgIdx" resultType="Integer" parameterType="Long">
         SELECT COUNT(*)
         FROM member m
-                 LEFT OUTER JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.pg_reg_status = 'Aprroved' and m.pg_idx = #{param}
+        JOIN program p ON m.pg_idx = p.pg_idx
+        WHERE m.pg_idx = #{param}
     </select>
 
-    <!-- 프로그램 별 미확인 멤버 수 -->
-    <select id="getPendingCntByPgIdx" resultType="Integer" parameterType="Long">
+    <!-- 프로그램 신청자 상태별 멤버 수 -->
+    <select id="getNumByPgIdx" resultType="Integer" parameterType="Map">
         SELECT COUNT(*)
         FROM member m
-                 LEFT OUTER JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.pg_reg_status = 'Pending' and m.pg_idx = #{param}
-    </select>
-
-    <!-- 프로그램 별 불합격자 멤버 수 -->
-    <select id="getRejectedCntByPgIdx" resultType="Integer" parameterType="Long">
-        SELECT COUNT(*)
-        FROM member m
-                 LEFT OUTER JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.pg_reg_status = 'Rejected' and m.pg_idx = #{param}
+        JOIN program p ON m.pg_idx = p.pg_idx
+        WHERE m.pg_reg_status = #{regStatus} and m.pg_idx = #{pgIdx}
     </select>
 
 </mapper>

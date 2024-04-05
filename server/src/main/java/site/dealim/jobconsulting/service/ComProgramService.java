@@ -39,5 +39,12 @@ public class ComProgramService {
 
     public List<Program> getAllPrograms() { return programMapper.selectAllPrograms();}
 
-    public Integer getApprovedCntByPgIdx(Long pgIdx) { return memberMapper.getApprovedCntByPgIdx(pgIdx);}
+    public Integer getApprovedCntByPgIdx(Long pgIdx) { return memberMapper.getNumByPgIdxAndRegStatus(pgIdx, "Approved");}
+
+    public Integer getRejectedCntByPgIdx(Long pgIdx) { return memberMapper.getNumByPgIdxAndRegStatus(pgIdx, "Rejected");}
+
+    public Integer getPendingCntByPgIdx(Long pgIdx) { return memberMapper.getNumByPgIdxAndRegStatus(pgIdx, "Pending");}
+
+    public Integer getTotalCntByPgIdx(Long pgIdx) { return memberMapper.getRegCntByPgIdx(pgIdx);}
+
 }

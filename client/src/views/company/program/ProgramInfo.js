@@ -7,6 +7,7 @@ import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
+import TotalRegNumber from "../../../components/Infos/TotalRegNumber";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -63,7 +64,7 @@ const ProgramInfo = () => {
                                             </Col>
                                             <Col>
                                                 <label>총 신청자</label>
-                                                <div className="ppl-num">9명</div>
+                                                <TotalRegNumber pgIdx={pgIdx}/>
                                             </Col>
                                         </Row>
                                     </Col>

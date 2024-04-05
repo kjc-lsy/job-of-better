@@ -33,12 +33,10 @@ public interface MemberMapper {
     // 회원 pgIdx 수정
     int updatePgIdx(@Param("pgIdx") Long pgIdx, @Param("memIdx") Long memIdx);
 
-    // 승인된 회원 수 조회
-    Integer getApprovedCntByPgIdx(Long pgIdx);
+    // 프로그램 신청 회원 수 조회
+    Integer getRegCntByPgIdx(Long pgIdx);
 
-    // 미승인 회원 수 조회
-    Integer getPendingCntByPgIdx(Long pgIdx);
+    // 상태에 따른 회원 수 조회
+    Integer getNumByPgIdxAndRegStatus(@Param("pgIdx")Long pgIdx, @Param("reg_status")String regStatus);
 
-    // 불합격자 회원 수 조회
-    Integer getRejectedCntByPgIdx(Long pgIdx);
 }

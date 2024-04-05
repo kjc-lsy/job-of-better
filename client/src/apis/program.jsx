@@ -16,8 +16,10 @@ export const setPgIdxOnUser = (pgIdx) => api.put('/api/user/program/set-pg-idx?p
 
 export const getComNameByComIdx = (comIdx) => api.get(`/api/user/program/get-com-name?comIdx=${comIdx}`)
 
-export const getApprovedMemNum = (pgIdx) => api.get(`/api/user/program/get-approved-mem-num?pgIdx=${pgIdx}`)
+export const getTotalMemNum = (pgIdx) => api.get(`/api/com/program/get-all-mem-num?pgIdx=${pgIdx}`)
 
-export const getPendingMemNum = (pgIdx) => api.get(`/api/user/program/get-pending-mem-num?pgIdx=${pgIdx}`)
+export const getApprovedMemNum = (pgIdx) => api.get(`/api/com/program/get-approved-mem-num?pgIdx=${pgIdx}`)
 
-export const getRejectedMemNum = (pgIdx) => api.get(`/api/user/program/get-rejected-mem-num?pgIdx=${pgIdx}`)
+export const getPendingMemNum = (pgIdx) => api.get(`/api/com/program/get-pending-mem-num?pgIdx=${pgIdx}`)
+
+export const getRejectedMemNum = (pgIdx) => api.get(`/api/com/program/get-rejected-mem-num?pgIdx=${pgIdx}`)
