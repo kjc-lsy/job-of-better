@@ -28,12 +28,12 @@ function Footer() {
         <Nav>
           <NavItem>
             <NavLink href="/">
-              job-consulting
+              job-of-better
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
-                href="https://github.com/dealim/job-consulting"
+                href="https://github.com/dealim/job-of-better"
                 target="_blank"
             >
               Github

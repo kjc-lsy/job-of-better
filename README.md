@@ -1,4 +1,4 @@
-# job-consulting
+# job-of-better
 
 취업 컨설팅을 위한 웹 사이트로, 교육생과 프로그램 관리 및 학생 모집 기능을 제공합니다.
 
@@ -42,8 +42,8 @@
 
    Git을 사용하여 이 프로젝트를 로컬 시스템으로 클론합니다.
     ```bash
-    git clone https://github.com/dealim/job-consulting
-    cd job-consulting
+    git clone https://github.com/dealim/job-of-better
+    cd job-of-better
     ```
 
 1. **환경변수 설정**
