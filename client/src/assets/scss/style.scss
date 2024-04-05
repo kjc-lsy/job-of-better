@@ -663,16 +663,21 @@ $base-width: 10%;*/
   small {
     padding-left: 5px;
   }
-
-
-
 }
+
+td {
+  color: $font-color !important
+}
+
 .user-profile-wrapper {
+  .rs-input-group.rs-input-group-inside .rs-input {
+    font-size:16px
+  }
   .col-md-8 {
     .tablesorter {
       td {
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 300;
         color: $font-color !important
       }
     }

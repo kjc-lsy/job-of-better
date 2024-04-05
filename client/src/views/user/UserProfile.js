@@ -1,13 +1,27 @@
-import React, {useEffect, useRef} from "react";
-import * as company from '../../apis/company';
+import React, {useEffect, useRef, useState} from "react";
+import * as user from '../../apis/user';
 
 // reactstrap components
-import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
-import {useNavigate} from "react-router-dom";
+import {
+    Button,
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    CardText,
+    FormGroup,
+    Form,
+    Input,
+    Row,
+    Col, NavLink, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, CardTitle, Table, Nav,
+} from "reactstrap";
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown,faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import KorDatePicker from "../../components/KorDatePicker";
-import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
+import ProgDateRangePicker from "../../components/Program/ProgDateRangePicker";
+import TimeRange30Picker from "../../components/Program/TimeRange30Picker";
+import {allowedRange, combine} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 import {useAuth} from "../../contexts/AuthContextProvider";
@@ -70,7 +84,7 @@ function UserProfile() {
         userInfo();
     }, [isLogin]);
     const userInfo = () => {
-        company.userProfileInfo()
+        user.userProfileInfo()
             .then((response) => {
                 setInputValue({...inputValue,
                     name : response.data.name,
@@ -84,7 +98,7 @@ function UserProfile() {
 
 
     const save =() => {
-        company.interviewTimeSave(inputValue)
+        user.interviewTimeSave(inputValue)
             .then((response) => {
                 console.log(response.data);
                 alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
@@ -115,7 +129,7 @@ function UserProfile() {
                                         changeProfileImg(e); // changeProfileImg 함수 호출 시 이벤트 객체 전달
                                     }}>
                                         <img
-                                            alt="..."
+                                            alt="profile image"
                                             ref={imgRef}
                                             name="profileImg"
                                             className="avatar"
@@ -382,6 +396,7 @@ function UserProfile() {
                         </CardBody>
                     </Card>*/}
                 </Col>
+
             </Row>
         </div>
     );

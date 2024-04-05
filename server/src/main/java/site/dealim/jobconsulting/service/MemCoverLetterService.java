@@ -4,25 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
-import site.dealim.jobconsulting.mapper.UserMapper;
+import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
+import site.dealim.jobconsulting.mapper.MemCoverLetterMapper;
 
 import java.util.List;
 
 @Service
-public class UserService {
+public class MemCoverLetterService {
     @Autowired
-    private UserMapper userMapper;
+    private MemCoverLetterMapper userMapper;
+    @Autowired
+    private ComCoverLetterMapper comCoverLetterMapper;
 
     public List<ComCoverLetter> userCoverLetterInfo(Long comIdx) {
-        return userMapper.userCoverLetterInfo(comIdx);
+        return comCoverLetterMapper.userCoverLetterInfo(comIdx);
     }
-
 
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx, Long comIdx) {
         userMapper.userCoverLetterSave(values, idx, comIdx);
     }
 
-    public int updatePgIdx(Long pgIdx, Long memIdx) {
-        return userMapper.updatePgIdx(pgIdx, memIdx);
-    }
 }

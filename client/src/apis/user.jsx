@@ -13,4 +13,15 @@ export const userCoverLetterSave = (value) => {
 };
 
 
+export const interviewTimeSave = (value) => {
+    return api.post('/api/user/interview-time-save', value.map(value => {
+        return {
+            desiredInterviewTime: value.interviewDate + " " + value.interviewTime
+        }
+    }))
+}
 
+
+export const userProfileInfo = () => {
+    return api.get('/api/user/user-profile-info')
+}

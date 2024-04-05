@@ -10,7 +10,7 @@ import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.UserService;
+import site.dealim.jobconsulting.service.MemCoverLetterService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +19,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 @Slf4j
-public class UserController {
+public class MemCoverLetterController {
     @Autowired
-    UserService userService;
+    MemCoverLetterService memCoverLetterService;
 
     @PostMapping("/user-cover-letter-save")
     public ResponseEntity<Map<String, String>> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<MemberCoverLetter> values) {
         Member user = customMember.getMember();
-        userService.userCoverLetterSave(values, user.getIdx(), user.getComIdx());
+        memCoverLetterService.userCoverLetterSave(values, user.getIdx(), user.getComIdx());
 
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("type", values.get(0).getMclIsConfirm()); // 클라이언트에서 받은 mclIsConfirm 값으로 설정
@@ -35,24 +35,14 @@ public class UserController {
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }
 
-    @GetMapping("user-cover-letter-info")
+    @GetMapping("/user-cover-letter-info")
     public List<ComCoverLetter> userCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
-        return userService.userCoverLetterInfo(user.getComIdx());
+        List<ComCoverLetter> mcl = memCoverLetterService.userCoverLetterInfo(user.getComIdx());
+        System.out.println("mcl = " + mcl);
+        return memCoverLetterService.userCoverLetterInfo(user.getComIdx());
     }
 
-    @PutMapping("/set-pg-idx")
-    public ResponseEntity<?> updatePgIdx(@AuthenticationPrincipal CustomMember customMember, @RequestParam("pgIdx") Long pgIdx) {
-        log.info("프로그램 신청 시작 : " + pgIdx);
-        int result = userService.updatePgIdx(pgIdx, customMember.getMember().getIdx());
-
-        if (result == 1) {
-            log.info("프로그램 신청 성공");
-            return new ResponseEntity<>("프로그램 신청 성공", HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>("프로그램 신청 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 
 }

@@ -8,10 +8,4 @@
         SELECT * FROM company_cover_letter
     </select>
 
-    <update id="updatePgIdx" parameterType="map">
-        UPDATE member
-        SET pg_idx = #{pgIdx}
-        WHERE idx = #{memIdx}
-    </update>
-
 </mapper>

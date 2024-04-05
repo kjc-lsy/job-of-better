@@ -1,7 +1,7 @@
 package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import site.dealim.jobconsulting.domain.Company;
+import org.apache.ibatis.annotations.Param;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
@@ -28,9 +28,9 @@ public interface MemberMapper {
 
     int checkDuplicateUsername(String username);
 
-    void companyJoin(Company company);
+    Member userProfileInfo(long idx);
 
-    int checkDuplicateBno(String comLicenseNum);
-
-    Integer getApprovedCntByPgIdx(Long pgIdx);
+    // 회원 프로그램 등록
+    int updatePgIdx(@Param("pgIdx") Long pgIdx, @Param("memIdx") Long memIdx);
+    int getApprovedCntByPgIdx(Long pgIdx);
 }

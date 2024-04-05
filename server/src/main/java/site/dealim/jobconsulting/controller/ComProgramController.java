@@ -14,7 +14,7 @@ import site.dealim.jobconsulting.service.ComProgramService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/program")
+@RequestMapping("/api/com/program")
 @Slf4j
 public class ComProgramController {
     @Autowired
