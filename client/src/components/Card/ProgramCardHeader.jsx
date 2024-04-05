@@ -1,11 +1,11 @@
 import React from 'react';
 import {CardHeader, CardTitle, Col, Row} from "reactstrap";
-import {getComNameByComIdx} from "../../apis/company";
+import {getComNameByComIdx} from "../../apis/program";
 
 const ProgramCardHeader = ({program}) => {
     const [comName, setComName] = React.useState('');
 
-    getComNameByComIdx().then((response) => {
+    getComNameByComIdx(program.pgComIdx).then((response) => {
         setComName(response.data);
     })
 

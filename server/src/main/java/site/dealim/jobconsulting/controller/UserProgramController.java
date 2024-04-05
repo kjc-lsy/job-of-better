@@ -32,8 +32,7 @@ public class UserProgramController {
 
     @Secured("ROLE_USER")
     @GetMapping("/get-com-name")
-    public ResponseEntity<?> getComNameByComIdx(@AuthenticationPrincipal CustomMember customMember) {
-        Long comIdx = customMember.getMember().getComIdx();
+    public ResponseEntity<?> getComNameByComIdx(@RequestParam("comIdx") Long comIdx) {
         return new ResponseEntity<>(userProgramService.getComNameByComIdx(comIdx), HttpStatus.OK);
     }
 

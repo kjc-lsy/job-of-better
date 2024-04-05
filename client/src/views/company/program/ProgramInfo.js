@@ -62,7 +62,7 @@ const ProgramInfo = () => {
                                                     </span>
                                             </Col>
                                             <Col>
-                                                <label>총 참여자 수</label>
+                                                <label>총 신청자</label>
                                                 <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
@@ -75,7 +75,7 @@ const ProgramInfo = () => {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <label>면접 참여 수</label>
+                                                <label>참여자</label>
                                                 <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
@@ -90,7 +90,7 @@ const ProgramInfo = () => {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <label>미확인 수</label>
+                                                <label>미확인 자</label>
                                                 <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>
@@ -103,7 +103,7 @@ const ProgramInfo = () => {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <label>불합격자 수</label>
+                                                <label>불합격자</label>
                                                 <div className="ppl-num">9명</div>
                                             </Col>
                                         </Row>

@@ -18,7 +18,7 @@
     <!-- 회사 이름 조회-->
     <select id="getComNameByComIdx" parameterType="Long" resultType="String">
         SELECT com_name
-        FROM compnay
+        FROM company
         WHERE com_idx = #{param}
     </select>
 </mapper>

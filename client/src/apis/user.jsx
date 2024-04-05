@@ -1,6 +1,5 @@
 import api from "./api";
 
-export const setPgIdxOnUser = (pgIdx) => api.put('/api/user/set-pg-idx?pgIdx='+pgIdx)
 
 export const userCoverLetterSave = (value) => {
     return api.post('/api/user/user-cover-letter-save', value.map(value => {
@@ -12,7 +11,6 @@ export const userCoverLetterSave = (value) => {
     }))
 };
 
-
 export const interviewTimeSave = (value) => {
     return api.post('/api/user/interview-time-save', value.map(value => {
         return {
@@ -21,7 +19,7 @@ export const interviewTimeSave = (value) => {
     }))
 }
 
-
 export const userProfileInfo = () => {
     return api.get('/api/user/user-profile-info')
 }
+

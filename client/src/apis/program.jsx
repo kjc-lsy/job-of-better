@@ -1,13 +1,23 @@
 import api from "./api";
 
-export const saveProgram = (inputValues) => api.post('/api/program/insert-program', inputValues)
+export const saveProgram = (inputValues) => api.post('/api/com/program/insert-program', inputValues)
 
-export const getPrograms = () => api.post('/api/program/get-programs')
+export const getPrograms = () => api.post('/api/com/program/get-programs')
 
-export const deleteProgram = (pgIdx) => api.delete('/api/program/delete-program/'+pgIdx)
+export const deleteProgram = (pgIdx) => api.delete('/api/com/program/delete-program/'+pgIdx)
 
-export const getProgram = (pgIdx) => api.get(`/api/program/get-program?pgIdx=${pgIdx}`)
+export const getProgram = (pgIdx) => api.get(`/api/com/program/get-program?pgIdx=${pgIdx}`)
 
-export const updateProgram = (program) => api.put('/api/program/update-program', program)
+export const updateProgram = (program) => api.put('/api/com/program/update-program', program)
 
-export const getAllPrograms = () => api.post('/api/program/get-all-programs')
+export const getAllPrograms = () => api.post('/api/com/program/get-all-programs')
+
+export const setPgIdxOnUser = (pgIdx) => api.put('/api/user/program/set-pg-idx?pgIdx='+pgIdx)
+
+export const getComNameByComIdx = (comIdx) => api.get(`/api/user/program/get-com-name?comIdx=${comIdx}`)
+
+export const getApprovedMemNum = (pgIdx) => api.get(`/api/user/program/get-approved-mem-num?pgIdx=${pgIdx}`)
+
+export const getPendingMemNum = (pgIdx) => api.get(`/api/user/program/get-pending-mem-num?pgIdx=${pgIdx}`)
+
+export const getRejectedMemNum = (pgIdx) => api.get(`/api/user/program/get-rejected-mem-num?pgIdx=${pgIdx}`)

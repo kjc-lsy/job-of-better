@@ -38,7 +38,7 @@ const ComProgramCard = ({program, loadPrograms}) => {
                         <div>
                             <FontAwesomeIcon icon={faUsers}/>
                         </div>
-                        <label>총 신청자 수</label>
+                        <label>총 신청자</label>
                         <div className="num-info">9명</div>
                     </Col>
                     <Col md='3'>
@@ -52,7 +52,7 @@ const ComProgramCard = ({program, loadPrograms}) => {
                         <div>
                             <FontAwesomeIcon icon={faUserClock}/>
                         </div>
-                        <label>미확인 수</label>
+                        <label>미확인 자</label>
                         <div className="num-info">4명</div>
                     </Col>
                     {/*<Col md='3'>*/}

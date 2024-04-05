@@ -1,31 +1,16 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import * as user from '../../apis/user';
 
 // reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    CardText,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col, NavLink, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, CardTitle, Table, Nav,
-} from "reactstrap";
-import {Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
+import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown,faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import KorDatePicker from "../../components/KorDatePicker";
-import ProgDateRangePicker from "../../components/Program/ProgDateRangePicker";
-import TimeRange30Picker from "../../components/Program/TimeRange30Picker";
-import {allowedRange, combine} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
+import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 import {useAuth} from "../../contexts/AuthContextProvider";
-
 
 function UserProfile() {
 

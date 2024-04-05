@@ -2,13 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
-import {getProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
-import {getComNameByComIdx} from "../../../apis/company";
-import {setPgIdxOnUser} from "../../../apis/user";
+import {getComNameByComIdx, getProgram, setPgIdxOnUser} from "../../../apis/program";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -22,15 +20,16 @@ const ProgramInfo = () => {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data
                 setProgram({...fetchedProgram})
+
+                getComNameByComIdx(fetchedProgram.pgComIdx).then((response) => {
+                    setComName(response.data);
+                })
             });
-            getComNameByComIdx().then((response) => {
-                setComName(response.data);
-            })
         }
     }, [isLogin]);
 
     const handleSubmitBtn = async (pgIdx) => {
-        if(window.confirm( program.pgTitle + ' 프로그램을 신청할까요?')){
+        if (window.confirm(program.pgTitle + ' 프로그램을 신청할까요?')) {
             await setPgIdxOnUser(pgIdx);
             navigate('/user/user-profile');
         }
@@ -82,7 +81,7 @@ const ProgramInfo = () => {
                                                 </span>
                                     </Col>
                                     <Col>
-                                        <label>면접 참여 수</label>
+                                        <label>참여자</label>
                                         <div className="ppl-num">9명</div>
                                     </Col>
                                 </Row>
@@ -97,7 +96,7 @@ const ProgramInfo = () => {
                                                 </span>
                                     </Col>
                                     <Col>
-                                        <label>미확인 수</label>
+                                        <label>미확인 자</label>
                                         <div className="ppl-num">9명</div>
                                     </Col>
                                 </Row>
@@ -110,7 +109,7 @@ const ProgramInfo = () => {
                                                 </span>
                                     </Col>
                                     <Col>
-                                        <label>불합격자 수</label>
+                                        <label>불합격자</label>
                                         <div className="ppl-num">9명</div>
                                     </Col>
                                 </Row>
