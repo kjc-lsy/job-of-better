@@ -1,15 +1,17 @@
 import React, {useEffect} from 'react';
 import {getApprovedMemNum} from "../../apis/program";
 
-const ApprovedNumber = ({program}) => {
+const ApprovedNumber = ({pgIdx}) => {
     const [number, setNumber] = React.useState(0);
 
     useEffect(() => {
-        setNumber(getApprovedMemNum(program.pgIdx))
+        getApprovedMemNum(pgIdx).then(res => {
+            setNumber(res.data)
+        });
     }, [])
 
     return (
-        <div className="ppl-num">number</div>
+        <div className="ppl-num">{`${number}명`}</div>
     );
 };
 

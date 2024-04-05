@@ -17,10 +17,10 @@ public class UserProgramController {
     @Autowired
     private UserProgramService userProgramService;
     @Secured("ROLE_USER")
-    @PutMapping("/set-pg-idx")
-    public ResponseEntity<?> updatePgIdx(@AuthenticationPrincipal CustomMember customMember, @RequestParam("pgIdx") Long pgIdx) {
+    @PutMapping("/register-program")
+    public ResponseEntity<?> registerProgram(@AuthenticationPrincipal CustomMember customMember, @RequestParam("pgIdx") Long pgIdx, @RequestParam("pgComIdx") Long comIdx) {
         log.info("프로그램 신청 시작 : " + pgIdx);
-        int result = userProgramService.updatePgIdx(pgIdx, customMember.getMember().getIdx());
+        int result = userProgramService.registerProgram(pgIdx, customMember.getMember().getIdx(), comIdx);
 
         if (result == 1) {
             log.info("프로그램 신청 성공");

@@ -12,7 +12,7 @@ export const updateProgram = (program) => api.put('/api/com/program/update-progr
 
 export const getAllPrograms = () => api.post('/api/com/program/get-all-programs')
 
-export const setPgIdxOnUser = (pgIdx) => api.put('/api/user/program/set-pg-idx?pgIdx='+pgIdx)
+export const registerProgram = (pgIdx, pgComIdx) => api.put(`/api/user/program/register-program?pgIdx=${pgIdx}&pgComIdx=${pgComIdx}`)
 
 export const getComNameByComIdx = (comIdx) => api.get(`/api/user/program/get-com-name?comIdx=${comIdx}`)
 

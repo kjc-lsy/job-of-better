@@ -8,6 +8,9 @@ import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
 import TotalRegNumber from "../../../components/Infos/TotalRegNumber";
+import ApprovedNumber from "../../../components/Infos/ApprovedNumber";
+import PendingNumber from "../../../components/Infos/PendingNumber";
+import RejectedNumber from "../../../components/Infos/RejectedNumber";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -19,7 +22,6 @@ const ProgramInfo = () => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data
-                console.log(fetchedProgram)
                 setProgram({...fetchedProgram})
             });
         }
@@ -77,7 +79,7 @@ const ProgramInfo = () => {
                                             </Col>
                                             <Col>
                                                 <label>참여자</label>
-                                                <div className="ppl-num">9명</div>
+                                                <ApprovedNumber pgIdx={pgIdx}/>
                                             </Col>
                                         </Row>
                                     </Col>
@@ -92,7 +94,7 @@ const ProgramInfo = () => {
                                             </Col>
                                             <Col>
                                                 <label>미확인 자</label>
-                                                <div className="ppl-num">9명</div>
+                                                <PendingNumber pgIdx={pgIdx}/>
                                             </Col>
                                         </Row>
                                     </Col>
@@ -105,7 +107,7 @@ const ProgramInfo = () => {
                                             </Col>
                                             <Col>
                                                 <label>불합격자</label>
-                                                <div className="ppl-num">9명</div>
+                                                <RejectedNumber pgIdx={pgIdx}/>
                                             </Col>
                                         </Row>
                                     </Col>

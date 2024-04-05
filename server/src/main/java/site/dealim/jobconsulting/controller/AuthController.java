@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.ComCoverLetterService;
 import site.dealim.jobconsulting.service.AuthServiceImpl;
+import site.dealim.jobconsulting.service.ComCoverLetterService;
 
 @Slf4j
 @RestController
@@ -121,7 +121,7 @@ public class AuthController {
             authServiceImpl.companyJoin(joinMember, memberCompanyDto.getCompany());
             log.info("기업 회원가입 성공! - SUCCESS");
             log.info("멤버 기업 idx값 추가");
-            authServiceImpl.addCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
+            authServiceImpl.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             res.sendError(404, "Error : "+e.getMessage());

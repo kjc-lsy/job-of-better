@@ -6,7 +6,7 @@ import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
-import {getComNameByComIdx, getProgram, setPgIdxOnUser} from "../../../apis/program";
+import {getComNameByComIdx, getProgram, registerProgram} from "../../../apis/program";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -28,9 +28,9 @@ const ProgramInfo = () => {
         }
     }, [isLogin]);
 
-    const handleSubmitBtn = async (pgIdx) => {
+    const handleSubmitBtn = async ({pgIdx, pgComIdx}) => {
         if (window.confirm(program.pgTitle + ' 프로그램을 신청할까요?')) {
-            await setPgIdxOnUser(pgIdx);
+            await registerProgram(pgIdx, pgComIdx);
             navigate('/user/user-profile');
         }
     }
@@ -45,7 +45,7 @@ const ProgramInfo = () => {
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
                     </div>
                     <Button onClick={() => {
-                        handleSubmitBtn(pgIdx)
+                        handleSubmitBtn(program)
                     }}>신청하기</Button>
                 </CardHeader>
                 <CardBody>

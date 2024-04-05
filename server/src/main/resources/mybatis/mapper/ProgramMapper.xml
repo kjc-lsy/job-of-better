@@ -110,7 +110,8 @@
     </select>
 
     <select id="pgInfo" parameterType="Long" resultType="site.dealim.jobconsulting.dto.ProgramCompanyDto">
-        SELECT * FROM program p LEFT JOIN Company c p.pg_com_idx = c.com_idx
+        SELECT * FROM program p
+        LEFT JOIN Company c p.pg_com_idx = c.com_idx
         WHERE p.pg_idx = #{param}
     </select>
 

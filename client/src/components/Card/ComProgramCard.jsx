@@ -6,6 +6,9 @@ import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import ProgramCardHeader from "./ProgramCardHeader";
+import TotalRegNumber from "../Infos/TotalRegNumber";
+import ApprovedNumber from "../Infos/ApprovedNumber";
+import PendingNumber from "../Infos/PendingNumber";
 
 const ComProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
@@ -39,21 +42,21 @@ const ComProgramCard = ({program, loadPrograms}) => {
                             <FontAwesomeIcon icon={faUsers}/>
                         </div>
                         <label>총 신청자</label>
-                        <div className="num-info">9명</div>
+                        <TotalRegNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
                         <div>
                             <FontAwesomeIcon icon={faUserCheck}/>
                         </div>
                         <label>참여자 수</label>
-                        <div className="num-info">6명</div>
+                        <ApprovedNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
                         <div>
                             <FontAwesomeIcon icon={faUserClock}/>
                         </div>
                         <label>미확인 자</label>
-                        <div className="num-info">4명</div>
+                        <PendingNumber pgIdx={program.pgIdx}/>
                     </Col>
                     {/*<Col md='3'>*/}
                     {/*    <div>*/}

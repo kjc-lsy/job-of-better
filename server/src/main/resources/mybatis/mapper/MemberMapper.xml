@@ -140,9 +140,9 @@
         SELECT count(*) FROM member WHERE username = #{username}
     </select>
 
-    <!-- 회원에 comidx 넣기 -->
-    <update id="addCompanyIdx">
-        UPDATE member SET com_idx = #{comIdx} WHERE idx = #{idx}
+    <!-- 회원에 comidx 수정 -->
+    <update id="updateCompanyIdx" parameterType="map">
+        UPDATE member SET com_idx = #{comIdx} WHERE idx = #{memIdx}
     </update>
 
     <!-- 회원 프로그램 등록 -->
@@ -153,8 +153,10 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updateRegStatusByPgIdx" parameterType="Long" >
-        
+    <update id="updateRegStatus" parameterType="Map" >
+        UPDATE member
+        SET reg_status = #{regStatus}
+        WHERE idx = ${memIdx}
     </update>
 
     <!-- 총 신청자 수 -->
@@ -166,11 +168,11 @@
     </select>
 
     <!-- 프로그램 신청자 상태별 멤버 수 -->
-    <select id="getNumByPgIdx" resultType="Integer" parameterType="Map">
+    <select id="getNumByPgIdxAndRegStatus" resultType="Integer" parameterType="Map">
         SELECT COUNT(*)
         FROM member m
         JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.pg_reg_status = #{regStatus} and m.pg_idx = #{pgIdx}
+        WHERE m.reg_status = #{regStatus} and m.pg_idx = #{pgIdx}
     </select>
 
 </mapper>

@@ -1,15 +1,17 @@
 import React, {useEffect} from 'react';
 import {getRejectedMemNum} from "../../apis/program";
 
-const RejectedNumber = ({program}) => {
+const RejectedNumber = ({pgIdx}) => {
     const [number, setNumber] = React.useState(0);
 
     useEffect(() => {
-        setNumber(getRejectedMemNum(program.pgIdx))
+        getRejectedMemNum(pgIdx).then(res => {
+            setNumber(res.data)
+        });
     }, [])
 
     return (
-        <div className="ppl-num">number</div>
+        <div className="ppl-num">{`${number}명`}</div>
     );
 };
 

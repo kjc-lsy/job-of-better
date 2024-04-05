@@ -32,7 +32,6 @@ const ProgramModify = () => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
                 const fetchedProgram = response.data;
-                console.log(fetchedProgram)
 
                 setTitle(fetchedProgram.pgTitle);
                 setContent(fetchedProgram.pgContent);
