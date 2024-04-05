@@ -1,8 +1,6 @@
 package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 
@@ -12,7 +10,7 @@ import java.util.List;
 public interface ProgramMapper {
     public int insertProgram(Program program);
     public List<Program> selectPgsByComIdx(Long comIdx);
-    public int deleteByPgIdx(Long pgIdx);
+    public int updateIsWithdrawn(Long pgIdx);
     public Program selectByPgIdx(Long pgIdx);
     public int updateProgram(Program program);
 

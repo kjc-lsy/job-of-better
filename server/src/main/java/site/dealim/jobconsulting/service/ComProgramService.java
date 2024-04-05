@@ -26,7 +26,7 @@ public class ComProgramService {
     }
 
     public int deleteByPgIdx(Long pgIdx) {
-        return programMapper.deleteByPgIdx(pgIdx);
+        return programMapper.updateIsWithdrawn(pgIdx);
     }
 
     public Program getProgramByPgIdx(Long pgIdx) {

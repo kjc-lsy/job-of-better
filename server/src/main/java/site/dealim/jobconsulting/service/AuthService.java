@@ -19,7 +19,7 @@ import site.dealim.jobconsulting.mapper.MemberMapper;
 
 @Slf4j
 @Service
-public class AuthServiceImpl {
+public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired

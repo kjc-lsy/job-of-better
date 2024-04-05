@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.AuthServiceImpl;
+import site.dealim.jobconsulting.service.AuthService;
 import site.dealim.jobconsulting.service.ComCoverLetterService;
 
 @Slf4j
@@ -21,7 +21,7 @@ import site.dealim.jobconsulting.service.ComCoverLetterService;
 public class AuthController {
 
     @Autowired
-    private AuthServiceImpl authServiceImpl;
+    private AuthService authService;
 
     @Autowired
     private ComCoverLetterService companyService;
@@ -60,7 +60,7 @@ public class AuthController {
     public ResponseEntity<?> join(@RequestBody Member member) throws Exception {
         log.info("회원가입 시작...");
 
-        authServiceImpl.insert(member);
+        authService.insert(member);
 
         log.info("회원가입 성공! - SUCCESS");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
@@ -78,7 +78,7 @@ public class AuthController {
     public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
         log.info("회원 정보 수정 시작...");
 
-        authServiceImpl.update(member);
+        authService.update(member);
 
         log.info("회원수정 성공! - SUCCESS");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
@@ -96,7 +96,7 @@ public class AuthController {
     public ResponseEntity<?> destroy(@PathVariable("username") String username) throws Exception {
         log.info("회원 삭제 시작...");
 
-        authServiceImpl.delete(username);
+        authService.delete(username);
 
         log.info("회원삭제 성공! - SUCCESS");
 
@@ -106,7 +106,7 @@ public class AuthController {
     @PostMapping("/check-duplicate-username")
     public ResponseEntity<?> checkDuplicateUsername(@RequestParam(value = "username") String username) {
         log.info("로그인 중복 유저 확인..."+username);
-        return new ResponseEntity<>(authServiceImpl.checkDuplicateUsername(username), HttpStatus.OK);
+        return new ResponseEntity<>(authService.checkDuplicateUsername(username), HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -114,14 +114,14 @@ public class AuthController {
     public ResponseEntity<?> companyJoin(@RequestBody MemberCompanyDto memberCompanyDto , HttpServletResponse res) throws Exception {
         try {
             log.info("멤버 회원가입 시작...");
-            authServiceImpl.MemberInsert(memberCompanyDto.getMember());
+            authService.MemberInsert(memberCompanyDto.getMember());
             Long joinMember = memberCompanyDto.getMember().getIdx();
             log.info("멤버 회원가입 성공! - SUCCESS / idx : "+memberCompanyDto.getMember().getIdx());
             log.info("기업 회원가입 시작...");
-            authServiceImpl.companyJoin(joinMember, memberCompanyDto.getCompany());
+            authService.companyJoin(joinMember, memberCompanyDto.getCompany());
             log.info("기업 회원가입 성공! - SUCCESS");
             log.info("멤버 기업 idx값 추가");
-            authServiceImpl.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
+            authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             res.sendError(404, "Error : "+e.getMessage());
@@ -133,6 +133,6 @@ public class AuthController {
     @PostMapping("/check-duplicate-bno")
     public ResponseEntity<?> checkDuplicateBno(@RequestParam(value = "comLicenseNum") String comLicenseNum) {
         log.info("사업자등록번호 중복 확인...");
-        return new ResponseEntity<>(authServiceImpl.checkDuplicateBno(comLicenseNum), HttpStatus.OK);
+        return new ResponseEntity<>(authService.checkDuplicateBno(comLicenseNum), HttpStatus.OK);
     }
 }

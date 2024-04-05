@@ -4,11 +4,10 @@
 
 <mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
 
-    <!-- program 조회 -->
     <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
-        WHERE pg_com_idx = #{param}
+        WHERE pg_com_idx = #{param} AND pg_is_withdrawn = 'N'
     </select>
 
     <insert id="insertProgram" parameterType="Program">
@@ -40,16 +39,16 @@
                 #{pgContent})
     </insert>
 
-    <delete id="deleteByPgIdx" parameterType="Long">
-        DELETE
-        FROM program
+    <update id="updateIsWithdrawn" parameterType="Long">
+        UPDATE program
+        SET pg_is_withdrawn = 'Y'
         WHERE pg_idx = #{param}
-    </delete>
+    </update>
 
     <select id="selectByPgIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
-        WHERE pg_idx = #{param}
+        WHERE pg_idx = #{param} and pg_is_withdrawn = 'N'
     </select>
 
     <update id="updateProgram" parameterType="Program">
@@ -104,9 +103,11 @@
     </update>
 
     <select id="selectAllPrograms" resultType="Program">
-        SELECT * FROM program
+        SELECT *
+        FROM program
         WHERE DATE(pg_prog_start_date) &lt;= DATE(NOW())
-          AND DATE(pg_prog_end_date) &gt;= DATE(NOW());
+          AND DATE(pg_prog_end_date) &gt;= DATE(NOW())
+          AND pg_is_withdrawn = 'N'
     </select>
 
     <select id="pgInfo" parameterType="Long" resultType="site.dealim.jobconsulting.dto.ProgramCompanyDto">
