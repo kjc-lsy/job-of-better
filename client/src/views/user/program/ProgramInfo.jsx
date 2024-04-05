@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
 import {getProgram} from "../../../apis/program";
@@ -15,6 +15,7 @@ const ProgramInfo = () => {
     const {isLogin} = useAuth();
     const [program, setProgram] = useState();
     const [comName, setComName] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isLogin) {
@@ -28,11 +29,11 @@ const ProgramInfo = () => {
         }
     }, [isLogin]);
 
-    const handleSubmitBtn = (pgIdx) => {
-        if(window.confirm('프로그램을 신청할까요?')){
-            setPgIdxOnUser(pgIdx);
+    const handleSubmitBtn = async (pgIdx) => {
+        if(window.confirm( program.pgTitle + ' 프로그램을 신청할까요?')){
+            await setPgIdxOnUser(pgIdx);
+            navigate('/user/user-profile');
         }
-
     }
 
     return (

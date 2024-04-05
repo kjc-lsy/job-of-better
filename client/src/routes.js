@@ -14,8 +14,6 @@ import CoverLetter from "./views/user/CoverLetter";
 import Resume from "./views/user/Resume";
 import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
-import ChoiceProgram from "./views/user/ChoiceProgram";
-
 
 var routes = [
   {
@@ -103,15 +101,6 @@ var routes = [
     component: <Home />,
     layout: "/user",
   },*/
-
-  {
-    path: "/choice-program",
-    name: "교육 프로그램 선택",
-    cate: "",
-    icon: "tim-icons icon-chart-pie-36",
-    component: <ChoiceProgram />,
-    layout: "/user",
-  },
   {
     path: "/program",
     name: "교육 프로그램",

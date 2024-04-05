@@ -29,6 +29,12 @@ function Program() {
     return (
         <div className="content program">
             <Row>
+                <Col>
+                    <span className="h3">프로그램 선택</span>
+                    <p>학습 커리큘럼을 선택해주세요. 프로그램명과 프로그램을 제공하는 기업을 자세히 확인해주세요.</p>
+                </Col>
+            </Row>
+            <Row>
                 {programs.map((program, index) => {
                     return (
                         <Col md="6" key={index}>

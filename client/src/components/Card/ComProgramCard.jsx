@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Card, CardBody, CardFooter, Col, Row} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserCheck, faUserClock, faUsers, faUserTie} from "@fortawesome/free-solid-svg-icons";
+import {faUserCheck, faUserClock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
@@ -38,14 +38,14 @@ const ComProgramCard = ({program, loadPrograms}) => {
                         <div>
                             <FontAwesomeIcon icon={faUsers}/>
                         </div>
-                        <label>총 참여자 수</label>
+                        <label>총 신청자 수</label>
                         <div className="num-info">9명</div>
                     </Col>
                     <Col md='3'>
                         <div>
                             <FontAwesomeIcon icon={faUserCheck}/>
                         </div>
-                        <label>신청자 수</label>
+                        <label>참여자 수</label>
                         <div className="num-info">6명</div>
                     </Col>
                     <Col md='3'>
@@ -55,13 +55,13 @@ const ComProgramCard = ({program, loadPrograms}) => {
                         <label>미확인 수</label>
                         <div className="num-info">4명</div>
                     </Col>
-                    <Col md='3'>
-                        <div>
-                            <FontAwesomeIcon icon={faUserTie}/>
-                        </div>
-                        <label>면접 참여자 수</label>
-                        <div className="num-info">4명</div>
-                    </Col>
+                    {/*<Col md='3'>*/}
+                    {/*    <div>*/}
+                    {/*        <FontAwesomeIcon icon={faUserTie}/>*/}
+                    {/*    </div>*/}
+                    {/*    <label>면접 참여자 수</label>*/}
+                    {/*    <div className="num-info">4명</div>*/}
+                    {/*</Col>*/}
                 </Row>
                 <Row>
                     <Col md="6">

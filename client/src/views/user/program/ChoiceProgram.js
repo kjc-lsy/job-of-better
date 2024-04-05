@@ -1,28 +1,10 @@
 import React, {useEffect, useState} from "react";
 
 // reactstrap components
-import {
-    Button,
-    ButtonGroup,
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    Label,
-    FormGroup,
-    Input,
-    Table,
-    Row,
-    Col,
-    UncontrolledTooltip,
-} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, CardTitle, Col, Row,} from "reactstrap";
 
-import {useAuth} from "../../contexts/AuthContextProvider";
-import {getAllPrograms} from "../../apis/program";
+import {useAuth} from "../../../contexts/AuthContextProvider";
+import {getAllPrograms} from "../../../apis/program";
 
 
 function ChoiceProgram() {

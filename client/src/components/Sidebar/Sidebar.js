@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React from "react";
-import {NavLink, Link, useLocation, Route} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 // nodejs library to set properties for components
 import {PropTypes} from "prop-types";
 
@@ -8,13 +8,8 @@ import {PropTypes} from "prop-types";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // reactstrap components
-import {Nav, NavLink as ReactstrapNavLink} from "reactstrap";
-import {
-    BackgroundColorContext,
-    backgroundColors,
-} from "contexts/BackgroundColorWrapper";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {Nav} from "reactstrap";
+import {BackgroundColorContext,} from "contexts/BackgroundColorWrapper";
 
 var ps;
 
@@ -28,6 +23,7 @@ function Sidebar(props) {
     const activeRoute = (routeName) => {
         return location.pathname === routeName ? "active" : "";
     };
+
     React.useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
             ps = new PerfectScrollbar(sidebarRef.current, {
@@ -42,7 +38,6 @@ function Sidebar(props) {
             }
         };
     });
-
 
     const linkOnClick = () => {
         document.documentElement.classList.remove("nav-open");

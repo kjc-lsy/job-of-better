@@ -1,5 +1,5 @@
 import React from 'react';
-import {CardHeader, CardTitle} from "reactstrap";
+import {CardHeader, CardTitle, Col, Row} from "reactstrap";
 import {getComNameByComIdx} from "../../apis/company";
 
 const ProgramCardHeader = ({program}) => {
@@ -11,8 +11,12 @@ const ProgramCardHeader = ({program}) => {
 
     return (
         <CardHeader>
-            <span className="company-name">{comName}</span>
-            <CardTitle tag="h1">{program.pgTitle}</CardTitle>
+            <Row>
+                <Col>
+                    <span className="company-name">{comName}</span>
+                    <CardTitle tag="h1">{program.pgTitle}</CardTitle>
+                </Col>
+            </Row>
         </CardHeader>
     );
 };
