@@ -1,5 +1,9 @@
 import api from "./api";
 
+export const pgInfo = () => {
+    return api.get('/api/user/pg-info')
+}
+
 
 export const userCoverLetterSave = (value) => {
     return api.post('/api/user/user-cover-letter-save', value.map(value => {
