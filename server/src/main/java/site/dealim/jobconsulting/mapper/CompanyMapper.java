@@ -1,21 +1,15 @@
 package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import site.dealim.jobconsulting.domain.ComCoverLetter;
-import site.dealim.jobconsulting.domain.Program;
-
-import java.util.HashMap;
-import java.util.List;
+import site.dealim.jobconsulting.domain.Company;
+import site.dealim.jobconsulting.domain.Member;
+import site.dealim.jobconsulting.domain.MemberRole;
 
 @Mapper
 public interface CompanyMapper {
-    void ComCoverLetterinsert(HashMap map);
-
-    List<ComCoverLetter> comCoverLetterInfo(Long comIdx);
-
-    int ComCoverLetterUpdate(HashMap map);
-
-    void ComCoverLetterDelete(HashMap map);
 
 
+    void companyJoin(Company company);
+
+    int checkDuplicateBno(String comLicenseNum);
 }

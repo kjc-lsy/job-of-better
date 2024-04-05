@@ -3,17 +3,16 @@ package site.dealim.jobconsulting.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
-import site.dealim.jobconsulting.domain.Company;
-import site.dealim.jobconsulting.mapper.CompanyMapper;
+import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
 import site.dealim.jobconsulting.domain.Member;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class CompanyService {
+public class ComCoverLetterService {
     @Autowired
-    private CompanyMapper companyMapper;
+    private ComCoverLetterMapper companyMapper;
 
     public void comCoverLetterSave(List<ComCoverLetter> values, Long comIdx) {
         for(ComCoverLetter comCoverLetter : values) {

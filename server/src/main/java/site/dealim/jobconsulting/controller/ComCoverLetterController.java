@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.CompanyService;
+import site.dealim.jobconsulting.service.ComCoverLetterService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/company")
 @Slf4j
-public class CompanyController {
+public class ComCoverLetterController {
     @Autowired
-    private CompanyService companyService;
+    private ComCoverLetterService companyService;
     @PostMapping("/cover-letter-save")
     public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
         Member user = customMember.getMember();

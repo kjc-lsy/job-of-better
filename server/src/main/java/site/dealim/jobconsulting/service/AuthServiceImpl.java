@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
+import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
 @Slf4j
@@ -23,6 +24,8 @@ public class AuthServiceImpl {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private CompanyMapper companyMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -116,7 +119,7 @@ public class AuthServiceImpl {
         map.put("comLicenseNum", company.getComLicenseNum());
         map.put("comAddress", company.getComAddress());
         map.put("comZipcode", company.getComZipcode());*/
-        memberMapper.companyJoin(company);
+        companyMapper.companyJoin(company);
     }
 
     public Long MemberInsert(Member member) {
@@ -129,6 +132,6 @@ public class AuthServiceImpl {
     }
 
     public boolean checkDuplicateBno(String comLicenseNum) {
-        return memberMapper.checkDuplicateBno(comLicenseNum) > 0;
+        return companyMapper.checkDuplicateBno(comLicenseNum) > 0;
     }
 }

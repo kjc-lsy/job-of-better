@@ -1,17 +1,5 @@
 import api from "./api";
 
-export const userProfileInfo = () => {
-    return api.get('/api/company/user-profile-info')
-}
-
-
-export const interviewTimeSave = (value) => {
-    return api.post('/api/company/interview-time-save', value.map(value => {
-        return {
-            desiredInterviewTime: value.interviewDate + " " + value.interviewTime
-        }
-    }))
-}
 
 
 export const coverLetterSave = (value) => {

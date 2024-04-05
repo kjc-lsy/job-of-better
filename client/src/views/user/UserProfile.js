@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import * as company from '../../apis/company';
+import * as user from '../../apis/user';
 
 // reactstrap components
 import {
@@ -24,6 +24,7 @@ import TimeRange30Picker from "../../components/Program/TimeRange30Picker";
 import {allowedRange, combine} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 
 function UserProfile() {
@@ -83,7 +84,7 @@ function UserProfile() {
         userInfo();
     }, [isLogin]);
     const userInfo = () => {
-        company.userProfileInfo()
+        user.userProfileInfo()
             .then((response) => {
                 setInputValue({...inputValue,
                     name : response.data.name,
@@ -97,7 +98,7 @@ function UserProfile() {
 
 
     const save =() => {
-        company.interviewTimeSave(inputValue)
+        user.interviewTimeSave(inputValue)
             .then((response) => {
                 console.log(response.data);
                 alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
@@ -128,7 +129,7 @@ function UserProfile() {
                                         changeProfileImg(e); // changeProfileImg 함수 호출 시 이벤트 객체 전달
                                     }}>
                                         <img
-                                            alt="..."
+                                            alt="profile image"
                                             ref={imgRef}
                                             name="profileImg"
                                             className="avatar"

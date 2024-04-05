@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.CompanyService;
+import site.dealim.jobconsulting.service.ComCoverLetterService;
 import site.dealim.jobconsulting.service.AuthServiceImpl;
 
 @Slf4j
@@ -24,7 +24,7 @@ public class AuthController {
     private AuthServiceImpl authServiceImpl;
 
     @Autowired
-    private CompanyService companyService;
+    private ComCoverLetterService companyService;
 
     /**
      * 사용자 정보 조회

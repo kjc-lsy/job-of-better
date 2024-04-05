@@ -30,7 +30,5 @@ public interface MemberMapper {
 
     int checkDuplicateUsername(String username);
 
-    void companyJoin(Company company);
-
-    int checkDuplicateBno(String comLicenseNum);
+    Member userProfileInfo(long idx);
 }
