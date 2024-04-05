@@ -16,8 +16,8 @@ public class MyInfoService {
     private MemberMapper memberMapper;
 
 
-    public Member userProfileInfo(long idx) {
-        return memberMapper.userProfileInfo(idx);
+    public Member userProfileInfo(String username) {
+        return memberMapper.login(username);
     }
 
 

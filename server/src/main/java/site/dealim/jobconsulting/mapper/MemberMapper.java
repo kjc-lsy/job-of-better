@@ -30,5 +30,4 @@ public interface MemberMapper {
 
     int checkDuplicateUsername(String username);
 
-    Member userProfileInfo(long idx);
 }

@@ -9,7 +9,7 @@ import site.dealim.jobconsulting.domain.MemberRole;
 public interface CompanyMapper {
 
 
-    void companyJoin(Company company);
+    Long companyJoin(Company company);
 
     int checkDuplicateBno(String comLicenseNum);
 }

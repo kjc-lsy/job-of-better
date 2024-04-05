@@ -86,6 +86,7 @@ function UserProfile() {
     const userInfo = () => {
         user.userProfileInfo()
             .then((response) => {
+                console.log(response.data);
                 setInputValue({...inputValue,
                     name : response.data.name,
                     profileImg : response.data.profileImg,
@@ -137,7 +138,7 @@ function UserProfile() {
                                         />
                                     </a>
                                 </label>
-                                <h5 className="title">이용민</h5>
+                                <h5 className="title">{inputValue.name}</h5>
                                 <p className="description">인하대 졸업</p>
                             </div>
                             {/*<div className="card-description">

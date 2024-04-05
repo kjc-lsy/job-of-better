@@ -54,8 +54,6 @@
     </insert>
 
 
-
-
     <!-- 회원 조회 -->
     <select id="selectMember" resultMap="memberMap">
         SELECT *
@@ -139,4 +137,9 @@
     <select id="checkDuplicateUsername" resultType="int">
         SELECT count(*) FROM member WHERE username = #{username}
     </select>
+
+    <!-- mypage -->
+
+
+
 </mapper>
