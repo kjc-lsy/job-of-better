@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import {getPendingMemNum} from "../../apis/program";
+import {getApprovedMemNum} from "../../../apis/program";
 
-const PendingNumber = ({pgIdx}) => {
+const ApprovedNumber = ({pgIdx}) => {
     const [number, setNumber] = React.useState(0);
 
     useEffect(() => {
-        getPendingMemNum(pgIdx).then(res => {
+        getApprovedMemNum(pgIdx).then(res => {
             setNumber(res.data)
         });
     }, [])
@@ -15,4 +15,4 @@ const PendingNumber = ({pgIdx}) => {
     );
 };
 
-export default PendingNumber;
+export default ApprovedNumber;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {getRejectedMemNum} from "../../apis/program";
+import {getRejectedMemNum} from "../../../apis/program";
 
 const RejectedNumber = ({pgIdx}) => {
     const [number, setNumber] = React.useState(0);

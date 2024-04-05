@@ -4,9 +4,8 @@ import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} f
 import {Viewer} from "@toast-ui/react-editor";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
 import {getComNameByComIdx, getProgram, registerProgram} from "../../../apis/program";
+import ProgramDateInfos from "../../../components/Infos/ProgramDateInfos";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -29,7 +28,7 @@ const ProgramInfo = () => {
     }, [isLogin]);
 
     const handleSubmitBtn = async ({pgIdx, pgComIdx}) => {
-        if (window.confirm(program.pgTitle + ' 프로그램을 신청할까요?')) {
+        if (window.confirm(`[${program.pgTitle}] 프로그램을 신청합니다`)) {
             await registerProgram(pgIdx, pgComIdx);
             navigate('/user/user-profile');
         }
@@ -49,88 +48,43 @@ const ProgramInfo = () => {
                     }}>신청하기</Button>
                 </CardHeader>
                 <CardBody>
-                    <div className='program-title'>
-                        <span>프로그램 정보</span>
-                    </div>
-                    <div className='program-content'>
-                        <Row>
-                            <Col>
-                                <label>현재 상태</label>
-                                <div className="curr-status">면접 진행중</div>
-                            </Col>
-                        </Row>
-                        <Row className="ppl-info-row">
-                            <Col>
-                                <Row className="ppl-info">
+                    <Row>
+                        <Col>
+                            <div className='program-title'>
+                                <span>프로그램 정보</span>
+                            </div>
+                            <div className='program-content'>
+                                <Row>
                                     <Col>
-                                                <span>
-                                                <FontAwesomeIcon icon={faUsers}/>
-                                                    </span>
-                                    </Col>
-                                    <Col>
-                                        <label>총 참여자 수</label>
-                                        <div className="ppl-num">9명</div>
+                                        <label>현재 상태</label>
+                                        <div className="curr-status">면접 진행중</div>
                                     </Col>
                                 </Row>
-                            </Col>
-                            <Col>
-                                <Row className="ppl-info">
+                                <Row>
                                     <Col>
-                                                <span>
-                                                    <FontAwesomeIcon icon={faUserCheck}/>
-                                                </span>
-                                    </Col>
-                                    <Col>
-                                        <label>참여자</label>
-                                        <div className="ppl-num">9명</div>
+                                        <label>AI 교육요약</label>
+                                        <div className="form-control">{program ? program.pgContentSummary : null}</div>
                                     </Col>
                                 </Row>
-                            </Col>
-                        </Row>
-                        <Row className="ppl-info-row">
-                            <Col>
-                                <Row className="ppl-info">
-                                    <Col>
-                                                <span>
-                                                    <FontAwesomeIcon icon={faUserClock}/>
-                                                </span>
-                                    </Col>
-                                    <Col>
-                                        <label>미확인 자</label>
-                                        <div className="ppl-num">9명</div>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col>
-                                <Row className="ppl-info">
-                                    <Col>
-                                                <span>
-                                                    <FontAwesomeIcon icon={faUserSlash}/>
-                                                </span>
-                                    </Col>
-                                    <Col>
-                                        <label>불합격자</label>
-                                        <div className="ppl-num">9명</div>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <label>AI 교육요약</label>
-                                <div className="form-control">{program ? program.pgContentSummary : null}</div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className='program-title'>
-                        <span>프로그램 내용</span>
-                    </div>
-                    <div className='program-content'>
-                        <Viewer
-                            key={program ? program.pgContent : null}
-                            initialValue={program ? program.pgContent : null}
-                        />
-                    </div>
+                            </div>
+                        </Col>
+                        <Col>
+                            <ProgramDateInfos program={program}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div className='program-title'>
+                                <span>프로그램 내용</span>
+                            </div>
+                            <div className='program-content'>
+                                <Viewer
+                                    key={program ? program.pgContent : null}
+                                    initialValue={program ? program.pgContent : null}
+                                />
+                            </div>
+                        </Col>
+                    </Row>
                 </CardBody>
             </Card>
         </div>

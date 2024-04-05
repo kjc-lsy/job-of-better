@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {getTotalMemNum} from "../../apis/program";
+import {getTotalMemNum} from "../../../apis/program";
 
 const TotalRegNumber = ({pgIdx}) => {
     const [number, setNumber] = React.useState(0);
