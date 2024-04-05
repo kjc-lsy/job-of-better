@@ -1,4 +1,4 @@
-import React from "react";
+import React, {StrictMode} from "react";
 import ReactDOM from "react-dom/client";
 import {BrowserRouter} from "react-router-dom";
 
@@ -16,15 +16,17 @@ import LoadingProvider from "./contexts/LoadingProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <LoadingProvider>
-        <ThemeContextWrapper>
-            <BackgroundColorWrapper>
-                <BrowserRouter>
-                    <AuthContextProvider>
-                        <App/>
-                    </AuthContextProvider>
-                </BrowserRouter>
-            </BackgroundColorWrapper>
-        </ThemeContextWrapper>
-    </LoadingProvider>
+    <StrictMode>
+        <LoadingProvider>
+            <ThemeContextWrapper>
+                <BackgroundColorWrapper>
+                    <BrowserRouter>
+                        <AuthContextProvider>
+                            <App/>
+                        </AuthContextProvider>
+                    </BrowserRouter>
+                </BackgroundColorWrapper>
+            </ThemeContextWrapper>
+        </LoadingProvider>
+    </StrictMode>
 );

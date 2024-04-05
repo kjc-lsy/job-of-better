@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
-import site.dealim.jobconsulting.mapper.AuthMapper;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.prop.JwtProps;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.security.jwt.constants.JwtConstants;
@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     @Autowired
     private JwtProps jwtProps;
     @Autowired
-    private AuthMapper authMapper;
+    private MemberMapper MemberMapper;
 
     public String createToken(long memberIdx, String memberId, List<String> roleList) {
 
@@ -111,7 +111,7 @@ public class JwtTokenProvider {
             // 토큰 유효하면
             // name, email 도 담아주기
             try {
-                Member userInfo = authMapper.selectMember(no);
+                Member userInfo = MemberMapper.selectMember(no);
                 if (userInfo != null) {
                     CopyBeanUtil.copyNonNullProperties(userInfo, member);
                 }

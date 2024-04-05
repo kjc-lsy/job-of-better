@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {Suspense, useEffect} from "react";
 import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -103,6 +103,7 @@ function User(props) {
                             changeColor={changeColor}
                             sideColor={color}
                         />
+                        <Suspense fallback={<div className="loading">loading...</div>}>
                         <Routes>
                             {getRoutes(routes, location)}
                             <Route
@@ -114,6 +115,7 @@ function User(props) {
                                 element={<Navigate to="/user/program" replace/>}
                             />
                         </Routes>
+                        </Suspense>
                         {
                             // we don't want the Footer to be rendered on map page
                             location.pathname === "/company/map" ? null : <Footer fluid/>

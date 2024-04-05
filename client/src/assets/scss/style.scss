@@ -595,6 +595,7 @@ $base-width: 10%;*/
     margin-right: 10px;
   }
   span {
+    opacity:0.8;
     font-size:13px
   }
   p {
@@ -667,12 +668,14 @@ $base-width: 10%;*/
 
 }
 .user-profile-wrapper {
-  .tablesorter {
-    td {
-      font-size:16px;
-      color: $font-color !important
+  .col-md-8 {
+    .tablesorter {
+      td {
+        font-size: 18px;
+        font-weight: 400;
+        color: $font-color !important
+      }
     }
-
   }
   .card-footer .row {
     display: flex;

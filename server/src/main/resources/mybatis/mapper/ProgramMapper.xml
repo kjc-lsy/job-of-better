@@ -109,6 +109,11 @@
           AND DATE(pg_prog_end_date) &gt;= DATE(NOW());
     </select>
 
+    <select id="getApprovedCntByPgIdx" resultType="Integer" parameterType="Long">
+        SELECT COUNT(*)
+        FROM member m
+        WHERE m.pg_reg_status = 'Aprroved'
+    </select>
 
 
 </mapper>

@@ -6,7 +6,7 @@ import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
 @Mapper
-public interface AuthMapper {
+public interface MemberMapper {
 
     // 회원 등록
     public Long insertMember(Member member);

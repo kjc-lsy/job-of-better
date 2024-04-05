@@ -1,10 +1,12 @@
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row} from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {Suspense,useEffect, useState, useContext} from "react";
 import * as user from "../../apis/user";
 import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import {LoadingContext} from "../../contexts/LoadingProvider";
 
 const CoverLetter = () => {
+    const {Loading,setLoading} = useContext(LoadingContext);
     const {isLogin} = useAuth();
     const [mclTitle, setMclTitle] = useState("");
     let [inputValue, setInputValue] = useState([{
@@ -119,6 +121,7 @@ const CoverLetter = () => {
                 <CardHeader>
                     <CardTitle tag="h4">자기소개서</CardTitle>
                 </CardHeader>
+
                 <CardBody>
                     <Form role="form" name="" aria-label="coverletter save">
                         <FormGroup className="coverLetterTitle">
@@ -142,6 +145,7 @@ const CoverLetter = () => {
                             return (
                                 <Row key={value.num}>
                                     <Col className="pr-md-1" md="12">
+
                                         <FormGroup>
                                             {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                             <div className="coverletter_user">

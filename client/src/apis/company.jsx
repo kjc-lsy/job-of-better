@@ -2,6 +2,17 @@ import api from "./api";
 
 export const getComNameByComIdx = () => api.get('/api/company/get-com-name')
 
+export const userProfileInfo = () => {
+    return api.get('/api/company/user-profile-info')
+}
+
+export const interviewTimeSave = (value) => {
+    return api.post('/api/company/interview-time-save', value.map(value => {
+        return {
+            desiredInterviewTime: value.interviewDate + " " + value.interviewTime
+        }
+    }))
+}
 
 export const coverLetterSave = (value) => {
     return api.post('/api/company/cover-letter-save', value.map(value => {

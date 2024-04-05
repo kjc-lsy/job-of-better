@@ -1,4 +1,5 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
+import * as company from '../../apis/company';
 
 // reactstrap components
 import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
@@ -9,18 +10,42 @@ import KorDatePicker from "../../components/KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
+import {useAuth} from "../../contexts/AuthContextProvider";
+
 
 function UserProfile() {
 
     const imgRef = useRef();
+    const {isLogin} = useAuth();
 
     const [inputValue, setInputValue] = React.useState({
-        email: "",
-        validEmail: false,
-        emailUserName: "",
-        domain: "",
         name: "",
-        profileImg: require("assets/img/emilyz.jpg"),
+        profileImg:"" , //require("assets/img/emilyz.jpg")
+        gender:"",
+
+        resumeLength:"",
+        coverLetterLength:"",
+
+        mclTitle:"",
+        mclIsConfirm:false,
+
+        resumeTitle:"",
+        resumeIsConfirm:false,
+
+        pgTitle:"",
+        pgComName:"",
+        pgComTel:"",
+        pgProgStartDate:"", //프로그램시작
+        pgProgEndDate:"",
+        pgEduStartDate:"", // 교육시작일
+        pgEduEndDate:"",
+        pgRegValStartDate:"", //등록가능날짜
+        pgRegValEndDate:"",
+        pgInterviewValStartDate:"", //인터뷰 시작
+        pgInterviewValEndDate:"",
+
+        interviewDate:"",
+        interviewTime:"",
     });
 
     const changeProfileImg = () => {
@@ -41,12 +66,36 @@ function UserProfile() {
         };
         // 파일 업로드 등의 추가 작업을 수행할 수 있습니다.
     };
-
-    const save =() => {
-        console.log(inputValue);
+    useEffect(() => {
+        userInfo();
+    }, [isLogin]);
+    const userInfo = () => {
+        company.userProfileInfo()
+            .then((response) => {
+                setInputValue({...inputValue,
+                    name : response.data.name,
+                    profileImg : response.data.profileImg,
+                });
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
     }
 
+
+    const save =() => {
+        company.interviewTimeSave(inputValue)
+            .then((response) => {
+                console.log(response.data);
+                alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
+            })
+            .catch((error) => {
+                alert(error.response.data);
+            });
+
+    }
     const navigate = useNavigate();
+
     return (
         <div className="content">
             <Row>
@@ -67,8 +116,10 @@ function UserProfile() {
                                     }}>
                                         <img
                                             alt="..."
+                                            ref={imgRef}
+                                            name="profileImg"
                                             className="avatar"
-                                            src={inputValue.profileImg}
+                                            src={inputValue.profileImg ? inputValue.profileImg : inputValue.gender === "F" ? "../../assets/img/userImg_female.png" : "../../assets/img/userImg_male.png"}
                                         />
                                     </a>
                                 </label>
@@ -110,19 +161,6 @@ function UserProfile() {
                             </Row>
 
                         </CardFooter>
-                        {/*<CardFooter>
-                            <div className="button-container">
-                                <Button className="btn-icon btn-round" color="facebook">
-                                    <i className="fab fa-facebook"/>
-                                </Button>
-                                <Button className="btn-icon btn-round" color="twitter">
-                                    <i className="fab fa-twitter"/>
-                                </Button>
-                                <Button className="btn-icon btn-round" color="google">
-                                    <i className="fab fa-google-plus"/>
-                                </Button>
-                            </div>
-                        </CardFooter>*/}
                     </Card>
                     <Card className="card-user-box">
                         <CardHeader>
@@ -208,7 +246,7 @@ function UserProfile() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>AI(인공지능)&빅데이터응용 SW개발자 양성과정</td>
+                                    <td><b>AI(인공지능)&빅데이터응용 SW개발자 양성과정</b></td>
                                     <td>(주) 안녕하세요</td>
                                     <td>010-1234-5678</td>
                                     {/*<td className="text-center">24.04.15 14:30</td>
@@ -233,17 +271,27 @@ function UserProfile() {
                                     <span>면접 시간</span>
                                     <p>
                                         <KorDatePicker
-                                            shouldDisableDate={(allowedRange('2024-02-15', new Date()))}
+                                            value={inputValue.interviewDate}
+                                            name="interviewDate"
+                                            shouldDisableDate={(allowedRange('2024-02-15', new Date())) }
+                                            onChange={e => {
+                                                setInputValue({...inputValue,interviewDate : e})
+                                            }}
                                         />
                                         <DatePicker
+                                            name="interviewTime"
+                                            value={inputValue.interviewTime}
                                             format="HH:mm"
                                             hideHours={hour => hour < 8 || hour > 22}
                                             hideMinutes={minute => minute % 15 !== 0}
                                             hideSeconds={second => second % 30 !== 0}
                                             caretAs={FaClock}
+                                            onChange={e => {
+                                                setInputValue({...inputValue,interviewTime : e})
+                                            }}
                                         />
                                         <Button>
-                                            제출
+                                            신청
                                         </Button>
                                     </p>
                                 </div>
@@ -334,7 +382,6 @@ function UserProfile() {
                         </CardBody>
                     </Card>*/}
                 </Col>
-
             </Row>
         </div>
     );
