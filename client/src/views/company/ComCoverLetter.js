@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-
 // reactstrap components
 import {
     Card,
@@ -88,6 +87,15 @@ function ComCoverLetter() {
         company.coverLetterInfo()
             .then(response => {
                 setInputValue(
+                    response.data.length === 0 ? [
+                        {
+                            num: 1,
+                            id: 0,
+                            maxlength: 0,
+                            minlength: 0,
+                            question: ""
+                        }
+                    ] :
                     response.data.map((item, index) => {
                         return {
                             num: index + 1,
@@ -121,7 +129,7 @@ function ComCoverLetter() {
                                             let num = value.num;
                                             let id = value.id;
                                             return (
-                                                <li key={value.num} className="coverletter_row">
+                                                <li key={index} className="coverletter_row">
                                                     <Row className="listTitle">
                                                         <span>
                                                             자소서 질문 항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}

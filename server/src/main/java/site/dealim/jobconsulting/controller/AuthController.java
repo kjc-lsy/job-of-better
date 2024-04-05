@@ -120,6 +120,8 @@ public class AuthController {
             log.info("기업 회원가입 시작...");
             authServiceImpl.companyJoin(joinMember, memberCompanyDto.getCompany());
             log.info("기업 회원가입 성공! - SUCCESS");
+            log.info("멤버 기업 idx값 추가");
+            authServiceImpl.addCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             res.sendError(404, "Error : "+e.getMessage());

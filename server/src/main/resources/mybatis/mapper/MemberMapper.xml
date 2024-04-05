@@ -40,9 +40,9 @@
 
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="idx">
-        <selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
+        <!--<selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
             SELECT LAST_INSERT_ID() AS idx
-        </selectKey>
+        </selectKey>-->
 
         INSERT INTO member (name, username, password, email, birth_date, gender, phone, com_idx, resume_file,
         desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
@@ -93,9 +93,9 @@
     <!-- 회원 권한 등록 -->
     <insert id="insertMemberRole" parameterType="MemberRole">
         <!-- 가입된 회원의 idx 값을 얻기 위해 selectKey 사용 -->
-        <selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
+        <!--<selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
             SELECT LAST_INSERT_ID() AS idx
-        </selectKey>
+        </selectKey>-->
 
         INSERT INTO member_role (role_name, username)
         VALUES (#{roleName}, #{username})
@@ -136,6 +136,11 @@
     <select id="checkDuplicateUsername" resultType="int">
         SELECT count(*) FROM member WHERE username = #{username}
     </select>
+
+    <!-- 회원에 comidx 넣기 -->
+    <update id="addCompanyIdx">
+        UPDATE member SET com_idx = #{comIdx} WHERE idx = #{idx}
+    </update>
 
     <!-- 회원 프로그램 등록 -->
     <update id="updatePgIdx" parameterType="map">

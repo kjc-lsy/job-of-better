@@ -1,5 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import * as user from '../../apis/user';
+import femaleImg from "../../assets/img/userImg_female.png";
+import maleImg from "../../assets/img/userImg_male.png";
 
 // reactstrap components
 import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
@@ -119,7 +121,7 @@ function UserProfile() {
                                             ref={imgRef}
                                             name="profileImg"
                                             className="avatar"
-                                            src={inputValue.profileImg ? inputValue.profileImg : inputValue.gender === "F" ? "../../assets/img/userImg_female.png" : "../../assets/img/userImg_male.png"}
+                                            src={inputValue.profileImg !== null ? inputValue.profileImg : inputValue.gender === "F" ? femaleImg : maleImg}
                                         />
                                     </a>
                                 </label>

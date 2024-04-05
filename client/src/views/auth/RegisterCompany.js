@@ -112,7 +112,7 @@ const CompanyRegister = () => {
     const submitRequirement =
         Object.values(inputValue).every(value => value) &&
         inputValue.validBNo === "true" &&
-        inputValue.validDuplicateBNo === "true" &&
+        inputValue.validDuplicateBNo === "false" &&
         inputValue.validBCeoName &&
         inputValue.validUsername &&
         inputValue.validDuplicateUsername === "true" &&
@@ -122,6 +122,25 @@ const CompanyRegister = () => {
         inputValue.validEmail &&
         inputValue.validPhone &&
         inputValue.agree;
+
+    useEffect(() => {
+        return () => {
+           console.log(
+               "inputValue.validBNo : "+inputValue.validBNo,
+               "inputValue.validDuplicateBNo : "+inputValue.validDuplicateBNo,
+               "inputValue.validBCeoName : "+inputValue.validBCeoName,
+               "inputValue.validUsername : "+inputValue.validUsername,
+               "inputValue.validDuplicateUsername : "+inputValue.validDuplicateUsername,
+               "inputValue.validCheckPassword : "+inputValue.validCheckPassword,
+               "inputValue.validPassword : "+inputValue.validPassword,
+               "inputValue.validName : "+inputValue.validName,
+               "inputValue.validEmail : "+inputValue.validEmail,
+               "inputValue.validPhone : "+inputValue.validPhone,
+               "inputValue.agree : "+inputValue.agree
+           );
+        };
+    }, [inputValue]);
+
 
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
@@ -466,7 +485,7 @@ const CompanyRegister = () => {
                                 value={inputValue.b_openingDate}
                                 name="b_openingDate"
                                 placeholder="개업일(YYYY/MM/DD)"
-                                oneTapㅡ
+                                oneTap
                                 shouldDisableDate={date => date > new Date()}
                                 onChange={date => {
                                     setInputValue({...inputValue, b_openingDate: date})
@@ -486,6 +505,9 @@ const CompanyRegister = () => {
                                         placeholder="아이디"
                                         type="text"
                                         onInput={handleInputChange}
+                                        onChange={e => {
+                                            setInputValue({...inputValue, username: e.target.value})
+                                        }}
                                     />
                                     <div className="text-muted font-italic">
                                         <small>

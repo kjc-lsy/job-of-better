@@ -21,6 +21,7 @@ public class ComCoverLetterService {
             map.put("cclLetterQuestion", comCoverLetter.getCclLetterQuestion());
             map.put("cclMinLength", comCoverLetter.getCclMinLength());
             map.put("cclMaxLength", comCoverLetter.getCclMaxLength());
+            System.out.println("map = " + map);
             Long cclIdx = comCoverLetter.getCclIdx();
             if(cclIdx != null && cclIdx > 0) {
                 map.put("cclIdx", cclIdx);
