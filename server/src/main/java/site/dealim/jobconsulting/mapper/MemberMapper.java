@@ -39,4 +39,5 @@ public interface MemberMapper {
     // 상태에 따른 회원 수 조회
     Integer getNumByPgIdxAndRegStatus(@Param("pgIdx")Long pgIdx, @Param("reg_status")String regStatus);
 
+    void interviewTimeSave(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
 }

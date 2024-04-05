@@ -25,6 +25,7 @@ function UserProfile() {
         name: "",
         profileImg:"" , //require("assets/img/emilyz.jpg")
         gender:"",
+        regStatus:"",
 
         resumeLength:"",
         coverLetterLength:"",
@@ -35,9 +36,12 @@ function UserProfile() {
         resumeTitle:"",
         resumeIsConfirm:false,
 
-        pgTitle:"",
         pgComName:"",
         pgComTel:"",
+        pgComAddr:"",
+
+        pgTitle:"",
+        pgContent:"",
         pgProgStartDate:"", //프로그램시작
         pgProgEndDate:"",
         pgEduStartDate:"", // 교육시작일
@@ -46,9 +50,11 @@ function UserProfile() {
         pgRegValEndDate:"",
         pgInterviewValStartDate:"", //인터뷰 시작
         pgInterviewValEndDate:"",
+        pgInterviewValStartTime:"",
+        pgInterviewValEndTime:"",
 
-        interviewDate:"",
-        interviewTime:"",
+        interviewDate:new Date(),
+        interviewTime:new Date().getHours() + ":" + new Date().getMinutes(),
     });
 
     const changeProfileImg = () => {
@@ -70,52 +76,84 @@ function UserProfile() {
         // 파일 업로드 등의 추가 작업을 수행할 수 있습니다.
     };
     useEffect(() => {
-        userInfo();
-        pgInfo();
+        Promise.all([userInfo(), pgInfo()])
+            .catch((error) => {
+                console.error(error.response.data);
+            });
     }, [isLogin]);
-    //사용자 정보 불러오기
-    const userInfo = () => {
-        user.userProfileInfo()
-            .then((response) => {
-                console.log(response.data);
-                setInputValue({...inputValue,
-                    name : response.data.name,
-                    profileImg : response.data.profileImg,
-                });
-            })
-            .catch((error) => {
-                console.log(error.response.data);
-            });
-    }
+
+    // 사용자 정보 불러오기
+    const userInfo = async () => {
+        try {
+            const response = await user.userProfileInfo();
+            // 사용자 정보 업데이트
+            setInputValue((prevInputValue) => ({
+                ...prevInputValue,
+                name: response.data.name,
+                profileImg: response.data.profileImg,
+                gender: response.data.gender,
+                regStatus: response.data.regStatus,
+            }));
+        } catch (error) {
+            console.error(error.response.data);
+        }
+    };
     
-    //프로그램 정보 불러오기
-    const pgInfo = () => {
-        user.pgInfo()
-            .then((response) => {
-                setInputValue({
-                    ...inputValue,
-                    pgTitle : response.data.pgTitle,
-                    pgComName : response.data.pgComName,
-                    pgComTel : response.data.pgComTel,
-                    pgProgStartDate : response.data.pgProgStartDate,
-                    pgProgEndDate : response.data.pgProgEndDate,
-                    pgEduStartDate : response.data.pgEduStartDate,
-                    pgEduEndDate : response.data.pgEduEndDate,
-                    pgRegValStartDate : response.data.pgRegValStartDate,
-                    pgRegValEndDate : response.data.pgRegValEndDate,
-                    pgInterviewValStartDate : response.data.pgInterviewValStartDate,
-                    pgInterviewValEndDate : response.data.pgInterviewValEndDate
-                });
-            })
-            .catch((error) => {
-                console.log(error.response.data);
-            });
+    // 프로그램 정보 불러오기
+    const pgInfo = async () => {
+        try {
+            const response = await user.pgInfo();
+            // 프로그램 정보 업데이트
+            setInputValue((prevInputValue) => ({
+                ...prevInputValue,
+                pgComName: response.data.company.comName,
+                pgComTel: response.data.company.comTel,
+                pgComAddr: response.data.company.comAddress,
+
+                pgTitle: response.data.program.pgTitle,
+                pgProgStartDate: response.data.program.pgProgStartDate,
+                pgProgEndDate: response.data.program.pgProgEndDate,
+                pgEduStartDate: response.data.program.pgEduStartDate,
+                pgEduEndDate: response.data.program.pgEduEndDate,
+                pgRegValStartDate: response.data.program.pgRegValStartDate,
+                pgRegValEndDate: response.data.program.pgRegValEndDate,
+                pgInterviewValStartDate: response.data.program.pgInterviewValStartDate,
+                pgInterviewValEndDate: response.data.program.pgInterviewValEndDate,
+                pgInterviewValEndTime: response.data.program.pgInterviewValEndTime,
+                pgInterviewValStartTime: response.data.program.pgInterviewValStartTime,
+                pgContent: (response.data.program.pgContent).replace(/<[^>]+>/g, ''),
+
+
+            }));
+        } catch (error) {
+            console.error(error.response.data);
+        }
+    };
+
+    //coverletter 값 들고오기
+    const coverLetterInfo = async () => {
+        try {
+            const response = await user.coverLetterInfo();
+        }catch(error) {
+            console.error(error.response.data);
+        }
     }
-    
+
 
 
     const save =() => {
-        user.interviewTimeSave(inputValue)
+        // interviewDate를 'YYYY-MM-DD' 형식의 문자열로 변환
+        const interviewDateStr = inputValue.interviewDate.toISOString().split('T')[0];
+
+        // interviewTime을 'HH:mm' 형식의 문자열로 변환
+        const interviewTimeStr = inputValue.interviewTime.toTimeString().split(' ')[0];
+
+        // interviewDateTime 문자열 생성
+        const interviewDateTime = interviewDateStr + ' ' + interviewTimeStr;
+        console.log(interviewDateTime);
+
+        // 서버에 저장
+        user.interviewTimeSave(interviewDateTime)
             .then((response) => {
                 console.log(response.data);
                 alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
@@ -124,6 +162,15 @@ function UserProfile() {
                 alert(error.response.data);
             });
 
+    }
+
+    const ProgramState = () => {
+     return (
+         new Date() >= new Date(inputValue.pgProgStartDate) && new Date() <= new Date(inputValue.pgProgEndDate) ? "프로그램 진행중"
+             : new Date() >= new Date(inputValue.pgEduStartDate) && new Date() <= new Date(inputValue.pgEduEndDate) ? "교육 진행중"
+                 : new Date() >= new Date(inputValue.pgRegValStartDate) && new Date() <= new Date(inputValue.pgRegValEndDate) ? "신청 진행중"
+                     : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중"  : "프로그램 종료"
+     )
     }
 
 
@@ -277,8 +324,8 @@ function UserProfile() {
                                 <tbody>
                                 <tr>
                                     <td><b>{inputValue.pgTitle}</b></td>
-                                    <td>(주) 안녕하세요</td>
-                                    <td>010-1234-5678</td>
+                                    <td>{inputValue.pgComName}</td>
+                                    <td>{inputValue.pgComTel}</td>
                                     {/*<td className="text-center">24.04.15 14:30</td>
                                     <td className="text-center">확정</td>*/}
                                 </tr>
@@ -290,20 +337,21 @@ function UserProfile() {
                             <div className="programInfo">
                                 <div>
                                     <span>프로그램 진행 기한</span>
-                                    <p>2024.04.15 ~ 2024.04.30</p>
+                                    <p>{inputValue.pgProgStartDate} ~ {inputValue.pgProgEndDate}</p>
                                 </div>
                                 <div>
                                     <span>프로그램 진행 상황</span>
-                                    <p>면접 진행</p>
+                                    <p>{ProgramState()}</p>
                                 </div>
-                                <Form onSubmit={save}>
+                                <Form role="form">
                                 <div>
                                     <span>면접 시간</span>
                                     <p>
                                         <KorDatePicker
                                             value={inputValue.interviewDate}
                                             name="interviewDate"
-                                            shouldDisableDate={(allowedRange('2024-02-15', new Date())) }
+                                            format="yyyy-MM-dd"
+                                            shouldDisableDate={(allowedRange(inputValue.pgInterviewValStartDate, inputValue.pgInterviewValEndDate)) }
                                             onChange={e => {
                                                 setInputValue({...inputValue,interviewDate : e})
                                             }}
@@ -312,15 +360,30 @@ function UserProfile() {
                                             name="interviewTime"
                                             value={inputValue.interviewTime}
                                             format="HH:mm"
-                                            hideHours={hour => hour < 8 || hour > 22}
+                                            hideHours={(hour) => {
+                                                const startTimeString = inputValue.pgInterviewValStartTime;
+                                                const startHour = parseInt(startTimeString.split(':')[0]);
+                                                const endTimeString = inputValue.pgInterviewValEndTime;
+                                                const endHour = parseInt(endTimeString.split(':')[0]);
+
+                                               return hour < startHour || hour > endHour
+                                            }}
                                             hideMinutes={minute => minute % 15 !== 0}
                                             hideSeconds={second => second % 30 !== 0}
                                             caretAs={FaClock}
                                             onChange={e => {
-                                                setInputValue({...inputValue,interviewTime : e})
+                                                // e를 Date 객체로 파싱
+                                                const selectedTime = new Date(e);
+                                                setInputValue(prevInputValue => ({
+                                                    ...prevInputValue,
+                                                    interviewTime: selectedTime
+                                                }));
                                             }}
                                         />
-                                        <Button>
+                                        <Button type="button" onClick={(e) => {
+                                            e.preventDefault();
+                                            save()
+                                        }}>
                                             신청
                                         </Button>
                                     </p>
@@ -328,11 +391,11 @@ function UserProfile() {
                                 </Form>
                                 <div>
                                     <span>내용</span>
-                                    <p>내용 내용 내용</p>
+                                    <p>{inputValue.pgContent}</p>
                                 </div>
                                 <div>
                                     <span>상태</span>
-                                    <p>확정</p>
+                                    <p>{inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}</p>
                                 </div>
                             </div>
                         </CardFooter>

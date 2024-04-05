@@ -89,6 +89,8 @@ const CompanyRegister = () => {
         b_ceoName: "",
         validBCeoName: false,
         b_img: "",
+        b_tel: "",
+        validBTel:false,
         b_address: "",
         b_zipCode: "",
         b_detailAddr: "",
@@ -231,6 +233,14 @@ const CompanyRegister = () => {
             setInputValue({...inputValue, validPhone: false});
         }
     }, [inputValue.phone]);
+
+    useEffect(() => {
+        if (inputValue.b_tel.match(inputRegexs.phoneRegex)) {
+            setInputValue({...inputValue, validBTel: true});
+        } else {
+            setInputValue({...inputValue, validBTel: false});
+        }
+    }, [inputValue.b_tel]);
 
     // 직접 입력 선택시 이메일 도메인 직접입력 가능
     const handleDomainChange = (domain) => {
@@ -455,6 +465,27 @@ const CompanyRegister = () => {
                                         : inputValue.b_ceoName !== ""
                                             ? <span className="text-danger font-weight-700">유효하지 않은 이름 입니다</span>
                                             : <span></span>
+                                    }
+                                </small>
+                            </div>
+                        </FormGroup>
+                        <FormGroup>
+                            <label>회사 전화번호</label>
+                            <Input
+                                vlaue={inputValue.b_tel}
+                                placeholder="연락가능한 회사 전화번호를 입력해주세요."
+                                name="phone"
+                                type="text"
+                                onChange={e => setInputValue({...inputValue, b_tel: e.target.value})}
+                            />
+                            <div className="text-muted font-italic">
+                                <small>
+                                    {
+                                        inputValue.validPhone && inputValue.b_tel !== ""
+                                            ? <span className="text-success font-weight-700">유효한 번호 입니다.</span>
+                                            : inputValue.b_tel !== ""
+                                                ? <span className="text-danger font-weight-700">유효한 번호가 아닙니다.</span>
+                                                : <span>"-"를 뺀 번호를 입력해주세요</span>
                                     }
                                 </small>
                             </div>

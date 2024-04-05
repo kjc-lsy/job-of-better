@@ -4,12 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemCoverLetterService;
 import site.dealim.jobconsulting.service.MyInfoService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/")
@@ -29,7 +32,21 @@ public class MyInfoController {
     public ProgramCompanyDto pgInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("사용자 지정 프로그램 정보 불러오기");
         Member user = customMember.getMember();
-        System.out.println("user.getPgIdx() = " + user.getPgIdx());
-        return myinfoService.pgInfo(user.getPgIdx());
+        ProgramCompanyDto pgInfo = myinfoService.pgInfo(user.getPgIdx());
+        //System.out.println("pgInfo = " + pgInfo);
+        return pgInfo;
+    }
+
+    @GetMapping("/cover-letter-info")
+    public List<ComCoverLetter> coverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("자소서 항목 불러오기");
+        Member user = customMember.getMember();
+        return myinfoService.coverLetterInfo(user.getIdx(),user.getPgIdx());
+    }
+
+    @PostMapping("interview-time-save/interviewDate")
+    public void interviewTimeSave(@PathVariable("interviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
+        Member user = customMember.getMember();
+        myinfoService.interviewTimeSave(desiredInterviewDate,user.getIdx());
     }
 }
