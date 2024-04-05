@@ -151,4 +151,9 @@
                  LEFT OUTER JOIN program p ON m.pg_idx = p.pg_idx
         WHERE m.pg_reg_status = 'Aprroved' and m.pg_idx = #{param}
     </select>
+
+    <!-- mypage -->
+
+
+
 </mapper>

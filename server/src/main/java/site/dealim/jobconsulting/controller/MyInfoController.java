@@ -19,6 +19,6 @@ public class MyInfoController {
     @GetMapping("/user-profile-info")
     public Member userProfileInfo(@AuthenticationPrincipal CustomMember customMember) {
         Member user = customMember.getMember();
-        return myinfoService.userProfileInfo(user.getIdx());
+        return myinfoService.userProfileInfo(user.getUsername());
     }
 }

@@ -10,8 +10,8 @@ public class MyInfoService {
     @Autowired
     private MemberMapper memberMapper;
 
-    public Member userProfileInfo(long idx) {
-        return memberMapper.userProfileInfo(idx);
+    public Member userProfileInfo(String username) {
+        return memberMapper.login(username);
     }
 
 }

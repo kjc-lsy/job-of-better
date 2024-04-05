@@ -30,7 +30,9 @@ public interface MemberMapper {
 
     Member userProfileInfo(long idx);
 
-    // 회원 프로그램 등록
+    // 회원 pgIdx 수정
     int updatePgIdx(@Param("pgIdx") Long pgIdx, @Param("memIdx") Long memIdx);
+
+    // 승인된 회원 수 조회
     int getApprovedCntByPgIdx(Long pgIdx);
 }

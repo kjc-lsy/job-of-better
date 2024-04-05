@@ -120,6 +120,7 @@ public class AuthServiceImpl {
         map.put("comAddress", company.getComAddress());
         map.put("comZipcode", company.getComZipcode());*/
         companyMapper.companyJoin(company);
+
     }
 
     public Long MemberInsert(Member member) {
@@ -128,7 +129,20 @@ public class AuthServiceImpl {
         String encodedPwd = passwordEncoder.encode(memberPwd);
         member.setPassword(encodedPwd);
 
-        return memberMapper.insertMember(member);
+        Long result = memberMapper.insertMember(member);
+
+        if(result > 0) {
+            MemberRole memberRole = new MemberRole();
+            memberRole.setUsername(member.getUsername());
+            memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
+            memberMapper.insertMemberRole(memberRole);
+
+            memberRole.setUsername(member.getUsername());
+            memberRole.setRoleName("ROLE_COMPANY"); // 기본 권한 : 사용자 권한 (ROLE_COMPANY)
+            memberMapper.insertMemberRole(memberRole);
+        }
+
+        return result;
     }
 
     public boolean checkDuplicateBno(String comLicenseNum) {
