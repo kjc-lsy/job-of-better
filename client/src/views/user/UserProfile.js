@@ -19,10 +19,11 @@ import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown,faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import KorDatePicker from "../../components/KorDatePicker";
-import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
+import ProgDateRangePicker from "../../components/Program/ProgDateRangePicker";
+import TimeRange30Picker from "../../components/Program/TimeRange30Picker";
+import {allowedRange, combine} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
-import {useAuth} from "../../contexts/AuthContextProvider";
 
 
 function UserProfile() {

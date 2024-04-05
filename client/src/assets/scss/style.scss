@@ -1190,9 +1190,7 @@ $base-width: 10%;*/
     }
   }
 }
-a , .rs-input{
-  cursor:pointer
-}
+
 .navbar-expand-lg .navbar-nav {
   align-items: center;
 }
@@ -1252,9 +1250,6 @@ a , .rs-input{
 /********************************************* white content *********************************************/
 
 .white-content {
-  .table > tbody > tr > td {
-    color: $font-color !important;
-  }
   /*.main-panel {
     background: #f2f5fd;
   }*/
