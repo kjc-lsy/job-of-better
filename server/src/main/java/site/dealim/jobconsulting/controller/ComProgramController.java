@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComProgramService;
+import site.dealim.jobconsulting.service.UserProgramService;
 
 import java.util.List;
 
@@ -18,7 +19,9 @@ import java.util.List;
 @Slf4j
 public class ComProgramController {
     @Autowired
-    private ComProgramService programService;
+    private ComProgramService comProgramService;
+    @Autowired
+    private UserProgramService userProgramService;
     @Secured("ROLE_COMPANY")
     @PostMapping("/insert-program")
     public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody Program program) {
@@ -26,7 +29,7 @@ public class ComProgramController {
         program.setPgComIdx(customMember.getMember().getComIdx());
 
         try {
-            programService.insertProgram(program);
+            comProgramService.insertProgram(program);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,10 +39,10 @@ public class ComProgramController {
 
     @Secured({"ROLE_COMPANY", "ROLE_USER"})
     @PostMapping("/get-programs")
-    public ResponseEntity<?> getPrograms(@AuthenticationPrincipal CustomMember customMember) {
+    public ResponseEntity<?> getPrograms() {
         log.info("프로그램 목록 조회...");
 
-        List<Program> programs = programService.getProgramsByComIdx(customMember.getMember().getComIdx());
+        List<Program> programs = userProgramService.getAllPrograms();
 
         return new ResponseEntity<>(programs, HttpStatus.OK);
     }
@@ -50,7 +53,7 @@ public class ComProgramController {
         log.info("프로그램 삭제... : pgIdx = " +  pgIdx);
 
         try {
-            programService.deleteByPgIdx(pgIdx);
+            comProgramService.deleteByPgIdx(pgIdx);
             return new ResponseEntity<>("프로그램 삭제 완료", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +66,7 @@ public class ComProgramController {
     public ResponseEntity<?> getProgram(@RequestParam(value = "pgIdx") Long pgIdx) {
         log.info("프로그램 조회... : " + pgIdx);
         try {
-            return new ResponseEntity<>(programService.getProgramByPgIdx(pgIdx), HttpStatus.OK);
+            return new ResponseEntity<>(comProgramService.getProgramByPgIdx(pgIdx), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 조회 실패", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -76,7 +79,7 @@ public class ComProgramController {
         log.info("프로그램 내용 수정... : " + program.toString());
 
         try {
-            programService.updateProgram(program);
+            comProgramService.updateProgram(program);
             return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +91,7 @@ public class ComProgramController {
     public ResponseEntity<?> getAllPrograms() {
         log.info("프로그램 전체 목록 조회...");
 
-        return new ResponseEntity<>(programService.getAllPrograms(), HttpStatus.OK);
+        return new ResponseEntity<>(comProgramService.getAllPrograms(), HttpStatus.OK);
     }
 
 }

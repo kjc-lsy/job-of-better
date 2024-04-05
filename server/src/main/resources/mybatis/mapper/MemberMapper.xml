@@ -96,7 +96,6 @@
         <!--<selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
             SELECT LAST_INSERT_ID() AS idx
         </selectKey>-->
-
         INSERT INTO member_role (role_name, username)
         VALUES (#{roleName}, #{username})
     </insert>
