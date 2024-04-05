@@ -31,4 +31,6 @@ public interface MemberMapper {
     void companyJoin(Company company);
 
     int checkDuplicateBno(String comLicenseNum);
+
+    Integer getApprovedCntByPgIdx(Long pgIdx);
 }

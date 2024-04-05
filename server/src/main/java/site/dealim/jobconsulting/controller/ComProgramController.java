@@ -9,16 +9,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.ProgramService;
+import site.dealim.jobconsulting.service.ComProgramService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/program")
 @Slf4j
-public class ProgramController {
+public class ComProgramController {
     @Autowired
-    private ProgramService programService;
+    private ComProgramService programService;
     @Secured("ROLE_COMPANY")
     @PostMapping("/insert-program")
     public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody Program program) {
@@ -90,4 +90,5 @@ public class ProgramController {
 
         return new ResponseEntity<>(programService.getAllPrograms(), HttpStatus.OK);
     }
+
 }

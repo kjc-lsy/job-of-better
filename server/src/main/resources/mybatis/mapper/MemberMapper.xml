@@ -146,4 +146,12 @@
     <select id="checkDuplicateBno" resultType="int">
         SELECT count(*) FROM company WHERE com_license_num = #{comLicenseNum}
     </select>
+
+    <!-- 프로그램 별 승인된 가입자 수 -->
+    <select id="getApprovedCntByPgIdx" resultType="Integer" parameterType="Long">
+        SELECT COUNT(*)
+        FROM member m
+                 LEFT OUTER JOIN program p ON m.pg_idx = p.pg_idx
+        WHERE m.pg_reg_status = 'Approved' and m.pg_idx = #{param}
+    </select>
 </mapper>
