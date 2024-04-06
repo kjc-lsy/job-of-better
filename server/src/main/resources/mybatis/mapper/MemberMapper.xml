@@ -175,4 +175,9 @@
         WHERE m.reg_status = #{regStatus} and m.pg_idx = #{pgIdx}
     </select>
 
+    <!-- mypg -->
+    <update id="interviewTimeSave" parameterType="map">
+        UPDATE member SET desired_interview_date = #{desiredInterviewDate} WHERE idx = #{idx}
+    </update>
+
 </mapper>

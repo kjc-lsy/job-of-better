@@ -18,5 +18,5 @@ public interface ComCoverLetterMapper {
 
     List<ComCoverLetter> userCoverLetterInfo(Long comIdx);
 
-
+    List<ComCoverLetter> coverLetterInfo(long idx, Long comIdx);
 }

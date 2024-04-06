@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site.dealim.jobconsulting.mapper.ComCoverLetterMapper">
+
     <!-- 자소서 질문 등록 -->
     <insert id="ComCoverLetterinsert" parameterType="Map">
         INSERT INTO company_cover_letter (ccl_com_idx, ccl_letter_question, ccl_min_length, ccl_max_length)

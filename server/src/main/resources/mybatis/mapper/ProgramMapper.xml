@@ -7,7 +7,8 @@
     <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
-        WHERE pg_com_idx = #{param} AND pg_is_withdrawn = 'N'
+        WHERE pg_com_idx = #{param}
+          AND pg_is_withdrawn = 'N'
     </select>
 
     <insert id="insertProgram" parameterType="Program">
@@ -48,7 +49,8 @@
     <select id="selectByPgIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
-        WHERE pg_idx = #{param} and pg_is_withdrawn = 'N'
+        WHERE pg_idx = #{param}
+          and pg_is_withdrawn = 'N'
     </select>
 
     <update id="updateProgram" parameterType="Program">
@@ -111,16 +113,52 @@
     <select id="selectAllValidPrograms" resultType="Program">
         SELECT *
         FROM program
-        WHERE DATE(pg_prog_start_date) &lt;= DATE(NOW())
-          AND DATE(pg_prog_end_date) &gt;= DATE(NOW())
+        WHERE DATE (pg_prog_start_date) &lt;= DATE (NOW())
+          AND DATE (pg_prog_end_date) &gt;= DATE (NOW())
           AND pg_is_withdrawn = 'N'
     </select>
 
-    <select id="pgInfo" parameterType="Long" resultType="site.dealim.jobconsulting.dto.ProgramCompanyDto">
-        SELECT * FROM program p
-        LEFT JOIN Company c p.pg_com_idx = c.com_idx
-        WHERE p.pg_idx = #{param}
-    </select>
+    <!-- resultMap 정의 -->
+    <resultMap id="pgInfoResultMap" type="site.dealim.jobconsulting.dto.ProgramCompanyDto">
+        <!-- Program 객체에 대한 매핑 -->
+        <association property="program" javaType="site.dealim.jobconsulting.domain.Program">
+            <!-- Program 클래스의 모든 필드에 대한 매핑 -->
+            <result property="pgIdx" column="pg_idx"/>
+            <result property="pgComIdx" column="pg_com_idx"/>
+            <result property="pgTitle" column="pg_title"/>
+            <result property="pgContent" column="pg_content"/>
+            <result property="pgContentSummary" column="pg_content_summary"/>
+            <result property="pgProgStartDate" column="pg_prog_start_date"/>
+            <result property="pgProgEndDate" column="pg_prog_end_date"/>
+            <result property="pgEduStartDate" column="pg_edu_start_date"/>
+            <result property="pgEduEndDate" column="pg_edu_end_date"/>
+            <result property="pgRegValStartDate" column="pg_reg_val_start_date"/>
+            <result property="pgRegValEndDate" column="pg_reg_val_end_date"/>
+            <result property="pgInterviewValStartDate" column="pg_interview_val_start_date"/>
+            <result property="pgInterviewValEndDate" column="pg_interview_val_end_date"/>
+            <result property="pgInterviewValStartTime" column="pg_interview_val_start_time"/>
+            <result property="pgInterviewValEndTime" column="pg_interview_val_end_time"/>
+            <result property="pgCreatedDate" column="pg_created_date"/>
+            <result property="pgModifiedDate" column="pg_modified_date"/>
+            <result property="pgIsWithdrawn" column="pg_is_withdrawn"/>
+            <!-- 나머지 Program 클래스의 모든 필드에 대한 매핑 -->
+        </association>
+        <!-- Company 객체에 대한 매핑 -->
+        <association property="company" javaType="site.dealim.jobconsulting.domain.Company">
+            <result property="comIdx" column="com_idx"/>
+            <result property="comName" column="com_name"/>
+            <result property="comAddress" column="com_address"/>
+            <result property="comLogo" column="com_logo"/>
+            <!-- 필요한 필드들만 매핑 -->
+        </association>
+    </resultMap>
 
+    <!-- SQL 쿼리에서 resultMap 참조 -->
+    <select id="pgInfo" parameterType="Long" resultMap="pgInfoResultMap">
+        SELECT p.*, c.*
+        FROM program p
+                 LEFT JOIN company c ON p.pg_com_idx = c.com_idx
+        WHERE p.pg_idx = #{pgIdx}
+    </select>
 
 </mapper>

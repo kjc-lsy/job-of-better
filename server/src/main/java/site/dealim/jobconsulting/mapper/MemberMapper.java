@@ -42,4 +42,6 @@ public interface MemberMapper {
     Integer updateRegStatus(@Param("regStatus")String regStatus, @Param("memIdx")Long memIdx);
 
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
+
+    void interviewTimeSave(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
 }
