@@ -13,8 +13,9 @@ public interface ProgramMapper {
     public int updateIsWithdrawn(Long pgIdx);
     public Program selectByPgIdx(Long pgIdx);
     public int updateProgram(Program program);
+    public List<Program> selectAllPrograms();
 
-    List<Program> selectAllPrograms();
+    public List<Program> selectAllValidPrograms();
 
     public ProgramCompanyDto pgInfo(Long pgIdx);
 }

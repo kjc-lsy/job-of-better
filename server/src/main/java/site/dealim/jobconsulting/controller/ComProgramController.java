@@ -12,8 +12,6 @@ import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComProgramService;
 import site.dealim.jobconsulting.service.UserProgramService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/com/program")
 @Slf4j
@@ -35,16 +33,6 @@ public class ComProgramController {
             return new ResponseEntity<>("프로그램 추가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("프로그램을 추가 하였습니다", HttpStatus.OK);
-    }
-
-    @Secured({"ROLE_COMPANY", "ROLE_USER"})
-    @PostMapping("/get-programs")
-    public ResponseEntity<?> getPrograms() {
-        log.info("프로그램 목록 조회...");
-
-        List<Program> programs = userProgramService.getAllPrograms();
-
-        return new ResponseEntity<>(programs, HttpStatus.OK);
     }
 
     @Secured("ROLE_COMPANY")
@@ -87,10 +75,10 @@ public class ComProgramController {
         }
     }
 
+    @Secured("ROLE_COMPANY")
     @PostMapping("/get-all-programs")
     public ResponseEntity<?> getAllPrograms() {
         log.info("프로그램 전체 목록 조회...");
-
         return new ResponseEntity<>(comProgramService.getAllPrograms(), HttpStatus.OK);
     }
 

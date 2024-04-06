@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.UserProgramService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/program")
@@ -35,5 +38,16 @@ public class UserProgramController {
     public ResponseEntity<?> getComNameByComIdx(@RequestParam("comIdx") Long comIdx) {
         return new ResponseEntity<>(userProgramService.getComNameByComIdx(comIdx), HttpStatus.OK);
     }
+
+    @Secured({"ROLE_USER"})
+    @PostMapping("/get-programs")
+    public ResponseEntity<?> getPrograms() {
+        log.info("프로그램 목록 조회...");
+
+        List<Program> programs = userProgramService.getAllPrograms();
+
+        return new ResponseEntity<>(programs, HttpStatus.OK);
+    }
+
 
 }

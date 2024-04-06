@@ -105,6 +105,12 @@
     <select id="selectAllPrograms" resultType="Program">
         SELECT *
         FROM program
+        WHERE pg_is_withdrawn = 'N'
+    </select>
+
+    <select id="selectAllValidPrograms" resultType="Program">
+        SELECT *
+        FROM program
         WHERE DATE(pg_prog_start_date) &lt;= DATE(NOW())
           AND DATE(pg_prog_end_date) &gt;= DATE(NOW())
           AND pg_is_withdrawn = 'N'

@@ -31,7 +31,7 @@ public class UserProgramService {
     }
 
     public List<Program> getAllPrograms() {
-        return programMapper.selectAllPrograms();
+        return programMapper.selectAllValidPrograms();
     }
 
 }

@@ -2,7 +2,7 @@ import api from "./api";
 
 export const saveProgram = (inputValues) => api.post('/api/com/program/insert-program', inputValues)
 
-export const getPrograms = () => api.post('/api/com/program/get-programs')
+export const getPrograms = () => api.post('/api/com/program/get-all-programs')
 
 export const deleteProgram = (pgIdx) => api.delete('/api/com/program/delete-program/'+pgIdx)
 
