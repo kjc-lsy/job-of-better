@@ -44,6 +44,10 @@ dependencies {
 
     // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // open ai
+    implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.0'
+
 }
 
 tasks.named('test') {
