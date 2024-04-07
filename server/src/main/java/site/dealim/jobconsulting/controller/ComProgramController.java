@@ -82,6 +82,13 @@ public class ComProgramController {
         return new ResponseEntity<>(comProgramService.getAllPrograms(), HttpStatus.OK);
     }
 
+    @Secured("ROLE_COMPANY")
+    @GetMapping("/get-content-summary")
+    public ResponseEntity<?> getContentSummary(@RequestParam(value = "pgIdx") Long pgIdx) {
+        log.info("프로그램 내용 SUMMARY 가져오기...");
+        return new ResponseEntity<>(comProgramService.getContSummary(pgIdx), HttpStatus.OK);
+    }
+
     @GetMapping("/get-all-mem-num")
     public ResponseEntity<?> getAllMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
         log.info("프로그램 전체 회원 수 가져오기...");

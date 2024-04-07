@@ -2,6 +2,7 @@ package site.dealim.jobconsulting.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,8 @@ public class TestController {
     }
 
     @PostMapping("/vertex-ai")
-    public ResponseEntity<?> getSummary(@RequestParam(value = "prompt") String prompt) throws IOException {
-        return ResponseEntity.ok(vertexAiService.sendMsg(prompt));
+    public ResponseEntity<?> getSummary(@RequestParam(value = "prompt") String prompt) throws IOException, JSONException {
+        return ResponseEntity.ok(vertexAiService.sendMsgOnTextBison(prompt));
     }
 
 }

@@ -23,11 +23,6 @@ const ProgramModify = () => {
     const [interviewValTimeRange, setInterviewValTimeRange] = useState([null, null]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const onChangeGetHTML = () => {
-        const data = editorRef.current.getInstance().getHTML();
-        setContent(data);
-    }
-
     useEffect(() => {
         if (isLogin) {
             getProgram(pgIdx).then((response) => {
@@ -59,6 +54,11 @@ const ProgramModify = () => {
             });
         }
     }, [isLogin]);
+
+    const onChangeMarkdown = () => {
+        const data = editorRef.current.getInstance().getMarkdown();
+        setContent(data);
+    }
 
     const addNineHours = (date) => {
         if (!date) return null;
@@ -166,11 +166,13 @@ const ProgramModify = () => {
                             <div className="program-subcategory">프로그램 내용</div>
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
+                                    key={content}
                                     height="600px"
                                     previewStyle={window.innerWidth < 991 ? 'tab' : 'vertical'}
                                     initialEditType="markdown"
                                     ref={editorRef}
-                                    onChange={onChangeGetHTML}
+                                    onChange={onChangeMarkdown}
+                                    initialValue={content}
                                 />
                             </div>
                         </FormGroup>

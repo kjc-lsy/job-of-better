@@ -63,6 +63,9 @@
                 <if test="pgContent != null">
                     pg_content = #{pgContent},
                 </if>
+                <if test="pgContentSummary != null">
+                    pg_content_summary = #{pgContentSummary},
+                </if>
                 <if test="pgProgStartDate != null">
                     pg_prog_start_date = #{pgProgStartDate},
                 </if>

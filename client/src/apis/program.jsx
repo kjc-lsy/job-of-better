@@ -23,3 +23,5 @@ export const getApprovedMemNum = (pgIdx) => api.get(`/api/com/program/get-approv
 export const getPendingMemNum = (pgIdx) => api.get(`/api/com/program/get-pending-mem-num?pgIdx=${pgIdx}`)
 
 export const getRejectedMemNum = (pgIdx) => api.get(`/api/com/program/get-rejected-mem-num?pgIdx=${pgIdx}`)
+
+export const getContentSummary = (pgIdx) => api.get(`/api/com/program/get-content-summary?pgIdx=${pgIdx}`)

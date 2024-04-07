@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
-import {getProgram} from "../../../apis/program";
+import {getContentSummary, getProgram} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -12,21 +12,40 @@ import ApprovedNumber from "../../../components/Infos/numbers/ApprovedNumber";
 import PendingNumber from "../../../components/Infos/numbers/PendingNumber";
 import RejectedNumber from "../../../components/Infos/numbers/RejectedNumber";
 import ProgramDateInfos from "../../../components/Infos/ProgramDateInfos";
+import RefreshButton from "../../../components/Buttons/RefreshButton";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
     const navigate = useNavigate();
     const {isLogin} = useAuth();
     const [program, setProgram] = useState();
+    const [isSummaryLoading, setIsSummaryLoading] = useState(false);
 
     useEffect(() => {
         if (isLogin) {
-            getProgram(pgIdx).then((response) => {
-                const fetchedProgram = response.data
-                setProgram({...fetchedProgram})
-            });
+            updateProgram(pgIdx);
         }
     }, [isLogin]);
+
+    const updateProgram = (pgIdx) => {
+        getProgram(pgIdx).then((response) => {
+            const fetchedProgram = response.data
+            setProgram({...fetchedProgram})
+        });
+    }
+
+    const handleSummaryRefreshBtn = async () => {
+        setIsSummaryLoading(true)
+
+        try {
+            await getContentSummary(pgIdx);
+            await updateProgram(pgIdx);
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setIsSummaryLoading(false)
+        }
+    }
 
     const handleModifyBtn = (pgIdx) => {
         navigate('/company/program-modify/' + pgIdx)
@@ -115,8 +134,19 @@ const ProgramInfo = () => {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <label>AI 교육요약</label>
-                                        <div className="form-control">{program ? program.pgContentSummary : null}</div>
+                                        <div className="ai-summary-label">
+                                            <label>AI 교육요약</label>
+                                            <RefreshButton
+                                                onClick={handleSummaryRefreshBtn}
+                                                loading={isSummaryLoading}
+                                            />
+                                        </div>
+                                        <div className="form-control">
+                                            <Viewer
+                                                key={program ? program.pgContentSummary : null}
+                                                initialValue={program ? program.pgContentSummary : null}
+                                            />
+                                        </div>
                                     </Col>
                                 </Row>
                             </div>
