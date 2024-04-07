@@ -9,6 +9,7 @@ import ProgramCardHeader from "./ProgramCardHeader";
 import TotalRegNumber from "../Infos/numbers/TotalRegNumber";
 import ApprovedNumber from "../Infos/numbers/ApprovedNumber";
 import PendingNumber from "../Infos/numbers/PendingNumber";
+import {Viewer} from "@toast-ui/react-editor";
 
 const ComProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
@@ -78,8 +79,13 @@ const ComProgramCard = ({program, loadPrograms}) => {
                 </Row>
                 <Row>
                     <Col md="12">
-                        <label>교육내용</label>
-                        <div className="form-control">짧은 교육내용 요약을 여기에 입력</div>
+                        <label>AI 교육요약</label>
+                        <div className="form-control">
+                            <Viewer
+                                key={program ? program.pgContentSummary : null}
+                                initialValue={program ? program.pgContentSummary : ""}
+                            />
+                        </div>
                     </Col>
                 </Row>
             </CardBody>

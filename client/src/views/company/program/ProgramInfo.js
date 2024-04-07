@@ -144,7 +144,7 @@ const ProgramInfo = () => {
                                         <div className="form-control">
                                             <Viewer
                                                 key={program ? program.pgContentSummary : null}
-                                                initialValue={program ? program.pgContentSummary : null}
+                                                initialValue={program ? program.pgContentSummary : ""}
                                             />
                                         </div>
                                     </Col>
