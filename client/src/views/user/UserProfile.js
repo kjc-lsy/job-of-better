@@ -86,6 +86,7 @@ function UserProfile() {
     const userInfo = async () => {
         try {
             const response = await user.userProfileInfo();
+            //console.log(response.data.desiredInterviewDate);
             // 사용자 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
@@ -93,7 +94,10 @@ function UserProfile() {
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
                 regStatus: response.data.regStatus,
+                interviewDate : new Date((response.data.desiredInterviewDate).split("T")[0]),
+                interviewTime : new Date(response.data.desiredInterviewDate),
             }));
+            //console.log(inputValue.interviewTime);
         } catch (error) {
             console.error(error.response.data);
         }
@@ -149,7 +153,7 @@ function UserProfile() {
         const interviewTimeStr = inputValue.interviewTime.toTimeString().split(' ')[0];
 
         // interviewDateTime 문자열 생성
-        const interviewDateTime = interviewDateStr + ' ' + interviewTimeStr;
+        const interviewDateTime = interviewDateStr + 'T' + interviewTimeStr;
         console.log(interviewDateTime);
 
         // 서버에 저장
@@ -315,19 +319,23 @@ function UserProfile() {
                                 <thead className="text-primary">
                                 <tr>
                                     <th>프로그램명</th>
-                                    <th>기관명</th>
-                                    <th>전화번호</th>
-                                    {/*<th className="text-center">면접시간</th>
-                                    <th className="text-center">상태</th>*/}
+                                    <th className="text-center">기관명</th>
+                                    <th className="text-center">전화번호</th>
+                                    <th className="text-center">지역</th>
+                                    <th className="text-center">상태</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td><b>{inputValue.pgTitle}</b></td>
-                                    <td>{inputValue.pgComName}</td>
-                                    <td>{inputValue.pgComTel}</td>
-                                    {/*<td className="text-center">24.04.15 14:30</td>
-                                    <td className="text-center">확정</td>*/}
+                                    <td className="text-center">{inputValue.pgComName}</td>
+                                    <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>
+                                    <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
+                                    <td className="text-center">
+                                        <span className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
+                                            {inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}
+                                        </span>
+                                    </td>
                                 </tr>
 
                                 </tbody>
@@ -395,7 +403,12 @@ function UserProfile() {
                                 </div>
                                 <div>
                                     <span>상태</span>
-                                    <p>{inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}</p>
+                                    <p>
+                                        <span
+                                            className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
+                                            {inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </CardFooter>

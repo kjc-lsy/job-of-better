@@ -44,9 +44,10 @@ public class MyInfoController {
         return myinfoService.coverLetterInfo(user.getIdx(),user.getPgIdx());
     }
 
-    @PostMapping("interview-time-save/interviewDate")
-    public void interviewTimeSave(@PathVariable("interviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
+    @PostMapping("/interview-time-save")
+    public void interviewTimeSave(@RequestParam("desiredInterviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
         Member user = customMember.getMember();
+        System.out.println("desiredInterviewDate = " + desiredInterviewDate);
         myinfoService.interviewTimeSave(desiredInterviewDate,user.getIdx());
     }
 }

@@ -28,6 +28,9 @@ b {
 p {
   word-break: keep-all;
 }
+.nav-link {
+  cursor:pointer
+}
 
 @mixin ellipsis($lines: 1) {
   @if $lines == 1 {
@@ -472,7 +475,7 @@ form.form-register label + .form-control {
 
     .register_addr {
       .btn {
-        padding: 10px 13px;
+        padding: 11.5px 13px;
         margin: 0;
       }
 
@@ -576,7 +579,7 @@ $base-width: 10%;*/
 }
 @mixin rollAnimation($angle) {
   .percent#{$angle} {
-    animation: 0.5s roll#{$angle} 0.5s linear alternate both;
+    animation: 0.5s roll#{$angle} 0.5s ease-in alternate both;
   }
   @keyframes roll#{$angle} {
     to {
@@ -601,7 +604,13 @@ $base-width: 10%;*/
   p {
     font-size:18px;
     margin-bottom: 20px;
+    > span {
+      font-size: 18px;
+      margin-bottom: 20px;
+      opacity:1
+    }
   }
+
 }
 .card-user-box.card {
   .card-title {
@@ -678,7 +687,7 @@ td {
       td {
         font-size: 18px;
         font-weight: 300;
-        color: $font-color !important
+        color: $font-color !important;
       }
     }
   }
@@ -693,8 +702,17 @@ td {
     flex-direction: column;
 
   }
-  .btn {
+  .programInfo .btn {
     padding: 8px 30px;
+  }
+  span.reject {
+    color: darkred;
+  }
+  span.delay {
+    color: #8c8e90;
+  }
+  span.confirm {
+    color: blue;
   }
 }
 .card-user .avatar {
