@@ -28,6 +28,5 @@ public interface ProgramMapper {
 
     public ProgramCompanyDto pgInfo(@Param("pgIdx") Long pgIdx);
 
-    List<ComCoverLetter> coverLetterInfo(long idx, Long pgIdx);
 
 }

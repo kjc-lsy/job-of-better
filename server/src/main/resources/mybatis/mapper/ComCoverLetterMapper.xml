@@ -33,9 +33,11 @@
     </delete>
 
     <!-- 자소서 조회 -->
-    <select id="userCoverLetterInfo" resultType="ComCoverLetter">
+    <select id="userCoverLetterInfo" resultType="ComCoverLetter" parameterType="Long">
         SELECT *
-        FROM company_cover_letter
+        FROM company_cover_letter c
+            JOIN program p on c.ccl_com_idx = p.pg_com_idx
+        WHERE p.pg_idx = #{param}
     </select>
 
 </mapper>

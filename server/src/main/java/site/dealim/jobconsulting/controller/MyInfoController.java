@@ -38,7 +38,7 @@ public class MyInfoController {
     }
 
     @GetMapping("/cover-letter-info")
-    public List<ComCoverLetter> coverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+    public int[] coverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
         return myinfoService.coverLetterInfo(user.getIdx(),user.getPgIdx());
@@ -46,8 +46,10 @@ public class MyInfoController {
 
     @PostMapping("/interview-time-save")
     public void interviewTimeSave(@RequestParam("desiredInterviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
+        log.info("면접시간 저장");
         Member user = customMember.getMember();
-        System.out.println("desiredInterviewDate = " + desiredInterviewDate);
+        //System.out.println("desiredInterviewDate = " + desiredInterviewDate);
         myinfoService.interviewTimeSave(desiredInterviewDate,user.getIdx());
     }
+
 }

@@ -6,6 +6,8 @@ import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
+import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
+import site.dealim.jobconsulting.mapper.MemCoverLetterMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
 
@@ -19,6 +21,10 @@ public class MyInfoService {
     private MemberMapper memberMapper;
     @Autowired
     private ProgramMapper programMapper;
+    @Autowired
+    private ComCoverLetterMapper comCoverLetterMapper;
+    @Autowired
+    private MemCoverLetterMapper memberCoverLetterMapper;
 
     public Member userProfileInfo(String username) {
         return memberMapper.login(username);
@@ -28,8 +34,13 @@ public class MyInfoService {
         return programMapper.pgInfo(pgIdx);
     }
 
-    public List<ComCoverLetter> coverLetterInfo(long idx, Long pgIdx) {
-        return programMapper.coverLetterInfo(idx, pgIdx);
+    public int[] coverLetterInfo(long idx, Long pgIdx) {
+        int[] coverLetterInfo = new int[2];
+        //System.out.println(comCoverLetterMapper.userCoverLetterInfo(pgIdx));
+        coverLetterInfo[0] = (comCoverLetterMapper.userCoverLetterInfo(pgIdx)).size();
+        coverLetterInfo[1] = memberCoverLetterMapper.coverLetterInfo(idx,pgIdx);
+        //System.out.println("coverLetterInfo = " + coverLetterInfo.toString());
+        return coverLetterInfo;
     }
 
     public void interviewTimeSave(String desiredInterviewDate, long idx) {

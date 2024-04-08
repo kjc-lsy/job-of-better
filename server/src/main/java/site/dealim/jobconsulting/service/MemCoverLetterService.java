@@ -16,8 +16,8 @@ public class MemCoverLetterService {
     @Autowired
     private ComCoverLetterMapper comCoverLetterMapper;
 
-    public List<ComCoverLetter> userCoverLetterInfo(Long comIdx) {
-        return comCoverLetterMapper.userCoverLetterInfo(comIdx);
+    public List<ComCoverLetter> userCoverLetterInfo(Long pgIdx) {
+        return comCoverLetterMapper.userCoverLetterInfo(pgIdx);
     }
 
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx, Long comIdx) {

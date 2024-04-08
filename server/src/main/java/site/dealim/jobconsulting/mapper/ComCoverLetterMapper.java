@@ -16,7 +16,6 @@ public interface ComCoverLetterMapper {
 
     void ComCoverLetterDelete(HashMap map);
 
-    List<ComCoverLetter> userCoverLetterInfo(Long comIdx);
+    List<ComCoverLetter> userCoverLetterInfo(Long pgIdx);
 
-    List<ComCoverLetter> coverLetterInfo(long idx, Long comIdx);
 }

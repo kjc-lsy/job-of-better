@@ -25,8 +25,12 @@ function UserProfile() {
         gender:"",
         regStatus:"",
 
-        resumeLength:"",
-        coverLetterLength:"",
+        resumeLength:0,
+        resumeTotalLength:0,
+        resumePercent:0,
+        coverLetterLength:0,
+        coverLetterTotalLength:0,
+        coverLetterPercent:0,
 
         mclTitle:"",
         mclIsConfirm:false,
@@ -74,7 +78,7 @@ function UserProfile() {
         // 파일 업로드 등의 추가 작업을 수행할 수 있습니다.
     };
     useEffect(() => {
-        Promise.all([userInfo(), pgInfo()])
+        Promise.all([userInfo(), pgInfo(),coverLetterInfo()])
             .catch((error) => {
                 console.error(error.response.data);
             });
@@ -136,6 +140,11 @@ function UserProfile() {
     const coverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
+            //console.log(response.data);
+            setInputValue((prevInputValue) => ({
+                ...prevInputValue,
+                coverLetterPercent: (response.data[1] / response.data[0]) * 100
+            }))
         }catch(error) {
             console.error(error.response.data);
         }
@@ -227,8 +236,8 @@ function UserProfile() {
                                 </Col>
                                 <Col md={4}>
                                     <b>자기소개서</b>
-                                    <div className="percent percent52">
-                                        <span>20%</span>
+                                    <div className={"percent percent"+inputValue.coverLetterPercent * 3.6}>
+                                        <span>{inputValue.coverLetterPercent}%</span>
                                     </div>
                                     <a onClick={(e) => {
                                         e.preventDefault()

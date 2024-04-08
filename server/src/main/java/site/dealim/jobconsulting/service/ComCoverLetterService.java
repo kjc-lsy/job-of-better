@@ -44,4 +44,7 @@ public class ComCoverLetterService {
         companyMapper.ComCoverLetterDelete(map);
     }
 
+    public List<ComCoverLetter> coverLetterInfo(Long pgIdx) {
+        return companyMapper.userCoverLetterInfo(pgIdx);
+    }
 }

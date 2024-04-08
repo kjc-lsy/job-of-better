@@ -32,7 +32,8 @@ public class ComCoverLetterController {
     public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
-        return companyService.comCoverLetterInfo(user.getComIdx());
+        return companyService.coverLetterInfo(user.getPgIdx());
+        //return companyService.comCoverLetterInfo(user.getComIdx());
     }
 
     @DeleteMapping("/cover-letter-delete/{id}")
