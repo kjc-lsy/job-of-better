@@ -2,6 +2,7 @@ package site.dealim.jobconsulting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
@@ -18,7 +19,10 @@ public class UserProgramService {
     @Autowired
     private ProgramMapper programMapper;
 
-    public int updatePgIdx(Long pgIdx, Long memIdx) {
+    @Transactional
+    public int registerProgram(Long pgIdx, Long memIdx, Long comIdx) {
+        memberMapper.updateCompanyIdx(comIdx, memIdx);
+        memberMapper.updateRegStatus("Pending", memIdx);
         return memberMapper.updatePgIdx(pgIdx, memIdx);
     }
 
@@ -27,7 +31,7 @@ public class UserProgramService {
     }
 
     public List<Program> getAllPrograms() {
-        return programMapper.selectAllPrograms();
+        return programMapper.selectAllValidPrograms();
     }
 
 }

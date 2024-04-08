@@ -1075,6 +1075,25 @@ td {
         font-size: 24px
       }
 
+      .ai-summary-label {
+        display: flex;
+        align-items: center;
+      }
+
+      .refresh-btn {
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
+        padding: 0;
+        margin-bottom: 5px;
+        color: $label-color;
+        background-color: transparent;
+
+        svg {
+          font-size: 14px;
+        }
+      }
+
     }
   }
 

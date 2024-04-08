@@ -6,6 +6,10 @@ import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import ProgramCardHeader from "./ProgramCardHeader";
+import TotalRegNumber from "../Infos/numbers/TotalRegNumber";
+import ApprovedNumber from "../Infos/numbers/ApprovedNumber";
+import PendingNumber from "../Infos/numbers/PendingNumber";
+import {Viewer} from "@toast-ui/react-editor";
 
 const ComProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
@@ -39,21 +43,21 @@ const ComProgramCard = ({program, loadPrograms}) => {
                             <FontAwesomeIcon icon={faUsers}/>
                         </div>
                         <label>총 신청자</label>
-                        <div className="num-info">9명</div>
+                        <TotalRegNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
                         <div>
                             <FontAwesomeIcon icon={faUserCheck}/>
                         </div>
                         <label>참여자 수</label>
-                        <div className="num-info">6명</div>
+                        <ApprovedNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
                         <div>
                             <FontAwesomeIcon icon={faUserClock}/>
                         </div>
                         <label>미확인 자</label>
-                        <div className="num-info">4명</div>
+                        <PendingNumber pgIdx={program.pgIdx}/>
                     </Col>
                     {/*<Col md='3'>*/}
                     {/*    <div>*/}
@@ -75,8 +79,13 @@ const ComProgramCard = ({program, loadPrograms}) => {
                 </Row>
                 <Row>
                     <Col md="12">
-                        <label>교육내용</label>
-                        <div className="form-control">짧은 교육내용 요약을 여기에 입력</div>
+                        <label>AI 교육요약</label>
+                        <div className="form-control">
+                            <Viewer
+                                key={program ? program.pgContentSummary : null}
+                                initialValue={program ? program.pgContentSummary : ""}
+                            />
+                        </div>
                     </Col>
                 </Row>
             </CardBody>

@@ -44,5 +44,4 @@ public class ComCoverLetterController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
-
 }

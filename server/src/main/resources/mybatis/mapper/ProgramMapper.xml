@@ -4,11 +4,11 @@
 
 <mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
 
-    <!-- program 조회 -->
     <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
         WHERE pg_com_idx = #{param}
+          AND pg_is_withdrawn = 'N'
     </select>
 
     <insert id="insertProgram" parameterType="Program">
@@ -40,16 +40,17 @@
                 #{pgContent})
     </insert>
 
-    <delete id="deleteByPgIdx" parameterType="Long">
-        DELETE
-        FROM program
+    <update id="updateIsWithdrawn" parameterType="Long">
+        UPDATE program
+        SET pg_is_withdrawn = 'Y'
         WHERE pg_idx = #{param}
-    </delete>
+    </update>
 
     <select id="selectByPgIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
         WHERE pg_idx = #{param}
+          and pg_is_withdrawn = 'N'
     </select>
 
     <update id="updateProgram" parameterType="Program">
@@ -61,6 +62,9 @@
                 </if>
                 <if test="pgContent != null">
                     pg_content = #{pgContent},
+                </if>
+                <if test="pgContentSummary != null">
+                    pg_content_summary = #{pgContentSummary},
                 </if>
                 <if test="pgProgStartDate != null">
                     pg_prog_start_date = #{pgProgStartDate},
@@ -104,9 +108,17 @@
     </update>
 
     <select id="selectAllPrograms" resultType="Program">
-        SELECT * FROM program
-        WHERE DATE(pg_prog_start_date) &lt;= DATE(NOW())
-          AND DATE(pg_prog_end_date) &gt;= DATE(NOW());
+        SELECT *
+        FROM program
+        WHERE pg_is_withdrawn = 'N'
+    </select>
+
+    <select id="selectAllValidPrograms" resultType="Program">
+        SELECT *
+        FROM program
+        WHERE DATE (pg_prog_start_date) &lt;= DATE (NOW())
+          AND DATE (pg_prog_end_date) &gt;= DATE (NOW())
+          AND pg_is_withdrawn = 'N'
     </select>
 
     <!-- resultMap 정의 -->
@@ -144,14 +156,12 @@
         </association>
     </resultMap>
 
-
     <!-- SQL 쿼리에서 resultMap 참조 -->
     <select id="pgInfo" parameterType="Long" resultMap="pgInfoResultMap">
         SELECT p.*, c.*
-        FROM program p LEFT JOIN company c ON p.pg_com_idx = c.com_idx
+        FROM program p
+                 LEFT JOIN company c ON p.pg_com_idx = c.com_idx
         WHERE p.pg_idx = #{pgIdx}
     </select>
-
-
 
 </mapper>

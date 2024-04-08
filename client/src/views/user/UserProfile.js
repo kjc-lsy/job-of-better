@@ -17,10 +17,8 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 function UserProfile() {
 
     const navigate = useNavigate();
-
     const imgRef = useRef();
     const {isLogin} = useAuth();
-
     const [inputValue, setInputValue] = React.useState({
         name: "",
         profileImg:"" , //require("assets/img/emilyz.jpg")

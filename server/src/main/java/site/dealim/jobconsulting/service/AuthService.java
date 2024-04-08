@@ -17,12 +17,9 @@ import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Slf4j
 @Service
-public class AuthServiceImpl {
+public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -155,10 +152,7 @@ public class AuthServiceImpl {
         return companyMapper.checkDuplicateBno(comLicenseNum) > 0;
     }
 
-    public void addCompanyIdx(Long comIdx, long idx) {
-        Map map = new HashMap();
-        map.put("comIdx", comIdx);
-        map.put("idx", idx);
-        companyMapper.addCompanyIdx(map);
+    public void updateCompanyIdx(Long comIdx, long idx) {
+        memberMapper.updateCompanyIdx(comIdx, idx);
     }
 }

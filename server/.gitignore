@@ -44,3 +44,6 @@ sql-scripts/*
 
 ### react buildfiles ###
 /src/main/resources/static/**
+
+### json-key ###
+/src/main/resources/*.json
