@@ -187,4 +187,8 @@
         UPDATE member SET desired_interview_date = #{desiredInterviewDate} WHERE idx = #{idx}
     </update>
 
+    <select id="selectAllMembers" resultMap="memberMap">
+        SELECT * FROM member
+    </select>
+
 </mapper>

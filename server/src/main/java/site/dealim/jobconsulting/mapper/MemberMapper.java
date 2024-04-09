@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
+import java.util.List;
+
 @Mapper
 public interface MemberMapper {
 
@@ -46,4 +48,6 @@ public interface MemberMapper {
     void interviewTimeSave(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
 
     int cancelRegister(Long memIdx);
+
+    List<Member> selectAllMembers();
 }

@@ -8,6 +8,10 @@ const ProgCurrentStatus = ({program}) => {
             setStatus("프로그램 시작 전")
         }
 
+        if(Date.now() > new Date(program?.pgProgStartDate).getTime() && Date.now() < new Date(program?.pgProgEndDate).getTime()) {
+            setStatus("프로그램 진행 중")
+        }
+
         if(Date.now() < new Date(program?.pgProgStartDate).getTime() && Date.now() > new Date(program?.pgProgEndDate).getTime()) {
             setStatus("대기 중")
         }

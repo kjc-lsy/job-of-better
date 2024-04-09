@@ -13,6 +13,7 @@ import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import {Viewer} from "@toast-ui/react-editor";
 
 function UserProfile() {
 
@@ -403,7 +404,12 @@ function UserProfile() {
                                 </Form>
                                 <div>
                                     <span>내용</span>
-                                    <p>{inputValue.pgContent}</p>
+                                    <p>
+                                        <Viewer
+                                            key={inputValue.pgContent}
+                                            initialValue={inputValue.pgContent}
+                                        />
+                                    </p>
                                 </div>
                                 <div>
                                     <span>상태</span>

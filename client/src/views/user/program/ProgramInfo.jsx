@@ -5,8 +5,8 @@ import {Viewer} from "@toast-ui/react-editor";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {getComNameByComIdx, getProgram, registerProgram} from "../../../apis/program";
-import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
+import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
