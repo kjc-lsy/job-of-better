@@ -156,7 +156,14 @@
     <update id="updateRegStatus" parameterType="Map" >
         UPDATE member
         SET reg_status = #{regStatus}
-        WHERE idx = ${memIdx}
+        WHERE idx = #{memIdx}
+    </update>
+
+    <!-- 프로그램 신청 취소 -->
+    <update id="cancelRegister" parameterType="Long">
+        UPDATE member
+            SET reg_status = null, com_idx = null, pg_idx = null
+        WHERE idx = #{param}
     </update>
 
     <!-- 총 신청자 수 -->

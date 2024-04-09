@@ -4,7 +4,7 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 // reactstrap components
 import {Col, Row,} from "reactstrap";
-import {getPrograms} from "../../../apis/program";
+import {getValidPrograms} from "../../../apis/program";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate} from "react-router-dom";
 import UserProgramCard from "../../../components/Card/UserProgramCard";
@@ -22,7 +22,7 @@ function Program() {
     }, [isLogin]);
 
     const loadPrograms = async () => {
-        const response = await getPrograms();
+        const response = await getValidPrograms();
         setPrograms(response.data);
     }
 

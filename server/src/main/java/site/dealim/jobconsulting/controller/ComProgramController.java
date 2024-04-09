@@ -75,7 +75,7 @@ public class ComProgramController {
         }
     }
 
-    @Secured({"ROLE_COMPANY", "ROLE_USER"})
+    @Secured("ROLE_COMPANY")
     @PostMapping("/get-all-programs")
     public ResponseEntity<?> getAllPrograms() {
         log.info("프로그램 전체 목록 조회...");

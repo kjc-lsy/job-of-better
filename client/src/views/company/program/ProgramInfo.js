@@ -11,8 +11,9 @@ import TotalRegNumber from "../../../components/Infos/numbers/TotalRegNumber";
 import ApprovedNumber from "../../../components/Infos/numbers/ApprovedNumber";
 import PendingNumber from "../../../components/Infos/numbers/PendingNumber";
 import RejectedNumber from "../../../components/Infos/numbers/RejectedNumber";
-import ProgramDateInfos from "../../../components/Infos/ProgramDateInfos";
+import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 import RefreshButton from "../../../components/Buttons/RefreshButton";
+import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -73,7 +74,9 @@ const ProgramInfo = () => {
                                 <Row>
                                     <Col>
                                         <label>현재 상태</label>
-                                        <div className="curr-status">면접 진행중</div>
+                                        <ProgCurrentStatus
+                                            program={program}
+                                        />
                                     </Col>
                                 </Row>
                                 <Row className="ppl-info-row">
@@ -152,7 +155,7 @@ const ProgramInfo = () => {
                             </div>
                         </Col>
                         <Col>
-                            <ProgramDateInfos program={program}/>
+                            <ProgDateInfos program={program}/>
                         </Col>
                     </Row>
                     <div className='program-title'>

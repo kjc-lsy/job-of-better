@@ -19,6 +19,7 @@ import java.util.List;
 public class UserProgramController {
     @Autowired
     private UserProgramService userProgramService;
+
     @Secured("ROLE_USER")
     @PutMapping("/register-program")
     public ResponseEntity<?> registerProgram(@AuthenticationPrincipal CustomMember customMember, @RequestParam("pgIdx") Long pgIdx, @RequestParam("pgComIdx") Long comIdx) {
@@ -40,13 +41,27 @@ public class UserProgramController {
     }
 
     @Secured({"ROLE_USER"})
-    @PostMapping("/get-programs")
+    @PostMapping("/get-valid-programs")
     public ResponseEntity<?> getPrograms() {
-        log.info("프로그램 목록 조회...");
+        log.info("사용 가능한 프로그램 목록 조회...");
 
         List<Program> programs = userProgramService.getAllPrograms();
 
         return new ResponseEntity<>(programs, HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @PostMapping("/cancel-register")
+    public ResponseEntity<?> cancelRegister(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("프로그램 신청 취소...");
+
+        Long memIdx = customMember.getMember().getIdx();
+        int result = userProgramService.calncelRegister(memIdx);
+
+        if(result == 1) {
+            return new ResponseEntity<>("프로그램 신청을 취소하였습니다.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("프로그램 신청을 취소할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

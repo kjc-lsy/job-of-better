@@ -150,8 +150,6 @@ function UserProfile() {
         }
     }
 
-
-
     const save =() => {
         // interviewDate를 'YYYY-MM-DD' 형식의 문자열로 변환
         const interviewDateStr = inputValue.interviewDate.toISOString().split('T')[0];
@@ -172,7 +170,6 @@ function UserProfile() {
             .catch((error) => {
                 alert(error.response.data);
             });
-
     }
 
     const ProgramState = () => {

@@ -44,4 +44,6 @@ public interface MemberMapper {
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
 
     void interviewTimeSave(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
+
+    int cancelRegister(Long memIdx);
 }

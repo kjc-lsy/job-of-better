@@ -30,6 +30,10 @@ public class UserProgramService {
         return companyMapper.getComNameByComIdx(comIdx);
     }
 
+    public int calncelRegister(Long memIdx) {
+        return memberMapper.cancelRegister(memIdx);
+    }
+
     public List<Program> getAllPrograms() {
         return programMapper.selectAllValidPrograms();
     }

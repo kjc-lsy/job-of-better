@@ -1,8 +1,7 @@
 import React from 'react';
 import {Col, Row, Table} from "reactstrap";
-import {format} from "date-fns";
 
-const ProgramDateInfos = ({program}) => {
+const ProgDateInfos = ({program}) => {
 
     return (
         <>
@@ -20,31 +19,13 @@ const ProgramDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">시작일</label>
-                                        <h4>{program ? format(program.pgProgStartDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgProgStartDate || "시작일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">종료일</label>
-                                        <h4>{program ? format(program.pgProgEndDate, 'yyyy-MM-dd') : null}</h4>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>교육 진행 기간</th>
-                        <td>
-                            <Row>
-                                <Col>
-                                    <div className="">
-                                        <label htmlFor="">시작일</label>
-                                        <h4>{program ? format(program.pgEduStartDate, 'yyyy-MM-dd') : null}</h4>
-                                    </div>
-                                </Col>
-                                <Col>
-                                    <div className=""><label htmlFor="">종료일</label>
-                                        <h4>{program ? format(program.pgEduEndDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgProgEndDate || "종료일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>
@@ -57,13 +38,31 @@ const ProgramDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">시작일</label>
-                                        <h4>{program ? format(program.pgRegValStartDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgRegValStartDate || "시작일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">종료일</label>
-                                        <h4>{program ? format(program.pgRegValEndDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgRegValEndDate || "종료일이 설정되지 않았습니다"}</h4>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>교육 진행 기간</th>
+                        <td>
+                            <Row>
+                                <Col>
+                                    <div className="">
+                                        <label htmlFor="">시작일</label>
+                                        <h4>{program?.pgEduStartDate || "시작일이 설정되지 않았습니다"}</h4>
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div className=""><label htmlFor="">종료일</label>
+                                        <h4>{program?.pgEduEndDate || "종료일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>
@@ -81,12 +80,12 @@ const ProgramDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">시작일</label>
-                                        <h4>{program ? format(program.pgInterviewValStartDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgProgStartDate || "시작일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className=""><label htmlFor="">종료일</label>
-                                        <h4>{program ? format(program.pgInterviewValEndDate, 'yyyy-MM-dd') : null}</h4>
+                                        <h4>{program?.pgProgEndDate || "종료일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>
@@ -99,13 +98,13 @@ const ProgramDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">시작시간</label>
-                                        <h4>{program ? (program.pgInterviewValStartTime ? program.pgInterviewValStartTime.substr(0, 5) : "시작 시간이 설정되지 않았습니다.") : null}</h4>
+                                        <h4>{program?.pgInterviewValStartTime?.substring(0,5) || "시작 시간이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">종료시간</label>
-                                        <h4>{program ? (program.pgInterviewValEndTime ? program.pgInterviewValEndTime.substr(0, 5) : "시작 시간이 설정되지 않았습니다.") : null}</h4>
+                                        <h4>{program?.pgInterviewValEndTime?.substring(0,5) || "종료 시간이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>
@@ -118,4 +117,4 @@ const ProgramDateInfos = ({program}) => {
     );
 };
 
-export default ProgramDateInfos;
+export default ProgDateInfos;

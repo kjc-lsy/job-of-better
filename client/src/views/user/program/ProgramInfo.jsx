@@ -5,7 +5,8 @@ import {Viewer} from "@toast-ui/react-editor";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {getComNameByComIdx, getProgram, registerProgram} from "../../../apis/program";
-import ProgramDateInfos from "../../../components/Infos/ProgramDateInfos";
+import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
+import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -57,19 +58,26 @@ const ProgramInfo = () => {
                                 <Row>
                                     <Col>
                                         <label>현재 상태</label>
-                                        <div className="curr-status">면접 진행중</div>
+                                        <ProgCurrentStatus
+                                            program={program}
+                                        />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
                                         <label>AI 교육요약</label>
-                                        <div className="form-control">{program ? program.pgContentSummary : null}</div>
+                                        <div className="form-control">
+                                            <Viewer
+                                                key={program ? program.pgContentSummary : null}
+                                                initialValue={program ? program.pgContentSummary : ""}
+                                            />
+                                        </div>
                                     </Col>
                                 </Row>
                             </div>
                         </Col>
                         <Col>
-                            <ProgramDateInfos program={program}/>
+                            <ProgDateInfos program={program}/>
                         </Col>
                     </Row>
                     <Row>

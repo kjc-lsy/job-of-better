@@ -4,15 +4,17 @@ export const saveProgram = (inputValues) => api.post('/api/com/program/insert-pr
 
 export const getPrograms = () => api.post('/api/com/program/get-all-programs')
 
+export const getValidPrograms = () => api.post('/api/user/program/get-valid-programs')
+
 export const deleteProgram = (pgIdx) => api.delete('/api/com/program/delete-program/'+pgIdx)
 
 export const getProgram = (pgIdx) => api.get(`/api/com/program/get-program?pgIdx=${pgIdx}`)
 
 export const updateProgram = (program) => api.put('/api/com/program/update-program', program)
 
-export const getAllPrograms = () => api.post('/api/com/program/get-all-programs')
-
 export const registerProgram = (pgIdx, pgComIdx) => api.put(`/api/user/program/register-program?pgIdx=${pgIdx}&pgComIdx=${pgComIdx}`)
+
+export const cancelRegister = () => api.post('/api/user/program/cancel-register')
 
 export const getComNameByComIdx = (comIdx) => api.get(`/api/user/program/get-com-name?comIdx=${comIdx}`)
 

@@ -4,16 +4,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCheck, faUserClock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
-import {useAuth} from "../../contexts/AuthContextProvider";
 import ProgramCardHeader from "./ProgramCardHeader";
 import TotalRegNumber from "../Infos/numbers/TotalRegNumber";
 import ApprovedNumber from "../Infos/numbers/ApprovedNumber";
 import PendingNumber from "../Infos/numbers/PendingNumber";
 import {Viewer} from "@toast-ui/react-editor";
+import ProgCurrentStatus from "../Infos/ProgCurrentStatus";
 
 const ComProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
-    const {roles} = useAuth();
     const handleDeleteBtn = async (id) => {
         if (window.confirm('프로그램을 삭제합니다')) {
             await deleteProgram(id);
@@ -34,7 +33,9 @@ const ComProgramCard = ({program, loadPrograms}) => {
                 <Row>
                     <Col>
                         <label>현재상태</label>
-                        <div className="curr-status">면접 진행중</div>
+                        <ProgCurrentStatus
+                            program={program}
+                        />
                     </Col>
                 </Row>
                 <Row className="num-info-section">
@@ -91,7 +92,7 @@ const ComProgramCard = ({program, loadPrograms}) => {
             </CardBody>
             <CardFooter>
                 <Button onClick={() => handleInfoBtn(program.pgIdx)}>상세정보</Button>
-                {roles.isCompany ? <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button> : null}
+                <Button onClick={() => handleDeleteBtn(program.pgIdx)}>삭제</Button>
             </CardFooter>
         </Card>
     );

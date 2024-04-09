@@ -89,14 +89,14 @@ export const AuthContextProvider = ({children}) => {
     }
 
     const loginSetting = (userData) => {
-        const {idx, username, roleList} = userData
+        const {idx, username, roleList, pgIdx} = userData
         const authList = roleList.map((auth) => auth.roleName)
 
         // 로그인 여부
         setIsLogin(true)
 
         // 유저 정보 세팅
-        setUser({idx, username, authList})
+        setUser({idx, username, authList, pgIdx})
 
         // 권한 정보 세팅
         const updatedRoles = {isUser: false, isCompany: false};
