@@ -7,7 +7,6 @@ import Home from "./views/user/Home";
 import UserProfile from "./views/user/UserProfile";
 import UserModify from "./views/user/UserModify";
 import React from "react";
-import Typography from "./views/common/Typography";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
 import CoverLetter from "./views/user/CoverLetter";
@@ -72,20 +71,20 @@ var routes = [
     component: <ComCoverLetter />,
     layout: "/company",
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "tim-icons icon-zoom-split",
-    component: <Icons />,
-    layout: "/company",
-  },
-  {
-    path: "/typo",
-    name: "Typography",
-    icon: "tim-icons icon-zoom-split",
-    component: <Typography />,
-    layout: "/company",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "tim-icons icon-zoom-split",
+  //   component: <Icons />,
+  //   layout: "/company",
+  // },
+  // {
+  //   path: "/typo",
+  //   name: "Typography",
+  //   icon: "tim-icons icon-zoom-split",
+  //   component: <Typography />,
+  //   layout: "/company",
+  // },
   {
     path: "/user-profile",
     name: "회사 프로필",

@@ -4,6 +4,7 @@ import {deleteProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import ProgramCardHeader from "./ProgramCardHeader";
+import {Viewer} from "@toast-ui/react-editor";
 
 const UserProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
@@ -42,10 +43,13 @@ const UserProgramCard = ({program, loadPrograms}) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md="12">
-                        <label>교육내용</label>
-                        <div className="form-control">짧은 교육내용 요약을 여기에 입력</div>
-                    </Col>
+                    <label>AI 교육요약</label>
+                    <div className="form-control">
+                        <Viewer
+                            key={program ? program.pgContentSummary : null}
+                            initialValue={program ? program.pgContentSummary : ""}
+                        />
+                    </div>
                 </Row>
             </CardBody>
             <CardFooter>

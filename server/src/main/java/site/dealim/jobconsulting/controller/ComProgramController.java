@@ -68,14 +68,14 @@ public class ComProgramController {
 
         try {
             comProgramService.updateProgram(program);
-            return new ResponseEntity<>("프로그램 수정 완료", HttpStatus.OK);
+            return new ResponseEntity<>("프로그램이 수정 완료되었습니다", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 수정 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @Secured("ROLE_COMPANY")
+    @Secured({"ROLE_COMPANY", "ROLE_USER"})
     @PostMapping("/get-all-programs")
     public ResponseEntity<?> getAllPrograms() {
         log.info("프로그램 전체 목록 조회...");

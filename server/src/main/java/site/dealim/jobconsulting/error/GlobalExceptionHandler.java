@@ -1,7 +1,6 @@
 package site.dealim.jobconsulting.error;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,7 +26,6 @@ public class GlobalExceptionHandler {
         }
 
         // 다른 DataIntegrityViolationException 처리
-        // TODO: DB 메시지가 클라이언트에 직접 보이고 있음. 개발이 끝나면 지울것
-        return new ResponseEntity<>("데이터 처리 오류 : " + e.getMessage() , HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("데이터 처리 오류" , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

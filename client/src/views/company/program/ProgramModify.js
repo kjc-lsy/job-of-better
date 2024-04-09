@@ -55,11 +55,6 @@ const ProgramModify = () => {
         }
     }, [isLogin]);
 
-    const onChangeMarkdown = () => {
-        const data = editorRef.current.getInstance().getMarkdown();
-        setContent(data);
-    }
-
     const addNineHours = (date) => {
         if (!date) return null;
         const newDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
@@ -78,6 +73,7 @@ const ProgramModify = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // 수정 내용을 content 변수에 담기
         try {
             const response = await updateProgram({
                 pgProgStartDate: addNineHours(progDateRange[0]),
@@ -91,7 +87,7 @@ const ProgramModify = () => {
                 pgInterviewValStartTime: formatTime(interviewValTimeRange[0]),
                 pgInterviewValEndTime: formatTime(interviewValTimeRange[1]),
                 pgTitle: title,
-                pgContent: content,
+                pgContent: editorRef.current.getInstance().getMarkdown(),
                 pgIdx: pgIdx
             });
             alert(response.data)
@@ -171,7 +167,6 @@ const ProgramModify = () => {
                                     previewStyle={window.innerWidth < 991 ? 'tab' : 'vertical'}
                                     initialEditType="markdown"
                                     ref={editorRef}
-                                    onChange={onChangeMarkdown}
                                     initialValue={content}
                                 />
                             </div>
