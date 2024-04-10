@@ -5,8 +5,8 @@
 <mapper namespace="site.dealim.jobconsulting.mapper.MemCoverLetterMapper">
 
     <!-- 자소서 조회 -->
-    <select id="coverLetterInfo" resultType="int" parameterType="Long">
-        SELECT count(*)
+    <select id="coverLetterInfo" resultType="MemberCoverLetter" parameterType="Long">
+        SELECT *
         FROM member_cover_letter m
         LEFT JOIN company_cover_letter c
             ON m.mcl_ccl_idx = c.ccl_idx
@@ -14,5 +14,4 @@
             ON c.ccl_com_idx = p.pg_com_idx
         WHERE m.mcl_member_idx = #{idx} AND p.pg_idx = #{pgIdx}
     </select>
-
 </mapper>

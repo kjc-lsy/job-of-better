@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
+import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
@@ -38,12 +39,16 @@ public class MyInfoService {
         int[] coverLetterInfo = new int[2];
         //System.out.println(comCoverLetterMapper.userCoverLetterInfo(pgIdx));
         coverLetterInfo[0] = (comCoverLetterMapper.userCoverLetterInfo(pgIdx)).size();
-        coverLetterInfo[1] = memberCoverLetterMapper.coverLetterInfo(idx,pgIdx);
+        coverLetterInfo[1] = (memberCoverLetterMapper.coverLetterInfo(idx,pgIdx)).size();
         //System.out.println("coverLetterInfo = " + coverLetterInfo.toString());
         return coverLetterInfo;
     }
 
     public void interviewTimeSave(String desiredInterviewDate, long idx) {
         memberMapper.interviewTimeSave(desiredInterviewDate, idx);
+    }
+
+    public List<MemberCoverLetter> coverLetterList(long idx, Long pgIdx) {
+        return memberCoverLetterMapper.coverLetterInfo(idx,pgIdx);
     }
 }

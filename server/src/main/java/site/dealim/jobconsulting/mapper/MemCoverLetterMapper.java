@@ -11,5 +11,5 @@ public interface MemCoverLetterMapper {
 
     void userCoverLetterSave(List<MemberCoverLetter> values, long idx, Long comIdx);
 
-    int coverLetterInfo(@Param("idx") long idx,@Param("pgIdx") Long pgIdx);
+    List<MemberCoverLetter> coverLetterInfo(@Param("idx") long idx,@Param("pgIdx") Long pgIdx);
 }

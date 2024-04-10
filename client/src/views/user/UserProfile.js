@@ -22,43 +22,45 @@ function UserProfile() {
     const {isLogin} = useAuth();
     const [inputValue, setInputValue] = React.useState({
         name: "",
-        profileImg:"" , //require("assets/img/emilyz.jpg")
-        gender:"",
-        regStatus:"",
+        profileImg: "", //require("assets/img/emilyz.jpg")
+        gender: "",
+        regStatus: "",
 
-        resumeLength:0,
-        resumeTotalLength:0,
-        resumePercent:0,
-        coverLetterLength:0,
-        coverLetterTotalLength:0,
-        coverLetterPercent:0,
+        resumeLength: 0,
+        resumeTotalLength: 0,
+        resumePercent: 0,
+        coverLetterLength: 0,
+        coverLetterTotalLength: 0,
+        coverLetterPercent: 0,
 
-        mclTitle:"",
-        mclIsConfirm:false,
+        mclTitle: "",
+        mclDate: "",
+        mclIsConfirm: "",
+        mclIsSave: "",
 
-        resumeTitle:"",
-        resumeIsConfirm:false,
+        resumeTitle: "",
+        resumeIsConfirm: "",
 
-        pgId:0,
-        pgComName:"",
-        pgComTel:"",
-        pgComAddr:"",
+        pgId: 0,
+        pgComName: "",
+        pgComTel: "",
+        pgComAddr: "",
 
-        pgTitle:"",
-        pgContent:"",
-        pgProgStartDate:"", //프로그램시작
-        pgProgEndDate:"",
-        pgEduStartDate:"", // 교육시작일
-        pgEduEndDate:"",
-        pgRegValStartDate:"", //등록가능날짜
-        pgRegValEndDate:"",
-        pgInterviewValStartDate:"", //인터뷰 시작
-        pgInterviewValEndDate:"",
-        pgInterviewValStartTime:"",
-        pgInterviewValEndTime:"",
+        pgTitle: "",
+        pgContent: "",
+        pgProgStartDate: "", //프로그램시작
+        pgProgEndDate: "",
+        pgEduStartDate: "", // 교육시작일
+        pgEduEndDate: "",
+        pgRegValStartDate: "", //등록가능날짜
+        pgRegValEndDate: "",
+        pgInterviewValStartDate: "", //인터뷰 시작
+        pgInterviewValEndDate: "",
+        pgInterviewValStartTime: "",
+        pgInterviewValEndTime: "",
 
-        interviewDate:new Date(),
-        interviewTime:new Date().getHours() + ":" + new Date().getMinutes(),
+        interviewDate: new Date(),
+        interviewTime: new Date().getHours() + ":" + new Date().getMinutes(),
     });
 
     const changeProfileImg = () => {
@@ -80,7 +82,7 @@ function UserProfile() {
         // 파일 업로드 등의 추가 작업을 수행할 수 있습니다.
     };
     useEffect(() => {
-        Promise.all([userInfo(), pgInfo(),coverLetterInfo()])
+        Promise.all([userInfo(), pgInfo(), coverLetterInfo()])
             .catch((error) => {
                 console.error(error.response.data);
             });
@@ -98,15 +100,15 @@ function UserProfile() {
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
                 regStatus: response.data.regStatus,
-                interviewDate : new Date((response.data.desiredInterviewDate).split("T")[0]),
-                interviewTime : new Date(response.data.desiredInterviewDate),
+                interviewDate: new Date((response.data.desiredInterviewDate).split("T")[0]),
+                interviewTime: new Date(response.data.desiredInterviewDate),
             }));
             //console.log(inputValue.interviewTime);
         } catch (error) {
             console.error(error.response.data);
         }
     };
-    
+
     // 프로그램 정보 불러오기
     const pgInfo = async () => {
         try {
@@ -144,17 +146,21 @@ function UserProfile() {
     const coverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
-            //console.log(response.data);
+            console.log(response.data);
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
-                coverLetterPercent: (response.data[1] / response.data[0]) * 100
+                mclTitle: response.data.clList.mclTitle,
+                mclDate: response.data.clList.mclModifiedDate,
+                mclIsConfirm: response.data.clList.mclIsConfirm,
+                mclIsSave: response.data.clList.mclIsSave,
+                coverLetterPercent: (response.data.clPercent[1] / response.data.clPercent[0]) * 100
             }))
-        }catch(error) {
+        } catch (error) {
             console.error(error.response.data);
         }
     }
 
-    const save =() => {
+    const save = () => {
         // interviewDate를 'YYYY-MM-DD' 형식의 문자열로 변환
         const interviewDateStr = inputValue.interviewDate.toISOString().split('T')[0];
 
@@ -166,29 +172,35 @@ function UserProfile() {
         console.log(interviewDateTime);
 
         // 서버에 저장
-        user.interviewTimeSave(interviewDateTime)
-            .then((response) => {
-                console.log(response.data);
-                alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
-            })
-            .catch((error) => {
-                alert(error.response.data);
-            });
+        if (interviewDateStr < inputValue.pgInterviewValStartDate || interviewDateStr > inputValue.pgInterviewValEndDate) {
+            alert("해당 날짜엔 신청 할 수 없습니다.\n확인바랍니다.");
+        } else if (interviewDateStr < inputValue.pgInterviewValStartTime || interviewDateStr > inputValue.pgInterviewValEndTime) {
+            alert("해당 시간엔 신청 할 수 없습니다.\n확인바랍니다.");
+        } else {
+            user.interviewTimeSave(interviewDateTime)
+                .then((response) => {
+                    console.log(response.data);
+                    alert("신청이 완료 되었습니다. \n기업관리자 확인 후 확정됩니다.")
+                })
+                .catch((error) => {
+                    alert(error.response.data);
+                });
+        }
     }
 
     const ProgramState = () => {
-     return (
-         new Date() >= new Date(inputValue.pgProgStartDate) && new Date() <= new Date(inputValue.pgProgEndDate) ? "프로그램 진행중"
-             : new Date() >= new Date(inputValue.pgEduStartDate) && new Date() <= new Date(inputValue.pgEduEndDate) ? "교육 진행중"
-                 : new Date() >= new Date(inputValue.pgRegValStartDate) && new Date() <= new Date(inputValue.pgRegValEndDate) ? "신청 진행중"
-                     : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중"  : "프로그램 종료"
-     )
+        return (
+            new Date() >= new Date(inputValue.pgProgStartDate) && new Date() <= new Date(inputValue.pgProgEndDate) ? "프로그램 진행중"
+                : new Date() >= new Date(inputValue.pgEduStartDate) && new Date() <= new Date(inputValue.pgEduEndDate) ? "교육 진행중"
+                    : new Date() >= new Date(inputValue.pgRegValStartDate) && new Date() <= new Date(inputValue.pgRegValEndDate) ? "신청 진행중"
+                        : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중" : "프로그램 종료"
+        )
     }
     const viewMore = () => {
         let viewer = document.getElementById("mypg_viewer");
         viewer.classList.toggle("on");
         setTimeout(() => {
-            if(viewer.classList.contains("on")){
+            if (viewer.classList.contains("on")) {
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -217,10 +229,10 @@ function UserProfile() {
                                         changeProfileImg(e); // changeProfileImg 함수 호출 시 이벤트 객체 전달
                                     }}>
                                         <img alt="profile image"
-                                            ref={imgRef}
-                                            name="profileImg"
-                                            className="avatar"
-                                            src={inputValue.profileImg !== null ? inputValue.profileImg : inputValue.gender === "F" ? femaleImg : maleImg}
+                                             ref={imgRef}
+                                             name="profileImg"
+                                             className="avatar"
+                                             src={inputValue.profileImg !== null ? inputValue.profileImg : inputValue.gender === "F" ? femaleImg : maleImg}
                                         />
                                     </a>
                                 </label>
@@ -249,7 +261,7 @@ function UserProfile() {
                                 </Col>
                                 <Col md={4}>
                                     <b>자기소개서</b>
-                                    <div className={"percent percent"+inputValue.coverLetterPercent * 3.6}>
+                                    <div className={"percent percent" + inputValue.coverLetterPercent * 3.6}>
                                         <span>{inputValue.coverLetterPercent}%</span>
                                     </div>
                                     <a onClick={(e) => {
@@ -273,13 +285,18 @@ function UserProfile() {
                                 <tr>
                                     <th>제목</th>
                                     <th className="text-center">작업 상태</th>
+                                    <th className="text-center">날짜</th>
                                     <th className="text-center">바로가기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Dakota Rice</td>
-                                    <td className="text-center">완료</td>
+                                    <td>{inputValue.mclTitle}</td>
+                                    <td>{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                    <td className="text-center">
+                                        {inputValue.mclIsConfirm === "confirm" ? "완료" :
+                                            inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
+                                    </td>
                                     <td className="text-center">
                                         <a onClick={(e) => {
                                             e.preventDefault();
@@ -304,24 +321,39 @@ function UserProfile() {
                                     <th>제목</th>
                                     <th className="text-center">피드백</th>
                                     <th className="text-center">작업 상태</th>
+                                    <th className="text-center">날짜</th>
                                     <th className="text-center">바로가기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Dakota Rice</td>
-                                    <td className="text-center">dkssud</td>
-                                    <td className="text-center">완료</td>
-                                    <td className="text-center">
-                                        <a onClick={(e) => {
-                                            e.preventDefault();
-                                            navigate("/user/cover-letter")
-                                        }}>
-                                            <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
-                                        </a>
-                                    </td>
-                                </tr>
+                                {inputValue.mclTitle ?
+                                    <tr>
 
+                                        <td>{inputValue.mclTitle}</td>
+                                        <td className="text-center">
+                                            {inputValue.mclIsConfirm === "confirm" ? "완료" :
+                                                inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
+                                        </td>
+                                        <td className="text-center">
+                                            {inputValue.mclIsSave === "tmp" ? "임시저장" :
+                                                inputValue.mclIsSave === "done" ? "완료" : "미작성"}
+                                        </td>
+                                        <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                        <td className="text-center">
+                                            <a onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/user/cover-letter")
+                                            }}>
+                                                <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td colSpan={5} class="text-center">자료가 없습니다.</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </Table>
                         </CardBody>
@@ -347,12 +379,15 @@ function UserProfile() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><b class="title" onClick={e => navigate(`/user/program-info/${inputValue.pgId}`)}>{inputValue.pgTitle}</b></td>
+                                    <td><b class="title"
+                                           onClick={e => navigate(`/user/program-info/${inputValue.pgId}`)}>{inputValue.pgTitle}</b>
+                                    </td>
                                     <td className="text-center">{inputValue.pgComName}</td>
                                     <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>
                                     <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
                                     <td className="text-center">
-                                        <span className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
+                                        <span
+                                            className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
                                             {inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}
                                         </span>
                                     </td>
@@ -372,50 +407,50 @@ function UserProfile() {
                                     <p>{ProgramState()}</p>
                                 </div>
                                 <Form role="form">
-                                <div>
-                                    <span>면접 시간</span>
-                                    <p>
-                                        <KorDatePicker
-                                            value={inputValue.interviewDate}
-                                            name="interviewDate"
-                                            format="yyyy-MM-dd"
-                                            shouldDisableDate={(allowedRange(inputValue.pgInterviewValStartDate, inputValue.pgInterviewValEndDate)) }
-                                            onChange={e => {
-                                                setInputValue({...inputValue,interviewDate : e})
-                                            }}
-                                        />
-                                        <DatePicker
-                                            name="interviewTime"
-                                            value={inputValue.interviewTime}
-                                            format="HH:mm"
-                                            hideHours={(hour) => {
-                                                const startTimeString = inputValue.pgInterviewValStartTime;
-                                                const startHour = parseInt(startTimeString.split(':')[0]);
-                                                const endTimeString = inputValue.pgInterviewValEndTime;
-                                                const endHour = parseInt(endTimeString.split(':')[0]);
+                                    <div>
+                                        <span>면접 시간</span>
+                                        <p>
+                                            <KorDatePicker
+                                                value={inputValue.interviewDate}
+                                                name="interviewDate"
+                                                format="yyyy-MM-dd"
+                                                shouldDisableDate={(allowedRange(inputValue.pgInterviewValStartDate, inputValue.pgInterviewValEndDate))}
+                                                onChange={e => {
+                                                    setInputValue({...inputValue, interviewDate: e})
+                                                }}
+                                            />
+                                            <DatePicker
+                                                name="interviewTime"
+                                                value={inputValue.interviewTime}
+                                                format="HH:mm"
+                                                hideHours={(hour) => {
+                                                    const startTimeString = inputValue.pgInterviewValStartTime;
+                                                    const startHour = parseInt(startTimeString.split(':')[0]);
+                                                    const endTimeString = inputValue.pgInterviewValEndTime;
+                                                    const endHour = parseInt(endTimeString.split(':')[0]);
 
-                                               return hour < startHour || hour > endHour
-                                            }}
-                                            hideMinutes={minute => minute % 15 !== 0}
-                                            hideSeconds={second => second % 30 !== 0}
-                                            caretAs={FaClock}
-                                            onChange={e => {
-                                                // e를 Date 객체로 파싱
-                                                const selectedTime = new Date(e);
-                                                setInputValue(prevInputValue => ({
-                                                    ...prevInputValue,
-                                                    interviewTime: selectedTime
-                                                }));
-                                            }}
-                                        />
-                                        <Button type="button" onClick={(e) => {
-                                            e.preventDefault();
-                                            save()
-                                        }}>
-                                            신청
-                                        </Button>
-                                    </p>
-                                </div>
+                                                    return hour < startHour || hour > endHour
+                                                }}
+                                                hideMinutes={minute => minute % 15 !== 0}
+                                                hideSeconds={second => second % 30 !== 0}
+                                                caretAs={FaClock}
+                                                onChange={e => {
+                                                    // e를 Date 객체로 파싱
+                                                    const selectedTime = new Date(e);
+                                                    setInputValue(prevInputValue => ({
+                                                        ...prevInputValue,
+                                                        interviewTime: selectedTime
+                                                    }));
+                                                }}
+                                            />
+                                            <Button type="button" onClick={(e) => {
+                                                e.preventDefault();
+                                                save()
+                                            }}>
+                                                신청
+                                            </Button>
+                                        </p>
+                                    </div>
                                 </Form>
                                 <div>
                                     <span>내용</span>
@@ -425,7 +460,8 @@ function UserProfile() {
                                             initialValue={inputValue.pgContent}
                                         />
                                     </p>
-                                    <Button type="button" onClick={viewMore} className="btn02 viewMore">더 보기</Button>
+                                    <Button type="button" onClick={viewMore} className="btn02 viewMore">더
+                                        보기</Button>
                                 </div>
                                 <div>
                                     <span>상태</span>
