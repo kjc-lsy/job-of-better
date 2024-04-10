@@ -39,6 +39,7 @@ function UserProfile() {
         resumeTitle:"",
         resumeIsConfirm:false,
 
+        pgId:0,
         pgComName:"",
         pgComTel:"",
         pgComAddr:"",
@@ -113,10 +114,12 @@ function UserProfile() {
             // 프로그램 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
+
                 pgComName: response.data.company.comName,
                 pgComTel: response.data.company.comTel,
                 pgComAddr: response.data.company.comAddress,
 
+                pgId: response.data.program.pgIdx,
                 pgTitle: response.data.program.pgTitle,
                 pgProgStartDate: response.data.program.pgProgStartDate,
                 pgProgEndDate: response.data.program.pgProgEndDate,
@@ -181,6 +184,18 @@ function UserProfile() {
                      : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중"  : "프로그램 종료"
      )
     }
+    const viewMore = () => {
+        let viewer = document.getElementById("mypg_viewer");
+        viewer.classList.toggle("on");
+        setTimeout(() => {
+            if(viewer.classList.contains("on")){
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }, 0);
+    };
 
 
     return (
@@ -332,7 +347,7 @@ function UserProfile() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><b>{inputValue.pgTitle}</b></td>
+                                    <td><b class="title" onClick={e => navigate(`/user/program-info/${inputValue.pgId}`)}>{inputValue.pgTitle}</b></td>
                                     <td className="text-center">{inputValue.pgComName}</td>
                                     <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>
                                     <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
@@ -404,12 +419,13 @@ function UserProfile() {
                                 </Form>
                                 <div>
                                     <span>내용</span>
-                                    <p>
+                                    <p id="mypg_viewer">
                                         <Viewer
                                             key={inputValue.pgContent}
                                             initialValue={inputValue.pgContent}
                                         />
                                     </p>
+                                    <Button type="button" onClick={viewMore} className="btn02 viewMore">더 보기</Button>
                                 </div>
                                 <div>
                                     <span>상태</span>
