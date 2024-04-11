@@ -49,9 +49,6 @@ let chart1_2_options = {
   },
 };
 
-// #########################################
-// // // used inside src/views/Dashboard.js
-// #########################################
 let chartExample1 = {
   data1: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -191,9 +188,6 @@ let chartExample1 = {
   options: chart1_2_options,
 };
 
-// #########################################
-// // // used inside src/views/Dashboard.js
-// #########################################
 let chartExample2 = {
   data: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -230,9 +224,6 @@ let chartExample2 = {
   options: chart1_2_options,
 };
 
-// #########################################
-// // // used inside src/views/Dashboard.js
-// #########################################
 let chartExample3 = {
   data: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -305,9 +296,6 @@ let chartExample3 = {
   },
 };
 
-// #########################################
-// // // used inside src/views/Dashboard.js
-// #########################################
 const chartExample4 = {
   data: (canvas) => {
     let ctx = canvas.getContext("2d");
@@ -390,9 +378,28 @@ const chartExample4 = {
 };
 
 
+//pie chart
+const pieChart = {
+  data: (canvas) => {
+    let ctx = canvas.getContext("2d");
+
+    return {
+      labels: ['작성중', '작성완료', '미작성'],
+      datasets: [
+        {
+          label: '자기소개서',
+          data:[],
+        }
+      ]
+    }
+  }
+}
+
+
 module.exports = {
   chartExample1, // used inside src/views/DashBoard.js
   chartExample2, // used inside src/views/DashBoard.js
   chartExample3, // used inside src/views/DashBoard.js
   chartExample4, // used inside src/views/DashBoard.js
+  pieChart,
 };

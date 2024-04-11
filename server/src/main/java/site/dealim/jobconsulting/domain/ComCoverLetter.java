@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ComCoverLetter {
     private Long cclIdx;
     private Long cclComIdx;
+    private Long cclPgIdx;
     private String cclLetterQuestion;
     private int cclMinLength;
     private int cclMaxLength;

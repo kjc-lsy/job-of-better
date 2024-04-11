@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MemberCoverLetter {
     Long mclIdx;
-    Long mclCclIdx;
+    Long mclCclIdx; // 기업이 제공한 자소서 idx
     Long mclMemberIdx;
     Long mclAnswer;
-    String mclIsConfirm;
-    String mclISave;
+    String mclIsConfirm; // 기업이 컨펌
+    String mclISave; // 미작성,임시저장,
     String mclTitle;
     LocalDateTime mclRegistrationDate;
     LocalDateTime mclModifiedDate;
