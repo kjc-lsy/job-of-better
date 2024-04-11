@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.service.MemberListService;
 import site.dealim.jobconsulting.service.OpenAiService;
 import site.dealim.jobconsulting.service.VertexAiService;
@@ -21,6 +22,8 @@ public class TestController {
     private VertexAiService vertexAiService;
     @Autowired
     private MemberListService memberListService;
+    @Autowired
+    private MemberMapper memberMapper;
 
     @PostMapping("/gpt")
     public ResponseEntity<?> index(@RequestParam(value = "prompt") String prompt) throws Exception {
@@ -35,6 +38,11 @@ public class TestController {
     @GetMapping("/members")
     public ResponseEntity<?> getMembers() {
         return ResponseEntity.ok(memberListService.getMembersList());
+    }
+
+    @GetMapping("/member")
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok(memberMapper.login("company"));
     }
 
 }

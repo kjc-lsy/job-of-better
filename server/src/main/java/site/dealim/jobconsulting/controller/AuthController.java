@@ -1,6 +1,5 @@
 package site.dealim.jobconsulting.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,6 +80,7 @@ public class AuthController {
         authService.update(member);
 
         log.info("회원수정 성공! - SUCCESS");
+
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
@@ -111,7 +111,7 @@ public class AuthController {
 
     @Transactional(rollbackFor = Exception.class)
     @PostMapping("/company-join")
-    public ResponseEntity<?> companyJoin(@RequestBody MemberCompanyDto memberCompanyDto , HttpServletResponse res) throws Exception {
+    public ResponseEntity<?> companyJoin(@RequestBody MemberCompanyDto memberCompanyDto) throws Exception {
         try {
             log.info("멤버 회원가입 시작...");
             authService.MemberInsert(memberCompanyDto.getMember());
@@ -124,7 +124,6 @@ public class AuthController {
             authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
-            res.sendError(404, "Error : "+e.getMessage());
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.
         }
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);

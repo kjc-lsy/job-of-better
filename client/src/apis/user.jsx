@@ -30,3 +30,6 @@ export const userProfileInfo = () => {
     return api.get('/api/user/user-profile-info')
 }
 
+//권한이 USER인 사용자 전부 불러오기
+export const getAllUserMembers = () => api.get('/api/member-list/get-user-members')
+

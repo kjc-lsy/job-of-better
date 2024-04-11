@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <mapper namespace="site.dealim.jobconsulting.mapper.MemberMapper">
+<mapper namespace="site.dealim.jobconsulting.mapper.MemberMapper">
 
     <!-- Member 매핑-->
     <resultMap type="Member" id="memberMap">
         <id property="idx" column="idx"/>
-
         <result property="name" column="name"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
@@ -45,7 +44,6 @@
         <!--<selectKey keyColumn="idx" keyProperty="idx" order="AFTER" resultType="Long">
             SELECT LAST_INSERT_ID() AS idx
         </selectKey>-->
-
         INSERT INTO member (name, username, password, email, birth_date, gender, phone, com_idx, resume_file,
         desired_interview_date, assigned_interview_date, is_interview_date, interview_comment,
         is_cover_letter, is_resume, join_date, modified_date, withdrawn_date, is_withdrawn)
@@ -64,33 +62,9 @@
 
     <!-- 회원 조회 - id -->
     <select id="login" resultMap="memberMap">
-        SELECT m.idx
-             , m.name
-             , m.username
-             , m.password
-             , m.email
-             , m.birth_date
-             , m.gender
-             , m.phone
-             , m.com_idx
-             , m.pg_idx
-             , m.reg_status
-             , m.resume_file
-             , m.desired_interview_date
-             , m.assigned_interview_date
-             , m.is_interview_date
-             , m.interview_comment
-             , m.is_cover_letter
-             , m.is_resume
-             , m.join_date
-             , m.modified_date
-             , m.withdrawn_date
-             , m.is_withdrawn
-             , r.role_idx
-             , r.role_name
-             , r.username as role_username
+        SELECT m.*, r.role_idx, r.role_name, r.username
         FROM member m
-                 LEFT OUTER JOIN member_role r ON m.username = r.username
+                 JOIN member_role r ON m.username = r.username
         WHERE m.username = #{username}
     </select>
 
@@ -137,12 +111,16 @@
 
     <!-- 회원 중복 확인 -->
     <select id="checkDuplicateUsername" resultType="int">
-        SELECT count(*) FROM member WHERE username = #{username}
+        SELECT count(*)
+        FROM member
+        WHERE username = #{username}
     </select>
 
     <!-- 회원에 comidx 수정 -->
     <update id="updateCompanyIdx" parameterType="map">
-        UPDATE member SET com_idx = #{comIdx} WHERE idx = #{memIdx}
+        UPDATE member
+        SET com_idx = #{comIdx}
+        WHERE idx = #{memIdx}
     </update>
 
     <!-- 회원 프로그램 등록 -->
@@ -153,7 +131,7 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updateRegStatus" parameterType="Map" >
+    <update id="updateRegStatus" parameterType="Map">
         UPDATE member
         SET reg_status = #{regStatus}
         WHERE idx = #{memIdx}
@@ -162,7 +140,9 @@
     <!-- 프로그램 신청 취소 -->
     <update id="cancelRegister" parameterType="Long">
         UPDATE member
-            SET reg_status = null, com_idx = null, pg_idx = null
+        SET reg_status = null,
+            com_idx    = null,
+            pg_idx     = null
         WHERE idx = #{param}
     </update>
 
@@ -170,7 +150,7 @@
     <select id="getRegCntByPgIdx" resultType="Integer" parameterType="Long">
         SELECT COUNT(*)
         FROM member m
-        JOIN program p ON m.pg_idx = p.pg_idx
+                 JOIN program p ON m.pg_idx = p.pg_idx
         WHERE m.pg_idx = #{param}
     </select>
 
@@ -178,17 +158,27 @@
     <select id="getNumByPgIdxAndRegStatus" resultType="Integer" parameterType="Map">
         SELECT COUNT(*)
         FROM member m
-        JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.reg_status = #{regStatus} and m.pg_idx = #{pgIdx}
+                 JOIN program p ON m.pg_idx = p.pg_idx
+        WHERE m.reg_status = #{regStatus}
+          and m.pg_idx = #{pgIdx}
     </select>
 
     <!-- mypg -->
     <update id="interviewTimeSave" parameterType="map">
-        UPDATE member SET desired_interview_date = #{desiredInterviewDate} WHERE idx = #{idx}
+        UPDATE member
+        SET desired_interview_date = #{desiredInterviewDate}
+        WHERE idx = #{idx}
     </update>
 
+    <!-- user 권한만 가진 멤버 조회 -->
     <select id="selectAllMembers" resultMap="memberMap">
-        SELECT * FROM member
+        SELECT *
+        FROM member
+        WHERE username IN (SELECT m.username
+                           FROM member m
+                                    LEFT JOIN member_role r ON m.username = r.username
+                           GROUP BY m.username
+                           HAVING count(m.username) = 1)
     </select>
 
 </mapper>

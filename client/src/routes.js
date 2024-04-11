@@ -2,7 +2,6 @@ import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 import MemberList from "./views/company/MemberList";
 import ComCoverLetter from "./views/company/ComCoverLetter";
-import Icons from "./views/common/Icons";
 import Home from "./views/user/Home";
 import UserProfile from "./views/user/UserProfile";
 import UserModify from "./views/user/UserModify";
@@ -13,6 +12,7 @@ import CoverLetter from "./views/user/CoverLetter";
 import Resume from "./views/user/Resume";
 import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
+import Icons from "./views/common/Icons";
 
 var routes = [
   {

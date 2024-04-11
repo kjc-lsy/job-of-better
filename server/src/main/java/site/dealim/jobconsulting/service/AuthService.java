@@ -138,6 +138,7 @@ public class AuthService {
             MemberRole memberRole = new MemberRole();
             memberRole.setUsername(member.getUsername());
             memberRole.setRoleName("ROLE_USER"); // 기본 권한 : 사용자 권한 (ROLE_USER)
+            memberMapper.insertMemberRole(memberRole);
 
             log.info("회원가입 권한(ROLE_COMPANY) 등록 시작");
             memberRole.setUsername(member.getUsername());

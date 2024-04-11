@@ -394,7 +394,7 @@ form.form-register label + .form-control {
 
 /** register company **/
 
-.companyRegisterContainer {
+.register-container {
   h3 {
     margin-bottom: 5px;
   }
@@ -1320,7 +1320,7 @@ td {
     background: #f5f6fa;
   }
 
-  .companyRegisterContainer .card:not(.card-white) {
+  .register-container .card:not(.card-white) {
     .card-body {
       background: #fff;
     }
