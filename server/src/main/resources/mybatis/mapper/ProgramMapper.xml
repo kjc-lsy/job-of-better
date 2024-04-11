@@ -42,7 +42,7 @@
 
     <update id="updateIsWithdrawn" parameterType="Long">
         UPDATE program
-        SET pg_is_withdrawn = 'Y'
+        SET pg_is_withdrawn = 'Y', pg_withdrawn_date = now()
         WHERE pg_idx = #{param}
     </update>
 
@@ -163,5 +163,12 @@
                  LEFT JOIN company c ON p.pg_com_idx = c.com_idx
         WHERE p.pg_idx = #{pgIdx}
     </select>
+
+    <!-- 프로그램 상태 업데이트 -->
+    <update id="updatePgStatus" parameterType="Map">
+        UPDATE program
+        SET pg_status = #{pgStatus}
+        WHERE pg_idx = #{pgIdx}
+    </update>
 
 </mapper>

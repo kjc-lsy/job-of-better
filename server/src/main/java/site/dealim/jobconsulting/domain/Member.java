@@ -26,7 +26,7 @@ public class Member {
     private String address;
     private String profileImg;
     private Long comIdx;
-    private String regStatus;
+    private String pgRegStatus;
     private Long pgIdx;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;

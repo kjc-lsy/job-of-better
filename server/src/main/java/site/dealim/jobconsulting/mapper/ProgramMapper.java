@@ -2,8 +2,6 @@ package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import site.dealim.jobconsulting.domain.ComCoverLetter;
-import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 
@@ -28,5 +26,5 @@ public interface ProgramMapper {
 
     public ProgramCompanyDto pgInfo(@Param("pgIdx") Long pgIdx);
 
-
+    public int updatePgStatus(@Param("pgIdx") Long pgIdx, @Param("pgStatus") String pgStatus);
 }

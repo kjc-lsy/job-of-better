@@ -16,7 +16,7 @@
         <result property="phone" column="phone"/>
         <result property="comIdx" column="com_idx"/>
         <result property="pgIdx" column="pg_idx"/>
-        <result property="regStatus" column="reg_status"/>
+        <result property="pgRegStatus" column="pg_reg_status"/>
         <result property="resumeFile" column="resume_file"/>
         <result property="desiredInterviewDate" column="desired_interview_date"/>
         <result property="assignedInterviewDate" column="assigned_interview_date"/>
@@ -62,7 +62,7 @@
 
     <!-- 회원 조회 - id -->
     <select id="login" resultMap="memberMap">
-        SELECT m.*, r.role_idx, r.role_name, r.username
+        SELECT m.*, r.*
         FROM member m
                  JOIN member_role r ON m.username = r.username
         WHERE m.username = #{username}
@@ -131,16 +131,16 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updateRegStatus" parameterType="Map">
+    <update id="updatepgRegStatus" parameterType="Map">
         UPDATE member
-        SET reg_status = #{regStatus}
+        SET pg_reg_status = #{pgRegStatus}
         WHERE idx = #{memIdx}
     </update>
 
     <!-- 프로그램 신청 취소 -->
     <update id="cancelRegister" parameterType="Long">
         UPDATE member
-        SET reg_status = null,
+        SET pg_reg_status = null,
             com_idx    = null,
             pg_idx     = null
         WHERE idx = #{param}
@@ -155,11 +155,11 @@
     </select>
 
     <!-- 프로그램 신청자 상태별 멤버 수 -->
-    <select id="getNumByPgIdxAndRegStatus" resultType="Integer" parameterType="Map">
+    <select id="getNumByPgIdxAndpgRegStatus" resultType="Integer" parameterType="Map">
         SELECT COUNT(*)
         FROM member m
                  JOIN program p ON m.pg_idx = p.pg_idx
-        WHERE m.reg_status = #{regStatus}
+        WHERE m.pg_reg_status = #{pgRegStatus}
           and m.pg_idx = #{pgIdx}
     </select>
 

@@ -39,9 +39,9 @@ public interface MemberMapper {
     Integer getRegCntByPgIdx(Long pgIdx);
 
     // 상태에 따른 회원 수 조회
-    Integer getNumByPgIdxAndRegStatus(@Param("pgIdx")Long pgIdx, @Param("regStatus")String regStatus);
+    Integer getNumByPgIdxAndpgRegStatus(@Param("pgIdx")Long pgIdx, @Param("pgRegStatus")String pgRegStatus);
 
-    Integer updateRegStatus(@Param("regStatus")String regStatus, @Param("memIdx")Long memIdx);
+    Integer updatepgRegStatus(@Param("pgRegStatus")String pgRegStatus, @Param("memIdx")Long memIdx);
 
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
 

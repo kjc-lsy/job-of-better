@@ -24,7 +24,7 @@ function UserProfile() {
         name: "",
         profileImg: "", //require("assets/img/emilyz.jpg")
         gender: "",
-        regStatus: "",
+        pgRegStatus: "",
 
         resumeLength: 0,
         resumeTotalLength: 0,
@@ -99,7 +99,7 @@ function UserProfile() {
                 name: response.data.name,
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
-                regStatus: response.data.regStatus,
+                pgRegStatus: response.data.pgRegStatus,
                 interviewDate: new Date((response.data.desiredInterviewDate).split("T")[0]),
                 interviewTime: new Date(response.data.desiredInterviewDate),
             }));
@@ -387,8 +387,8 @@ function UserProfile() {
                                     <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
                                     <td className="text-center">
                                         <span
-                                            className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
-                                            {inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}
+                                            className={inputValue.pgRegStatus === "Approved" ? "confirm" : inputValue.pgRegStatus === "Rejected" ? "reject" : "delay"}>
+                                            {inputValue.pgRegStatus === "Approved" ? "확정" : inputValue.pgRegStatus === "Rejected" ? "거절" : "보류"}
                                         </span>
                                     </td>
                                 </tr>
@@ -467,8 +467,8 @@ function UserProfile() {
                                     <span>상태</span>
                                     <p>
                                         <span
-                                            className={inputValue.regStatus === "Approved" ? "confirm" : inputValue.regStatus === "Rejected" ? "reject" : "delay"}>
-                                            {inputValue.regStatus === "Approved" ? "확정" : inputValue.regStatus === "Rejected" ? "거절" : "보류"}
+                                            className={inputValue.pgRegStatus === "Approved" ? "confirm" : inputValue.pgRegStatus === "Rejected" ? "reject" : "delay"}>
+                                            {inputValue.pgRegStatus === "Approved" ? "확정" : inputValue.pgRegStatus === "Rejected" ? "거절" : "보류"}
                                         </span>
                                     </p>
                                 </div>

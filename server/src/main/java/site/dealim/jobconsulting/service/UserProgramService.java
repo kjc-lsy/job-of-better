@@ -22,7 +22,7 @@ public class UserProgramService {
     @Transactional
     public int registerProgram(Long pgIdx, Long memIdx, Long comIdx) {
         memberMapper.updateCompanyIdx(comIdx, memIdx);
-        memberMapper.updateRegStatus("Pending", memIdx);
+        memberMapper.updatepgRegStatus("Pending", memIdx);
         return memberMapper.updatePgIdx(pgIdx, memIdx);
     }
 
