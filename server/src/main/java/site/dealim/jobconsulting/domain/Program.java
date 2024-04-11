@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -31,4 +32,6 @@ public class Program {
     private LocalDate pgCreatedDate;
     private LocalDate pgModifiedDate;
     private Character pgIsWithdrawn;
+    private LocalDateTime pgWithdrawDate;
+    private String pgStatus;
 }

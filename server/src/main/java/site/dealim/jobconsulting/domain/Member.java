@@ -16,28 +16,29 @@ import java.util.List;
 @Builder
 public class Member {
     private long idx;
+    private String name;
     private String username;
     private String password;
-    private String name;
     private String email;
+    private String address;
     private LocalDate birthDate;
     private String gender;
     private String phone;
-    private String address;
-    private String profileImg;
     private Long comIdx;
-    private String pgRegStatus;
     private Long pgIdx;
+    private String pgRegStatus;
+    private LocalDateTime pgRegDate;
+    private String interviewStatus;
+    private String coverLetterStatus;
+    private String resumeStatus;
     private byte[] resumeFile;
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;
-    private String isInterviewDate = "N";
     private String interviewComment;
-    private String isCoverLetter = "N";
-    private String isResume = "N";
-    private LocalDateTime joinDate = LocalDateTime.now();
-    private LocalDateTime modifiedDate = LocalDateTime.now();
+    private LocalDateTime joinDate;
+    private LocalDateTime modifiedDate;
     private LocalDateTime withdrawnDate;
     private String isWithdrawn = "N";
+    private String profileImg;
     private List<MemberRole> roleList = new ArrayList<>();
 }

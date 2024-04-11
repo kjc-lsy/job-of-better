@@ -47,7 +47,7 @@ function MemberList() {
                                         <td>{user.phone}</td>
                                         <td>{user.gender}</td>
                                         <td>{user.isCoverLetter}</td>
-                                        <td>{user.isResume}</td>
+                                        <td>{user.resumeStatus}</td>
                                         <td>{user.name}</td>
                                         <td>{user.name}</td>
                                         <td>{user.name}</td>
