@@ -1,5 +1,10 @@
 import api from "./api";
 
+export const curentProgramIdxInfo = () => {
+    return api.get('/api/company/curent-program-idx-info')
+}
+
+
 export const coverLetterSave = (value) => {
     return api.post('/api/company/cover-letter-save', value.map(value => {
         return {

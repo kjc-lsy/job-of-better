@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link, NavLink, useLocation} from "react-router-dom";
 // nodejs library to set properties for components
 import {PropTypes} from "prop-types";
@@ -7,9 +7,15 @@ import {PropTypes} from "prop-types";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
+import * as program from "../../apis/program"
+
 // reactstrap components
-import {Nav} from "reactstrap";
+import {ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label, Nav} from "reactstrap";
 import {BackgroundColorContext,} from "contexts/BackgroundColorWrapper";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {useAuth} from "../../contexts/AuthContextProvider";
+import {getPrograms} from "../../apis/program";
 
 var ps;
 
@@ -17,7 +23,22 @@ function Sidebar(props) {
 
     const location = useLocation();
     const currentPath = location.pathname;
+    const pathLayout = currentPath.split("/")[1];
+
+    const isLogin = useAuth();
+
     const sidebarRef = React.useRef(null);
+
+    //const {programIdx,setProgramIdx} = useState(localStorage.getItem("program"));
+    const [programList,setProgramList] = useState([
+        {
+            id:1,
+            pgIdx: 0,
+            pgTitle: "",
+            pgStatus:"",
+        }
+    ]);
+    const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
 
     // verifies if routeName is the one active (in browser input)
     const activeRoute = (routeName) => {
@@ -38,6 +59,26 @@ function Sidebar(props) {
             }
         };
     });
+
+    const getProgramList = async () => {
+        const response = await getPrograms();
+        setProgramList(
+            response.data.map((item, index) => {
+                return {
+                    id: index + 1,
+                    pgIdx: item.pgIdx,
+                    pgTitle: item.pgTitle,
+                    pgStatus: item.pgStatus,
+                };
+            })
+        )
+    }
+    useEffect(() => {
+        return () => {
+            getProgramList()
+        };
+    }, [isLogin]);
+
 
     const linkOnClick = () => {
         document.documentElement.classList.remove("nav-open");
@@ -122,14 +163,40 @@ function Sidebar(props) {
             {({color}) => (
                 <div className="sidebar" data={color}>
                     <div className="sidebar-wrapper" ref={sidebarRef}>
-                        {logoImg !== null || logoText !== null
+                        {/*{logoImg !== null || logoText !== null
                             ?
                             (<div className="logo">
                                 {logoImg}
                                 {logoText}
                             </div>)
                             :
-                            null}
+                            null}*/}
+                        {pathLayout === "company" ?
+                        <ButtonDropdown className="programSelector" isOpen={dropdownOpen} toggle={() => {
+                            setDropdownOpen(!dropdownOpen)
+                        }}>
+                            <DropdownToggle caret className="domainSelect">
+                                <div>{localStorage.getItem("program") ? programList.find(item => item.pgIdx === parseInt(localStorage.getItem("program")))?.pgTitle : "프로그램 선택"}</div> <FontAwesomeIcon icon={faChevronDown}/>
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                {programList.map((item, index) => {
+                                    return (
+                                        <DropdownItem
+                                            key={index}
+                                            className={
+                                                item.pgStatus === "Prestart" || item.pgStatus === "Ended" ? "grey" : ""
+                                            }
+                                            onClick={(e) => {
+                                                //setProgramIdx(item.pgIdx);
+                                                localStorage.setItem("program", item.pgIdx);
+                                            }}>
+                                            {item.pgTitle}
+                                        </DropdownItem>
+                                    );
+                                })}
+                            </DropdownMenu>
+                        </ButtonDropdown>
+                        :null}
                         <Nav>
                             {routeArr.map((item, index) => {
                                 if (item === "" || item === null || item === undefined) {

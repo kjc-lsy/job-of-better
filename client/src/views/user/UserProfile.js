@@ -14,6 +14,7 @@ import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {Viewer} from "@toast-ui/react-editor";
+import ProgCurrentStatus from "../../components/Infos/ProgCurrentStatus";
 
 function UserProfile() {
 
@@ -36,7 +37,6 @@ function UserProfile() {
         mclTitle: "",
         mclDate: "",
         mclIsConfirm: "",
-        mclIsSave: "",
 
         resumeTitle: "",
         resumeIsConfirm: "",
@@ -54,6 +54,7 @@ function UserProfile() {
         pgEduEndDate: "",
         pgRegValStartDate: "", //등록가능날짜
         pgRegValEndDate: "",
+        pgStatus:"",
         pgInterviewValStartDate: "", //인터뷰 시작
         pgInterviewValEndDate: "",
         pgInterviewValStartTime: "",
@@ -123,6 +124,7 @@ function UserProfile() {
 
                 pgId: response.data.program.pgIdx,
                 pgTitle: response.data.program.pgTitle,
+                pgStatus: response.data.program,
                 pgProgStartDate: response.data.program.pgProgStartDate,
                 pgProgEndDate: response.data.program.pgProgEndDate,
                 pgEduStartDate: response.data.program.pgEduStartDate,
@@ -152,7 +154,6 @@ function UserProfile() {
                 mclTitle: response.data.clList.mclTitle,
                 mclDate: response.data.clList.mclModifiedDate,
                 mclIsConfirm: response.data.clList.mclIsConfirm,
-                mclIsSave: response.data.clList.mclIsSave,
                 coverLetterPercent: (response.data.clPercent[1] / response.data.clPercent[0]) * 100
             }))
         } catch (error) {
@@ -188,14 +189,14 @@ function UserProfile() {
         }
     }
 
-    const ProgramState = () => {
+   /* const ProgramState = () => {
         return (
             new Date() >= new Date(inputValue.pgProgStartDate) && new Date() <= new Date(inputValue.pgProgEndDate) ? "프로그램 진행중"
                 : new Date() >= new Date(inputValue.pgEduStartDate) && new Date() <= new Date(inputValue.pgEduEndDate) ? "교육 진행중"
                     : new Date() >= new Date(inputValue.pgRegValStartDate) && new Date() <= new Date(inputValue.pgRegValEndDate) ? "신청 진행중"
                         : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중" : "프로그램 종료"
         )
-    }
+    }*/
     const viewMore = () => {
         let viewer = document.getElementById("mypg_viewer");
         viewer.classList.toggle("on");
@@ -319,7 +320,6 @@ function UserProfile() {
                                 <thead className="text-primary">
                                 <tr>
                                     <th>제목</th>
-                                    <th className="text-center">피드백</th>
                                     <th className="text-center">작업 상태</th>
                                     <th className="text-center">날짜</th>
                                     <th className="text-center">바로가기</th>
@@ -328,15 +328,10 @@ function UserProfile() {
                                 <tbody>
                                 {inputValue.mclTitle ?
                                     <tr>
-
                                         <td>{inputValue.mclTitle}</td>
                                         <td className="text-center">
-                                            {inputValue.mclIsConfirm === "confirm" ? "완료" :
-                                                inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
-                                        </td>
-                                        <td className="text-center">
-                                            {inputValue.mclIsSave === "tmp" ? "임시저장" :
-                                                inputValue.mclIsSave === "done" ? "완료" : "미작성"}
+                                            {inputValue.mclIsConfirm === "tmp" ? "임시저장" :
+                                                inputValue.mclIsConfirm === "done" ? "완료" : "미작성"}
                                         </td>
                                         <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
                                         <td className="text-center">
@@ -404,7 +399,7 @@ function UserProfile() {
                                 </div>
                                 <div>
                                     <span>프로그램 진행 상황</span>
-                                    <p>{ProgramState()}</p>
+                                    <p><ProgCurrentStatus program={inputValue.pgStatus}/> {/*{ProgramState()}*/}</p>
                                 </div>
                                 <Form role="form">
                                     <div>

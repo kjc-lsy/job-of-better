@@ -8,19 +8,6 @@ import classNames from "classnames";
 function Home(props) {
     return (
         <div className="content">
-            <ButtonGroup
-                className="btn-group-toggle"
-                data-toggle="buttons"
-            >
-                <Button
-                    tag="label"
-                    color="info"
-                    id="0"
-                    size="sm"
-                >
-                    <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">프로그램1</span>
-                </Button>
-            </ButtonGroup>
             <Row className="home_top">
                 <Col lg="3">
                     <Card>
@@ -53,7 +40,7 @@ function Home(props) {
                         <CardHeader>
                             <h5 className="card-category">전체 탈락자 수</h5>
                             <CardTitle tag="h3">
-                                <h3>탈락자 수</h3>
+                                탈락자 수
                             </CardTitle>
                         </CardHeader>
                         <CardBody>
@@ -66,7 +53,7 @@ function Home(props) {
                         <CardHeader>
                             <h5 className="card-category">현재 교육 진행자 수</h5>
                             <CardTitle tag="h3">
-                                <h3>교육자 수</h3>
+                                교육자 수
                             </CardTitle>
                         </CardHeader>
                         <CardBody>

@@ -793,6 +793,41 @@ td {
 
 /****************************************** company ******************************************/
 
+.programSelector {
+  padding:10px 23px 0;
+  display: block;
+  > button.btn {
+    background: transparent;
+    border:1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    width: 100%;
+    padding: 11px 10px;
+    text-align: center;
+    display: flex;
+    &:hover {
+      background: $bg-color !important;
+      color: $main-color !important
+    }
+    div {
+      @include ellipsis;
+    }
+  }
+  svg {
+    margin-left: 10px;
+    flex:1
+  }
+  .dropdown-menu {
+    width: calc(100% - 46px);
+  }
+
+  &.show {
+    > button {
+      background: #fff !important;
+      color: $main-color !important
+    }
+  }
+}
+
 /************* program *************/
 
 .rs-calendar-time-dropdown-column {
