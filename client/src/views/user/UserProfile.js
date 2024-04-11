@@ -34,11 +34,14 @@ function UserProfile() {
         coverLetterPercent: 0,
 
         mclTitle: "",
-        mclIsConfirm: false,
+        mclDate: "",
+        mclIsConfirm: "",
+        mclIsSave: "",
 
         resumeTitle: "",
-        resumeIsConfirm: false,
+        resumeIsConfirm: "",
 
+        pgId: 0,
         pgComName: "",
         pgComTel: "",
         pgComAddr: "",
@@ -113,10 +116,12 @@ function UserProfile() {
             // 프로그램 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
+
                 pgComName: response.data.company.comName,
                 pgComTel: response.data.company.comTel,
                 pgComAddr: response.data.company.comAddress,
 
+                pgId: response.data.program.pgIdx,
                 pgTitle: response.data.program.pgTitle,
                 pgProgStartDate: response.data.program.pgProgStartDate,
                 pgProgEndDate: response.data.program.pgProgEndDate,
@@ -141,10 +146,14 @@ function UserProfile() {
     const coverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
-            //console.log(response.data);
+            console.log(response.data);
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
-                coverLetterPercent: (response.data[1] / response.data[0]) * 100
+                mclTitle: response.data.clList.mclTitle,
+                mclDate: response.data.clList.mclModifiedDate,
+                mclIsConfirm: response.data.clList.mclIsConfirm,
+                mclIsSave: response.data.clList.mclIsSave,
+                coverLetterPercent: (response.data.clPercent[1] / response.data.clPercent[0]) * 100
             }))
         } catch (error) {
             console.error(error.response.data);
@@ -163,14 +172,20 @@ function UserProfile() {
         console.log(interviewDateTime);
 
         // 서버에 저장
-        user.interviewTimeSave(interviewDateTime)
-            .then((response) => {
-                console.log(response.data);
-                alert("신청이 완료 되었습니다. \n 기업관리자 확인 후 확정됩니다.")
-            })
-            .catch((error) => {
-                alert(error.response.data);
-            });
+        if (interviewDateStr < inputValue.pgInterviewValStartDate || interviewDateStr > inputValue.pgInterviewValEndDate) {
+            alert("해당 날짜엔 신청 할 수 없습니다.\n확인바랍니다.");
+        } else if (interviewDateStr < inputValue.pgInterviewValStartTime || interviewDateStr > inputValue.pgInterviewValEndTime) {
+            alert("해당 시간엔 신청 할 수 없습니다.\n확인바랍니다.");
+        } else {
+            user.interviewTimeSave(interviewDateTime)
+                .then((response) => {
+                    console.log(response.data);
+                    alert("신청이 완료 되었습니다. \n기업관리자 확인 후 확정됩니다.")
+                })
+                .catch((error) => {
+                    alert(error.response.data);
+                });
+        }
     }
 
     const ProgramState = () => {
@@ -181,6 +196,18 @@ function UserProfile() {
                         : new Date() >= new Date(inputValue.pgInterviewValStartDate) && new Date() <= new Date(inputValue.pgInterviewValEndDate) ? "인터뷰 진행중" : "프로그램 종료"
         )
     }
+    const viewMore = () => {
+        let viewer = document.getElementById("mypg_viewer");
+        viewer.classList.toggle("on");
+        setTimeout(() => {
+            if (viewer.classList.contains("on")) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }, 0);
+    };
 
 
     return (
@@ -258,13 +285,18 @@ function UserProfile() {
                                 <tr>
                                     <th>제목</th>
                                     <th className="text-center">작업 상태</th>
+                                    <th className="text-center">날짜</th>
                                     <th className="text-center">바로가기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Dakota Rice</td>
-                                    <td className="text-center">완료</td>
+                                    <td>{inputValue.mclTitle}</td>
+                                    <td>{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                    <td className="text-center">
+                                        {inputValue.mclIsConfirm === "confirm" ? "완료" :
+                                            inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
+                                    </td>
                                     <td className="text-center">
                                         <a onClick={(e) => {
                                             e.preventDefault();
@@ -289,24 +321,39 @@ function UserProfile() {
                                     <th>제목</th>
                                     <th className="text-center">피드백</th>
                                     <th className="text-center">작업 상태</th>
+                                    <th className="text-center">날짜</th>
                                     <th className="text-center">바로가기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Dakota Rice</td>
-                                    <td className="text-center">dkssud</td>
-                                    <td className="text-center">완료</td>
-                                    <td className="text-center">
-                                        <a onClick={(e) => {
-                                            e.preventDefault();
-                                            navigate("/user/cover-letter")
-                                        }}>
-                                            <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
-                                        </a>
-                                    </td>
-                                </tr>
+                                {inputValue.mclTitle ?
+                                    <tr>
 
+                                        <td>{inputValue.mclTitle}</td>
+                                        <td className="text-center">
+                                            {inputValue.mclIsConfirm === "confirm" ? "완료" :
+                                                inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
+                                        </td>
+                                        <td className="text-center">
+                                            {inputValue.mclIsSave === "tmp" ? "임시저장" :
+                                                inputValue.mclIsSave === "done" ? "완료" : "미작성"}
+                                        </td>
+                                        <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                        <td className="text-center">
+                                            <a onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate("/user/cover-letter")
+                                            }}>
+                                                <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td colSpan={5} class="text-center">자료가 없습니다.</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </Table>
                         </CardBody>
@@ -332,7 +379,9 @@ function UserProfile() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><b>{inputValue.pgTitle}</b></td>
+                                    <td><b class="title"
+                                           onClick={e => navigate(`/user/program-info/${inputValue.pgId}`)}>{inputValue.pgTitle}</b>
+                                    </td>
                                     <td className="text-center">{inputValue.pgComName}</td>
                                     <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>
                                     <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
@@ -393,10 +442,6 @@ function UserProfile() {
                                                         interviewTime: selectedTime
                                                     }));
                                                 }}
-                                                renderCell={(date) => {
-                                                    return (<div>분</div>)
-                                                }}
-
                                             />
                                             <Button type="button" onClick={(e) => {
                                                 e.preventDefault();
@@ -409,12 +454,14 @@ function UserProfile() {
                                 </Form>
                                 <div>
                                     <span>내용</span>
-                                    <p>
+                                    <p id="mypg_viewer">
                                         <Viewer
                                             key={inputValue.pgContent}
                                             initialValue={inputValue.pgContent}
                                         />
                                     </p>
+                                    <Button type="button" onClick={viewMore} className="btn02 viewMore">더
+                                        보기</Button>
                                 </div>
                                 <div>
                                     <span>상태</span>

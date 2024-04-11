@@ -2,7 +2,7 @@ import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
 import MemberList from "./views/company/MemberList";
 import ComCoverLetter from "./views/company/ComCoverLetter";
-import Home from "./views/user/Home";
+import Home from "./views/company/Home";
 import UserProfile from "./views/user/UserProfile";
 import UserModify from "./views/user/UserModify";
 import React from "react";

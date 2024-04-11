@@ -12,7 +12,9 @@ import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemCoverLetterService;
 import site.dealim.jobconsulting.service.MyInfoService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user/")
@@ -38,10 +40,13 @@ public class MyInfoController {
     }
 
     @GetMapping("/cover-letter-info")
-    public int[] coverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+    public Map coverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
-        return myinfoService.coverLetterInfo(user.getIdx(),user.getPgIdx());
+        Map coverLetterInfo = new HashMap();
+        coverLetterInfo.put("clList",myinfoService.coverLetterList(user.getIdx(),user.getPgIdx()));
+        coverLetterInfo.put("clPercent",myinfoService.coverLetterInfo(user.getIdx(),user.getPgIdx()));
+        return coverLetterInfo;
     }
 
     @PostMapping("/interview-time-save")
