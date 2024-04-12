@@ -5,11 +5,11 @@ import site.dealim.jobconsulting.domain.Company;
 
 @Mapper
 public interface CompanyMapper {
-
+    Long selectComIdxByMemIdx(Long idx);
 
     Long companyJoin(Company company);
 
     int checkDuplicateBno(String comLicenseNum);
     String getComNameByComIdx(Long comIdx);
-    Company selectComInfoByIdx(Long comIdx);
+
 }

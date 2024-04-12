@@ -52,8 +52,8 @@ public interface MemberMapper {
 
     List<Member> selectAllMembers();
 
-    int getMemberTotalCnt();
+    int getMemberTotalCnt(Long comIdx);
 
-    List<Member> getMemberListPage(Pageable pageable);
+    List<Member> getMemberListPage(@Param("pageable")Pageable pageable, @Param("comIdx")Long comIdx);
 
 }

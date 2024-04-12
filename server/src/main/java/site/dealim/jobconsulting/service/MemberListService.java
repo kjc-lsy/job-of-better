@@ -22,6 +22,8 @@ public class MemberListService {
     private MemberMapper memberMapper;
     @Autowired
     private ProgramMapper programMapper;
+    @Autowired
+    private CommonService commonService;
 
     /**
      * @return
@@ -39,8 +41,10 @@ public class MemberListService {
         return memberListDtos;
     }
 
-    public Page<MemberListDto> getAllMembersPage(Pageable pageable) {
-        List<Member> members = memberMapper.getMemberListPage(pageable);
+    public Page<MemberListDto> getAllMembersPage(Pageable pageable, Long memIdx) {
+        Long comIdx = commonService.getComIdxByMemIdx(memIdx);
+
+        List<Member> members = memberMapper.getMemberListPage(pageable, comIdx);
 
         List<MemberListDto> content = members.stream().map(member -> {
             return MemberListDto.builder()
@@ -49,12 +53,8 @@ public class MemberListService {
                     .build();
         }).toList();
 
-        int total = memberMapper.getMemberTotalCnt();
+        int total = memberMapper.getMemberTotalCnt(comIdx);
         return new PageImpl<>(content, pageable, total);
-    }
-
-    public String getProgramTitleByPgIdx(Long pgIdx) {
-        return programMapper.selectPgTitleByPgIdx(pgIdx);
     }
 
     public Member getMemberInfoByIdx(long idx) {

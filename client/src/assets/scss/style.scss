@@ -1369,6 +1369,21 @@ td {
     .table-responsive {
       overflow: inherit;
     }
+
+    .rs-pagination-btn {
+      color: $font-color !important;
+    }
+
+  .table-header {
+    display: flex;
+    justify-content: right;
+  }
+  .member-table {
+    tbody>tr>td {
+      color: $font-color !important;
+    }
+  }
+
 }
 
 /********************************************* white content *********************************************/

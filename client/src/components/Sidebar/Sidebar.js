@@ -19,15 +19,11 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 var ps;
 
 function Sidebar(props) {
-
     const location = useLocation();
     const currentPath = location.pathname;
     const pathLayout = currentPath.split("/")[1];
-
-    const {isLogin, roles} = useAuth();
-
+    const {isLogin, roles, user} = useAuth();
     const sidebarRef = React.useRef(null);
-
     //const {programIdx,setProgramIdx} = useState(localStorage.getItem("program"));
     const [programList, setProgramList] = useState([
         {
@@ -38,13 +34,12 @@ function Sidebar(props) {
         }
     ]);
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
+    const {routes, rtlActive, logo} = props;
+    const routeAllCate = [...new Set(routes.map(route => route.cate))];
+    const routeCategory = [...new Set(routeAllCate.filter(cate => cate))];
+    const [routeState, setRouteState] = useState();
 
-    // verifies if routeName is the one active (in browser input)
-    const activeRoute = (routeName) => {
-        return location.pathname === routeName ? "active" : "";
-    };
-
-    React.useEffect(() => {
+    useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
             ps = new PerfectScrollbar(sidebarRef.current, {
                 suppressScrollX: true,
@@ -58,6 +53,26 @@ function Sidebar(props) {
             }
         };
     });
+
+    useEffect(() => {
+        if(roles.isCompany) {
+            getProgramList()
+        }
+    }, [isLogin]);
+
+    useEffect(() => {
+        if(user?.pgIdx) {
+            setRouteState(routeCategory)
+        }
+
+        if(!user?.pgIdx) {
+            setRouteState([""])
+        }
+    }, [user]);
+
+    const activeRoute = (routeName) => {
+        return location.pathname === routeName ? "active" : "";
+    };
 
     const getProgramList = async () => {
         const response = await getPrograms();
@@ -73,23 +88,9 @@ function Sidebar(props) {
         )
     }
 
-    useEffect(() => {
-        if(roles.isCompany) {
-            getProgramList()
-        }
-    }, [isLogin]);
-
-
     const linkOnClick = () => {
         document.documentElement.classList.remove("nav-open");
     };
-
-    const {routes, rtlActive, logo} = props;
-
-    const dupArr = routes.map(route => route.cate);
-    const routeArr = dupArr.filter((element, index) => {
-        return dupArr.indexOf(element) === index;
-    });
 
     function renderRoutesCategory(prop, key, depth) {
         return (
@@ -159,6 +160,7 @@ function Sidebar(props) {
             );
         }
     }
+
     return (
         <BackgroundColorContext.Consumer>
             {({color}) => (
@@ -198,10 +200,12 @@ function Sidebar(props) {
                                     })}
                                 </DropdownMenu>
                             </ButtonDropdown>
-                            : null}
+                            :
+                            null
+                        }
                         <Nav>
-                            {routeArr.map((item, index) => {
-                                if (item === "" || item === null || item === undefined) {
+                            {routeState?.map((item, index) => {
+                                if (!item) {
                                     return routes.map((prop, key) => {
                                         if (prop.cate === item) {
                                             return renderRoutesCategory(prop, key, 1);

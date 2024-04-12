@@ -28,4 +28,11 @@
         FROM company
         WHERE com_idx = #{param}
     </select>
+
+    <!-- 회원 정보로 회사 Idx 조회-->
+    <select id="selectComIdxByMemIdx" parameterType="Long" resultType="Long">
+        SELECT com_idx
+        FROM company
+        WHERE com_mem_idx = #{param}
+    </select>
 </mapper>

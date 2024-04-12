@@ -26,7 +26,7 @@ const UserProgramCard = ({program, loadPrograms}) => {
     const handleRegisterBtn = async ({pgIdx, pgComIdx}) => {
         if (window.confirm(`[${program.pgTitle}] 프로그램을 신청합니다`)) {
             await registerProgram(pgIdx, pgComIdx);
-            navigate('/user/user-profile');
+            window.location.href = '/user/user-profile';
         }
     }
     return (
