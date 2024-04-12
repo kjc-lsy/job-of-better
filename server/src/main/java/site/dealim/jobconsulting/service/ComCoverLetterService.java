@@ -14,15 +14,17 @@ public class ComCoverLetterService {
     @Autowired
     private ComCoverLetterMapper companyMapper;
 
-    public void comCoverLetterSave(List<ComCoverLetter> values, Long comIdx) {
+    public void comCoverLetterSave(List<ComCoverLetter> values) {
         for(ComCoverLetter comCoverLetter : values) {
             HashMap map = new HashMap();
-            map.put("cclComIdx", comIdx);
+            //map.put("cclComIdx", comIdx);
+            map.put("cclPgIdx", comCoverLetter.getCclPgIdx());
             map.put("cclLetterQuestion", comCoverLetter.getCclLetterQuestion());
             map.put("cclMinLength", comCoverLetter.getCclMinLength());
             map.put("cclMaxLength", comCoverLetter.getCclMaxLength());
             System.out.println("map = " + map);
             Long cclIdx = comCoverLetter.getCclIdx();
+
             if(cclIdx != null && cclIdx > 0) {
                 map.put("cclIdx", cclIdx);
                 companyMapper.ComCoverLetterUpdate(map);
@@ -45,6 +47,6 @@ public class ComCoverLetterService {
     }
 
     public List<ComCoverLetter> coverLetterInfo(Long pgIdx) {
-        return companyMapper.userCoverLetterInfo(pgIdx);
+        return companyMapper.comCoverLetterInfo(pgIdx);
     }
 }

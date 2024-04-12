@@ -23,7 +23,8 @@ function ComCoverLetter() {
         id: 0,
         maxlength: 0,
         minlength: 0,
-        question: ""
+        question: "",
+        pgIdx: localStorage.getItem("program")
     }]);
 
     function addInput() {
@@ -34,7 +35,8 @@ function ComCoverLetter() {
                 id: 0,
                 maxlength: 0,
                 minlength: 0,
-                question: ""
+                question: "",
+                pgIdx: localStorage.getItem("program")
             }
         ]);
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface ComCoverLetterMapper {
     void ComCoverLetterinsert(HashMap map);
 
-    List<ComCoverLetter> comCoverLetterInfo(Long comIdx);
+    List<ComCoverLetter> comCoverLetterInfo(Long pgIdx);
 
     int ComCoverLetterUpdate(HashMap map);
 
