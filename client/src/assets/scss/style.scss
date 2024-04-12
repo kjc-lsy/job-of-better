@@ -804,6 +804,7 @@ td {
     padding: 11px 10px;
     text-align: center;
     display: flex;
+    justify-content: space-between;
     &:hover {
       background: $bg-color !important;
       color: $main-color !important
@@ -814,7 +815,6 @@ td {
   }
   svg {
     margin-left: 10px;
-    flex:1
   }
   .dropdown-menu {
     width: calc(100% - 46px);

@@ -9,6 +9,7 @@ export const coverLetterSave = (value) => {
     return api.post('/api/company/cover-letter-save', value.map(value => {
         return {
             cclIdx: value.id,
+            cclPgIdx: value.pgIdx,
             cclLetterQuestion: value.question,
             cclMinLength: value.minlength,
             cclMaxLength: value.maxlength

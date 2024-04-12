@@ -20,9 +20,9 @@ public class ComCoverLetterController {
     @Autowired
     private ComCoverLetterService companyService;
     @PostMapping("/cover-letter-save")
-    public ResponseEntity<?> comCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<ComCoverLetter> values) {
-        Member user = customMember.getMember();
-        companyService.comCoverLetterSave(values, user.getComIdx());
+    public ResponseEntity<?> comCoverLetterSave(@RequestBody List<ComCoverLetter> values) {
+        companyService.comCoverLetterSave(values);
+        System.out.println("values = " + values);
         log.info("자소서 항목 등록 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
