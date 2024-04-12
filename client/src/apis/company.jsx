@@ -23,3 +23,4 @@ export const coverLetterInfo = () => {
 export function coverLetterDelete(id) {
     return api.delete(`/api/company/cover-letter-delete/${id}`)
 }
+

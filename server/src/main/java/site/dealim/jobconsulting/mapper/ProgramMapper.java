@@ -13,6 +13,7 @@ public interface ProgramMapper {
     public int insertProgram(Program program);
 
     public List<Program> selectPgsByComIdx(Long comIdx);
+    public String selectPgTitleByPgIdx(Long pgIdx);
 
     public int updateIsWithdrawn(Long pgIdx);
 

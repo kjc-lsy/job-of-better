@@ -10,7 +10,6 @@ public interface CompanyMapper {
     Long companyJoin(Company company);
 
     int checkDuplicateBno(String comLicenseNum);
-
-
     String getComNameByComIdx(Long comIdx);
+    Company selectComInfoByIdx(Long comIdx);
 }

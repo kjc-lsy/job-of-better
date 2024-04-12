@@ -5,8 +5,8 @@
     <mapper namespace="site.dealim.jobconsulting.mapper.CompanyMapper">
 
     <!-- 회사 정보 조회 -->
-    <select id="selectComNameByIdx" resultType="String" parameterType="Long">
-        SELECT com_name
+    <select id="selectComInfoByIdx" resultType="Company" parameterType="Long">
+        SELECT *
         FROM company
         WHERE com_idx = #{param}
     </select>

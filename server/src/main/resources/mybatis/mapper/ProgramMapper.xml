@@ -11,6 +11,12 @@
           AND pg_is_withdrawn = 'N'
     </select>
 
+    <select id="selectPgTitleByPgIdx" parameterType="Long" resultType="String">
+        SELECT pg_title
+        FROM program
+        WHERE pg_idx = #{param}
+    </select>
+
     <insert id="insertProgram" parameterType="Program">
         INSERT INTO program (pg_com_idx,
                              pg_prog_start_date,

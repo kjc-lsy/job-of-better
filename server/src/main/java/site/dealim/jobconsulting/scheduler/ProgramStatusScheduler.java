@@ -14,7 +14,7 @@ public class ProgramStatusScheduler {
 
 
     // 매일 자정에 실행되는 스케줄된 작업
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void updateProgramColumn() {
         try {
             comProgramService.updateAllProgramsStatus();

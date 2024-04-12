@@ -7,15 +7,14 @@ import {PropTypes} from "prop-types";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import * as program from "../../apis/program"
+import {getPrograms} from "../../apis/program"
 
 // reactstrap components
-import {ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Input, Label, Nav} from "reactstrap";
+import {ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav} from "reactstrap";
 import {BackgroundColorContext,} from "contexts/BackgroundColorWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../contexts/AuthContextProvider";
-import {getPrograms} from "../../apis/program";
 
 var ps;
 
@@ -25,17 +24,17 @@ function Sidebar(props) {
     const currentPath = location.pathname;
     const pathLayout = currentPath.split("/")[1];
 
-    const isLogin = useAuth();
+    const {isLogin, roles} = useAuth();
 
     const sidebarRef = React.useRef(null);
 
     //const {programIdx,setProgramIdx} = useState(localStorage.getItem("program"));
-    const [programList,setProgramList] = useState([
+    const [programList, setProgramList] = useState([
         {
-            id:1,
+            id: 1,
             pgIdx: 0,
             pgTitle: "",
-            pgStatus:"",
+            pgStatus: "",
         }
     ]);
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
@@ -73,10 +72,11 @@ function Sidebar(props) {
             })
         )
     }
+
     useEffect(() => {
-        return () => {
+        if(roles.isCompany) {
             getProgramList()
-        };
+        }
     }, [isLogin]);
 
 
@@ -90,7 +90,8 @@ function Sidebar(props) {
     const routeArr = dupArr.filter((element, index) => {
         return dupArr.indexOf(element) === index;
     });
-    function renderRoutesCategory(prop, key,depth) {
+
+    function renderRoutesCategory(prop, key, depth) {
         return (
             <li
                 className={activeRoute(prop.path) + (prop.pro ? " active-pro" : "") + (depth === 1 ? "depth1" : "depth2")}
@@ -102,7 +103,7 @@ function Sidebar(props) {
                     onClick={props.toggleSidebar}
                 >
                     <i className={prop.icon}/>
-                <p>{rtlActive ? prop.rtlName : prop.name}</p>
+                    <p>{rtlActive ? prop.rtlName : prop.name}</p>
                 </NavLink>
             </li>
         );
@@ -172,45 +173,51 @@ function Sidebar(props) {
                             :
                             null}*/}
                         {pathLayout === "company" ?
-                        <ButtonDropdown className="programSelector" isOpen={dropdownOpen} toggle={() => {
-                            setDropdownOpen(!dropdownOpen)
-                        }}>
-                            <DropdownToggle caret className="domainSelect">
-                                <div>{localStorage.getItem("program") ? programList.find(item => item.pgIdx === parseInt(localStorage.getItem("program")))?.pgTitle : "프로그램 선택"}</div> <FontAwesomeIcon icon={faChevronDown}/>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                {programList.map((item, index) => {
-                                    return (
-                                        <DropdownItem
-                                            key={index}
-                                            className={
-                                                item.pgStatus === "Prestart" || item.pgStatus === "Ended" ? "grey" : ""
-                                            }
-                                            onClick={(e) => {
-                                                //setProgramIdx(item.pgIdx);
-                                                localStorage.setItem("program", item.pgIdx);
-                                            }}>
-                                            {item.pgTitle}
-                                        </DropdownItem>
-                                    );
-                                })}
-                            </DropdownMenu>
-                        </ButtonDropdown>
-                        :null}
+                            <ButtonDropdown className="programSelector" isOpen={dropdownOpen} toggle={() => {
+                                setDropdownOpen(!dropdownOpen)
+                            }}>
+                                <DropdownToggle caret className="domainSelect">
+                                    <div>{localStorage.getItem("program") ? programList.find(item => item.pgIdx === parseInt(localStorage.getItem("program")))?.pgTitle : "프로그램 선택"}</div>
+                                    <FontAwesomeIcon icon={faChevronDown}/>
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    {programList.map((item, index) => {
+                                        return (
+                                            <DropdownItem
+                                                key={index}
+                                                className={
+                                                    item.pgStatus === "Prestart" || item.pgStatus === "Ended" ? "grey" : ""
+                                                }
+                                                onClick={(e) => {
+                                                    //setProgramIdx(item.pgIdx);
+                                                    localStorage.setItem("program", item.pgIdx);
+                                                }}>
+                                                {item.pgTitle}
+                                            </DropdownItem>
+                                        );
+                                    })}
+                                </DropdownMenu>
+                            </ButtonDropdown>
+                            : null}
                         <Nav>
                             {routeArr.map((item, index) => {
                                 if (item === "" || item === null || item === undefined) {
                                     return routes.map((prop, key) => {
                                         if (prop.cate === item) {
                                             return renderRoutesCategory(prop, key, 1);
-                                        } })} else {
+                                        }
+                                    })
+                                } else {
                                     return (
                                         <li key={index}>
-                                            <div className="navSubTit">{/*<i className={routes.filter(prop => prop.cate === item)[0].icon}></i>*/}{item}</div>
+                                            <div
+                                                className="navSubTit">{/*<i className={routes.filter(prop => prop.cate === item)[0].icon}></i>*/}{item}</div>
                                             <ul>
                                                 {routes.map((prop, key) => {
                                                     if (prop.cate === item) {
-                                                       return renderRoutesCategory(prop, key,2)}})}
+                                                        return renderRoutesCategory(prop, key, 2)
+                                                    }
+                                                })}
                                             </ul>
                                         </li>
                                     );

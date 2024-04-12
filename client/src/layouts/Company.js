@@ -16,6 +16,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramInfo from "../views/company/program/ProgramInfo";
 import ProgramInsert from "../views/company/program/ProgramInsert";
+import UserProfile from "../views/company/UserProfile";
 
 var ps;
 
@@ -143,6 +144,10 @@ function Company(props) {
                             <Route
                                 path="/program-insert"
                                 element={<ProgramInsert/>}
+                            />
+                            <Route
+                                path="/user-profile/:idx"
+                                element={<UserProfile/>}
                             />
                             <Route
                                 path="/"
