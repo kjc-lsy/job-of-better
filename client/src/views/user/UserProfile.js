@@ -64,6 +64,13 @@ function UserProfile() {
         interviewTime: new Date().getHours() + ":" + new Date().getMinutes(),
     });
 
+    useEffect(() => {
+        Promise.all([userInfo(), pgInfo(), coverLetterInfo()])
+            .catch((error) => {
+                console.error(error.response.data);
+            });
+    }, [isLogin]);
+
     const changeProfileImg = () => {
         document.getElementById("profile-img").click();
     };
@@ -82,12 +89,6 @@ function UserProfile() {
         };
         // 파일 업로드 등의 추가 작업을 수행할 수 있습니다.
     };
-    useEffect(() => {
-        Promise.all([userInfo(), pgInfo(), coverLetterInfo()])
-            .catch((error) => {
-                console.error(error.response.data);
-            });
-    }, [isLogin]);
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
@@ -101,7 +102,7 @@ function UserProfile() {
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
                 pgRegStatus: response.data.pgRegStatus,
-                interviewDate: new Date((response.data.desiredInterviewDate).split("T")[0]),
+                interviewDate: new Date((response.data.desiredInterviewDate)?.split("T")[0]),
                 interviewTime: new Date(response.data.desiredInterviewDate),
             }));
             //console.log(inputValue.interviewTime);
@@ -148,7 +149,6 @@ function UserProfile() {
     const coverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
-            console.log(response.data);
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
                 mclTitle: response.data.clList.mclTitle,
@@ -163,10 +163,10 @@ function UserProfile() {
 
     const save = () => {
         // interviewDate를 'YYYY-MM-DD' 형식의 문자열로 변환
-        const interviewDateStr = inputValue.interviewDate.toISOString().split('T')[0];
+        const interviewDateStr = inputValue?.interviewDate.toISOString().split('T')[0];
 
         // interviewTime을 'HH:mm' 형식의 문자열로 변환
-        const interviewTimeStr = inputValue.interviewTime.toTimeString().split(' ')[0];
+        const interviewTimeStr = inputValue?.interviewTime.toTimeString().split(' ')[0];
 
         // interviewDateTime 문자열 생성
         const interviewDateTime = interviewDateStr + 'T' + interviewTimeStr;
@@ -293,7 +293,7 @@ function UserProfile() {
                                 <tbody>
                                 <tr>
                                     <td>{inputValue.mclTitle}</td>
-                                    <td>{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                    <td>{inputValue.mclDate ? new Date(inputValue?.mclDate)?.split("T")[0] : null}</td>
                                     <td className="text-center">
                                         {inputValue.mclIsConfirm === "confirm" ? "완료" :
                                             inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
@@ -333,7 +333,7 @@ function UserProfile() {
                                             {inputValue.mclIsConfirm === "tmp" ? "임시저장" :
                                                 inputValue.mclIsConfirm === "done" ? "완료" : "미작성"}
                                         </td>
-                                        <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate).split("T")[0] : null}</td>
+                                        <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate)?.split("T")[0] : null}</td>
                                         <td className="text-center">
                                             <a onClick={(e) => {
                                                 e.preventDefault();
@@ -379,7 +379,7 @@ function UserProfile() {
                                     </td>
                                     <td className="text-center">{inputValue.pgComName}</td>
                                     <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>
-                                    <td className="text-center">{(inputValue.pgComAddr).split(" ").slice(0, 2).join(" ")}</td>
+                                    <td className="text-center">{(inputValue.pgComAddr)?.split(" ").slice(0, 2).join(" ")}</td>
                                     <td className="text-center">
                                         <span
                                             className={inputValue.pgRegStatus === "Approved" ? "confirm" : inputValue.pgRegStatus === "Rejected" ? "reject" : "delay"}>
@@ -420,9 +420,9 @@ function UserProfile() {
                                                 format="HH:mm"
                                                 hideHours={(hour) => {
                                                     const startTimeString = inputValue.pgInterviewValStartTime;
-                                                    const startHour = parseInt(startTimeString.split(':')[0]);
+                                                    const startHour = parseInt(startTimeString?.split(':')[0]);
                                                     const endTimeString = inputValue.pgInterviewValEndTime;
-                                                    const endHour = parseInt(endTimeString.split(':')[0]);
+                                                    const endHour = parseInt(endTimeString?.split(':')[0]);
 
                                                     return hour < startHour || hour > endHour
                                                 }}
