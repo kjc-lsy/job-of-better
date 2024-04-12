@@ -35,8 +35,8 @@ public class Member {
     private LocalDateTime desiredInterviewDate;
     private LocalDateTime assignedInterviewDate;
     private String interviewComment;
-    private LocalDateTime joinDate;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime joinDate = LocalDateTime.now();
+    private LocalDateTime modifiedDate = LocalDateTime.now();
     private LocalDateTime withdrawnDate;
     private String isWithdrawn = "N";
     private String profileImg;

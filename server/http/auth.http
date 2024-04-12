@@ -3,8 +3,13 @@ POST http://localhost:9090/api/auth/join
 Content-Type: application/json
 
 {
-  "username": "company",
-  "password": "0000"
+  "username": "user14",
+  "password": "qwER1234!",
+  "name": "이시육",
+  "email": "asordk@naver.com",
+  "phone": "01051181129",
+  "birthDate": "2000-11-11",
+  "gender": "F"
 }
 
 ###

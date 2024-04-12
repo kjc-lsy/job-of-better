@@ -23,8 +23,7 @@ public class MemberListController {
     @GetMapping("/get-members-page")
     public ResponseEntity<?> getMembers(Pageable pageable) {
         log.info("USER 권한 사용자 페이지 불러오기...");
-        log.info(pageable.toString());
-        return ResponseEntity.ok(memberListService.getMembersList());
+        return ResponseEntity.ok(memberListService.getAllMembersPage(pageable));
     }
 
     @Secured("ROLE_COMPANY")

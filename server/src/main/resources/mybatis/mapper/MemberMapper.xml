@@ -42,20 +42,42 @@
         <result property="username" column="username"/>
     </resultMap>
 
+    <!-- 멤버 목록 페이지 조회(USER 권한 멤버만) -->
+    <select id="getMemberTotalCnt" resultType="int">
+        SELECT COUNT(*) AS CNT FROM member
+    </select>
+
+    <select id="getMemberListPage" parameterType="org.springframework.data.domain.Pageable" resultType="member">
+        SELECT *
+        FROM member
+        ORDER BY join_date DESC
+            LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <!-- user 권한만 가진 멤버 조회 -->
+    <select id="selectAllMembers" resultMap="memberMap">
+        SELECT *
+        FROM member
+        WHERE username IN (SELECT m.username
+                           FROM member m
+                                    LEFT JOIN member_role r ON m.username = r.username
+                           GROUP BY m.username
+                           HAVING count(m.username) = 1)
+    </select>
+
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="idx">
         INSERT INTO member (
             name, username, password, email, address, birth_date, gender, phone, com_idx,
             pg_idx, pg_reg_status, pg_reg_date, resume_file, desired_interview_date,
-            assigned_interview_date, interview_status, interview_comment, is_cover_letter,
-            resume_status, join_date, modified_date, withdrawn_date, is_withdrawn, profile_img
+            assigned_interview_date, interview_status, interview_comment, cover_letter_status,
+            resume_status, withdrawn_date, is_withdrawn, profile_img
         )
         VALUES (
                    #{name}, #{username}, #{password}, #{email}, #{address}, #{birthDate}, #{gender},
                    #{phone}, #{comIdx}, #{pgIdx}, #{pgRegStatus}, #{pgRegDate}, #{resumeFile},
                    #{desiredInterviewDate}, #{assignedInterviewDate}, #{interviewStatus},
-                   #{interviewComment}, #{isCoverLetter}, #{resumeStatus}, #{joinDate},
-                   #{modifiedDate}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
+                   #{interviewComment}, #{coverLetterStatus}, #{resumeStatus}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
                )
     </insert>
 
@@ -99,7 +121,7 @@
             assigned_interview_date = #{assignedInterviewDate},
             interview_status       = #{interviewStatus},
             interview_comment       = #{interviewComment},
-            is_cover_letter         = #{isCoverLetter},
+            coverLetterStatus         = #{coverLetterStatus},
             resume_status               = #{resumeStatus},
             join_date               = #{joinDate},
             modified_date           = #{modifiedDate},
@@ -175,16 +197,5 @@
         SET desired_interview_date = #{desiredInterviewDate}
         WHERE idx = #{idx}
     </update>
-
-    <!-- user 권한만 가진 멤버 조회 -->
-    <select id="selectAllMembers" resultMap="memberMap">
-        SELECT *
-        FROM member
-        WHERE username IN (SELECT m.username
-                           FROM member m
-                                    LEFT JOIN member_role r ON m.username = r.username
-                           GROUP BY m.username
-                           HAVING count(m.username) = 1)
-    </select>
 
 </mapper>

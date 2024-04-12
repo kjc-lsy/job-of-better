@@ -31,7 +31,7 @@ export const userProfileInfo = () => {
 }
 
 //권한이 USER인 사용자 전부 불러오기
-export const getAllUserMembers = () => api.get('/api/member-list/get-members-page')
+export const getAllUserMembers = (page,pageSize) => api.get(`/api/member-list/get-members-page?page=${page}&size=${pageSize}`)
 
 //사용자 정보 조회
 export const getMemberListInfoByIdx = (idx) => api.get(`/api/member-list/get-user-info/${idx}`)

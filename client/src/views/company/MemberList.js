@@ -5,25 +5,24 @@ import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstra
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {getAllUserMembers} from "../../apis/user";
 import {useNavigate} from "react-router-dom";
+import {Pagination} from "rsuite";
 
 function MemberList() {
     const {isLogin} = useAuth()
     const navigate = useNavigate()
-    const [page, setPage] = useState()
-    const [pageSize, setPageSize] = useState()
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+    const [totalPage, setTotalPage] = useState()
     const [userList, setUserList] = useState(null)
 
     useEffect(() => {
         if (isLogin) {
-            getAllUserMembers().then(res => {
-                setUserList(res.data)
+            getAllUserMembers(page-1, pageSize).then(res => {
+                setUserList(res.data.content)
+                setTotalPage(res.data.totalElements)
             })
         }
-    }, [isLogin]);
-
-    useEffect(() => {
-        
-    }, [page, pageSize]);
+    }, [isLogin, page, pageSize]);
 
     return (
         <div className="content member-list">
@@ -69,6 +68,19 @@ function MemberList() {
                                 )}
                                 </tbody>
                             </Table>
+                            <Pagination
+                                layout={['-','pager','-']}
+                                prev
+                                last
+                                next
+                                first
+                                size="sm"
+                                total={totalPage}
+                                limit={pageSize}
+                                activePage={page}
+                                onChangePage={setPage}
+                                maxButtons={10}
+                            />
                         </CardBody>
                     </Card>
                 </Col>

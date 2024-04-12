@@ -108,7 +108,7 @@ CREATE TABLE `member` (
   `assigned_interview_date` datetime DEFAULT NULL COMMENT '확정 모의면접 일자',
   `interview_status` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'N' COMMENT '모의면접일 확정여부',
   `interview_comment` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '모의면접 코멘트',
-  `is_cover_letter` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'N' COMMENT '자소서 등록 여부',
+  `coverLetterStatus` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'N' COMMENT '자소서 등록 여부',
   `resume_status` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'N' COMMENT '이력서 등록 여부',
   `join_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

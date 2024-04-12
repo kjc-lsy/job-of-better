@@ -2,6 +2,7 @@ package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.domain.Pageable;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
@@ -50,4 +51,9 @@ public interface MemberMapper {
     int cancelRegister(Long memIdx);
 
     List<Member> selectAllMembers();
+
+    int getMemberTotalCnt();
+
+    List<Member> getMemberListPage(Pageable pageable);
+
 }
