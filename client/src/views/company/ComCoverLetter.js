@@ -18,13 +18,13 @@ import {useAuth} from "../../contexts/AuthContextProvider";
 function ComCoverLetter() {
     const {isLogin} = useAuth();
 
-    let [inputValue, setInputValue] = useState([{
+    const [inputValue, setInputValue] = useState([{
         num: 1,
         id: 0,
         maxlength: 0,
         minlength: 0,
         question: "",
-        pgIdx: localStorage.getItem("program")
+        pgIdx: localStorage.getItem("program"),
     }]);
 
     function addInput() {
@@ -36,7 +36,7 @@ function ComCoverLetter() {
                 maxlength: 0,
                 minlength: 0,
                 question: "",
-                pgIdx: localStorage.getItem("program")
+                pgIdx: localStorage.getItem("program"),
             }
         ]);
     }
@@ -71,6 +71,7 @@ function ComCoverLetter() {
         } else if (inputValue.some(value => !value.question)) {
             alert("빈 값은 등록 할 수 없습니다.\n 삭제 또는 내용을 입력해주세요.")
         } else {
+            //console.log(inputValue);
             //inputValue.map(value => value.question)
             company.coverLetterSave(inputValue)
                 .then(response => {
@@ -86,7 +87,7 @@ function ComCoverLetter() {
         }
     }
     useEffect(() => {
-        company.coverLetterInfo()
+        company.coverLetterInfo(localStorage.getItem("program"))
             .then(response => {
                 setInputValue(
                     response.data.length === 0 ? [
@@ -95,7 +96,8 @@ function ComCoverLetter() {
                             id: 0,
                             maxlength: 0,
                             minlength: 0,
-                            question: ""
+                            question: "",
+                            pgIdx: localStorage.getItem("program"),
                         }
                     ] :
                     response.data.map((item, index) => {
@@ -104,7 +106,8 @@ function ComCoverLetter() {
                             id: item.cclIdx,
                             maxlength: item.cclMaxLength,
                             minlength: item.cclMinLength,
-                            question: item.cclLetterQuestion
+                            question: item.cclLetterQuestion,
+                            pgIdx: item.cclPgIdx,
                         }
                     }));
                 //console.log(response.data);

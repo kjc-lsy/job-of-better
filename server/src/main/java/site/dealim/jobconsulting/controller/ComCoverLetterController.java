@@ -20,19 +20,18 @@ public class ComCoverLetterController {
     @Autowired
     private ComCoverLetterService companyService;
     @PostMapping("/cover-letter-save")
-    public ResponseEntity<?> comCoverLetterSave(@RequestBody List<ComCoverLetter> values) {
-        companyService.comCoverLetterSave(values);
+    public ResponseEntity<?> comCoverLetterSave(@RequestBody List<ComCoverLetter> values, @AuthenticationPrincipal CustomMember customMember) {
+        companyService.comCoverLetterSave(values, customMember.getMember().getComIdx());
         System.out.println("values = " + values);
         log.info("자소서 항목 등록 성공");
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
 
-    @GetMapping("/cover-letter-info")
-    public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+    @GetMapping("/cover-letter-info/{pgIdx}")
+    public List<ComCoverLetter> comCoverLetterInfo(@PathVariable Long pgIdx) {
         log.info("자소서 항목 불러오기");
-        Member user = customMember.getMember();
-        return companyService.coverLetterInfo(user.getPgIdx());
+        return companyService.coverLetterInfo(pgIdx);
         //return companyService.comCoverLetterInfo(user.getComIdx());
     }
 
