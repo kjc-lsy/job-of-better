@@ -1391,6 +1391,10 @@ td {
   align-content: center;
   justify-content: center;
 
+  .card {
+    padding: 0 10px 10px;
+  }
+
   .waiting-img {
     position: absolute;
     width: 50px;
@@ -1403,6 +1407,10 @@ td {
 
     svg {
       padding-bottom: 5px;
+    }
+
+    p {
+      white-space: nowrap;
     }
   }
 

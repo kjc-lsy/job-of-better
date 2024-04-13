@@ -108,7 +108,7 @@ export const AuthContextProvider = ({children}) => {
         setRoles(updatedRoles);
     }
 
-    const value = {user, isLogin, roles, login, logoutSetting}; // 전역으로 넘길 함수들
+    const value = {user, isLogin, roles, login, logoutSetting, setLoginUser}; // 전역으로 넘길 함수들
 
     return (
         <AuthContext.Provider value={value}>

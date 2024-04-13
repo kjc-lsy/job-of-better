@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 import UserProgramCard from "../../../components/Card/UserProgramCard";
 
 function Program() {
-    const {isLogin} = useAuth();
+    const {isLogin, user} = useAuth();
     const [programs, setPrograms] = useState([]);
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ function Program() {
         if (isLogin) {
             loadPrograms();
         }
-    }, [isLogin]);
+    }, [isLogin, user]);
 
     const loadPrograms = async () => {
         const response = await getValidPrograms();

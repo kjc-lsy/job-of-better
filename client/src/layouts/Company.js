@@ -17,6 +17,7 @@ import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramInfo from "../views/company/program/ProgramInfo";
 import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserProfile from "../views/company/UserProfile";
+import {useLoading} from "../contexts/LoadingProvider";
 
 var ps;
 
@@ -27,23 +28,25 @@ function Company(props) {
     const navigate = useNavigate();
     const [isMounted, setIsMounted] = React.useState(false);
     const companyRoutes = routes.filter(route => route.layout === "/company");
-
-    // 권한 처리
-    useEffect(() => {
-        if (isMounted) {
-            if (!isLogin || !roles.isCompany) {
-                alert("접근할 수 없습니다")
-                navigate("/auth/login")
-            }
-        } else {
-            setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
-        }
-
-    }, [isLogin, roles]);
+    const {setLoading} = useLoading();
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
     );
-    React.useEffect(() => {
+
+    useEffect(() => {
+        setLoading(true)
+
+        if(isLogin) {
+            setLoading(false)
+
+            if (!roles.isCompany) {
+                alert("접근할 수 없습니다")
+                navigate("/auth/login")
+            }
+        }
+    }, [isLogin]);
+
+    useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
             document.documentElement.className += " perfect-scrollbar-on";
             document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -64,7 +67,8 @@ function Company(props) {
             }
         };
     });
-    React.useEffect(() => {
+
+    useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
             let tables = document.querySelectorAll(".table-responsive");
             for (let i = 0; i < tables.length; i++) {
@@ -77,7 +81,7 @@ function Company(props) {
             mainPanelRef.current.scrollTop = 0;
         }
     }, [location]);
-    // this function opens and closes the sidebar on small devices
+
     const toggleSidebar = () => {
         document.documentElement.classList.toggle("nav-open");
         setsidebarOpened(!sidebarOpened);

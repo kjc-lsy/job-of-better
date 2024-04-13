@@ -16,32 +16,49 @@ import Footer from "../components/Footer/Footer";
 import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
 import ProgramInfo from "../views/user/program/ProgramInfo";
 import WaitingReg from "../views/user/WaitingReg";
+import {useLoading} from "../contexts/LoadingProvider";
 
 var ps;
 
 function User(props) {
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
-    const {isLogin, roles, user} = useAuth();
+    const {isLogin, roles, user, setLoginUser} = useAuth();
     const navigate = useNavigate();
     const userRoutes = routes.filter(route => route.layout === "/user");
+    const {setLoading} = useLoading();
+
 
     // 권한 처리
     useEffect(() => {
-        if (isLogin && !roles.isUser) {
-            alert("접근할 수 없습니다.");
-            navigate("/auth/login");
-        }
+        setLoading(true)
 
-        if (user?.pgRegStatus === "Pending") {
-            navigate("/user/waiting-reg");
-        }
+        if(isLogin) {
+            setLoading(false)
 
-        if (user?.pgRegStatus === "Approved") {
-            navigate("/user/user-profile");
-        }
+            if (!roles.isUser) {
+                alert("접근할 수 없습니다.");
+                navigate("/auth/login");
+                return
+            }
 
-    }, [isLogin, roles, user, navigate]);
+            if(!user?.pgRegStatus) {
+                navigate("/user/program");
+                return
+            }
+
+            if (user?.pgRegStatus === "Pending") {
+                navigate("/user/waiting-reg");
+                return
+            }
+
+            if (user?.pgRegStatus === "Approved") {
+                navigate("/user/user-profile");
+                return
+            }
+
+        }
+    }, [isLogin, user]);
 
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1

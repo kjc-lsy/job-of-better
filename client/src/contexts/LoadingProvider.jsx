@@ -1,9 +1,11 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 export const LoadingContext = createContext({
     loading : false,
     setLoading : () => {}
 })
+
+export const useLoading = () => useContext(LoadingContext)
 export default function LoadingProvider(props) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {

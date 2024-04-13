@@ -17,10 +17,6 @@ const WaitingReg = () => {
 
         }
     }, [isLogin]);
-    useEffect(() => {
-        console.log(waitingRegDto)
-    }, [waitingRegDto]);
-
 
     return (
         <Row className="content waiting-reg">
