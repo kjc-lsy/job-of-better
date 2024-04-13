@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.dealim.jobconsulting.domain.Program;
+import site.dealim.jobconsulting.dto.WaitingRegDto;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
@@ -22,7 +23,7 @@ public class UserProgramService {
     @Transactional
     public int registerProgram(Long pgIdx, Long memIdx, Long comIdx) {
         memberMapper.updateCompanyIdx(comIdx, memIdx);
-        memberMapper.updatepgRegStatus("Pending", memIdx);
+        memberMapper.updatePgRegStatus("Pending", memIdx);
         return memberMapper.updatePgIdx(pgIdx, memIdx);
     }
 
@@ -36,6 +37,10 @@ public class UserProgramService {
 
     public List<Program> getAllPrograms() {
         return programMapper.selectAllValidPrograms();
+    }
+
+    public WaitingRegDto getWaitingRegDto(Long pgIdx) {
+        return programMapper.selectWaitingRegDto(pgIdx);
     }
 
 }

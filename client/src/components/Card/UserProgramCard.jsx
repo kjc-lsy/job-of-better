@@ -1,34 +1,18 @@
 import React from 'react';
 import {Button, Card, CardBody, CardFooter, Col, Row} from "reactstrap";
-import {cancelRegister, registerProgram} from "../../apis/program";
 import {useNavigate} from "react-router-dom";
 import ProgramCardHeader from "./ProgramCardHeader";
 import {Viewer} from "@toast-ui/react-editor";
-import {useAuth} from "../../contexts/AuthContextProvider";
 import ProgCurrentStatus from "../Infos/ProgCurrentStatus";
+import RegSubmitBtn from "../Buttons/RegSubmitBtn";
 
 const UserProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
-
-    const {user} = useAuth();
-
-    const handleCancelBtn = async (id) => {
-        if (window.confirm('프로그램 신청을 취소합니다')) {
-            await cancelRegister();
-            loadPrograms();
-        }
-    }
 
     const handleInfoBtn = (pgIdx) => {
         navigate('../program-info/' + pgIdx)
     }
 
-    const handleRegisterBtn = async ({pgIdx, pgComIdx}) => {
-        if (window.confirm(`[${program.pgTitle}] 프로그램을 신청합니다`)) {
-            await registerProgram(pgIdx, pgComIdx);
-            navigate('/user/user-profile');
-        }
-    }
     return (
         <Card>
             <ProgramCardHeader
@@ -67,17 +51,7 @@ const UserProgramCard = ({program, loadPrograms}) => {
             </CardBody>
             <CardFooter>
                 <Button onClick={() => handleInfoBtn(program.pgIdx)}>상세정보</Button>
-                {user.pgIdx
-                    ?
-                    user.pgIdx === program.pgIdx
-                        ?
-                        <Button color="danger" onClick={() => handleCancelBtn(program.pgIdx)}>신청취소</Button>
-                        :
-                        <Button disabled onClick={() => handleRegisterBtn(program)}>신청하기</Button>
-                    :
-                    <Button onClick={() => handleRegisterBtn(program)}>신청하기</Button>
-                }
-
+                <RegSubmitBtn program={program}/>
             </CardFooter>
         </Card>
     );

@@ -27,10 +27,6 @@ public class ComProgramService {
         return programMapper.insertProgram(program);
     }
 
-    public List<Program> getProgramsByComIdx(Long comIdx) {
-        return programMapper.selectPgsByComIdx(comIdx);
-    }
-
     public int deleteByPgIdx(Long pgIdx) {
         return programMapper.updateIsWithdrawn(pgIdx);
     }
@@ -43,8 +39,8 @@ public class ComProgramService {
         return programMapper.updateProgram(program);
     }
 
-    public List<Program> getAllPrograms() {
-        return programMapper.selectAllPrograms();
+    public List<Program> getAllPrograms(Long comIdx) {
+        return programMapper.selectAllPgsInComIdx(comIdx);
     }
 
     public Integer getApprovedCntByPgIdx(Long pgIdx) {

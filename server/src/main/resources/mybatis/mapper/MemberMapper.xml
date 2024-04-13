@@ -42,16 +42,25 @@
         <result property="username" column="username"/>
     </resultMap>
 
-    <!-- 멤버 목록 페이지 조회(USER 권한 멤버만) -->
-    <select id="getMemberTotalCnt" resultType="int">
-        SELECT COUNT(*) AS CNT FROM member
-    </select>
-
-    <select id="getMemberListPage" parameterType="org.springframework.data.domain.Pageable" resultType="member">
+    <!-- 멤버 목록 페이지 조회(USER 권한 멤버, 특정 회사 멤버) -->
+    <select id="getMemberListPage" parameterType="map" resultType="member">
         SELECT *
         FROM member
+        WHERE username IN (SELECT m.username
+                           FROM member m
+                                    LEFT JOIN member_role r ON m.username = r.username
+                           WHERE m.com_idx = #{comIdx}
+                           GROUP BY m.username
+                           HAVING COUNT(m.username) = 1)
         ORDER BY join_date DESC
-            LIMIT #{pageSize} OFFSET #{offset}
+        LIMIT #{pageable.pageSize}
+        OFFSET #{pageable.offset}
+    </select>
+
+    <select id="getMemberTotalCnt" resultType="int" parameterType="Long">
+        SELECT COUNT(*) AS CNT
+        FROM member
+        WHERE com_idx = #{param}
     </select>
 
     <!-- user 권한만 가진 멤버 조회 -->
@@ -159,7 +168,7 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updatepgRegStatus" parameterType="Map">
+    <update id="updatePgRegStatus" parameterType="Map">
         UPDATE member
         SET pg_reg_status = #{pgRegStatus}
         WHERE idx = #{memIdx}

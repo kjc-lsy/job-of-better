@@ -1,5 +1,5 @@
-import React, {Suspense, useEffect} from "react";
-import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import React, {useEffect} from "react";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
@@ -15,29 +15,33 @@ import Footer from "../components/Footer/Footer";
 
 import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
 import ProgramInfo from "../views/user/program/ProgramInfo";
+import WaitingReg from "../views/user/WaitingReg";
 
 var ps;
 
 function User(props) {
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
-    const {isLogin, roles} = useAuth();
+    const {isLogin, roles, user} = useAuth();
     const navigate = useNavigate();
-    const [isMounted, setIsMounted] = React.useState(false);
     const userRoutes = routes.filter(route => route.layout === "/user");
 
     // 권한 처리
     useEffect(() => {
-        if (isMounted) {
-            if (!isLogin || !roles.isUser) {
-                alert("접근할 수 없습니다")
-                navigate("/auth/login")
-            }
-        } else {
-            setIsMounted(true) // 최초 마운트시에 한번은 이 useEffect가 실행되지 않음 아직 roles가 업데이트 되지 않았기 때문, contextProvider에서 isLogin, roles를 업데이트 하는 요청이 비동기이기 때문에 해당 값이 변경 될때만 실행 되도록 함
+        if (isLogin && !roles.isUser) {
+            alert("접근할 수 없습니다.");
+            navigate("/auth/login");
         }
 
-    }, [isLogin, roles]);
+        if (user?.pgRegStatus === "Pending") {
+            navigate("/user/waiting-reg");
+        }
+
+        if (user?.pgRegStatus === "Approved") {
+            navigate("/user/user-profile");
+        }
+
+    }, [isLogin, roles, user, navigate]);
 
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
@@ -103,19 +107,18 @@ function User(props) {
                             changeColor={changeColor}
                             sideColor={color}
                         />
-                        <Suspense fallback={<div className="loading">loading...</div>}>
                         <Routes>
                             {getRoutes(routes, location)}
+                            <Route
+                                path="/waiting-reg"
+                                element={<WaitingReg/>}
+                            />
                             <Route
                                 path="/program-info/:pgIdx"
                                 element={<ProgramInfo/>}
                             />
-                            <Route
-                                path="/"
-                                element={<Navigate to="/user/program" replace/>}
-                            />
+                            <Route path="/" element={<></>} />
                         </Routes>
-                        </Suspense>
                         {
                             // we don't want the Footer to be rendered on map page
                             location.pathname === "/company/map" ? null : <Footer fluid/>

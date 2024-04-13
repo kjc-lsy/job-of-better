@@ -5,7 +5,7 @@ import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstra
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {getAllUserMembers} from "../../apis/user";
 import {useNavigate} from "react-router-dom";
-import {Pagination} from "rsuite";
+import {Pagination, SelectPicker} from "rsuite";
 
 function MemberList() {
     const {isLogin} = useAuth()
@@ -14,15 +14,22 @@ function MemberList() {
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
     const [userList, setUserList] = useState(null)
-
+    const [pgRegStatus, setPgRegStatus] = useState('')
+    const regStatusSelect = ['가입대기', '확인', '거절'].map(
+        item => ({label: item, value: item})
+    );
     useEffect(() => {
         if (isLogin) {
-            getAllUserMembers(page-1, pageSize).then(res => {
+            getAllUserMembers(page - 1, pageSize).then(res => {
                 setUserList(res.data.content)
                 setTotalPage(res.data.totalElements)
             })
         }
     }, [isLogin, page, pageSize]);
+
+    useEffect(() => {
+        console.log(pgRegStatus)
+    }, [pgRegStatus]);
 
     return (
         <div className="content member-list">
@@ -33,6 +40,9 @@ function MemberList() {
                             <CardTitle tag="h4">학생 정보</CardTitle>
                         </CardHeader>
                         <CardBody>
+                            <div className="table-header">
+                                총 학생 수 : {totalPage}
+                            </div>
                             <Table className="member-table" responsive>
                                 <thead className="text-primary">
                                 <tr className="text-center">
@@ -50,10 +60,13 @@ function MemberList() {
                                 <tbody>
                                 {userList?.map(({member, pgTitle}, idx) => (
                                         <tr key={member.username} className="text-center">
-                                            <td><a onClick={(e) => {
-                                                e.preventDefault()
-                                                navigate(`/company/user-profile/${member.idx}`)
-                                            }}>{member.username}</a>
+                                            <td>
+                                                <a onClick={(e) => {
+                                                    e.preventDefault()
+                                                    navigate(`/company/user-profile/${member.idx}`)
+                                                }}>
+                                                    {member.username}
+                                                </a>
                                             </td>
                                             <td>{member.name}</td>
                                             <td>{member.phone}</td>
@@ -62,14 +75,24 @@ function MemberList() {
                                             <td>{member.resumeStatus}</td>
                                             <td>{member.interviewStatus}</td>
                                             <td>{pgTitle}</td>
-                                            <td>{member.pgRegStatus}</td>
+                                            <td>
+                                                <SelectPicker
+                                                    onChange={setPgRegStatus}
+                                                    data={regStatusSelect}
+                                                    searchable={false}
+                                                    style={{width: 120}}
+                                                    defaultValue={member.pgRegStatus === 'Pending' ? '가입대기' :
+                                                        member.pgRegStatus === 'Approved' ? '확인' :
+                                                            member.pgRegStatus === 'Rejected' ? '거절' : ''}
+                                                />
+                                            </td>
                                         </tr>
                                     )
                                 )}
                                 </tbody>
                             </Table>
                             <Pagination
-                                layout={['-','pager','-']}
+                                layout={['-', 'pager', '-']}
                                 prev
                                 last
                                 next

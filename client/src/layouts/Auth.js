@@ -3,7 +3,7 @@ import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-do
 import {Container, Row} from "reactstrap";
 import CommonNavbar from "../components/Navbars/Navbar";
 import "assets/scss/argon-dashboard-react.scss";
-import {getPathname, getRoutes , getBrandText} from "../components/GetRouteProvider";
+import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
 
 import routes from "routes.js";
 import {BackgroundColorContext} from "../contexts/BackgroundColorWrapper";
@@ -12,7 +12,7 @@ import {useAuth} from "../contexts/AuthContextProvider";
 const Auth = (props) => {
     const mainContent = React.useRef(null);
     const location = useLocation();
-    const {isLogin, roles} = useAuth();
+    const {isLogin, roles, user} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => { // Auth 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
@@ -22,8 +22,14 @@ const Auth = (props) => {
                 return
             }
             if (roles.isUser) {
-                navigate("/user");
-                return
+                if(user?.pgIdx){
+                    navigate("/user/user-profile")
+                    return;
+                }
+                if(!user?.pgIdx){
+                    navigate("/user/program")
+                    return;
+                }
             }
         }
     }, [isLogin, roles]);
