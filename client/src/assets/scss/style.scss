@@ -1364,7 +1364,7 @@ td {
   }
 }
 
-/****************************************** member-list ******************************************/
+/******************************** member-list ********************************/
 .member-list {
     .table-responsive {
       overflow: inherit;
@@ -1381,6 +1381,34 @@ td {
   .member-table {
     tbody>tr>td {
       color: $font-color !important;
+    }
+  }
+}
+
+/******************************** waiting-reg ********************************/
+
+.waiting-reg {
+  align-content: center;
+  justify-content: center;
+
+  .waiting-img {
+    position: absolute;
+    width: 50px;
+    top: 30px;
+    right: 25px;
+  }
+
+  .waiting-info {
+    margin-top: 25px;
+
+    svg {
+      padding-bottom: 5px;
+    }
+  }
+
+  .card-footer {
+    .btn {
+      width: 90%;
     }
   }
 

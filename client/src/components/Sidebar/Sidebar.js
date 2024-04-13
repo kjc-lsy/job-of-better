@@ -60,12 +60,17 @@ function Sidebar(props) {
         }
     }, [isLogin]);
 
+    // 유저 상태별 사이드바 렌더링
     useEffect(() => {
-        if(roles?.isUser && user?.pgIdx) {
+        if(roles?.isUser && user?.pgRegStatus === "Approved") {
             setRouteState(routeExistingCate)
         }
 
-        if(roles?.isUser && !user?.pgIdx) {
+        if(roles?.isUser && user?.pgRegStatus === "Pending") {
+            setRouteState([""])
+        }
+
+        if(roles?.isUser && !user?.pgRegStatus) {
             setRouteState([""])
         }
 

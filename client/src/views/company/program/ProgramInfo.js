@@ -12,7 +12,7 @@ import ApprovedNumber from "../../../components/Infos/numbers/ApprovedNumber";
 import PendingNumber from "../../../components/Infos/numbers/PendingNumber";
 import RejectedNumber from "../../../components/Infos/numbers/RejectedNumber";
 import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
-import RefreshButton from "../../../components/Buttons/RefreshButton";
+import RefreshBtn from "../../../components/Buttons/RefreshBtn";
 import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 
 const ProgramInfo = () => {
@@ -139,7 +139,7 @@ const ProgramInfo = () => {
                                     <Col>
                                         <div className="ai-summary-label">
                                             <label>AI 교육요약</label>
-                                            <RefreshButton
+                                            <RefreshBtn
                                                 onClick={handleSummaryRefreshBtn}
                                                 loading={isSummaryLoading}
                                             />

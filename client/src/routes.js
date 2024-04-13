@@ -94,7 +94,7 @@ var routes = [
     path: "/user-profile",
     name: "회사 프로필",
     cate: "",
-    icon: "tim-icons icon-single-02",
+    icon: "ni ni-building",
     component: <CompanyProfile />,
     layout: "/company",
   },

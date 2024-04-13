@@ -167,7 +167,7 @@
         SELECT p.*, c.*
         FROM program p
                  LEFT JOIN company c ON p.pg_com_idx = c.com_idx
-        WHERE p.pg_idx = #{pgIdx}
+        WHERE p.pg_idx = #{param}
     </select>
 
     <!-- 프로그램 상태 업데이트 -->
@@ -176,5 +176,13 @@
         SET pg_status = #{pgStatus}
         WHERE pg_idx = #{pgIdx}
     </update>
+
+    <!-- waiting reg dto 조회-->
+    <select id="selectWaitingRegDto" parameterType="Long" resultType="WaitingRegDto" >
+        SELECT p.*, c.*
+        FROM program p
+        JOIN company c ON p.pg_com_idx = c.com_idx
+        WHERE p.pg_idx = #{param}
+    </select>
 
 </mapper>

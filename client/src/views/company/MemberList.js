@@ -14,7 +14,7 @@ function MemberList() {
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
     const [userList, setUserList] = useState(null)
-    const [regStatus, setRegStatus] = useState('')
+    const [pgRegStatus, setPgRegStatus] = useState('')
     const regStatusSelect = ['가입대기', '확인', '거절'].map(
         item => ({label: item, value: item})
     );
@@ -28,8 +28,8 @@ function MemberList() {
     }, [isLogin, page, pageSize]);
 
     useEffect(() => {
-        console.log(regStatus)
-    }, [regStatus]);
+        console.log(pgRegStatus)
+    }, [pgRegStatus]);
 
     return (
         <div className="content member-list">
@@ -77,7 +77,7 @@ function MemberList() {
                                             <td>{pgTitle}</td>
                                             <td>
                                                 <SelectPicker
-                                                    onChange={setRegStatus}
+                                                    onChange={setPgRegStatus}
                                                     data={regStatusSelect}
                                                     searchable={false}
                                                     style={{width: 120}}

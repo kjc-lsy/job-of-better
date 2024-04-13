@@ -27,3 +27,5 @@ export const getPendingMemNum = (pgIdx) => api.get(`/api/com/program/get-pending
 export const getRejectedMemNum = (pgIdx) => api.get(`/api/com/program/get-rejected-mem-num?pgIdx=${pgIdx}`)
 
 export const getContentSummary = (pgIdx) => api.get(`/api/com/program/get-content-summary?pgIdx=${pgIdx}`)
+
+export const getWaitingRegDto = () => api.get('/api/user/program/get-waiting-reg')

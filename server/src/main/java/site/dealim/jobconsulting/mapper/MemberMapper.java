@@ -42,7 +42,7 @@ public interface MemberMapper {
     // 상태에 따른 회원 수 조회
     Integer getNumByPgIdxAndpgRegStatus(@Param("pgIdx")Long pgIdx, @Param("pgRegStatus")String pgRegStatus);
 
-    Integer updatepgRegStatus(@Param("pgRegStatus")String pgRegStatus, @Param("memIdx")Long memIdx);
+    Integer updatePgRegStatus(@Param("pgRegStatus")String pgRegStatus, @Param("memIdx")Long memIdx);
 
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
 

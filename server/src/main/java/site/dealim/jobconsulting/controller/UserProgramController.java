@@ -64,5 +64,11 @@ public class UserProgramController {
         return new ResponseEntity<>("프로그램 신청을 취소할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Secured("ROLE_USER")
+    @GetMapping("/get-waiting-reg")
+    public ResponseEntity<?> getWaitingReg(@AuthenticationPrincipal CustomMember customMember) {
+        return new ResponseEntity<>(userProgramService.getWaitingRegDto(customMember.getMember().getPgIdx()), HttpStatus.OK);
+    }
+
 
 }

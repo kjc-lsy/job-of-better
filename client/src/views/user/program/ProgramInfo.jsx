@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
+import {Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
 import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
-import {getComNameByComIdx, getProgram, registerProgram} from "../../../apis/program";
+import {getComNameByComIdx, getProgram} from "../../../apis/program";
 import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
+import RegSubmitBtn from "../../../components/Buttons/RegSubmitBtn";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
@@ -28,13 +29,6 @@ const ProgramInfo = () => {
         }
     }, [isLogin]);
 
-    const handleSubmitBtn = async ({pgIdx, pgComIdx}) => {
-        if (window.confirm(`[${program.pgTitle}] 프로그램을 신청합니다`)) {
-            await registerProgram(pgIdx, pgComIdx);
-            navigate('/user/user-profile');
-        }
-    }
-
     return (
         <div className="content program">
             <Card className='program-info'>
@@ -44,9 +38,7 @@ const ProgramInfo = () => {
                         <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
                     </div>
-                    <Button onClick={() => {
-                        handleSubmitBtn(program)
-                    }}>신청하기</Button>
+                    <RegSubmitBtn program={program}/>
                 </CardHeader>
                 <CardBody>
                     <Row>

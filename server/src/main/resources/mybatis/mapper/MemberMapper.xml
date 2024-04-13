@@ -168,7 +168,7 @@
     </update>
 
     <!-- 회원 프로그램 승인 상태 수정 -->
-    <update id="updatepgRegStatus" parameterType="Map">
+    <update id="updatePgRegStatus" parameterType="Map">
         UPDATE member
         SET pg_reg_status = #{pgRegStatus}
         WHERE idx = #{memIdx}
