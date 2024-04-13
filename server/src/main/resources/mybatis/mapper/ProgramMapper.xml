@@ -4,7 +4,7 @@
 
 <mapper namespace="site.dealim.jobconsulting.mapper.ProgramMapper">
 
-    <select id="selectPgsByComIdx" parameterType="Long" resultType="Program">
+    <select id="selectAllPgsInComIdx" parameterType="Long" resultType="Program">
         SELECT *
         FROM program
         WHERE pg_com_idx = #{param}

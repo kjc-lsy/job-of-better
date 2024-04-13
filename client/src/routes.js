@@ -13,6 +13,7 @@ import Resume from "./views/user/Resume";
 import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
 import Icons from "./views/common/Icons";
+import CompanyProfile from "./views/company/CompanyProfile";
 
 var routes = [
   {
@@ -46,27 +47,31 @@ var routes = [
   {
     path: "/home",
     name: "Home",
+    cate: "",
     icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
     layout: "/company",
   },
   {
-    path: "/member-list",
-    name: "학생목록",
-    icon: "tim-icons icon-bullet-list-67",
-    component: <MemberList />,
-    layout: "/company",
-  },
-  {
     path: "/program",
     name: "교육 프로그램",
+    cate: "program",
     icon: "tim-icons icon-components",
     component: <CompanyProgram />,
     layout: "/company",
   },
   {
+    path: "/member-list",
+    name: "학생목록",
+    cate: "student",
+    icon: "tim-icons icon-bullet-list-67",
+    component: <MemberList />,
+    layout: "/company",
+  },
+  {
     path: "/com-cover-letter",
     name: "자소서 항목",
+    cate: "student",
     icon: "tim-icons icon-notes",
     component: <ComCoverLetter />,
     layout: "/company",
@@ -88,8 +93,9 @@ var routes = [
   {
     path: "/user-profile",
     name: "회사 프로필",
+    cate: "",
     icon: "tim-icons icon-single-02",
-    component: <UserProfile />,
+    component: <CompanyProfile />,
     layout: "/company",
   },
   /*{

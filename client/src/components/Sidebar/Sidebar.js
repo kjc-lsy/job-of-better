@@ -36,7 +36,7 @@ function Sidebar(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false); // 도메인 토글용
     const {routes, rtlActive, logo} = props;
     const routeAllCate = [...new Set(routes.map(route => route.cate))];
-    const routeCategory = [...new Set(routeAllCate.filter(cate => cate))];
+    const routeExistingCate = [...new Set(routeAllCate.filter(cate => cate))];
     const [routeState, setRouteState] = useState();
 
     useEffect(() => {
@@ -61,12 +61,16 @@ function Sidebar(props) {
     }, [isLogin]);
 
     useEffect(() => {
-        if(user?.pgIdx) {
-            setRouteState(routeCategory)
+        if(roles?.isUser && user?.pgIdx) {
+            setRouteState(routeExistingCate)
         }
 
-        if(!user?.pgIdx) {
+        if(roles?.isUser && !user?.pgIdx) {
             setRouteState([""])
+        }
+
+        if(roles?.isCompany) {
+            setRouteState(routeAllCate)
         }
     }, [user]);
 
@@ -211,7 +215,9 @@ function Sidebar(props) {
                                             return renderRoutesCategory(prop, key, 1);
                                         }
                                     })
-                                } else {
+                                }
+
+                                if (item){
                                     return (
                                         <li key={index}>
                                             <div

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComProgramService;
@@ -78,9 +77,9 @@ public class ComProgramController {
 
     @Secured("ROLE_COMPANY")
     @PostMapping("/get-all-programs")
-    public ResponseEntity<?> getAllPrograms() {
-        log.info("프로그램 전체 목록 조회...");
-        return new ResponseEntity<>(comProgramService.getAllPrograms(), HttpStatus.OK);
+    public ResponseEntity<?> getAllPrograms(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("회사기준 프로그램 전체 목록 조회...");
+        return new ResponseEntity<>(comProgramService.getAllPrograms(customMember.getMember().getComIdx()), HttpStatus.OK);
     }
 
     @Secured("ROLE_COMPANY")

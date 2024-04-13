@@ -12,7 +12,6 @@ public interface ProgramMapper {
 
     public int insertProgram(Program program);
 
-    public List<Program> selectPgsByComIdx(Long comIdx);
     public String selectPgTitleByPgIdx(Long pgIdx);
 
     public int updateIsWithdrawn(Long pgIdx);
@@ -22,6 +21,8 @@ public interface ProgramMapper {
     public int updateProgram(Program program);
 
     public List<Program> selectAllPrograms();
+
+    public List<Program> selectAllPgsInComIdx(Long comIdx);
 
     public List<Program> selectAllValidPrograms();
 
