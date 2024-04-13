@@ -12,7 +12,7 @@ public interface ComCoverLetterMapper {
 
     List<ComCoverLetter> comCoverLetterInfo(Long pgIdx);
 
-    int ComCoverLetterUpdate(HashMap map);
+    void ComCoverLetterUpdate(HashMap map);
 
     void ComCoverLetterDelete(HashMap map);
 

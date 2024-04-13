@@ -10,6 +10,7 @@ import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.security.custom.CustomMember;
+import site.dealim.jobconsulting.service.ComCoverLetterService;
 import site.dealim.jobconsulting.service.MemCoverLetterService;
 
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class MemCoverLetterController {
     @Autowired
     MemCoverLetterService memCoverLetterService;
+    @Autowired
+    ComCoverLetterService comCoverLetterService;
 
     @PostMapping("/user-cover-letter-save")
     public ResponseEntity<Map<String, String>> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<MemberCoverLetter> values) {
@@ -40,6 +43,14 @@ public class MemCoverLetterController {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
         return memCoverLetterService.userCoverLetterInfo(user.getPgIdx());
+    }
+
+
+    @GetMapping("/user-com-cover-letter-info")
+    public List<ComCoverLetter> comCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
+        log.info("자소서 항목 불러오기");
+        return comCoverLetterService.coverLetterInfo(customMember.getMember().getPgIdx());
+        //return companyService.comCoverLetterInfo(user.getComIdx());
     }
 
 

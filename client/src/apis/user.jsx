@@ -2,7 +2,10 @@ import api from "./api";
 
 //자소서 정보
 export const coverLetterInfo = () => {
-    return api.get('/api/user/cover-letter-info')
+    return api.get(`/api/user/user-cover-letter-info`)
+}
+export const userComCoverLetterInfo = () => {
+    return api.get(`/api/user/user-com-cover-letter-info`)
 }
 
 //프로그램 정보

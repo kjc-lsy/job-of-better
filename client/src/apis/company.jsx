@@ -16,9 +16,10 @@ export const coverLetterSave = (value) => {
     }))
 };
 
-export const coverLetterInfo = () => {
-    return api.get('/api/company/cover-letter-info')
+export const coverLetterInfo = (pgIdx) => {
+    return api.get(`/api/company/cover-letter-info/${pgIdx}`)
 }
+
 
 export function coverLetterDelete(id) {
     return api.delete(`/api/company/cover-letter-delete/${id}`)

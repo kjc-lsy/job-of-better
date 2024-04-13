@@ -4,6 +4,7 @@ import * as user from "../../apis/user";
 import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {LoadingContext} from "../../contexts/LoadingProvider";
+import {userComCoverLetterInfo} from "../../apis/user";
 
 const CoverLetter = () => {
     const {Loading,setLoading} = useContext(LoadingContext);
@@ -23,7 +24,7 @@ const CoverLetter = () => {
     // 자소서 항목 들고오기
     useEffect(() => {
         //console.log("test");
-        company.coverLetterInfo()
+        user.userComCoverLetterInfo()
             .then(response => {
                 setInputValue(
                     response.data.map((item, index) => {
