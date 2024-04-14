@@ -6,10 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemberListService;
 
@@ -33,5 +30,15 @@ public class MemberListController {
     public ResponseEntity<?> getUserInfo(@PathVariable("idx") Long idx) {
         log.info("USER 정보 가져오기...");
         return ResponseEntity.ok(memberListService.getMemberInfoByIdx(idx));
+    }
+
+    @Secured("ROLE_COMPANY")
+    @PutMapping("/update-reg-status")
+    public ResponseEntity<?> updateRegStatus(@RequestParam("memIdx") Long memIdx, @RequestParam("status") String status) {
+        log.info("member 프로그램 신청 상태 업데이트...");
+        if(memberListService.updateRegStatus(memIdx, status) == 1) {
+            return ResponseEntity.ok("업데이트 성공");
+        }
+        return ResponseEntity.ok("업데이트 실패");
     }
 }

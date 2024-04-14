@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstrap";
-import {useAuth} from "../../contexts/AuthContextProvider";
 import {getAllUserMembers} from "../../apis/user";
 import {useNavigate} from "react-router-dom";
 import {Pagination, SelectPicker} from "rsuite";
+import {updateRegStatus} from "../../apis/company";
 
 function MemberList() {
-    const {isLogin} = useAuth()
     const navigate = useNavigate()
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
@@ -71,13 +70,23 @@ function MemberList() {
                                             <td>{pgTitle}</td>
                                             <td>
                                                 <SelectPicker
-                                                    onChange={setPgRegStatus}
+                                                    onChange={(value) => {
+                                                        if(value === '가입대기') {
+                                                            updateRegStatus(member.idx, 'Pending')
+                                                        }
+                                                        if(value === '확인') {
+                                                            updateRegStatus(member.idx, 'Approved')
+                                                        }
+                                                        if(value === '거절') {
+                                                            updateRegStatus(member.idx, 'Rejected')
+                                                        }
+                                                    }}
                                                     data={regStatusSelect}
                                                     searchable={false}
                                                     style={{width: 120}}
                                                     defaultValue={member.pgRegStatus === 'Pending' ? '가입대기' :
-                                                        member.pgRegStatus === 'Approved' ? '확인' :
-                                                            member.pgRegStatus === 'Rejected' ? '거절' : ''}
+                                                                member.pgRegStatus === 'Approved' ? '확인' :
+                                                                member.pgRegStatus === 'Rejected' ? '거절' : ''}
                                                 />
                                             </td>
                                         </tr>

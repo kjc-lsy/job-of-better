@@ -4,11 +4,11 @@ import AuthLayout from "./layouts/Auth";
 import UserLayout from "./layouts/User";
 import React from "react";
 import Loading from "./components/Loading";
-import {LoadingContext} from "./contexts/LoadingProvider";
+import {useLoading} from "./contexts/LoadingProvider";
 import {useAuth} from "./contexts/AuthContextProvider";
 
 const App = () => {
-    const {loading, setLoading} = React.useContext(LoadingContext);
+    const {loading} = useLoading();
     const {isLogin} = useAuth();
 
     return (

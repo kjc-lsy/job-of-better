@@ -151,10 +151,10 @@ function UserProfile() {
             const response = await user.coverLetterInfo();
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
-                mclTitle: response.data.clList.mclTitle,
-                mclDate: response.data.clList.mclModifiedDate,
-                mclIsConfirm: response.data.clList.mclIsConfirm,
-                coverLetterPercent: (response.data.clPercent[1] / response.data.clPercent[0]) * 100
+                mclTitle: response.data.clList?.mclTitle,
+                mclDate: response.data.clList?.mclModifiedDate,
+                mclIsConfirm: response.data.clList?.mclIsConfirm,
+                coverLetterPercent: (response.data.clPercent?.[1] / response.data.clPercent?.[0]) * 100
             }))
         } catch (error) {
             console.error(error.response.data);

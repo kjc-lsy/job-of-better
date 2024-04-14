@@ -61,4 +61,8 @@ public class MemberListService {
         return memberMapper.selectMember(idx);
     }
 
+    public Integer updateRegStatus(Long memIdx, String status) {
+        return memberMapper.updatePgRegStatus(status, memIdx);
+    }
+
 }

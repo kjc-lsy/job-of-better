@@ -167,7 +167,7 @@
         SELECT p.*, c.*
         FROM program p
                  LEFT JOIN company c ON p.pg_com_idx = c.com_idx
-        WHERE p.pg_idx = #{param}
+        WHERE p.pg_idx = #{pgIdx}
     </select>
 
     <!-- 프로그램 상태 업데이트 -->
