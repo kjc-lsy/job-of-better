@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { Button, Col, Input, Row } from "reactstrap";
+import React from 'react';
+import {useDaumPostcodePopup} from 'react-daum-postcode';
+import {Button, Col, Input, Row} from "reactstrap";
 
 const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-const Postcode = ({inputValue,setInputValue}) => {
-    const [address, setAddress] = useState('');
+const Postcode = ({setAddress, handleZipCodeValue}) => {
     const open = useDaumPostcodePopup(scriptUrl);
+    const [data, setData] = React.useState({})
 
     const handleComplete = (data) => {
         let fullAddress = data.address;
@@ -21,9 +21,9 @@ const Postcode = ({inputValue,setInputValue}) => {
             }
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
-        console.log(data);
-        setAddress(data);
-        setInputValue({...inputValue ,b_address: fullAddress, b_zipCode: data.zonecode});
+        setData(data)
+        setAddress(fullAddress);
+        handleZipCodeValue(data.zonecode);
     };
 
     const handleClick = () => {
@@ -36,7 +36,7 @@ const Postcode = ({inputValue,setInputValue}) => {
                 <Input
                     id="exampleCity"
                     name="address"
-                    value={address.address ? address.address : ''}
+                    value={data.address ? data.address : ''}
                     placeholder="도로명주소"
                 />
             </Col>
@@ -44,7 +44,7 @@ const Postcode = ({inputValue,setInputValue}) => {
                 <Input
                     id="exampleState"
                     name="zip"
-                    value={address.zonecode ? address.zonecode : ''}
+                    value={data.zonecode ? data.zonecode : ''}
                     placeholder="우편번호"
                     disabled
                 />

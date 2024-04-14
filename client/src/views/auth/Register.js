@@ -1,6 +1,6 @@
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, Col, Form, Row,} from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import UsernameFormGroup from "../../components/FormGroup/UsernameFormGroup";
@@ -11,6 +11,7 @@ import EmailFormGroup from "../../components/FormGroup/EmailFormGroup";
 import BirthDateFormGroup from "../../components/FormGroup/BirthDateFormGroup";
 import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
 import GenderFormGroup from "../../components/FormGroup/GenderFormGroup";
+import RegisterAddrFormGroup from "../../components/FormGroup/RegisterAddrFormGroup";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -31,6 +32,9 @@ const Register = () => {
         validEmail: false,
         emailUserName: "",
         domain: "",
+
+        address: "",
+        zipCode: "",
 
         birthDate: "",
 
@@ -63,10 +67,6 @@ const Register = () => {
                 alert(error.response.data);
             });
     }
-
-    useEffect(() => {
-        console.log(inputValue.birthDate)
-    }, [inputValue]);
 
     return (
         <Col lg="6" md="8" className="register-container">
@@ -103,6 +103,12 @@ const Register = () => {
                         <PhoneFormGroup
                             inputValue={inputValue}
                             setInputValue={setInputValue}
+                        />
+                        <RegisterAddrFormGroup
+                            label="개인 주소"
+                            placeholder="상세주소"
+                            handleAddrValue={(value) => setInputValue({...inputValue, address: value})}
+                            handleZipCodeValue={(value) => setInputValue({...inputValue, zipCode: value})}
                         />
                         <GenderFormGroup
                             inputValue={inputValue}

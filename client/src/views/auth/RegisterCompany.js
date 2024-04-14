@@ -53,7 +53,6 @@ const CompanyRegister = () => {
         validBTel: false,
         b_address: "",
         b_zipCode: "",
-        b_detailAddr: "",
         b_openingDate: new Date(),
 
         agree: false
@@ -87,10 +86,6 @@ const CompanyRegister = () => {
             });
     }
 
-    // useEffect(() => {
-    //     console.log(inputValue)
-    // }, [inputValue]);
-
     return (
         <Col lg="6" md="8" className="register-container">
             <Card>
@@ -122,8 +117,14 @@ const CompanyRegister = () => {
                             setInputValue={setInputValue}
                         />
                         <RegisterAddrFormGroup
-                            inputValue={inputValue}
-                            setInputValue={setInputValue}
+                            label="기업 주소"
+                            placeholder="상세 주소"
+                            handleAddrValue={fullAddr => {
+                                setInputValue({...inputValue, b_address: fullAddr})
+                            }}
+                            handleZipCodeValue={zipCode => {
+                                setInputValue({...inputValue, b_zipCode: zipCode})
+                            }}
                         />
                         <BOpeningDateFormGroup
                             inputValue={inputValue}

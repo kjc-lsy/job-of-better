@@ -33,7 +33,7 @@ export const companyJoin = (data) => api.post(`/api/auth/company-join`, {
     company : {
         comName : data.b_name,
         comCeoName : data.b_ceoName,
-        comAddress : data.b_address + " " + data.b_detailAddr,
+        comAddress : data.b_address,
         comZipcode : data.b_zipCode,
         comLicenseNum : data.b_no,
         comOpeningDate : data.b_openingDate,

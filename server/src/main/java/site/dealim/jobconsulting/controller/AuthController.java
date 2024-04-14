@@ -62,6 +62,7 @@ public class AuthController {
         authService.insert(member);
 
         log.info("회원가입 성공! - SUCCESS");
+
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
