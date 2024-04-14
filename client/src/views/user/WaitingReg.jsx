@@ -10,13 +10,10 @@ const WaitingReg = () => {
     const {isLogin} = useAuth();
     const [waitingRegDto, setWaitingRegDto] = useState({});
     useEffect(() => {
-        if(isLogin) {
-            getWaitingRegDto().then(res => {
-                setWaitingRegDto(res.data)
-            })
-
-        }
-    }, [isLogin]);
+        getWaitingRegDto().then(res => {
+            setWaitingRegDto(res.data)
+        })
+    }, []);
 
     return (
         <Row className="content waiting-reg">
@@ -35,11 +32,11 @@ const WaitingReg = () => {
                         </Row>
                         <Row className="text-center waiting-info">
                             <Col>
-                                <FontAwesomeIcon icon={faPhone} />
+                                <FontAwesomeIcon icon={faPhone}/>
                                 <p>{waitingRegDto.comPhone?.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}</p>
                             </Col>
                             <Col>
-                                <FontAwesomeIcon icon={faEnvelope} />
+                                <FontAwesomeIcon icon={faEnvelope}/>
                                 <p>{waitingRegDto.comEmail}</p>
                             </Col>
                         </Row>

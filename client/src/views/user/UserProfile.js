@@ -69,7 +69,7 @@ function UserProfile() {
             .catch((error) => {
                 console.error(error.response.data);
             });
-    }, [isLogin]);
+    }, []);
 
     const changeProfileImg = () => {
         document.getElementById("profile-img").click();

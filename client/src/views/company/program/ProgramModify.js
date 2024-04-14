@@ -4,7 +4,6 @@ import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Inp
 import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
-import {useAuth} from "../../../contexts/AuthContextProvider";
 import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker";
 import TimeRange30Picker from "../../../components/Picker/TimeRange30Picker";
 
@@ -15,7 +14,6 @@ const ProgramModify = () => {
     const theme = useContext(ThemeContext);
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
-    const {isLogin} = useAuth();
     const [progDateRange, setProgDateRange] = useState([null, null]);
     const [eduDateRange, setEduDateRange] = useState([null, null]);
     const [regValDateRange, setRegValDateRange] = useState([null, null]);
@@ -24,36 +22,34 @@ const ProgramModify = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (isLogin) {
-            getProgram(pgIdx).then((response) => {
-                const fetchedProgram = response.data;
+        getProgram(pgIdx).then((response) => {
+            const fetchedProgram = response.data;
 
-                setTitle(fetchedProgram.pgTitle);
-                setContent(fetchedProgram.pgContent);
-                setProgDateRange([
-                    fetchedProgram.pgProgStartDate ? new Date(fetchedProgram.pgProgStartDate) : null,
-                    fetchedProgram.pgProgEndDate ? new Date(fetchedProgram.pgProgEndDate) : null
-                ]);
-                setEduDateRange([
-                    fetchedProgram.pgEduStartDate ? new Date(fetchedProgram.pgEduStartDate) : null,
-                    fetchedProgram.pgEduEndDate ? new Date(fetchedProgram.pgEduEndDate) : null
-                ]);
-                setRegValDateRange([
-                    fetchedProgram.pgRegValStartDate ? new Date(fetchedProgram.pgRegValStartDate) : null,
-                    fetchedProgram.pgRegValEndDate ? new Date(fetchedProgram.pgRegValEndDate) : null
-                ]);
-                setInterviewValDateRange([
-                    fetchedProgram.pgInterviewValStartDate ? new Date(fetchedProgram.pgInterviewValStartDate) : null,
-                    fetchedProgram.pgInterviewValEndDate ? new Date(fetchedProgram.pgInterviewValEndDate) : null
-                ]);
-                setInterviewValTimeRange([
-                    fetchedProgram.pgInterviewValStartTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValStartTime) : null,
-                    fetchedProgram.pgInterviewValEndTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValEndTime) : null
-                ]);
-                setIsLoading(false)
-            });
-        }
-    }, [isLogin]);
+            setTitle(fetchedProgram.pgTitle);
+            setContent(fetchedProgram.pgContent);
+            setProgDateRange([
+                fetchedProgram.pgProgStartDate ? new Date(fetchedProgram.pgProgStartDate) : null,
+                fetchedProgram.pgProgEndDate ? new Date(fetchedProgram.pgProgEndDate) : null
+            ]);
+            setEduDateRange([
+                fetchedProgram.pgEduStartDate ? new Date(fetchedProgram.pgEduStartDate) : null,
+                fetchedProgram.pgEduEndDate ? new Date(fetchedProgram.pgEduEndDate) : null
+            ]);
+            setRegValDateRange([
+                fetchedProgram.pgRegValStartDate ? new Date(fetchedProgram.pgRegValStartDate) : null,
+                fetchedProgram.pgRegValEndDate ? new Date(fetchedProgram.pgRegValEndDate) : null
+            ]);
+            setInterviewValDateRange([
+                fetchedProgram.pgInterviewValStartDate ? new Date(fetchedProgram.pgInterviewValStartDate) : null,
+                fetchedProgram.pgInterviewValEndDate ? new Date(fetchedProgram.pgInterviewValEndDate) : null
+            ]);
+            setInterviewValTimeRange([
+                fetchedProgram.pgInterviewValStartTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValStartTime) : null,
+                fetchedProgram.pgInterviewValEndTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValEndTime) : null
+            ]);
+            setIsLoading(false)
+        });
+    }, []);
 
     const addNineHours = (date) => {
         if (!date) return null;

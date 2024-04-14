@@ -1,11 +1,9 @@
 import React from 'react';
 import {registerProgram} from "../../apis/program";
 import {Button} from "reactstrap";
-import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../contexts/AuthContextProvider";
 
 const RegSubmitBtn = ({program}) => {
-    const navigate = useNavigate();
     const {setLoginUser} = useAuth();
 
     const handleRegisterBtn = async ({pgIdx, pgComIdx, pgTitle}) => {

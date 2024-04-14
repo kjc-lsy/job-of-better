@@ -3,25 +3,21 @@ import React, {useEffect, useRef, useState} from "react";
 // reactstrap components
 import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row,} from "reactstrap";
 import {useNavigate, useParams} from "react-router-dom";
-import {useAuth} from "../../contexts/AuthContextProvider";
 import maleImg from "../../assets/img/userImg_male.png";
 import {getMemberListInfoByIdx} from "../../apis/user";
 
 
 function UserProfile() {
     const navigate = useNavigate();
-    const {isLogin} = useAuth();
     const imgRef = useRef();
     const memIdx = useParams().idx;
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        if(isLogin) {
-            getMemberListInfoByIdx(memIdx).then(res =>{
-                setUser(res.data)
-            })
-        }
-    }, [isLogin]);
+        getMemberListInfoByIdx(memIdx).then(res => {
+            setUser(res.data)
+        })
+    }, []);
 
     return (
         <div className="content">
@@ -36,12 +32,12 @@ function UserProfile() {
                                 <div className="block block-three"/>
                                 <div className="block block-four"/>
                                 <label htmlFor="profile-img" className="profile_img">
-                                        <img alt="profile image"
-                                             ref={imgRef}
-                                             name="profileImg"
-                                             className="avatar"
-                                             src={maleImg}
-                                        />
+                                    <img alt="profile image"
+                                         ref={imgRef}
+                                         name="profileImg"
+                                         className="avatar"
+                                         src={maleImg}
+                                    />
                                 </label>
                                 <h5 className="title">{user?.name}</h5>
                                 <p className="description">{user?.username}</p>

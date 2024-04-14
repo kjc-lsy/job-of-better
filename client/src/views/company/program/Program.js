@@ -5,22 +5,17 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 // reactstrap components
 import {Button, Card, Col, Row,} from "reactstrap";
 import {getPrograms} from "../../../apis/program";
-import {useAuth} from "../../../contexts/AuthContextProvider";
 import {useNavigate} from "react-router-dom";
 import programAddImg from "../../../assets/img/program-add.png";
 import ComProgramCard from "../../../components/Card/ComProgramCard";
 
 function Program() {
-    const {isLogin} = useAuth();
     const [programs, setPrograms] = useState([]);
     const navigate = useNavigate();
 
-    // 로그인 처리가 완료 되면 실행
     useEffect(() => {
-        if (isLogin) {
-            loadPrograms();
-        }
-    }, [isLogin]);
+        loadPrograms();
+    }, []);
 
     const loadPrograms = async () => {
         const response = await getPrograms();
@@ -44,7 +39,7 @@ function Program() {
                         </Col>
                     )
                 })}
-                
+
                 <Col md="6" className="text-center">
                     <Card className="program-add">
                         <Button onClick={handleAddBtn}>

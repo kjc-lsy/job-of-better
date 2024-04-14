@@ -12,7 +12,7 @@ export const AuthContextProvider = ({children}) => {
     // 로그인 유저 정보
     const [user, setUser] = useState(null);
     // 권한 정보
-    const [roles, setRoles] = useState({isUser: false, isCompany: false});
+    const [roles, setRoles] = useState({user: false, company: false});
 
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(() => {
@@ -49,14 +49,14 @@ export const AuthContextProvider = ({children}) => {
         // 쿠키 초기화
         Cookies.remove("accessToken");
 
-        // 로그인 여부
-        setIsLogin(false);
-
         // 유저 정보 초기화
         setUser(null);
 
         // 권한 정보 초기화
         setRoles(null);
+
+        // 로그인 여부
+        setIsLogin(false);
 
     };
 
@@ -93,19 +93,19 @@ export const AuthContextProvider = ({children}) => {
         const {idx, username, roleList, pgRegStatus, pgIdx} = userData
         const authList = roleList.map((auth) => auth.roleName)
 
-        // 로그인 여부
-        setIsLogin(true)
-
         // 유저 정보 세팅
         setUser({idx, username, authList, pgRegStatus, pgIdx})
 
         // 권한 정보 세팅
-        const updatedRoles = {isUser: false, isCompany: false};
+        const updatedRoles = {user: false, company: false};
         roleList.forEach((role) => {
-            if (role.roleName === 'ROLE_USER') updatedRoles.isUser = true
-            if (role.roleName === 'ROLE_COMPANY') updatedRoles.isCompany = true
+            if (role.roleName === 'ROLE_USER') updatedRoles.user = true
+            if (role.roleName === 'ROLE_COMPANY') updatedRoles.company = true
         });
         setRoles(updatedRoles);
+
+        // 로그인 여부
+        setIsLogin(true)
     }
 
     const value = {user, isLogin, roles, login, logoutSetting, setLoginUser}; // 전역으로 넘길 함수들

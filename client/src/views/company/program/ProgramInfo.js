@@ -3,7 +3,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
 import {getContentSummary, getProgram} from "../../../apis/program";
-import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
@@ -18,15 +17,12 @@ import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
     const navigate = useNavigate();
-    const {isLogin} = useAuth();
     const [program, setProgram] = useState();
     const [isSummaryLoading, setIsSummaryLoading] = useState(false);
 
     useEffect(() => {
-        if (isLogin) {
-            updateProgram(pgIdx);
-        }
-    }, [isLogin]);
+        updateProgram(pgIdx);
+    }, []);
 
     const updateProgram = (pgIdx) => {
         getProgram(pgIdx).then((response) => {

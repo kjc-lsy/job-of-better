@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
-import {useAuth} from "../../../contexts/AuthContextProvider";
 import {format} from "date-fns";
 import {getComNameByComIdx, getProgram} from "../../../apis/program";
 import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
@@ -11,23 +10,20 @@ import RegSubmitBtn from "../../../components/Buttons/RegSubmitBtn";
 
 const ProgramInfo = () => {
     const {pgIdx} = useParams();
-    const {isLogin} = useAuth();
     const [program, setProgram] = useState();
     const [comName, setComName] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isLogin) {
-            getProgram(pgIdx).then((response) => {
-                const fetchedProgram = response.data
-                setProgram({...fetchedProgram})
+        getProgram(pgIdx).then((response) => {
+            const fetchedProgram = response.data
+            setProgram({...fetchedProgram})
 
-                getComNameByComIdx(fetchedProgram.pgComIdx).then((response) => {
-                    setComName(response.data);
-                })
-            });
-        }
-    }, [isLogin]);
+            getComNameByComIdx(fetchedProgram.pgComIdx).then((response) => {
+                setComName(response.data);
+            })
+        });
+    }, []);
 
     return (
         <div className="content program">

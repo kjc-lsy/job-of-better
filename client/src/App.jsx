@@ -5,16 +5,19 @@ import UserLayout from "./layouts/User";
 import React from "react";
 import Loading from "./components/Loading";
 import {LoadingContext} from "./contexts/LoadingProvider";
+import {useAuth} from "./contexts/AuthContextProvider";
 
 const App = () => {
-    const {loading} = React.useContext(LoadingContext);
+    const {loading, setLoading} = React.useContext(LoadingContext);
+    const {isLogin} = useAuth();
+
     return (
         <>
             <Loading loading={loading}/>
             <Routes>
-                <Route path="/company/*" element={<CompanyLayout/>}/>
                 <Route path="/auth/*" element={<AuthLayout/>}/>
-                <Route path="/user/*" element={<UserLayout/>}/>
+                <Route path="/company/*" element={isLogin ? <CompanyLayout/> : null}/>
+                <Route path="/user/*" element={isLogin ? <UserLayout/> : null}/>
                 <Route path="*" element={<Navigate to="/auth/login" replace/>}/>
             </Routes>
         </>

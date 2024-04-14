@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
@@ -18,33 +18,20 @@ import ProgramInfo from "../views/company/program/ProgramInfo";
 import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserProfile from "../views/company/UserProfile";
 import {useLoading} from "../contexts/LoadingProvider";
+import withAuthorization from "../components/HOC/withAuthorization";
 
 var ps;
 
 function Company(props) {
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
-    const {isLogin, roles} = useAuth();
-    const navigate = useNavigate();
+    const {isLogin} = useAuth();
     const [isMounted, setIsMounted] = React.useState(false);
     const companyRoutes = routes.filter(route => route.layout === "/company");
     const {setLoading} = useLoading();
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
     );
-
-    useEffect(() => {
-        setLoading(true)
-
-        if(isLogin) {
-            setLoading(false)
-
-            if (!roles.isCompany) {
-                alert("접근할 수 없습니다")
-                navigate("/auth/login")
-            }
-        }
-    }, [isLogin]);
 
     useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
@@ -168,4 +155,4 @@ function Company(props) {
     );
 }
 
-export default Company;
+export default withAuthorization(Company, ['company']);

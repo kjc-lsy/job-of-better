@@ -17,22 +17,16 @@ const Auth = (props) => {
 
     useEffect(() => { // Auth 컴포넌트에 접근할때 무조건 한번은 실행됨(로그인 이후에 이 페이지 접근 불가)
         if (isLogin) {
-            if (roles.isCompany) {
-                navigate("/company");
+            if (roles.company) {
+                navigate("/company")
                 return
             }
-            if (roles.isUser) {
-                if(user?.pgIdx){
-                    navigate("/user/user-profile")
-                    return;
-                }
-                if(!user?.pgIdx){
-                    navigate("/user/program")
-                    return;
-                }
+            if (roles.user) {
+                navigate("/user")
+                return
             }
         }
-    }, [isLogin, roles]);
+    }, [isLogin]);
 
     useEffect(() => {
         document.body.classList.add("bg-default");

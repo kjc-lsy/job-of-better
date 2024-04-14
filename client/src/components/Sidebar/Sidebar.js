@@ -55,26 +55,26 @@ function Sidebar(props) {
     });
 
     useEffect(() => {
-        if(roles.isCompany) {
+        if(roles.company) {
             getProgramList()
         }
     }, [isLogin]);
 
     // 유저 상태별 사이드바 렌더링
     useEffect(() => {
-        if(roles?.isUser && user?.pgRegStatus === "Approved") {
+        if(roles?.user && user?.pgRegStatus === "Approved") {
             setRouteState(routeExistingCate)
         }
 
-        if(roles?.isUser && user?.pgRegStatus === "Pending") {
+        if(roles?.user && user?.pgRegStatus === "Pending") {
             setRouteState([""])
         }
 
-        if(roles?.isUser && !user?.pgRegStatus) {
+        if(roles?.user && !user?.pgRegStatus) {
             setRouteState([""])
         }
 
-        if(roles?.isCompany) {
+        if(roles?.company) {
             setRouteState(routeAllCate)
         }
     }, [user]);

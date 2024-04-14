@@ -17,17 +17,17 @@ import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvid
 import ProgramInfo from "../views/user/program/ProgramInfo";
 import WaitingReg from "../views/user/WaitingReg";
 import {useLoading} from "../contexts/LoadingProvider";
+import withAuthorization from "../components/HOC/withAuthorization";
 
 var ps;
 
 function User(props) {
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
-    const {isLogin, roles, user, setLoginUser} = useAuth();
+    const {isLogin, user} = useAuth();
     const navigate = useNavigate();
     const userRoutes = routes.filter(route => route.layout === "/user");
     const {setLoading} = useLoading();
-
 
     // 권한 처리
     useEffect(() => {
@@ -36,29 +36,20 @@ function User(props) {
         if(isLogin) {
             setLoading(false)
 
-            if (!roles.isUser) {
-                alert("접근할 수 없습니다.");
-                navigate("/auth/login");
-                return
+            if(!user.pgRegStatus) {
+                navigate("/user/program")
             }
 
-            if(!user?.pgRegStatus) {
-                navigate("/user/program");
-                return
+            if(user.pgRegStatus === "Pending") {
+                navigate("/user/waiting-reg")
             }
 
-            if (user?.pgRegStatus === "Pending") {
-                navigate("/user/waiting-reg");
-                return
-            }
-
-            if (user?.pgRegStatus === "Approved") {
-                navigate("/user/user-profile");
-                return
+            if(user.pgRegStatus === "Approved") {
+                navigate("/user/user-profile")
             }
 
         }
-    }, [isLogin, user]);
+    }, [isLogin, user.pgRegStatus]);
 
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
@@ -147,4 +138,4 @@ function User(props) {
     );
 }
 
-export default User;
+export default withAuthorization(User, ['user','company']);

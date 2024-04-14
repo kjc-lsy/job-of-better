@@ -5,21 +5,15 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 // reactstrap components
 import {Col, Row,} from "reactstrap";
 import {getValidPrograms} from "../../../apis/program";
-import {useAuth} from "../../../contexts/AuthContextProvider";
-import {useNavigate} from "react-router-dom";
 import UserProgramCard from "../../../components/Card/UserProgramCard";
 
 function Program() {
-    const {isLogin, user} = useAuth();
     const [programs, setPrograms] = useState([]);
-    const navigate = useNavigate();
 
     // 로그인 처리가 완료 되면 그 이후에 함수를 실행
     useEffect(() => {
-        if (isLogin) {
-            loadPrograms();
-        }
-    }, [isLogin, user]);
+        loadPrograms();
+    }, []);
 
     const loadPrograms = async () => {
         const response = await getValidPrograms();

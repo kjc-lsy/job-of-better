@@ -19,17 +19,11 @@ function MemberList() {
         item => ({label: item, value: item})
     );
     useEffect(() => {
-        if (isLogin) {
-            getAllUserMembers(page - 1, pageSize).then(res => {
-                setUserList(res.data.content)
-                setTotalPage(res.data.totalElements)
-            })
-        }
-    }, [isLogin, page, pageSize]);
-
-    useEffect(() => {
-        console.log(pgRegStatus)
-    }, [pgRegStatus]);
+        getAllUserMembers(page - 1, pageSize).then(res => {
+            setUserList(res.data.content)
+            setTotalPage(res.data.totalElements)
+        })
+    }, [page, pageSize]);
 
     return (
         <div className="content member-list">
