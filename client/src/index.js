@@ -13,6 +13,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import ThemeContextWrapper from "./contexts/ThemeWrapper";
 import BackgroundColorWrapper from "./contexts/BackgroundColorWrapper";
 import LoadingProvider from "./contexts/LoadingProvider";
+import CurrProgProvider from "./contexts/CurrProgProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,9 +22,11 @@ root.render(
             <ThemeContextWrapper>
                 <BackgroundColorWrapper>
                     <BrowserRouter>
-                        <AuthContextProvider>
-                            <App/>
-                        </AuthContextProvider>
+                        <CurrProgProvider>
+                            <AuthContextProvider>
+                                <App/>
+                            </AuthContextProvider>
+                        </CurrProgProvider>
                     </BrowserRouter>
                 </BackgroundColorWrapper>
             </ThemeContextWrapper>

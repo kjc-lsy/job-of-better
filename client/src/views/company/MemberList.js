@@ -2,38 +2,61 @@ import React, {useEffect, useState} from "react";
 
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
-import {Form, InputGroup, Pagination, SelectPicker} from "rsuite";
+import {Form, InputGroup, Pagination, SelectPicker, Toggle} from "rsuite";
 import {getMembersPage, updateRegStatus} from "../../apis/company";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {useCurrProg} from "../../contexts/CurrProgProvider";
 
 function MemberList() {
     const navigate = useNavigate()
+    const [userList, setUserList] = useState(null)
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
-    const [userList, setUserList] = useState(null)
     const [keyword, setKeyword] = useState('')
-    const [programSort, setProgramSort] = useState('')
-    const regStatusSelect = [{label: '가입대기', value: 'Pending'}, {label: '확인', value: 'Approved'}, {label: '거절', value: 'Rejected'}]
+    const {currProg, setCurrProg} = useCurrProg();
+
+    const coverLetterSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
+        label: '작성완료',
+        value: 'Complete'
+    }]
+    const resumeSelect = [{label: '미작성', value: 'Pending'}, {label: '제출중', value: 'Writing'}, {
+        label: '제출완료',
+        value: 'Complete'
+    }]
+    const interviewSelect = [{label: '미신청', value: 'Pending'}, {label: '면접대기', value: 'Registered'}, {
+        label: '합격',
+        value: 'Approved'
+    }, {label: '불합격', value: 'Rejected'}]
+    const regStatusSelect = [{label: '가입대기', value: 'Registered'}, {label: '확인', value: 'Approved'}, {
+        label: '거절',
+        value: 'Rejected'
+    }]
+
+    const [coverLetterFilter, setCoverLetterFilter] = useState(null)
+    const [resumeFilter, setResumeFilter] = useState(null)
+    const [interviewFilter, setInterviewFilter] = useState(null)
+    const [regStatusFilter, setRegStatusFilter] = useState(null)
 
     useEffect(() => {
         updatePage()
-    }, [page]);
-
-    const renderMenuItem = (label, item) => item.value === 'Pending' ?
-        <span style={{color: '#e55757'}}>{label}</span> : label;
-    const renderValue = (value, item, selectedEl) => {
-        if (value === 'Pending') return (<span style={{color: '#e55757'}}>{item.label}</span>)
-        return selectedEl
-    }
+    }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
 
     const updatePage = () => {
-        getMembersPage(page-1, pageSize, keyword).then(res => {
+        getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter).then(res => {
             setUserList(res.data.content)
             setTotalPage(res.data.totalElements)
         })
+    }
+
+    const renderMenuItem = (label, item) => item.value === 'Registered' ?
+        <span style={{color: '#e55757'}}>{label}</span> : label;
+
+    const renderValue = (value, item, selectedEl) => {
+        if (value === 'Registered') return (<span style={{color: '#e55757'}}>{item.label}</span>)
+        return selectedEl
     }
 
     return (
@@ -52,15 +75,29 @@ function MemberList() {
                                 }}>
                                     <InputGroup>
                                         <Form.Control
-                                            placeholder="이름"
+                                            placeholder="이름 검색"
                                             value={keyword}
                                             onChange={setKeyword}
+                                            name={"keyword"}
                                         />
                                         <InputGroup.Addon>
                                             <FontAwesomeIcon onClick={updatePage} icon={faMagnifyingGlass}/>
                                         </InputGroup.Addon>
                                     </InputGroup>
                                 </Form>
+                                <div className="select-all-members">
+                                    <span>모든 프로그램 보기</span>
+                                    <Toggle onChange={(value)=> {
+                                        if(!value) {
+                                           setCurrProg(currProg)
+                                        }
+                                        if(value) {
+                                            setCurrProg("")
+                                        }
+                                    }}/>
+                                </div>
+                                {/*<Button onClick={()=> setCurrProg("")}>모든 프로그램 보기</Button>*/}
+
                             </div>
                             <Table className="member-table" responsive>
                                 <thead className="text-primary">
@@ -74,6 +111,53 @@ function MemberList() {
                                     <th>면접</th>
                                     <th>프로그램</th>
                                     <th>신청 상태</th>
+                                </tr>
+                                <tr className="text-center">
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <SelectPicker
+                                            defaultValue={coverLetterFilter}
+                                            onChange={setCoverLetterFilter}
+                                            searchable={false}
+                                            style={{width: 100}}
+                                            data={coverLetterSelect}
+                                            placeholder={"filter"}
+                                        />
+                                    </th>
+                                    <th>
+                                        <SelectPicker
+                                            defaultValue={resumeFilter}
+                                            onChange={setResumeFilter}
+                                            searchable={false}
+                                            style={{width: 100}}
+                                            data={resumeSelect}
+                                            placeholder={"filter"}
+                                        />
+                                    </th>
+                                    <th>
+                                        <SelectPicker
+                                            defaultValue={interviewFilter}
+                                            onChange={setInterviewFilter}
+                                            searchable={false}
+                                            style={{width: 100}}
+                                            data={interviewSelect}
+                                            placeholder={"filter"}
+                                        />
+                                    </th>
+                                    <th></th>
+                                    <th>
+                                        <SelectPicker
+                                            defaultValue={regStatusFilter}
+                                            onChange={setRegStatusFilter}
+                                            searchable={false}
+                                            style={{width: 120}}
+                                            data={regStatusSelect}
+                                            placeholder={"filter"}
+                                        />
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -90,9 +174,9 @@ function MemberList() {
                                             <td>{member.name}</td>
                                             <td>{member.phone}</td>
                                             <td>{member.gender === 'M' ? '남' : '여'}</td>
-                                            <td>{member.coverLetterStatus ?? '미작성'}</td>
-                                            <td>{member.resumeStatus ?? '미작성'}</td>
-                                            <td>{member.interviewStatus ?? '미신청'}</td>
+                                            <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
+                                            <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료" }</td>
+                                            <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
                                             <td>{pgTitle}</td>
                                             <td>
                                                 <SelectPicker

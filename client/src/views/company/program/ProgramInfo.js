@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCheck, faUserClock, faUsers, faUserSlash} from '@fortawesome/free-solid-svg-icons'
 import TotalRegNumber from "../../../components/Infos/numbers/TotalRegNumber";
 import ApprovedNumber from "../../../components/Infos/numbers/ApprovedNumber";
-import PendingNumber from "../../../components/Infos/numbers/PendingNumber";
+import RegisteredNumber from "../../../components/Infos/numbers/RegisteredNumber";
 import RejectedNumber from "../../../components/Infos/numbers/RejectedNumber";
 import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 import RefreshBtn from "../../../components/Buttons/RefreshBtn";
@@ -112,8 +112,8 @@ const ProgramInfo = () => {
                                                 </span>
                                             </Col>
                                             <Col>
-                                                <label>미확인 자</label>
-                                                <PendingNumber pgIdx={pgIdx}/>
+                                                <label>가입신청</label>
+                                                <RegisteredNumber pgIdx={pgIdx}/>
                                             </Col>
                                         </Row>
                                     </Col>

@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import ProgramCardHeader from "./ProgramCardHeader";
 import TotalRegNumber from "../Infos/numbers/TotalRegNumber";
 import ApprovedNumber from "../Infos/numbers/ApprovedNumber";
-import PendingNumber from "../Infos/numbers/PendingNumber";
+import RegisteredNumber from "../Infos/numbers/RegisteredNumber";
 import {Viewer} from "@toast-ui/react-editor";
 import ProgCurrentStatus from "../Infos/ProgCurrentStatus";
 
@@ -57,8 +57,8 @@ const ComProgramCard = ({program, loadPrograms}) => {
                         <div>
                             <FontAwesomeIcon icon={faUserClock}/>
                         </div>
-                        <label>미확인 자</label>
-                        <PendingNumber pgIdx={program.pgIdx}/>
+                        <label>가입신청</label>
+                        <RegisteredNumber pgIdx={program.pgIdx}/>
                     </Col>
                     {/*<Col md='3'>*/}
                     {/*    <div>*/}

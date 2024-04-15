@@ -22,7 +22,7 @@ export const getTotalMemNum = (pgIdx) => api.get(`/api/com/program/get-all-mem-n
 
 export const getApprovedMemNum = (pgIdx) => api.get(`/api/com/program/get-approved-mem-num?pgIdx=${pgIdx}`)
 
-export const getPendingMemNum = (pgIdx) => api.get(`/api/com/program/get-pending-mem-num?pgIdx=${pgIdx}`)
+export const getRegisteredMemNum = (pgIdx) => api.get(`/api/com/program/get-registered-mem-num?pgIdx=${pgIdx}`)
 
 export const getRejectedMemNum = (pgIdx) => api.get(`/api/com/program/get-rejected-mem-num?pgIdx=${pgIdx}`)
 

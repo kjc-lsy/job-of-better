@@ -20,9 +20,20 @@ public class MemberListController {
 
     @Secured("ROLE_COMPANY")
     @GetMapping("/get-filtered-members")
-    public ResponseEntity<?> getFilteredMembers(Pageable pageable, @RequestParam("keyword") String keyword, @AuthenticationPrincipal CustomMember member) {
-        log.info("멤버 필터링... : " + keyword);
-        return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword));
+    public ResponseEntity<?> getFilteredMembers(
+            Pageable pageable,
+            @AuthenticationPrincipal CustomMember member,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "currPgIdx", required = false) Long currPgIdx,
+            @RequestParam(value = "coverLetterFilter", required = false) String coverLetterFilter,
+            @RequestParam(value = "resumeFilter", required = false) String resumeFilter,
+            @RequestParam(value = "interviewFilter", required = false) String interviewFilter,
+            @RequestParam(value = "regStatusFilter", required = false) String regStatusFilter) {
+
+        log.info("멤버 필터링...");
+        log.info("keyword : " + keyword + ", currPgIdx : " + currPgIdx + ", coverLetterFilter : " + coverLetterFilter + ", resumeFilter : " + resumeFilter + ", interviewFilter : " + interviewFilter + ", regStatusFilter : " + regStatusFilter);
+
+        return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter));
     }
 
     @Secured("ROLE_COMPANY")

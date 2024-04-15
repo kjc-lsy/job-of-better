@@ -31,24 +31,19 @@ function User(props) {
 
     // 권한 처리
     useEffect(() => {
-        setLoading(true)
 
-        if(isLogin) {
-            setLoading(false)
-
-            if(!user.pgRegStatus) {
-                navigate("/user/program")
-            }
-
-            if(user.pgRegStatus === "Pending") {
-                navigate("/user/waiting-reg")
-            }
-
-            if(user.pgRegStatus === "Approved") {
-                navigate("/user/user-profile")
-            }
-
+        if (user.pgRegStatus === "Pending") {
+            navigate("/user/program")
         }
+
+        if (user.pgRegStatus === "Registered") {
+            navigate("/user/waiting-reg")
+        }
+
+        if (user.pgRegStatus === "Approved") {
+            navigate("/user/user-profile")
+        }
+
     }, [isLogin, user.pgRegStatus]);
 
     const [sidebarOpened, setsidebarOpened] = React.useState(
@@ -125,7 +120,7 @@ function User(props) {
                                 path="/program-info/:pgIdx"
                                 element={<ProgramInfo/>}
                             />
-                            <Route path="/" element={<></>} />
+                            <Route path="/" element={<></>}/>
                         </Routes>
                         {
                             // we don't want the Footer to be rendered on map page
@@ -138,4 +133,4 @@ function User(props) {
     );
 }
 
-export default withAuthorization(User, ['user','company']);
+export default withAuthorization(User, ['user', 'company']);

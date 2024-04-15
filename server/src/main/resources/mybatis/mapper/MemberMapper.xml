@@ -46,13 +46,35 @@
     <select id="getFilteredMembersList" parameterType="map" resultType="Member">
         SELECT *
         FROM member
-        WHERE username IN (SELECT m.username
-                           FROM member m
-                                    LEFT JOIN member_role r ON m.username = r.username
-                           WHERE m.com_idx = #{comIdx}
-                           GROUP BY m.username
-                           HAVING COUNT(m.username) = 1)
-        AND name LIKE CONCAT('%', #{keyword}, '%')
+        <where>
+            username IN (
+            SELECT m.username
+            FROM member m
+            LEFT JOIN member_role r ON m.username = r.username
+            WHERE m.com_idx = #{comIdx}
+            GROUP BY m.username
+            HAVING COUNT(m.username) = 1
+            )
+
+            <if test="keyword != null and keyword != ''">
+                AND name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="currPgIdx != null">
+                AND pg_idx = #{currPgIdx}
+            </if>
+            <if test="coverLetterFilter != null">
+                AND cover_letter_status = #{coverLetterFilter}
+            </if>
+            <if test="resumeFilter != null">
+                AND resume_status = #{resumeFilter}
+            </if>
+            <if test="interviewFilter != null">
+                AND interview_status = #{interviewFilter}
+            </if>
+            <if test="regStatusFilter">
+                AND pg_reg_status = #{regStatusFilter}
+            </if>
+        </where>
         ORDER BY join_date DESC
         LIMIT #{pageable.pageSize}
         OFFSET #{pageable.offset}
@@ -61,13 +83,35 @@
     <select id="getFilteredMembersCnt" parameterType="map" resultType="int">
         SELECT COUNT(*)
         FROM member
-        WHERE username IN (SELECT m.username
-                           FROM member m
-                                    LEFT JOIN member_role r ON m.username = r.username
-                           WHERE m.com_idx = #{comIdx}
-                           GROUP BY m.username
-                           HAVING COUNT(m.username) = 1)
-        AND name LIKE CONCAT('%', #{keyword}, '%')
+        <where>
+            username IN (
+            SELECT m.username
+            FROM member m
+            LEFT JOIN member_role r ON m.username = r.username
+            WHERE m.com_idx = #{comIdx}
+            GROUP BY m.username
+            HAVING COUNT(m.username) = 1
+            )
+
+            <if test="keyword != null and keyword != ''">
+                AND name LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="currPgIdx != null">
+                AND pg_idx = #{currPgIdx}
+            </if>
+            <if test="coverLetterFilter != null">
+                AND cover_letter_status = #{coverLetterFilter}
+            </if>
+            <if test="resumeFilter != null">
+                AND resume_status = #{resumeFilter}
+            </if>
+            <if test="interviewFilter != null">
+                AND interview_status = #{interviewFilter}
+            </if>
+            <if test="regStatusFilter">
+                AND pg_reg_status = #{regStatusFilter}
+            </if>
+        </where>
     </select>
 
     <!-- user 권한만 가진 멤버 조회 -->
@@ -184,7 +228,7 @@
     <!-- 프로그램 신청 취소 -->
     <update id="cancelRegister" parameterType="Long">
         UPDATE member
-        SET pg_reg_status = null,
+        SET pg_reg_status = 'Pending',
             com_idx    = null,
             pg_idx     = null
         WHERE idx = #{param}

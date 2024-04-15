@@ -15,6 +15,7 @@ import {BackgroundColorContext,} from "contexts/BackgroundColorWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import {useCurrProg} from "../../contexts/CurrProgProvider";
 
 var ps;
 
@@ -38,6 +39,7 @@ function Sidebar(props) {
     const routeAllCate = [...new Set(routes.map(route => route.cate))];
     const routeExistingCate = [...new Set(routeAllCate.filter(cate => cate))];
     const [routeState, setRouteState] = useState();
+    const {setCurrProg} = useCurrProg();
 
     useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
@@ -58,7 +60,7 @@ function Sidebar(props) {
         if(roles.company) {
             getProgramList()
         }
-    }, [isLogin]);
+    }, []);
 
     // 유저 상태별 사이드바 렌더링
     useEffect(() => {
@@ -66,17 +68,14 @@ function Sidebar(props) {
             setRouteState(routeExistingCate)
         }
 
-        if(roles?.user && user?.pgRegStatus === "Pending") {
-            setRouteState([""])
-        }
-
-        if(roles?.user && !user?.pgRegStatus) {
+        if(roles?.user && !(user?.pgRegStatus === "Approved")) {
             setRouteState([""])
         }
 
         if(roles?.company) {
             setRouteState(routeAllCate)
         }
+
     }, [user]);
 
     const activeRoute = (routeName) => {
@@ -202,6 +201,7 @@ function Sidebar(props) {
                                                 onClick={(e) => {
                                                     //setProgramIdx(item.pgIdx);
                                                     localStorage.setItem("program", item.pgIdx);
+                                                    setCurrProg(item.pgIdx);
                                                 }}>
                                                 {item.pgTitle}
                                             </DropdownItem>

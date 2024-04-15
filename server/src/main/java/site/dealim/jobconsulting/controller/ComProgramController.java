@@ -111,11 +111,11 @@ public class ComProgramController {
         }
     }
 
-    @GetMapping("/get-pending-mem-num")
-    public ResponseEntity<?> getPendingMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
+    @GetMapping("/get-registered-mem-num")
+    public ResponseEntity<?> getRegisteredMemNum(@RequestParam(value = "pgIdx") Long pgIdx) {
         log.info("프로그램 대기 회원 수 가져오기...");
         try {
-            return new ResponseEntity<>(comProgramService.getPendingCntByPgIdx(pgIdx), HttpStatus.OK);
+            return new ResponseEntity<>(comProgramService.getRegisteredCntByPgIdx(pgIdx), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("프로그램 대기 회원 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);

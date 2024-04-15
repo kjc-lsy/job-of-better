@@ -52,8 +52,8 @@ public interface MemberMapper {
 
     List<Member> selectAllMembers();
 
-    List<Member> getFilteredMembersList(@Param("pageable")Pageable pageable, @Param("comIdx")Long comIdx, @Param("keyword")String keyword);
+    List<Member> getFilteredMembersList(@Param("pageable")Pageable pageable, @Param("comIdx")Long comIdx, @Param("keyword")String keyword, @Param("currPgIdx")Long currPgIdx, @Param("coverLetterFilter")String coverLetterFilter, @Param("resumeFilter")String resumeFilter, @Param("interviewFilter")String interviewFilter, @Param("regStatusFilter")String regStatusFilter);
 
-    Integer getFilteredMembersCnt(@Param("comIdx")Long comIdx, @Param("keyword")String keyword);
+    Integer getFilteredMembersCnt(@Param("comIdx")Long comIdx, @Param("keyword")String keyword, @Param("currPgIdx")Long currPgIdx, @Param("coverLetterFilter")String coverLetterFilter, @Param("resumeFilter")String resumeFilter, @Param("interviewFilter")String interviewFilter, @Param("regStatusFilter")String regStatusFilter);
 
 }

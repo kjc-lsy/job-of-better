@@ -51,8 +51,8 @@ public class ComProgramService {
         return memberMapper.getNumByPgIdxAndpgRegStatus(pgIdx, "Rejected");
     }
 
-    public Integer getPendingCntByPgIdx(Long pgIdx) {
-        return memberMapper.getNumByPgIdxAndpgRegStatus(pgIdx, "Pending");
+    public Integer getRegisteredCntByPgIdx(Long pgIdx) {
+        return memberMapper.getNumByPgIdxAndpgRegStatus(pgIdx, "Registered");
     }
 
     public Integer getTotalCntByPgIdx(Long pgIdx) {

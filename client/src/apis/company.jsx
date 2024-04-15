@@ -27,7 +27,20 @@ export function coverLetterDelete(id) {
 export const updateRegStatus = (memIdx, status) => api.put(`/api/company/update-reg-status?memIdx=${memIdx}&status=${status}`)
 
 // 회사 소속 회원들 페이지
-export const getMembersPage = (page, pageSize, keyword) => api.get(`/api/company/get-filtered-members?page=${page}&size=${pageSize}&keyword=${keyword}`)
+export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter) => {
+    return api.get(`/api/company/get-filtered-members`, {
+        params: {
+            page,
+            size: pageSize,
+            keyword,
+            currPgIdx,
+            coverLetterFilter,
+            resumeFilter,
+            interviewFilter,
+            regStatusFilter
+        }
+    });
+}
 
 //사용자 정보 조회
 export const getMemberListInfoByIdx = (idx) => api.get(`/api/company/get-user-info/${idx}`)
