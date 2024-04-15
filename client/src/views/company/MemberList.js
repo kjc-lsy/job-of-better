@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 // reactstrap components
-import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table,} from "reactstrap";
-import {getAllUserMembers} from "../../apis/user";
+import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
+import {Form, InputGroup, Pagination, SelectPicker} from "rsuite";
+import {getMembersPage, updateRegStatus} from "../../apis/company";
 import {useNavigate} from "react-router-dom";
-import {Pagination, SelectPicker} from "rsuite";
-import {updateRegStatus} from "../../apis/company";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
 function MemberList() {
     const navigate = useNavigate()
@@ -13,16 +14,27 @@ function MemberList() {
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
     const [userList, setUserList] = useState(null)
-    const [pgRegStatus, setPgRegStatus] = useState('')
-    const regStatusSelect = ['가입대기', '확인', '거절'].map(
-        item => ({label: item, value: item})
-    );
+    const [keyword, setKeyword] = useState('')
+    const [programSort, setProgramSort] = useState('')
+    const regStatusSelect = [{label: '가입대기', value: 'Pending'}, {label: '확인', value: 'Approved'}, {label: '거절', value: 'Rejected'}]
+
     useEffect(() => {
-        getAllUserMembers(page - 1, pageSize).then(res => {
+        updatePage()
+    }, [page]);
+
+    const renderMenuItem = (label, item) => item.value === 'Pending' ?
+        <span style={{color: '#e55757'}}>{label}</span> : label;
+    const renderValue = (value, item, selectedEl) => {
+        if (value === 'Pending') return (<span style={{color: '#e55757'}}>{item.label}</span>)
+        return selectedEl
+    }
+
+    const updatePage = () => {
+        getMembersPage(page-1, pageSize, keyword).then(res => {
             setUserList(res.data.content)
             setTotalPage(res.data.totalElements)
         })
-    }, [page, pageSize]);
+    }
 
     return (
         <div className="content member-list">
@@ -34,7 +46,21 @@ function MemberList() {
                         </CardHeader>
                         <CardBody>
                             <div className="table-header">
-                                총 학생 수 : {totalPage}
+                                <Form onSubmit={(checkStatus, event) => {
+                                    event.preventDefault()
+                                    updatePage()
+                                }}>
+                                    <InputGroup>
+                                        <Form.Control
+                                            placeholder="이름"
+                                            value={keyword}
+                                            onChange={setKeyword}
+                                        />
+                                        <InputGroup.Addon>
+                                            <FontAwesomeIcon onClick={updatePage} icon={faMagnifyingGlass}/>
+                                        </InputGroup.Addon>
+                                    </InputGroup>
+                                </Form>
                             </div>
                             <Table className="member-table" responsive>
                                 <thead className="text-primary">
@@ -63,30 +89,21 @@ function MemberList() {
                                             </td>
                                             <td>{member.name}</td>
                                             <td>{member.phone}</td>
-                                            <td>{member.gender}</td>
-                                            <td>{member.coverLetterStatus}</td>
-                                            <td>{member.resumeStatus}</td>
-                                            <td>{member.interviewStatus}</td>
+                                            <td>{member.gender === 'M' ? '남' : '여'}</td>
+                                            <td>{member.coverLetterStatus ?? '미작성'}</td>
+                                            <td>{member.resumeStatus ?? '미작성'}</td>
+                                            <td>{member.interviewStatus ?? '미신청'}</td>
                                             <td>{pgTitle}</td>
                                             <td>
                                                 <SelectPicker
-                                                    onChange={(value) => {
-                                                        if(value === '가입대기') {
-                                                            updateRegStatus(member.idx, 'Pending')
-                                                        }
-                                                        if(value === '확인') {
-                                                            updateRegStatus(member.idx, 'Approved')
-                                                        }
-                                                        if(value === '거절') {
-                                                            updateRegStatus(member.idx, 'Rejected')
-                                                        }
-                                                    }}
+                                                    cleanable={false}
+                                                    renderMenuItem={renderMenuItem}
+                                                    renderValue={renderValue}
+                                                    onChange={(value) => updateRegStatus(member.idx, value)}
                                                     data={regStatusSelect}
                                                     searchable={false}
                                                     style={{width: 120}}
-                                                    defaultValue={member.pgRegStatus === 'Pending' ? '가입대기' :
-                                                                member.pgRegStatus === 'Approved' ? '확인' :
-                                                                member.pgRegStatus === 'Rejected' ? '거절' : ''}
+                                                    defaultValue={member.pgRegStatus}
                                                 />
                                             </td>
                                         </tr>
@@ -94,19 +111,23 @@ function MemberList() {
                                 )}
                                 </tbody>
                             </Table>
-                            <Pagination
-                                layout={['-', 'pager', '-']}
-                                prev
-                                last
-                                next
-                                first
-                                size="sm"
-                                total={totalPage}
-                                limit={pageSize}
-                                activePage={page}
-                                onChangePage={setPage}
-                                maxButtons={10}
-                            />
+                            <div className="pagination-wrapper">
+                                <span className="total-student-cnt">총 학생 수 : {totalPage}</span>
+                                <Pagination
+                                    layout={['-', 'pager', '-']}
+                                    prev
+                                    last
+                                    next
+                                    first
+                                    size="sm"
+                                    total={totalPage}
+                                    limit={pageSize}
+                                    activePage={page}
+                                    onChangePage={setPage}
+                                    maxButtons={10}
+                                />
+
+                            </div>
                         </CardBody>
                     </Card>
                 </Col>

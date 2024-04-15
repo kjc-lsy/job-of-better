@@ -11,7 +11,7 @@ import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemberListService;
 
 @RestController
-@RequestMapping("/api/member-list")
+@RequestMapping("/api/company")
 @Slf4j
 public class MemberListController {
 
@@ -19,10 +19,10 @@ public class MemberListController {
     private MemberListService memberListService;
 
     @Secured("ROLE_COMPANY")
-    @GetMapping("/get-members-page")
-    public ResponseEntity<?> getMembers(Pageable pageable, @AuthenticationPrincipal CustomMember member) {
-        log.info("USER 권한+회사 소속 members 페이지 불러오기...");
-        return ResponseEntity.ok(memberListService.getAllMembersPage(pageable, member.getMember().getIdx()));
+    @GetMapping("/get-filtered-members")
+    public ResponseEntity<?> getFilteredMembers(Pageable pageable, @RequestParam("keyword") String keyword, @AuthenticationPrincipal CustomMember member) {
+        log.info("멤버 필터링... : " + keyword);
+        return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword));
     }
 
     @Secured("ROLE_COMPANY")
@@ -41,4 +41,5 @@ public class MemberListController {
         }
         return ResponseEntity.ok("업데이트 실패");
     }
+
 }

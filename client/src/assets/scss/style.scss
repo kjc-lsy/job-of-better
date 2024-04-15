@@ -1376,11 +1376,23 @@ td {
 
   .table-header {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+    align-items: center;
   }
   .member-table {
     tbody>tr>td {
       color: $font-color !important;
+    }
+  }
+
+  .pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .total-student-cnt {
+      position: absolute;
+      left: 15px;
     }
   }
 }

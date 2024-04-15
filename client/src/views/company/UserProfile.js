@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row,} from "reactstrap";
 import {useNavigate, useParams} from "react-router-dom";
 import maleImg from "../../assets/img/userImg_male.png";
-import {getMemberListInfoByIdx} from "../../apis/user";
+import {getMemberListInfoByIdx} from "../../apis/company";
 
 
 function UserProfile() {

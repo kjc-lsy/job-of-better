@@ -11,14 +11,14 @@
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="email" column="email"/>
-        <result property="address" column="address"/> <!-- 추가된 주소 필드 -->
+        <result property="address" column="address"/>
         <result property="birthDate" column="birth_date"/>
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
         <result property="comIdx" column="com_idx"/>
         <result property="pgIdx" column="pg_idx"/>
         <result property="pgRegStatus" column="pg_reg_status"/>
-        <result property="pgRegDate" column="pg_reg_date"/> <!-- 추가된 프로그램 등록 날짜 필드 -->
+        <result property="pgRegDate" column="pg_reg_date"/>
         <result property="resumeFile" column="resume_file"/>
         <result property="desiredInterviewDate" column="desired_interview_date"/>
         <result property="assignedInterviewDate" column="assigned_interview_date"/>
@@ -42,8 +42,8 @@
         <result property="username" column="username"/>
     </resultMap>
 
-    <!-- 멤버 목록 페이지 조회(USER 권한 멤버, 특정 회사 멤버) -->
-    <select id="getMemberListPage" parameterType="map" resultType="member">
+    <!-- 검색된 멤버 페이지 조회(USER 권한, 특정 회사) -->
+    <select id="getFilteredMembersList" parameterType="map" resultType="Member">
         SELECT *
         FROM member
         WHERE username IN (SELECT m.username
@@ -52,15 +52,22 @@
                            WHERE m.com_idx = #{comIdx}
                            GROUP BY m.username
                            HAVING COUNT(m.username) = 1)
+        AND name LIKE CONCAT('%', #{keyword}, '%')
         ORDER BY join_date DESC
         LIMIT #{pageable.pageSize}
         OFFSET #{pageable.offset}
     </select>
 
-    <select id="getMemberTotalCnt" resultType="int" parameterType="Long">
-        SELECT COUNT(*) AS CNT
+    <select id="getFilteredMembersCnt" parameterType="map" resultType="int">
+        SELECT COUNT(*)
         FROM member
-        WHERE com_idx = #{param}
+        WHERE username IN (SELECT m.username
+                           FROM member m
+                                    LEFT JOIN member_role r ON m.username = r.username
+                           WHERE m.com_idx = #{comIdx}
+                           GROUP BY m.username
+                           HAVING COUNT(m.username) = 1)
+        AND name LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <!-- user 권한만 가진 멤버 조회 -->

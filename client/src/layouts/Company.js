@@ -141,7 +141,7 @@ function Company(props) {
                                 element={<UserProfile/>}
                             />
                             <Route
-                                path="/"
+                                path="*"
                                 element={<Navigate to="/company/home" replace/>}
                             />
                         </Routes>

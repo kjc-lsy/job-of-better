@@ -41,10 +41,9 @@ public class MemberListService {
         return memberListDtos;
     }
 
-    public Page<MemberListDto> getAllMembersPage(Pageable pageable, Long memIdx) {
+    public Page<MemberListDto> getSearchedMembers(Pageable pageable, Long memIdx, String keyword) {
         Long comIdx = commonService.getComIdxByMemIdx(memIdx);
-
-        List<Member> members = memberMapper.getMemberListPage(pageable, comIdx);
+        List<Member> members = memberMapper.getFilteredMembersList(pageable, comIdx, keyword);
 
         List<MemberListDto> content = members.stream().map(member -> {
             return MemberListDto.builder()
@@ -53,9 +52,11 @@ public class MemberListService {
                     .build();
         }).toList();
 
-        int total = memberMapper.getMemberTotalCnt(comIdx);
+        long total = memberMapper.getFilteredMembersCnt(comIdx, keyword);
+
         return new PageImpl<>(content, pageable, total);
     }
+
 
     public Member getMemberInfoByIdx(long idx) {
         return memberMapper.selectMember(idx);
