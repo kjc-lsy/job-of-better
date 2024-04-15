@@ -3,6 +3,7 @@ import Register from "./views/auth/Register";
 import MemberList from "./views/company/MemberList";
 import ComCoverLetter from "./views/company/ComCoverLetter";
 import Home from "./views/company/Home";
+import Home2 from "./views/company/Home2";
 import UserProfile from "./views/user/UserProfile";
 import UserModify from "./views/user/UserModify";
 import React from "react";
@@ -50,6 +51,14 @@ var routes = [
     cate: "",
     icon: "tim-icons icon-chart-pie-36",
     component: <Home />,
+    layout: "/company",
+  },
+  {
+    path: "/home2",
+    name: "Home2",
+    cate: "",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <Home2 />,
     layout: "/company",
   },
   {

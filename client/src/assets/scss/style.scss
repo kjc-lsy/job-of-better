@@ -830,6 +830,117 @@ td {
 
 /****************************************** company ******************************************/
 
+/* home */
+.card:not(.card-white) .card-header {
+  padding: 25px 15px 0;
+}
+
+.home_top {
+  .card:not(.card-white) .card-header {
+    .card-title {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    text-align: right;
+    color: #9A9A9A;
+    margin-bottom: 5px;
+    font-weight: 300;
+    padding-top: 0;
+    font-size: 0.7500000025rem;
+
+    span {
+      font-size: 1.687499975rem;
+      color: $font-color;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .col-lg-3:nth-of-type(4) {
+    .card-body span {
+      color: $main-color;
+    }
+  }
+}
+
+.home_time {
+  .btn-group {
+    .btn-simple {
+      padding: 4px 25px;
+      background: transparent;
+      &.approved {
+        background: transparent;
+        border: 1px solid $border-color;
+        color: $font-color;
+
+        span {
+          color: $font-color;
+        }
+
+        &:hover, &.active {
+          border: 1px solid var(--primary);
+          background: var(--primary) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+      &.apply {
+        border: 1px solid #00d6b4;
+        color: #00d6b4;
+
+        span {
+          color: #00d6b4;
+        }
+
+        &:hover, &.active {
+          background: #00d6b4 !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+      &.duplicate {
+        border: 1px solid var(--red);
+        color: var(--red);
+
+        span {
+          color: var(--red);
+        }
+
+        &:hover, &.active {
+          background: var(--red) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+    }
+  }
+
+  .time_list {
+    display: flex;
+    align-items: center;
+    .date {
+      width: 200px;
+      font-size:1.2rem
+    }
+    .time {
+    }
+  }
+}
+
+
+/* program */
+
 .programSelector {
   padding: 10px 23px 0;
   display: block;
