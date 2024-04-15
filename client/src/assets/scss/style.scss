@@ -28,9 +28,11 @@ b {
 p {
   word-break: keep-all;
 }
+
 .nav-link {
-  cursor:pointer
+  cursor: pointer
 }
+
 .toastui-editor-contents {
   font-family: $font-stack !important;
 }
@@ -101,7 +103,7 @@ input[type=radio], input[type=checkbox] {
 
 input[type=file] {
   height: 0;
-  opacity:0
+  opacity: 0
 }
 
 /************* card ************/
@@ -175,20 +177,25 @@ input[type=file] {
 .sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
   font-size: 0.8em;
 }
+
 .sidebar {
   .nav {
     padding: 0 23px;
     align-items: center;
-    li:first-child a{
+
+    li:first-child a {
       margin: 0;
     }
+
     li > a {
       margin: 0;
       padding: 5px 0;
     }
+
     .depth1 a {
 
     }
+
     .depth2 {
       a {
         padding: 5px 0;
@@ -198,16 +205,17 @@ input[type=file] {
     .nav-link {
       font-size: 16px;
       cursor: pointer;
+
       p {
         color: #fff;
       }
     }
 
     .navSubTit {
-      color: rgba(255,255,255,0.5);
+      color: rgba(255, 255, 255, 0.5);
       display: flex;
       padding: 10px 0 5px; //김지창 바보
-      font-size:14px;
+      font-size: 14px;
     }
   }
 }
@@ -534,11 +542,12 @@ $base-width: 10%;*/
 .percent {
   width: 100px;
   height: 100px;
-  border-radius:100%;
-  background: conic-gradient($main-color var(--angle) , var(--bg-color) 0 360deg);
+  border-radius: 100%;
+  background: conic-gradient($main-color var(--angle), var(--bg-color) 0 360deg);
   position: relative;
   /*animation:0.5s roll 0.5s linear alternate both;*/
   margin: 10px;
+
   span {
     display: flex;
     width: 95px;
@@ -547,7 +556,7 @@ $base-width: 10%;*/
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     justify-content: center;
     align-items: center;
     font-size: 18px;
@@ -580,6 +589,7 @@ $base-width: 10%;*/
     }*/
   }
 }
+
 @mixin rollAnimation($angle) {
   .percent#{$angle} {
     animation: 0.5s roll#{$angle} 0.5s ease-in alternate both;
@@ -594,85 +604,103 @@ $base-width: 10%;*/
 @for $i from 0 through 360 {
   @include rollAnimation(#{$i});
 }
+
 .programInfo {
-  border:1px solid $border-color;
+  border: 1px solid $border-color;
   padding: 15px;
+
   .title {
-    cursor:pointer
+    cursor: pointer
   }
+
   .rs-picker {
     margin-right: 10px;
   }
+
   span {
-    opacity:0.8;
-    font-size:13px
+    opacity: 0.8;
+    font-size: 13px
   }
+
   p {
-    font-size:18px;
+    font-size: 18px;
     margin-bottom: 20px;
+
     p {
-      margin-bottom:0;
+      margin-bottom: 0;
     }
+
     > span {
       font-size: 18px;
       margin-bottom: 20px;
-      opacity:1
+      opacity: 1
     }
   }
+
   #mypg_viewer {
     max-height: 300px;
-    overflow:hidden;
-    position:relative;
+    overflow: hidden;
+    position: relative;
+
     ::after {
-      content:"";
+      content: "";
       display: block;
-      position:absolute;
+      position: absolute;
       left: 0;
       bottom: 0;
       width: 100%;
       height: 100%;
-      background:linear-gradient(to bottom, rgba(255,255,255,0) 80%, rgba(255,255,255,0.1) 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0.1) 100%);
     }
+
     &.on {
-      max-height:inherit;
+      max-height: inherit;
+
       ::after {
         display: none;
       }
     }
   }
 
-  .viewMore{
-    padding: 11px 30px ;
+  .viewMore {
+    padding: 11px 30px;
     width: 100%;
-    background:$bg-color;
+    background: $bg-color;
     margin-bottom: 20px;
     color: $font-color;
+
     &:hover {
       color: #fff;
     }
   }
 }
+
 .card-user-box.card {
   .card-title {
     margin-bottom: 0;
   }
+
   .card-header {
     padding: 30px 15px 0;
   }
+
   .table {
     margin-bottom: 0;
   }
 }
+
 @keyframes roll {
- to {
-   --angle: 288deg;
- }
+  to {
+    --angle: 288deg;
+  }
 }
+
 @property --angle {
   syntax: "<angle>";
   initial-value: 0deg;
   inherits: false;
 }
+
 .cover-letter-wrapper {
   .row {
     margin-bottom: 30px;
@@ -700,6 +728,7 @@ $base-width: 10%;*/
 
 
   }
+
   .coverLetterTitle {
     margin-bottom: 50px;
   }
@@ -720,8 +749,9 @@ td {
 
 .user-profile-wrapper {
   .rs-input-group.rs-input-group-inside .rs-input {
-    font-size:16px
+    font-size: 16px
   }
+
   .col-md-8 {
     .tablesorter {
       td {
@@ -731,41 +761,50 @@ td {
       }
     }
   }
+
   .card-footer .row {
     display: flex;
     justify-content: center;
   }
-  .card-footer .row > div{
+
+  .card-footer .row > div {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
   }
+
   .programInfo .btn {
     padding: 8px 30px;
   }
+
   span.reject {
     color: darkred;
   }
+
   span.delay {
     color: #8c8e90;
   }
+
   span.confirm {
     color: blue;
   }
 }
+
 .card-user .avatar {
   object-fit: cover;
 }
+
 .profile_img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .card-user .author .block {
   background: linear-gradient(to right, $main-color 0%, transparent 100%) !important;
-  opacity:0.7 !important;
+  opacity: 0.7 !important;
 }
 
 /************* program *************/
@@ -789,33 +828,147 @@ td {
 }
 
 
-
-
 /****************************************** company ******************************************/
 
+/* home */
+.card:not(.card-white) .card-header {
+  padding: 25px 15px 0;
+}
+
+.home_top {
+  .card:not(.card-white) .card-header {
+    .card-title {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    text-align: right;
+    color: #9A9A9A;
+    margin-bottom: 5px;
+    font-weight: 300;
+    padding-top: 0;
+    font-size: 0.7500000025rem;
+
+    span {
+      font-size: 1.687499975rem;
+      color: $font-color;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .col-lg-3:nth-of-type(4) {
+    .card-body span {
+      color: $main-color;
+    }
+  }
+}
+
+.home_time {
+  .btn-group {
+    .btn-simple {
+      padding: 4px 25px;
+      background: transparent;
+      &.approved {
+        background: transparent;
+        border: 1px solid $border-color;
+        color: $font-color;
+
+        span {
+          color: $font-color;
+        }
+
+        &:hover, &.active {
+          border: 1px solid var(--primary);
+          background: var(--primary) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+      &.apply {
+        border: 1px solid #00d6b4;
+        color: #00d6b4;
+
+        span {
+          color: #00d6b4;
+        }
+
+        &:hover, &.active {
+          background: #00d6b4 !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+      &.duplicate {
+        border: 1px solid var(--red);
+        color: var(--red);
+
+        span {
+          color: var(--red);
+        }
+
+        &:hover, &.active {
+          background: var(--red) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+    }
+  }
+
+  .time_list {
+    display: flex;
+    align-items: center;
+    .date {
+      width: 200px;
+      font-size:1.2rem
+    }
+    .time {
+    }
+  }
+}
+
+
+/* program */
+
 .programSelector {
-  padding:10px 23px 0;
+  padding: 10px 23px 0;
   display: block;
+
   > button.btn {
     background: transparent;
-    border:1px solid rgba(255,255,255,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     color: #fff;
     width: 100%;
     padding: 11px 10px;
     text-align: center;
     display: flex;
     justify-content: space-between;
+
     &:hover {
       background: $bg-color !important;
       color: $main-color !important
     }
+
     div {
       @include ellipsis;
     }
   }
+
   svg {
     margin-left: 10px;
   }
+
   .dropdown-menu {
     width: calc(100% - 46px);
   }
@@ -1366,20 +1519,21 @@ td {
 
 /******************************** member-list ********************************/
 .member-list {
-    .table-responsive {
-      overflow: inherit;
-    }
+  .table-responsive {
+    overflow: inherit;
+  }
 
-    .rs-pagination-btn {
-      color: $font-color !important;
-    }
+  .rs-pagination-btn {
+    color: $font-color !important;
+  }
 
   .table-header {
     display: flex;
     justify-content: right;
   }
+
   .member-table {
-    tbody>tr>td {
+    tbody > tr > td {
       color: $font-color !important;
     }
   }
@@ -1420,6 +1574,7 @@ td {
   .table > tbody > tr > td {
     color: $font-color !important
   }
+
   /*.main-panel {
     background: #f2f5fd;
   }*/

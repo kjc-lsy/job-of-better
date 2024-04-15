@@ -18,7 +18,7 @@ function Home(props) {
                             </CardTitle>
                         </CardHeader>
                         <CardBody>
-                            30명
+                            <span>30</span>명
                         </CardBody>
                     </Card>
                 </Col>
@@ -31,7 +31,7 @@ function Home(props) {
                             </CardTitle>
                         </CardHeader>
                         <CardBody>
-                            30명
+                            <span>30</span>명
                         </CardBody>
                     </Card>
                 </Col>
@@ -44,7 +44,7 @@ function Home(props) {
                             </CardTitle>
                         </CardHeader>
                         <CardBody>
-                            30명
+                            <span>30</span>명
                         </CardBody>
                     </Card>
                 </Col>
@@ -57,7 +57,7 @@ function Home(props) {
                             </CardTitle>
                         </CardHeader>
                         <CardBody>
-                            30명
+                            <span>30</span>명
                         </CardBody>
                     </Card>
                 </Col>
@@ -72,27 +72,82 @@ function Home(props) {
                                     <CardTitle tag="h2">시간대별 면접자 현황</CardTitle>
                                 </Col>
                                 <Col sm="6">
-                                    <ul>
-                                        <li className="blue"><a>확정</a></li>
-                                        <li className="white"><a>신청</a></li>
-                                        <li className="red"><a>중복</a></li>
-                                    </ul>
+                                    <ButtonGroup
+                                        className="btn-group-toggle float-right"
+                                        data-toggle="buttons"
+                                    >
+                                        <Button
+                                            tag="label"
+                                            className="btn-simple btn btn-info btn-sm approved"
+                                        >
+                                            <span className="">
+                                              확정
+                                            </span>
+                                            <span className="d-block d-sm-none">
+                                              <i className="tim-icons icon-single-02"/>
+                                            </span>
+                                        </Button>
+                                        <Button
+                                            tag="label"
+                                            className="btn-simple btn btn-info btn-sm apply"
+                                        >
+                                            <span className="">
+                                              신청
+                                            </span>
+                                            <span className="d-block d-sm-none">
+                                              <i className="tim-icons icon-single-02"/>
+                                            </span>
+                                        </Button>
+                                        <Button
+                                            tag="label"
+                                            className="btn-simple btn btn-info btn-sm duplicate"
+                                        >
+                                            <span className="">
+                                              중복
+                                            </span>
+                                            <span className="d-block d-sm-none">
+                                              <i className="tim-icons icon-single-02"/>
+                                            </span>
+                                        </Button>
+                                    </ButtonGroup>
                                 </Col>
                             </Row>
                         </CardHeader>
                         <CardBody>
                             <div className="chart-area">
                                 <List>
-                                    <List.Item>
+                                    <List.Item className="time_list">
                                         <div className="date">04/15</div>
                                         <div className="time">
-                                            <ul>
-                                                <li className="blue">김민지 15:00</li>
-                                                <li className="white">김민지 15:00</li>
-                                                <li className="red">김민지 15:00</li>
-                                                <li className="red">김민지 15:00</li>
-                                                <li className="red">김민지 15:00</li>
-                                            </ul>
+                                            <ButtonGroup
+                                                className="btn-group-toggle float-right"
+                                                data-toggle="buttons"
+                                            >
+                                                <Button
+                                                    tag="label"
+                                                    className="btn-simple btn btn-info btn-sm approved"
+                                                >
+                                                    김민지 10:00
+                                                </Button>
+                                                <Button
+                                                    tag="label"
+                                                    className="btn-simple btn btn-info btn-sm apply"
+                                                >
+                                                    김민지 11:00
+                                                </Button>
+                                                <Button
+                                                    tag="label"
+                                                    className="btn-simple btn btn-info btn-sm duplicate"
+                                                >
+                                                    김민지 12:00
+                                                </Button>
+                                                <Button
+                                                    tag="label"
+                                                    className="btn-simple btn btn-info btn-sm duplicate"
+                                                >
+                                                    김민지 12:00
+                                                </Button>
+                                            </ButtonGroup>
                                         </div>
                                     </List.Item>
                                 </List>
