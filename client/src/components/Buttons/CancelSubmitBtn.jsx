@@ -11,6 +11,8 @@ const CancelSubmitBtn = () => {
         if (window.confirm('프로그램 신청을 취소합니다')) {
             await cancelRegister();
             await setLoginUser();
+
+            navigate('/user/program')
         }
     }
 

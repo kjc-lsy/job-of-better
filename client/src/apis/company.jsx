@@ -27,7 +27,7 @@ export function coverLetterDelete(id) {
 export const updateRegStatus = (memIdx, status) => api.put(`/api/company/update-reg-status?memIdx=${memIdx}&status=${status}`)
 
 // 회사 소속 회원들 페이지
-export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter) => {
+export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, signal) => {
     return api.get(`/api/company/get-filtered-members`, {
         params: {
             page,
@@ -39,7 +39,7 @@ export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFi
             interviewFilter,
             regStatusFilter
         }
-    });
+    }, signal);
 }
 
 //사용자 정보 조회

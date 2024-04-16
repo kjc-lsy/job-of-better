@@ -2,12 +2,14 @@
 import {Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Row,} from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const {login} = useAuth();
+    const {login, user, isLogin} = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setRememberMe(localStorage.getItem("rememberMe") === "true");
@@ -19,9 +21,20 @@ const Login = () => {
         }
     }, [rememberMe]);
 
-    const loginSubmit = (e) => {
+    // useEffect(() => {
+    //     if (user?.pgRegStatus === "Pending") {
+    //         navigate("/user/program")
+    //     }
+    //
+    //     if (user?.pgRegStatus === "Registered") {
+    //         navigate("/user/waiting-reg")
+    //     }
+    // }, [isLogin]);
+
+    const loginSubmit = async (e) => {
         e.preventDefault()
-        login(username, password)
+
+        await login(username, password)
     }
 
     const handleRememberMe = (e) => {

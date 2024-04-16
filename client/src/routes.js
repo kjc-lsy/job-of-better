@@ -28,7 +28,7 @@ var routes = [
     path: "/register",
     name: "Register",
     icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
+    component: <Register/>,
     layout: "/auth",
   },
   {

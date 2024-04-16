@@ -1,13 +1,11 @@
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row} from "reactstrap";
-import React, {Suspense,useEffect, useState, useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import * as user from "../../apis/user";
-import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {LoadingContext} from "../../contexts/LoadingProvider";
-import {userComCoverLetterInfo} from "../../apis/user";
 
 const CoverLetter = () => {
-    const {Loading,setLoading} = useContext(LoadingContext);
+    const {Loading, setLoading} = useContext(LoadingContext);
     const {isLogin} = useAuth();
     const [mclTitle, setMclTitle] = useState("");
     let [inputValue, setInputValue] = useState([{

@@ -13,7 +13,7 @@ import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
 import GenderFormGroup from "../../components/FormGroup/GenderFormGroup";
 import RegisterAddrFormGroup from "../../components/FormGroup/RegisterAddrFormGroup";
 
-const Register = () => {
+const Register = ({header}) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
         username: "",

@@ -1537,6 +1537,10 @@ td {
     tbody > tr > td {
       color: $font-color !important;
     }
+
+    thead {
+
+    }
   }
 
   .pagination-wrapper {
@@ -1561,6 +1565,14 @@ td {
     .rs-toggle {
       margin-bottom: 0;
     }
+  }
+
+  .mem-list-loader {
+    height: 400px;
+  }
+
+  table {
+    table-layout: fixed;
   }
 }
 

@@ -28,10 +28,12 @@ public class MemberListController {
             @RequestParam(value = "coverLetterFilter", required = false) String coverLetterFilter,
             @RequestParam(value = "resumeFilter", required = false) String resumeFilter,
             @RequestParam(value = "interviewFilter", required = false) String interviewFilter,
-            @RequestParam(value = "regStatusFilter", required = false) String regStatusFilter) {
+            @RequestParam(value = "regStatusFilter", required = false) String regStatusFilter) throws InterruptedException {
 
         log.info("멤버 필터링...");
         log.info("keyword : " + keyword + ", currPgIdx : " + currPgIdx + ", coverLetterFilter : " + coverLetterFilter + ", resumeFilter : " + resumeFilter + ", interviewFilter : " + interviewFilter + ", regStatusFilter : " + regStatusFilter);
+
+        Thread.sleep(2000);
 
         return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter));
     }

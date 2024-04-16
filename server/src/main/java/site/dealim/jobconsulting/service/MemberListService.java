@@ -57,7 +57,6 @@ public class MemberListService {
         return new PageImpl<>(content, pageable, total);
     }
 
-
     public Member getMemberInfoByIdx(long idx) {
         return memberMapper.selectMember(idx);
     }

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
-import {Form, InputGroup, Pagination, SelectPicker, Toggle} from "rsuite";
+import {Form, InputGroup, Loader, Pagination, SelectPicker, Toggle} from "rsuite";
 import {getMembersPage, updateRegStatus} from "../../apis/company";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -16,13 +16,15 @@ function MemberList() {
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
     const [keyword, setKeyword] = useState('')
-    const {currProg, setCurrProg} = useCurrProg();
+    const {currProg, setCurrProg} = useCurrProg()
+    const [loading, setLoading] = useState(false)
+    const abortController = useRef(new AbortController());
 
     const coverLetterSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
         label: '작성완료',
         value: 'Complete'
     }]
-    const resumeSelect = [{label: '미작성', value: 'Pending'}, {label: '제출중', value: 'Writing'}, {
+    const resumeSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
         label: '제출완료',
         value: 'Complete'
     }]
@@ -45,10 +47,28 @@ function MemberList() {
     }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
 
     const updatePage = () => {
-        getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter).then(res => {
-            setUserList(res.data.content)
-            setTotalPage(res.data.totalElements)
-        })
+        setLoading(true)
+        abortController.current.abort()
+        abortController.current = new AbortController()
+
+        const fetchMembers = async () => {
+
+            try {
+                const res = await getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, { signal: abortController.current.signal });
+                setUserList(res.data.content);
+                setTotalPage(res.data.totalElements);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Fetch failed:', error);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchMembers()
+
+        abortController.current.abort()
     }
 
     const renderMenuItem = (label, item) => item.value === 'Registered' ?
@@ -69,19 +89,15 @@ function MemberList() {
                         </CardHeader>
                         <CardBody>
                             <div className="table-header">
-                                <Form onSubmit={(checkStatus, event) => {
-                                    event.preventDefault()
-                                    updatePage()
-                                }}>
+                                <Form onSubmit={updatePage}>
                                     <InputGroup>
                                         <Form.Control
                                             placeholder="이름 검색"
                                             value={keyword}
                                             onChange={setKeyword}
-                                            name={"keyword"}
                                         />
-                                        <InputGroup.Addon>
-                                            <FontAwesomeIcon onClick={updatePage} icon={faMagnifyingGlass}/>
+                                        <InputGroup.Addon onClick={updatePage}>
+                                            <FontAwesomeIcon icon={faMagnifyingGlass}/>
                                         </InputGroup.Addon>
                                     </InputGroup>
                                 </Form>
@@ -89,7 +105,7 @@ function MemberList() {
                                     <span>모든 프로그램 보기</span>
                                     <Toggle onChange={(value)=> {
                                         if(!value) {
-                                           setCurrProg(currProg)
+                                           setCurrProg(localStorage.getItem("program"))
                                         }
                                         if(value) {
                                             setCurrProg("")
@@ -125,6 +141,7 @@ function MemberList() {
                                             style={{width: 100}}
                                             data={coverLetterSelect}
                                             placeholder={"filter"}
+                                            size="xs"
                                         />
                                     </th>
                                     <th>
@@ -135,6 +152,7 @@ function MemberList() {
                                             style={{width: 100}}
                                             data={resumeSelect}
                                             placeholder={"filter"}
+                                            size="xs"
                                         />
                                     </th>
                                     <th>
@@ -145,6 +163,7 @@ function MemberList() {
                                             style={{width: 100}}
                                             data={interviewSelect}
                                             placeholder={"filter"}
+                                            size="xs"
                                         />
                                     </th>
                                     <th></th>
@@ -156,47 +175,55 @@ function MemberList() {
                                             style={{width: 120}}
                                             data={regStatusSelect}
                                             placeholder={"filter"}
+                                            size="xs"
                                         />
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                {userList?.map(({member, pgTitle}, idx) => (
-                                        <tr key={member.username} className="text-center">
-                                            <td>
-                                                <a onClick={(e) => {
-                                                    e.preventDefault()
-                                                    navigate(`/company/user-profile/${member.idx}`)
-                                                }}>
-                                                    {member.username}
-                                                </a>
-                                            </td>
-                                            <td>{member.name}</td>
-                                            <td>{member.phone}</td>
-                                            <td>{member.gender === 'M' ? '남' : '여'}</td>
-                                            <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
-                                            <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료" }</td>
-                                            <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
-                                            <td>{pgTitle}</td>
-                                            <td>
-                                                <SelectPicker
-                                                    cleanable={false}
-                                                    renderMenuItem={renderMenuItem}
-                                                    renderValue={renderValue}
-                                                    onChange={(value) => updateRegStatus(member.idx, value)}
-                                                    data={regStatusSelect}
-                                                    searchable={false}
-                                                    style={{width: 120}}
-                                                    defaultValue={member.pgRegStatus}
-                                                />
-                                            </td>
-                                        </tr>
-                                    )
-                                )}
-                                </tbody>
+                                {loading
+                                    ?
+                                    <tbody>
+                                    <tr className="mem-list-loader"><Loader backdrop center content="loading"/></tr>
+                                    </tbody>
+                                    :
+                                    <tbody>
+                                    {userList?.map(({member, pgTitle}, idx) => (
+                                            <tr key={member.username} className="text-center">
+                                                <td>
+                                                    <a onClick={(e) => {
+                                                        e.preventDefault()
+                                                        navigate(`/company/user-profile/${member.idx}`)
+                                                    }}>
+                                                        {member.username}
+                                                    </a>
+                                                </td>
+                                                <td>{member.name}</td>
+                                                <td>{member.phone}</td>
+                                                <td>{member.gender === 'M' ? '남' : '여'}</td>
+                                                <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
+                                                <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
+                                                <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
+                                                <td>{pgTitle}</td>
+                                                <td>
+                                                    <SelectPicker
+                                                        cleanable={false}
+                                                        renderMenuItem={renderMenuItem}
+                                                        renderValue={renderValue}
+                                                        onChange={(value) => updateRegStatus(member.idx, value)}
+                                                        data={regStatusSelect}
+                                                        searchable={false}
+                                                        style={{width: 120}}
+                                                        defaultValue={member.pgRegStatus}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    )}
+                                    </tbody>
+                                }
                             </Table>
                             <div className="pagination-wrapper">
-                                <span className="total-student-cnt">총 학생 수 : {totalPage}</span>
+                            <span className="total-student-cnt">총 학생 수 : {totalPage}</span>
                                 <Pagination
                                     layout={['-', 'pager', '-']}
                                     prev
@@ -210,7 +237,6 @@ function MemberList() {
                                     onChangePage={setPage}
                                     maxButtons={10}
                                 />
-
                             </div>
                         </CardBody>
                     </Card>
