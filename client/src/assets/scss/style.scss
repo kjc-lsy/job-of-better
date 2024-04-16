@@ -106,6 +106,15 @@ input[type=file] {
   opacity: 0
 }
 
+.fullHei {
+  min-height: calc(100vh - 140px)
+}
+.noCoverLetter {
+  font-size:24px;
+  text-align: center;
+  margin: 60px 0
+}
+
 /************* card ************/
 
 .card {
@@ -714,6 +723,9 @@ $base-width: 10%;*/
     justify-content: space-between;
     padding: 0 5px;
 
+    .cl_tit {
+      width: calc(100% - 80px)
+    }
     .cl_length {
       font-size: 16px;
 

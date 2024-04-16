@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
+import site.dealim.jobconsulting.dto.CoverLetterDto;
 import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
 import site.dealim.jobconsulting.mapper.MemCoverLetterMapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemCoverLetterService {
@@ -15,13 +19,37 @@ public class MemCoverLetterService {
     private MemCoverLetterMapper userMapper;
     @Autowired
     private ComCoverLetterMapper comCoverLetterMapper;
+    @Autowired
+    private MemCoverLetterMapper memberCoverLetterMapper;
 
-    public List<ComCoverLetter> userCoverLetterInfo(Long pgIdx) {
-        return comCoverLetterMapper.userCoverLetterInfo(pgIdx);
+
+    public void userCoverLetterSave(List<MemberCoverLetter> values, long idx) {
+        Map map = new HashMap<>();
+        for (MemberCoverLetter item : values) {
+            map.put("mclCclIdx", item.getMclCclIdx());
+            map.put("mclMemberIdx", idx);
+            map.put("mclAnswer", item.getMclAnswer());
+            map.put("mclIsConfirm", item.getMclIsConfirm());
+            map.put("mclTitle", item.getMclTitle());
+
+            Long mclIdx = item.getMclIdx();
+            if (mclIdx != null || mclIdx > 0) {
+                userMapper.userCoverLetterSave(map);
+            } else {
+
+            }
+        }
+
     }
 
-    public void userCoverLetterSave(List<MemberCoverLetter> values, long idx, Long comIdx) {
-        userMapper.userCoverLetterSave(values, idx, comIdx);
-    }
+    public List<CoverLetterDto> coverLetterInfo(long idx, Long pgIdx) {
+        List<CoverLetterDto> coverLetterDtoList = new ArrayList<>();
+        List<ComCoverLetter> ComcoverLetterInfo = comCoverLetterMapper.comCoverLetterInfo(pgIdx);
+        for(ComCoverLetter ccl : ComcoverLetterInfo){
+            MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(ccl.getCclIdx());
+            coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
+        }
 
+        return coverLetterDtoList;
+    }
 }

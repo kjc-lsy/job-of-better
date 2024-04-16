@@ -8,10 +8,19 @@
     <select id="coverLetterInfo" resultType="MemberCoverLetter" parameterType="Long">
         SELECT *
         FROM member_cover_letter m
-        LEFT JOIN company_cover_letter c
-            ON m.mcl_ccl_idx = c.ccl_idx
-        LEFT JOIN program p
-            ON c.ccl_com_idx = p.pg_com_idx
-        WHERE m.mcl_member_idx = #{idx} AND p.pg_idx = #{pgIdx}
+                 RIGHT JOIN company_cover_letter c
+                            ON m.mcl_ccl_idx = c.ccl_idx
+        WHERE m.mcl_member_idx = #{idx} AND c.ccl_pg_idx = #{pgIdx}
     </select>
+
+    <select id="memCoverLetterInfo" resultType="MemberCoverLetter" parameterType="Long">
+        SELECT *
+        FROM member_cover_letter
+        WHERE mcl_ccl_idx = #{cclIdx}
+    </select>
+
+    <insert id="userCoverLetterSave">
+        INSERT INTO member_cover_letter (mcl_ccl_idx,mcl_member_idx,mcl_answer,mcl_is_confirm,mcl_title)
+        value (#{mclCclIdx},#{mclMemberIdx},#{mclAnswer},#{mclIsConfirm},#{mclTitle})
+    </insert>
 </mapper>
