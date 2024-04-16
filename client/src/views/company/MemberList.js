@@ -15,7 +15,7 @@ function MemberList() {
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [totalPage, setTotalPage] = useState()
-    const [keyword, setKeyword] = useState('')
+    const [keyword, setKeyword] = useState()
     const {currProg, setCurrProg} = useCurrProg()
     const [loading, setLoading] = useState(false)
 
@@ -42,30 +42,35 @@ function MemberList() {
     const [regStatusFilter, setRegStatusFilter] = useState(null)
 
     useEffect(() => {
-        const abortController = new AbortController();
 
-        updatePage(abortController.signal);
+        const abortController = updatePage();
 
         return () => {
             abortController.abort()
         }
     }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
 
-    const updatePage = (signal) => {
+    const updatePage = () => {
+        const abortController = new AbortController();
         setLoading(true);
 
-        getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, signal)
+        getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, abortController.signal)
             .then(res => {
-                setUserList(res.data.content);
-                setTotalPage(res.data.totalElements);
-                setLoading(false);
+                setUserList(res.data.content)
+                setTotalPage(res.data.totalElements)
+                setLoading(false)
             })
             .catch(error => {
                 if (error.name !== 'AbortError') {
-                    console.error('요청 중 요청 재시도... :', error);
+                    console.error('요청 중 요청 재시도... :', error)
                 }
             })
+
+        return abortController;
     }
+    useEffect(() => {
+        console.log(keyword)
+    }, [keyword]);
 
     const renderMenuItem = (label, item) => item.value === 'Registered' ?
         <span style={{color: '#e55757'}}>{label}</span> : label;
@@ -85,12 +90,16 @@ function MemberList() {
                         </CardHeader>
                         <CardBody>
                             <div className="table-header">
-                                <Form onSubmit={updatePage}>
+                                <Form onSubmit={(status, e)=> {
+                                    e.preventDefault()
+                                    updatePage()
+                                } }>
                                     <InputGroup>
                                         <Form.Control
                                             placeholder="이름 검색"
                                             value={keyword}
                                             onChange={setKeyword}
+                                            name={"keyword"}
                                         />
                                         <InputGroup.Addon onClick={updatePage}>
                                             <FontAwesomeIcon icon={faMagnifyingGlass}/>
@@ -134,7 +143,7 @@ function MemberList() {
                                             defaultValue={coverLetterFilter}
                                             onChange={setCoverLetterFilter}
                                             searchable={false}
-                                            style={{width: 100}}
+                                            style={{width: 80}}
                                             data={coverLetterSelect}
                                             placeholder={"filter"}
                                             size="xs"
@@ -145,7 +154,7 @@ function MemberList() {
                                             defaultValue={resumeFilter}
                                             onChange={setResumeFilter}
                                             searchable={false}
-                                            style={{width: 100}}
+                                            style={{width: 80}}
                                             data={resumeSelect}
                                             placeholder={"filter"}
                                             size="xs"
@@ -156,7 +165,7 @@ function MemberList() {
                                             defaultValue={interviewFilter}
                                             onChange={setInterviewFilter}
                                             searchable={false}
-                                            style={{width: 100}}
+                                            style={{width: 80}}
                                             data={interviewSelect}
                                             placeholder={"filter"}
                                             size="xs"
@@ -168,7 +177,7 @@ function MemberList() {
                                             defaultValue={regStatusFilter}
                                             onChange={setRegStatusFilter}
                                             searchable={false}
-                                            style={{width: 120}}
+                                            style={{width: 100}}
                                             data={regStatusSelect}
                                             placeholder={"filter"}
                                             size="xs"
@@ -179,7 +188,7 @@ function MemberList() {
                                 {loading
                                     ?
                                     <tbody>
-                                    <tr className="mem-list-loader"><Loader backdrop center content="loading"/></tr>
+                                    <tr className="mem-list-loader"><td><Loader backdrop center content="loading"/></td></tr>
                                     </tbody>
                                     :
                                     <tbody>
@@ -208,7 +217,7 @@ function MemberList() {
                                                         onChange={(value) => updateRegStatus(member.idx, value)}
                                                         data={regStatusSelect}
                                                         searchable={false}
-                                                        style={{width: 120}}
+                                                        style={{width: "100px"}}
                                                         defaultValue={member.pgRegStatus}
                                                     />
                                                 </td>

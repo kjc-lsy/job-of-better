@@ -870,6 +870,7 @@ td {
     .btn-simple {
       padding: 4px 25px;
       background: transparent;
+
       &.approved {
         background: transparent;
         border: 1px solid $border-color;
@@ -889,6 +890,7 @@ td {
           }
         }
       }
+
       &.apply {
         border: 1px solid #00d6b4;
         color: #00d6b4;
@@ -906,6 +908,7 @@ td {
           }
         }
       }
+
       &.duplicate {
         border: 1px solid var(--red);
         color: var(--red);
@@ -929,10 +932,12 @@ td {
   .time_list {
     display: flex;
     align-items: center;
+
     .date {
       width: 200px;
-      font-size:1.2rem
+      font-size: 1.2rem
     }
+
     .time {
     }
   }
@@ -1534,11 +1539,20 @@ td {
   }
 
   .member-table {
+    table-layout: fixed;
+    width: 100%;
+    $column-widths: (9%, 9%, 10%, 5%, 9%, 9%, 9%, 20%, 20%);
+
     tbody > tr > td {
       color: $font-color !important;
     }
 
-    thead {
+    th {
+      @for $i from 1 through length($column-widths) {
+        &:nth-child(#{$i}) {
+          width: nth($column-widths, $i);
+        }
+      }
 
     }
   }
@@ -1571,9 +1585,6 @@ td {
     height: 400px;
   }
 
-  table {
-    table-layout: fixed;
-  }
 }
 
 /******************************** waiting-reg ********************************/

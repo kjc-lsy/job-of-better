@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row} from "reactstrap";
+import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Col, Row} from "reactstrap";
 import {getWaitingRegDto} from "../../apis/program";
-import CancelSubmitBtn from "../../components/Buttons/CancelSubmitBtn";
 import {faEnvelope, faPhone} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useNavigate} from "react-router-dom";
 
 const WaitingReg = () => {
     const [waitingRegDto, setWaitingRegDto] = useState({});
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
         getWaitingRegDto().then(res => {
             setWaitingRegDto(res.data)
@@ -25,7 +26,7 @@ const WaitingReg = () => {
                     <CardBody>
                         <Row>
                             <Col>
-                                <p>담당자가 프로그램 신청을 검토 중입니다</p>
+                                <p>프로그램 신청이 거절 되었습니다</p>
                                 <p>24시간 내에 연락이 없을 경우, 아래 연락처로 문의해 주시기 바랍니다</p>
                             </Col>
                         </Row>
@@ -43,7 +44,7 @@ const WaitingReg = () => {
                     <CardFooter>
                         <Row>
                             <Col className="text-center">
-                                <CancelSubmitBtn/>
+                                <Button onClick={()=> navigate('/user/program')}>프로그램 다시선택</Button>
                             </Col>
                         </Row>
                     </CardFooter>

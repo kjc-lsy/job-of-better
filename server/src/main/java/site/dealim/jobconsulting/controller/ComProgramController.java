@@ -77,8 +77,10 @@ public class ComProgramController {
 
     @Secured("ROLE_COMPANY")
     @PostMapping("/get-all-programs")
-    public ResponseEntity<?> getAllPrograms(@AuthenticationPrincipal CustomMember customMember) {
+    public ResponseEntity<?> getAllPrograms(@AuthenticationPrincipal CustomMember customMember) throws InterruptedException {
+        // TODO: 지울것
         log.info("회사기준 프로그램 전체 목록 조회...");
+        Thread.sleep(1500);
         return new ResponseEntity<>(comProgramService.getAllPrograms(customMember.getMember().getComIdx()), HttpStatus.OK);
     }
 

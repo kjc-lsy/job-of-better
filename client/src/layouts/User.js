@@ -17,6 +17,7 @@ import ProgramDetails from "../views/user/program/ProgramDetails";
 import withAuthorization from "../components/HOC/withAuthorization";
 import {useAuth} from "../contexts/AuthContextProvider";
 import WaitingReg from "../views/user/WaitingReg";
+import RejectedReg from "../views/user/RejectedReg";
 
 var ps;
 
@@ -101,6 +102,10 @@ function User(props) {
                                 path="/waiting-reg"
                                 element={<WaitingReg/>}
                             />
+                            <Route
+                                path="/rejected-reg"
+                                element={<RejectedReg/>}
+                            />
                             {user.pgRegStatus === "Approved"
                                 ?
                                 <Route path="*" element={<Navigate to="/user/user-profile" replace/>}/>
@@ -109,7 +114,11 @@ function User(props) {
                                     ?
                                     <Route path="*" element={<Navigate to="/user/waiting-reg" replace/>}/>
                                     :
-                                    <Route path="*" element={<Navigate to="/user/program" replace/>}/>
+                                    user.pgRegStatus === "Pending"
+                                        ?
+                                        <Route path="*" element={<Navigate to="/user/program" replace/>}/>
+                                        :
+                                        <Route path="*" element={<Navigate to="/user/rejected-reg" replace/>}/>
 
                             }
                         </Routes>
