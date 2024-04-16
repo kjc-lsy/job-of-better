@@ -87,7 +87,7 @@ const ProgramModify = () => {
                 pgIdx: pgIdx
             });
             alert(response.data)
-            navigate('/company/program-info/' + pgIdx)
+            navigate('/company/program-details/' + pgIdx)
         } catch (e) {
             alert(e.response.data)
             console.log(e)

@@ -10,7 +10,7 @@ const UserProgramCard = ({program, loadPrograms}) => {
     const navigate = useNavigate();
 
     const handleInfoBtn = (pgIdx) => {
-        navigate('../program-info/' + pgIdx)
+        navigate('../program-details/' + pgIdx)
     }
 
     return (

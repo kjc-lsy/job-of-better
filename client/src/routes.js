@@ -15,6 +15,7 @@ import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
 import Icons from "./views/common/Icons";
 import CompanyProfile from "./views/company/CompanyProfile";
+import ProgramInfo from "./views/user/ProgramInfo";
 
 var routes = [
   {
@@ -162,6 +163,14 @@ var routes = [
     component: <Icons />,
     layout: "/user",
   },
+  {
+    path: "/program-info",
+    name: "내 프로그램",
+    cate: "myJobInfo",
+    icon: "tim-icons icon-components",
+    component: <ProgramInfo/>,
+    layout: "/user",
+  }
 
 ];
 

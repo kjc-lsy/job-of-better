@@ -21,7 +21,7 @@ const ComProgramCard = ({program, loadPrograms}) => {
     }
 
     const handleInfoBtn = (pgIdx) => {
-        navigate('../program-info/' + pgIdx)
+        navigate('../program-details/' + pgIdx)
     }
 
     return (

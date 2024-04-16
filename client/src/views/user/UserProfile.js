@@ -375,7 +375,7 @@ function UserProfile() {
                                 <tbody>
                                 <tr>
                                     <td><b class="title"
-                                           onClick={e => navigate(`/user/program-info/${inputValue.pgId}`)}>{inputValue.pgTitle}</b>
+                                           onClick={e => navigate(`/user/program-details/${inputValue.pgId}`)}>{inputValue.pgTitle}</b>
                                     </td>
                                     <td className="text-center">{inputValue.pgComName}</td>
                                     <td className="text-center">{inputValue.pgComTel ? inputValue.pgComTel : "없음"}</td>

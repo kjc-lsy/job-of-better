@@ -38,8 +38,9 @@ export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFi
             resumeFilter,
             interviewFilter,
             regStatusFilter
-        }
-    }, signal);
+        },
+        signal: signal
+    });
 }
 
 //사용자 정보 조회

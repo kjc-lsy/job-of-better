@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
@@ -18,7 +18,6 @@ function MemberList() {
     const [keyword, setKeyword] = useState('')
     const {currProg, setCurrProg} = useCurrProg()
     const [loading, setLoading] = useState(false)
-    const abortController = useRef(new AbortController());
 
     const coverLetterSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
         label: '작성완료',
@@ -43,32 +42,29 @@ function MemberList() {
     const [regStatusFilter, setRegStatusFilter] = useState(null)
 
     useEffect(() => {
-        updatePage()
+        const abortController = new AbortController();
+
+        updatePage(abortController.signal);
+
+        return () => {
+            abortController.abort()
+        }
     }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
 
-    const updatePage = () => {
-        setLoading(true)
-        abortController.current.abort()
-        abortController.current = new AbortController()
+    const updatePage = (signal) => {
+        setLoading(true);
 
-        const fetchMembers = async () => {
-
-            try {
-                const res = await getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, { signal: abortController.current.signal });
+        getMembersPage(page - 1, pageSize, keyword, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter, signal)
+            .then(res => {
                 setUserList(res.data.content);
                 setTotalPage(res.data.totalElements);
-            } catch (error) {
-                if (error.name !== 'AbortError') {
-                    console.error('Fetch failed:', error);
-                }
-            } finally {
                 setLoading(false);
-            }
-        };
-
-        fetchMembers()
-
-        abortController.current.abort()
+            })
+            .catch(error => {
+                if (error.name !== 'AbortError') {
+                    console.error('요청 중 요청 재시도... :', error);
+                }
+            })
     }
 
     const renderMenuItem = (label, item) => item.value === 'Registered' ?

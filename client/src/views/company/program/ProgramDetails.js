@@ -14,7 +14,7 @@ import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 import RefreshBtn from "../../../components/Buttons/RefreshBtn";
 import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 
-const ProgramInfo = () => {
+const ProgramDetails = () => {
     const {pgIdx} = useParams();
     const navigate = useNavigate();
     const [program, setProgram] = useState();
@@ -50,9 +50,9 @@ const ProgramInfo = () => {
 
     return (
         <div className="content program">
-            <Card className='program-info'>
+            <Card className='program-details'>
                 <CardHeader>
-                    <div className="program-info-tt">
+                    <div className="program-details-tt">
                         <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
                     </div>
@@ -169,4 +169,4 @@ const ProgramInfo = () => {
     );
 };
 
-export default ProgramInfo;
+export default ProgramDetails;

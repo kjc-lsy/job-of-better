@@ -13,7 +13,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
 
 import {getBrandText, getPathname, getRoutes} from "../components/GetRouteProvider";
-import ProgramInfo from "../views/user/program/ProgramInfo";
+import ProgramDetails from "../views/user/program/ProgramDetails";
 import withAuthorization from "../components/HOC/withAuthorization";
 import {useAuth} from "../contexts/AuthContextProvider";
 import WaitingReg from "../views/user/WaitingReg";
@@ -94,8 +94,8 @@ function User(props) {
                         <Routes>
                             {getRoutes(routes, location)}
                             <Route
-                                path="/program-info/:pgIdx"
-                                element={<ProgramInfo/>}
+                                path="/program-details/:pgIdx"
+                                element={<ProgramDetails/>}
                             />
                             <Route
                                 path="/waiting-reg"

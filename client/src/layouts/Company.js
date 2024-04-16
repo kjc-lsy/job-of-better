@@ -14,7 +14,7 @@ import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
 import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModify from "../views/company/program/ProgramModify";
-import ProgramInfo from "../views/company/program/ProgramInfo";
+import ProgramDetails from "../views/company/program/ProgramDetails";
 import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserProfile from "../views/company/UserProfile";
 import {useLoading} from "../contexts/LoadingProvider";
@@ -125,8 +125,8 @@ function Company(props) {
                         <Routes>
                             {getRoutes(routes, location)}
                             <Route
-                                path="/program-info/:pgIdx"
-                                element={<ProgramInfo/>}
+                                path="/program-details/:pgIdx"
+                                element={<ProgramDetails/>}
                             />
                             <Route
                                 path="/program-modify/:pgIdx"

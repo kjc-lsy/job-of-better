@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Card, CardBody, CardHeader, CardSubtitle, CardTitle, Col, Row} from "reactstrap";
 import {Viewer} from "@toast-ui/react-editor";
 import {format} from "date-fns";
@@ -8,11 +8,10 @@ import ProgCurrentStatus from "../../../components/Infos/ProgCurrentStatus";
 import ProgDateInfos from "../../../components/Infos/ProgDateInfos";
 import RegSubmitBtn from "../../../components/Buttons/RegSubmitBtn";
 
-const ProgramInfo = () => {
+const ProgramDetails = () => {
     const {pgIdx} = useParams();
     const [program, setProgram] = useState();
     const [comName, setComName] = useState("");
-    const navigate = useNavigate();
 
     useEffect(() => {
         getProgram(pgIdx).then((response) => {
@@ -27,9 +26,9 @@ const ProgramInfo = () => {
 
     return (
         <div className="content program">
-            <Card className='program-info'>
+            <Card className='program-details'>
                 <CardHeader>
-                    <div className="program-info-tt">
+                    <div className="program-details-tt">
                         <span className="company-name">{comName}</span>
                         <CardTitle tag="h1">{program ? program.pgTitle : null}</CardTitle>
                         <CardSubtitle>{program ? "등록일 : " + format(program.pgModifiedDate, 'yyyy-MM-dd') + " | 수정일: " + format(program.pgModifiedDate, 'yyyy-MM-dd') : null}</CardSubtitle>
@@ -87,4 +86,4 @@ const ProgramInfo = () => {
     );
 };
 
-export default ProgramInfo;
+export default ProgramDetails;
