@@ -19,8 +19,19 @@
         WHERE mcl_ccl_idx = #{cclIdx}
     </select>
 
-    <insert id="userCoverLetterSave">
+    <insert id="userCoverLetterSave" parameterType="Map">
         INSERT INTO member_cover_letter (mcl_ccl_idx,mcl_member_idx,mcl_answer,mcl_is_confirm,mcl_title)
         value (#{mclCclIdx},#{mclMemberIdx},#{mclAnswer},#{mclIsConfirm},#{mclTitle})
     </insert>
+
+    <update id="userCoverLetterUpdate" parameterType="map">
+        UPDATE member_cover_letter
+        SET
+            mcl_ccl_idx = #{mclCclIdx},
+            mcl_member_idx = #{mclMemberIdx},
+            mcl_answer = #{mclAnswer},
+            mcl_is_confirm = #{mclIsConfirm},
+            mcl_title = #{mclTitle}
+        WHERE mcl_idx = #{mclIdx}
+    </update>
 </mapper>

@@ -30,11 +30,12 @@ public class MemCoverLetterController {
     @PostMapping("/user-cover-letter-save")
     public ResponseEntity<Map<String, String>> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<MemberCoverLetter> values) {
         Member user = customMember.getMember();
+        System.out.println("values = " + values);
         memCoverLetterService.userCoverLetterSave(values, user.getIdx());
 
         Map<String, String> responseMap = new HashMap<>();
         responseMap.put("type", values.get(0).getMclIsConfirm()); // 클라이언트에서 받은 mclIsConfirm 값으로 설정
-        responseMap.put("SUCCESS", "true"); // 성공 여부 설정
+        responseMap.put("SUCCESS", "SUCCESS"); // 성공 여부 설정
 
         return new ResponseEntity<>(responseMap, HttpStatus.OK);
     }

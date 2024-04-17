@@ -5,6 +5,7 @@ import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {LoadingContext} from "../../contexts/LoadingProvider";
 import {coverLetterInfo} from "../../apis/user";
+import { Message } from 'rsuite';
 
 const CoverLetter = () => {
     const {loading, setLoading} = useContext(LoadingContext);
@@ -34,19 +35,19 @@ const CoverLetter = () => {
         setIsDone(false);
         try {
             const response = await coverLetterInfo();
-            setMclTitle(response.data[0].memCoverLetter?.mclTitle)
+            setMclTitle(response.data[0].memberCoverLetter?.mclTitle)
             console.log(response.data);
-            if(response.data.memCoverLetter.length > 0) {
+            if(response.data.length > 0) {
                 setInputLength("true");
                 setInputValue(
                     response.data.map((item, index) => {
                         return {
                             num: index + 1,
-                            id: item.memCoverLetter?.mclIdx,
-                            answer: item.memCoverLetter?.mclAnswer,
-                            type: item.memCoverLetter?.mclIsConfirm ? item.memCoverLetter?.mclIsConfirm : "",
+                            id: item.memberCoverLetter?.mclIdx !== null && item.memberCoverLetter?.mclIdx !== undefined ? item.memberCoverLetter?.mclIdx : 0,
+                            answer: item.memberCoverLetter?.mclAnswer,
+                            type: item.memberCoverLetter?.mclIsConfirm ? item.memberCoverLetter?.mclIsConfirm : "",
 
-                            cclIdx: item.comCoverLetter?.cclIdx,
+                            cclIdx: item.comCoverLetter?.cclIdx ? item.comCoverLetter?.cclIdx : 0,
                             maxlength: item.comCoverLetter?.cclMaxLength,
                             minlength: item.comCoverLetter?.cclMinLength,
                             question: item.comCoverLetter?.cclLetterQuestion,
@@ -76,6 +77,21 @@ const CoverLetter = () => {
     }, [inputValue]);
 
     const getLength = async () => {
+        /*let answer_valid = false;
+
+        if ((item.maxlength !== 0 || item.maxlength !== null)) {
+            if ((item.minlength !== 0 || item.minlength !== null)) {
+                answer_valid = item.answer?.length >= item.minlength && item.answer?.length <= item.maxlength;
+            } else {
+                answer_valid = item.answer?.length <= item.maxlength;
+            }
+        } else {
+            if ((item.minlength !== 0 || item.minlength !== null)) {
+                answer_valid = item.answer?.length >= item.minlength;
+            } else {
+                answer_valid = true;
+            }
+        }*/
         const updatedInputValue = inputValue.map(item => ({
             ...item,
             answerValid: (item.maxlength !== 0 || item.maxlength !== null)
@@ -105,7 +121,10 @@ const CoverLetter = () => {
 
     const save = (e, type) => {
         e.preventDefault();
-        if (inputValue[0].answer === "") {
+        //console.log(mclTitle);
+        if(mclTitle === "" || mclTitle === null || mclTitle === undefined){
+            alert("제목을 입력해 주세요.")
+        } else if (inputValue[0].answer === "" || inputValue[0].answer === null || inputValue[0].answer === undefined) {
             alert("항목을 하나 이상 입력해주세요：)");
         } else {
             setInputValue((prevState) => prevState.map((v) => ({
@@ -133,12 +152,13 @@ const CoverLetter = () => {
         try {
             const response = await user.userCoverLetterSave(inputValue, mclTitle);
             //navigate('/auth/login')
-            if (response.data === "SUCCESS") {
+            if (response.data.SUCCESS === "SUCCESS") {
                 if (response.data.type === "Y") {
                     alert("등록이 완료되었습니다.");
                 } else {
                     alert("임시저장되었습니다. \n작성 완료 후 제출버튼을 눌러주세요.")
                 }
+                getInfo();
             }
 
             //alert(response.data)
@@ -146,6 +166,37 @@ const CoverLetter = () => {
             console.error("error", error.response.data);
         }
     }
+
+    const inputValidate = (value) => {
+        let text = "";
+        let textColor = "";
+
+        if (value.answer === "") {
+            textColor = "text-danger font-weight-700";
+            text = <span className={textColor}>내용을 입력해주세요.</span>;
+        } else if (value.answerValid) {
+            textColor = "text-success font-weight-700";
+            text = <span className={textColor}>등록 가능합니다.</span>;
+        } else {
+            textColor = "";
+            if (value.maxlength <= 0) {
+                if (value.minlength <= 0) {
+                    text = <span className={textColor}>글자 제한이 없습니다. 자유롭게 입력해주세요.</span>;
+                } else {
+                    text = <span className={textColor}>{value.minlength}자 이상 작성해주세요.</span>;
+                }
+            } else {
+                if (value.minlength <= 0) {
+                    text = <span className={textColor}>{value.maxlength}자 이하로 작성해주세요.</span>;
+                } else {
+                    text = <span className={textColor}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>;
+                }
+            }
+        }
+
+        return text;
+    }
+
 
     return (
         <div className="content">
@@ -155,6 +206,9 @@ const CoverLetter = () => {
                         <CardTitle tag="h4">자기소개서</CardTitle>
                     </CardHeader>
                     <CardBody>
+                        <Message showIcon type="info">
+                            <strong>Info!</strong> You can use the `Message` component to display a info message.
+                        </Message>
                         {inputLength === "true" ?
                         <Form role="form" name="" aria-label="coverletter save">
                             <FormGroup className="coverLetterTitle">
@@ -197,7 +251,8 @@ const CoverLetter = () => {
                                                 />
                                                 <div className="text-muted font-italic">
                                                     <small>
-                                                        {" "}
+                                                        {inputValidate(value)}
+                                                        {/*{" "}
                                                         {value.answerValid && value.answer !== "" ? (
                                                             <span
                                                                 className="text-success font-weight-700">등록가능합니다.</span>
@@ -217,7 +272,7 @@ const CoverLetter = () => {
                                                                     <span
                                                                         className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
                                                             )
-                                                        )}
+                                                        )}*/}
                                                     </small>
                                                 </div>
                                             </FormGroup>
