@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Tag(name = "Member Cover Letter API")
+@Tag(name = "회원 - 자기소개서", description = "Member Cover Letter Controller")
 @RequestMapping("/api/user")
 @Slf4j
 public class MemCoverLetterController {

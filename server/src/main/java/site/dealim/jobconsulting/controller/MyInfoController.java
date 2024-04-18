@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Tag(name = "My Home API")
+@Tag(name = "회원 - 마이페이지", description = "Member Info Controller")
 @RequestMapping("/api/user/")
 @Slf4j
 public class MyInfoController {

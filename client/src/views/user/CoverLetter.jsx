@@ -21,7 +21,7 @@ const CoverLetter = () => {
         minlength: 0,
         question: "",
         answer: "",
-        type: "",
+        type: "N",
         answerValid: false,
     }]);
 
@@ -45,7 +45,7 @@ const CoverLetter = () => {
                             num: index + 1,
                             id: item.memberCoverLetter?.mclIdx !== null && item.memberCoverLetter?.mclIdx !== undefined ? item.memberCoverLetter?.mclIdx : 0,
                             answer: item.memberCoverLetter?.mclAnswer,
-                            type: item.memberCoverLetter?.mclIsConfirm ? item.memberCoverLetter?.mclIsConfirm : "",
+                            type: item.memberCoverLetter?.mclIsConfirm ? item.memberCoverLetter?.mclIsConfirm : "N",
 
                             cclIdx: item.comCoverLetter?.cclIdx ? item.comCoverLetter?.cclIdx : 0,
                             maxlength: item.comCoverLetter?.cclMaxLength,
@@ -209,7 +209,7 @@ const CoverLetter = () => {
                             <Message showIcon type="success">
                                 <strong>제출 완료!</strong> 제출이 완료 되었습니다. 추가 적인 수정을 원하면 작성 후 다시 제출 버튼을 눌러주세요.
                             </Message>
-                        : inputValue[0].type === "N" ?
+                        : inputValue[0].type === "T" ?
                         <Message showIcon type="info">
                             <strong>임시 저장!</strong> 임시 저장 되었습니디. 제출을 하셔야 프로그램 담당자 확인이 가능합니다.
                         </Message>

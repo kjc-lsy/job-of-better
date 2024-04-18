@@ -23,6 +23,7 @@ import withAuthorization from "../components/HOC/withAuthorization";
 var ps;
 
 function Company(props) {
+    const {loading} = useLoading();
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
     const {isLogin} = useAuth();
@@ -122,6 +123,7 @@ function Company(props) {
                             changeColor={changeColor}
                             sideColor={color}
                         />
+                        {loading ? null :
                         <Routes>
                             {getRoutes(routes, location)}
                             <Route
@@ -144,10 +146,11 @@ function Company(props) {
                                 path="*"
                                 element={<Navigate to="/company/home" replace/>}
                             />
-                        </Routes>
+                        </Routes> }
                         {
                             location.pathname === "/company/map" ? null : <Footer fluid/>
                         }
+
                     </div>
                 </div>
             )}

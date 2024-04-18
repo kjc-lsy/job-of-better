@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState } from "react";
 // reactstrap components
 import {
     Card,
@@ -14,9 +14,11 @@ import {
 //import {coverLetterSave} from "../../apis/company";
 import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import {useLoading} from "../../contexts/LoadingProvider";
 
 function ComCoverLetter() {
     const {isLogin} = useAuth();
+    const {loading, setLoading} = useLoading();
 
     const [inputValue, setInputValue] = useState([{
         num: 1,
@@ -87,6 +89,7 @@ function ComCoverLetter() {
         }
     }
     useEffect(() => {
+        setLoading(true);
         company.coverLetterInfo(localStorage.getItem("program"))
             .then(response => {
                 setInputValue(
@@ -114,7 +117,10 @@ function ComCoverLetter() {
             })
             .catch(error => {
                 console.error("error", error.response.data);
-            });
+            })
+            .finally(
+                setLoading(false)
+            );
     }, [isLogin]);
 
 

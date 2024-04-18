@@ -384,14 +384,51 @@ const pieChart = {
     let ctx = canvas.getContext("2d");
 
     return {
-      labels: ['작성중', '작성완료', '미작성'],
+      labels: ['미작성', '작성완료', '작성중'],
       datasets: [
         {
           label: '자기소개서',
-          data:[],
+          data:[10,5,7],
+          backgroundColor:[
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+          ],borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+          ],
+          borderWidth: 1
         }
       ]
     }
+  },
+  options : {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      labels: {
+        render: 'percentage',
+        fontColor: ['red', 'blue', 'yello'],
+        precision: 2,
+        fontsize: 15
+      },
+
+    },
+    legend:{
+      display: true,
+      position: 'right',
+    },
+    /*pieceLabel: {
+      mode:"label",
+      fontSize: 11,
+      fontStyle: 'bold',
+      fontColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+      ],
+    }*/
   }
 }
 

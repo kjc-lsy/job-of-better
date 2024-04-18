@@ -1,11 +1,13 @@
 import React from "react";
 import {ButtonGroup, Card, CardBody, CardHeader, CardTitle, Col, Row, Button} from "reactstrap";
 import {List} from "rsuite";
-import {Line} from "react-chartjs-2";
-import {chartExample2, chartExample4} from "../../variables/charts";
+import {Line, Pie} from "react-chartjs-2";
+import {chartExample2, chartExample4, pieChart} from "../../variables/charts";
 import classNames from "classnames";
+import {useCurrProg} from "../../contexts/CurrProgProvider";
 
 function Home(props) {
+    const {currProg} = useCurrProg();
     return (
         <div className="content">
             <Row className="home_top">
@@ -167,9 +169,11 @@ function Home(props) {
                         </CardHeader>
                         <CardBody>
                             <div className="chart-area">
-                                <Line
-                                    data={chartExample4.data}
-                                    options={chartExample4.options}
+                                <Pie
+                                    data={pieChart.data}
+                                    options={pieChart.options}
+                                    width="400px"
+                                    height="200px"
                                 />
                             </div>
                         </CardBody>
@@ -185,9 +189,11 @@ function Home(props) {
                         </CardHeader>
                         <CardBody>
                             <div className="chart-area">
-                                <Line
-                                    data={chartExample4.data}
-                                    options={chartExample4.options}
+                                <Pie
+                                    data={pieChart.data}
+                                    options={pieChart.options}
+                                    width="400px"
+                                    height="200px"
                                 />
                             </div>
                         </CardBody>

@@ -85,15 +85,6 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/user/**")
                 .build();
     }
-    @Bean
-    public GroupedOpenApi getProgramApi() {
-        return GroupedOpenApi
-                .builder()
-                .group("5. Program")
-                .pathsToMatch("/api/user/program/**")
-                .pathsToMatch("/api/com/program/**")
-                .build();
-    }
 
 
 

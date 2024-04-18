@@ -15,7 +15,7 @@ import site.dealim.jobconsulting.service.ComCoverLetterService;
 import java.util.List;
 
 @RestController
-@Tag(name = "Company Cover Letter API")
+@Tag(name = "기업사용자 - 자기소개서", description = "Company Cover Letter Controller")
 @RequestMapping("/api/company")
 @Slf4j
 public class ComCoverLetterController {

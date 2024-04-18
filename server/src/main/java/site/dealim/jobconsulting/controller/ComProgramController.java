@@ -14,7 +14,7 @@ import site.dealim.jobconsulting.service.ComProgramService;
 import site.dealim.jobconsulting.service.UserProgramService;
 
 @RestController
-@Tag(name = "Company Program API")
+@Tag(name = "기업사용자 - 프로그램", description = "Company Program Controller")
 @RequestMapping("/api/com/program")
 @Slf4j
 public class ComProgramController {
