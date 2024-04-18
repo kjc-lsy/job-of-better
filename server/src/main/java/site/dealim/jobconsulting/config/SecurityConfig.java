@@ -25,6 +25,7 @@ import site.dealim.jobconsulting.security.jwt.provider.JwtTokenProvider;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
+
 public class SecurityConfig {
 
     @Autowired

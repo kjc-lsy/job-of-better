@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
 // reactstrap components
-import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row,} from "reactstrap";
+import {Card, CardBody, CardFooter, CardText, Col, Row,} from "reactstrap";
 import {useNavigate, useParams} from "react-router-dom";
 import maleImg from "../../assets/img/userImg_male.png";
 import {getMemberListInfoByIdx} from "../../apis/company";
@@ -18,6 +18,10 @@ function UserProfile() {
             setUser(res.data)
         })
     }, []);
+
+    useEffect(() => {
+        console.log(user)
+    }, [user]);
 
     return (
         <div className="content">
@@ -75,10 +79,13 @@ function UserProfile() {
                 </Col>
                 <Col md="8">
                     <Card>
-                        <CardHeader>
-                            <CardTitle tag="h4">회원정보</CardTitle>
-                            <p className="category"></p>
-                        </CardHeader>
+                        <CardBody>
+                            <div className="quote-subcategory">회원 기본 정보</div>
+                            <div>
+                                <label>asdasd</label>
+
+                            </div>
+                        </CardBody>
                     </Card>
                 </Col>
             </Row>

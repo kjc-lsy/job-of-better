@@ -42,7 +42,6 @@ function MemberList() {
     const [regStatusFilter, setRegStatusFilter] = useState(null)
 
     useEffect(() => {
-
         const abortController = updatePage();
 
         return () => {
@@ -68,9 +67,6 @@ function MemberList() {
 
         return abortController;
     }
-    useEffect(() => {
-        console.log(keyword)
-    }, [keyword]);
 
     const renderMenuItem = (label, item) => item.value === 'Registered' ?
         <span style={{color: '#e55757'}}>{label}</span> : label;
@@ -129,7 +125,7 @@ function MemberList() {
                                     <th>성별</th>
                                     <th>자소서</th>
                                     <th>이력서</th>
-                                    <th>면접</th>
+                                    <th>면접 상태</th>
                                     <th>프로그램</th>
                                     <th>신청 상태</th>
                                 </tr>
@@ -208,7 +204,10 @@ function MemberList() {
                                                 <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
-                                                <td>{pgTitle}</td>
+                                                <td><a onClick={(e)=>{
+                                                    e.preventDefault()
+                                                    navigate(`/company/program-details/${member.pgIdx}`)
+                                                }}>{pgTitle}</a></td>
                                                 <td>
                                                     <SelectPicker
                                                         cleanable={false}

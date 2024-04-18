@@ -104,7 +104,7 @@ const ProgramModify = () => {
                 <CardBody>
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
-                            <div className="program-subcategory">프로그램 제목</div>
+                            <div className="quote-subcategory">프로그램 제목</div>
                             <Input
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
@@ -113,7 +113,7 @@ const ProgramModify = () => {
                         <FormGroup>
                             <Row>
                                 <Col md='6' className='mb-4 mb-md-0'>
-                                    <div className="program-subcategory">프로그램 기간</div>
+                                    <div className="quote-subcategory">프로그램 기간</div>
                                     <div>
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
@@ -130,7 +130,7 @@ const ProgramModify = () => {
                                     </div>
                                 </Col>
                                 <Col md='6'>
-                                    <div className="program-subcategory">학생모집 기간</div>
+                                    <div className="quote-subcategory">학생모집 기간</div>
                                     <div>
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
@@ -155,7 +155,7 @@ const ProgramModify = () => {
                             </Row>
                         </FormGroup>
                         <FormGroup>
-                            <div className="program-subcategory">프로그램 내용</div>
+                            <div className="quote-subcategory">프로그램 내용</div>
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
                                     key={content}

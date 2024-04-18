@@ -36,6 +36,8 @@ export default function BackgroundColorWrapper(props) {
 
     let theme = color === "primary" ? primaryValue : color === "pink" ? pinkValue : greenValue;
 
+    //const colors = theme.colors;
+
     /*const localThemeMode = window.localStorage.getItem("back-color");
     const [themeMode, setThemeMode] = useState(localThemeMode);
 
@@ -46,7 +48,7 @@ export default function BackgroundColorWrapper(props) {
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle/>
-            <BackgroundColorContext.Provider value={{color: color, changeColor: changeColor}}>
+            <BackgroundColorContext.Provider value={{color: color,colors: theme.colors, changeColor: changeColor}}>
                 {props.children}
             </BackgroundColorContext.Provider>
         </ThemeProvider>

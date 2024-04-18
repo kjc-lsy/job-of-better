@@ -20,7 +20,6 @@ function UserProfile() {
 
     const navigate = useNavigate();
     const imgRef = useRef();
-    const {isLogin} = useAuth();
     const [inputValue, setInputValue] = React.useState({
         name: "",
         profileImg: "", //require("assets/img/emilyz.jpg")
@@ -62,6 +61,8 @@ function UserProfile() {
 
         interviewDate: new Date(),
         interviewTime: new Date().getHours() + ":" + new Date().getMinutes(),
+
+        assignedIntervieweDate: "",
     });
 
     useEffect(() => {
@@ -104,6 +105,7 @@ function UserProfile() {
                 pgRegStatus: response.data.pgRegStatus,
                 interviewDate: new Date((response.data.desiredInterviewDate)?.split("T")[0]),
                 interviewTime: new Date(response.data.desiredInterviewDate),
+                assignedIntervieweDate : response.data.assignedIntervieweDate,
             }));
             //console.log(inputValue.interviewTime);
         } catch (error) {
@@ -136,7 +138,7 @@ function UserProfile() {
                 pgInterviewValEndDate: response.data.program.pgInterviewValEndDate,
                 pgInterviewValEndTime: response.data.program.pgInterviewValEndTime,
                 pgInterviewValStartTime: response.data.program.pgInterviewValStartTime,
-                pgContent: (response.data.program.pgContent).replace(/<[^>]+>/g, ''),
+                pgContent: (response.data.program.pgContentSummary).replace(/<[^>]+>/g, ''),
 
 
             }));
@@ -151,10 +153,10 @@ function UserProfile() {
             const response = await user.coverLetterInfo();
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
-                mclTitle: response.data.clList?.mclTitle,
-                mclDate: response.data.clList?.mclModifiedDate,
-                mclIsConfirm: response.data.clList?.mclIsConfirm,
-                coverLetterPercent: (response.data.clPercent?.[1] / response.data.clPercent?.[0]) * 100
+                mclTitle: response.data.memCoverLetter?.mclTitle,
+                mclDate: response.data.memCoverLetter?.mclModifiedDate,
+                mclIsConfirm: response.data.memCoverLetter?.mclIsConfirm,
+                coverLetterPercent: (((response.data.memCoverLetter?.length ? response.data.memCoverLetter?.length : 0) / (response.data.comCoverLetter?.length) ? response.data.comCoverLetter?.length : 0) * 100).toFixed(0),
             }))
         } catch (error) {
             console.error(error.response.data);
@@ -170,12 +172,12 @@ function UserProfile() {
 
         // interviewDateTime 문자열 생성
         const interviewDateTime = interviewDateStr + 'T' + interviewTimeStr;
-        console.log(interviewDateTime);
+        //console.log(interviewTimeStr , inputValue.pgInterviewValStartTime);
 
         // 서버에 저장
         if (interviewDateStr < inputValue.pgInterviewValStartDate || interviewDateStr > inputValue.pgInterviewValEndDate) {
             alert("해당 날짜엔 신청 할 수 없습니다.\n확인바랍니다.");
-        } else if (interviewDateStr < inputValue.pgInterviewValStartTime || interviewDateStr > inputValue.pgInterviewValEndTime) {
+        } else if (interviewTimeStr < inputValue.pgInterviewValStartTime || interviewTimeStr > inputValue.pgInterviewValEndTime) {
             alert("해당 시간엔 신청 할 수 없습니다.\n확인바랍니다.");
         } else {
             user.interviewTimeSave(interviewDateTime)
@@ -405,6 +407,9 @@ function UserProfile() {
                                     <div>
                                         <span>면접 시간</span>
                                         <p>
+                                            {inputValue.assignedIntervieweDate ?
+                                                new Date(inputValue.assignedIntervieweDate).toLocaleString()
+                                              :  <>
                                             <KorDatePicker
                                                 value={inputValue.interviewDate}
                                                 name="interviewDate"
@@ -444,19 +449,21 @@ function UserProfile() {
                                             }}>
                                                 신청
                                             </Button>
+                                                </>
+                                        }
                                         </p>
                                     </div>
                                 </Form>
                                 <div>
                                     <span>내용</span>
-                                    <p id="mypg_viewer">
+                                    <p>{/* id="mypg_viewer"*/}
                                         <Viewer
                                             key={inputValue.pgContent}
                                             initialValue={inputValue.pgContent}
                                         />
                                     </p>
-                                    <Button type="button" onClick={viewMore} className="btn02 viewMore">더
-                                        보기</Button>
+                                    {/*<Button type="button" onClick={viewMore} className="btn02 viewMore">더
+                                        보기</Button>*/}
                                 </div>
                                 <div>
                                     <span>상태</span>

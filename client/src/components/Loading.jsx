@@ -1,5 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {BeatLoader} from "react-spinners";
+import { BackgroundColorContext } from "../contexts/BackgroundColorWrapper";
+import {useTheme} from "styled-components";
+
 
 const override = {
     position: "fixed",
@@ -15,9 +18,13 @@ const override = {
 };
 
 const Loading = ({ loading }) => {
+    //const {theme} = useContext(ThemeContext);
     const [load, setLoad] = useState(false);
+    const {theme} = useTheme();
+    const { colors } = useContext(BackgroundColorContext);
 
     useEffect(() => {
+
         if (loading) {
             const timer = setTimeout(() => {
                 setLoad(loading);
@@ -27,11 +34,12 @@ const Loading = ({ loading }) => {
         }else {
             setLoad(loading);
         }
+        //console.log(theme);
     }, [loading]);
     return (
         <div>
             <BeatLoader
-                color="#36d7b7"
+                color={colors}
                 loading={load}
                 cssOverride={override}
                 size={15}

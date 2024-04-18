@@ -80,7 +80,7 @@ public class ComProgramController {
     public ResponseEntity<?> getAllPrograms(@AuthenticationPrincipal CustomMember customMember) throws InterruptedException {
         // TODO: 지울것
         log.info("회사기준 프로그램 전체 목록 조회...");
-        Thread.sleep(1500);
+        Thread.sleep(1000);
         return new ResponseEntity<>(comProgramService.getAllPrograms(customMember.getMember().getComIdx()), HttpStatus.OK);
     }
 
