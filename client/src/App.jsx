@@ -18,7 +18,7 @@ const App = () => {
                 <Route path="/auth/*" element={<AuthLayout/>}/>
                 <Route path="/company/*" element={isLogin ? <CompanyLayout/> : null}/>
                 <Route path="/user/*" element={isLogin ? <UserLayout/> : null}/>
-                <Route path="*" element={<Navigate to="/auth/login" replace/>}/>
+                {/*<Route path="*" element={<Navigate to="/auth/login" replace/>}/>*/}
             </Routes>
         </>
     )

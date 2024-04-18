@@ -50,7 +50,6 @@ public class MemCoverLetterService {
             MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(ccl.getCclIdx());
             coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
         }
-
         return coverLetterDtoList;
     }
 }

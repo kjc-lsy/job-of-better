@@ -33,6 +33,15 @@ public class SecurityConfig {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    // Swagger 관련 URI 패턴
+    private String[] SWAGGER_URI = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.index.html",
+            "/webjars/**",
+            "/swagger-resources/**"
+    };
+
     @Bean
     public SecurityFilterChain filter(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         log.info("시큐리티 설정 시작...");
@@ -69,7 +78,20 @@ public class SecurityConfig {
         http.authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        //.requestMatchers(SWAGGER_URI).permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/error",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.index.html",
+                                "/webjars/**",
+                                "/swagger-resources/**",
+                                "/h2-console/**",
+                                "/api-docs/**"
+
+                        ).permitAll()
                         .requestMatchers("/api/auth/**").hasAnyRole("USER")
                         .requestMatchers("/api/company/**").hasAnyRole("COMPANY")
                         .anyRequest().authenticated()

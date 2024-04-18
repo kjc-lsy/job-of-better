@@ -5,7 +5,7 @@ import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {LoadingContext} from "../../contexts/LoadingProvider";
 import {coverLetterInfo} from "../../apis/user";
-import { Message } from 'rsuite';
+import {Message} from 'rsuite';
 
 const CoverLetter = () => {
     const {loading, setLoading} = useContext(LoadingContext);
@@ -37,7 +37,7 @@ const CoverLetter = () => {
             const response = await coverLetterInfo();
             setMclTitle(response.data[0].memberCoverLetter?.mclTitle)
             console.log(response.data);
-            if(response.data.length > 0) {
+            if (response.data.length > 0) {
                 setInputLength("true");
                 setInputValue(
                     response.data.map((item, index) => {
@@ -54,7 +54,7 @@ const CoverLetter = () => {
                         }
                     })
                 );
-            }else {
+            } else {
                 setInputLength("false");
             }
         } catch (error) {
@@ -122,7 +122,7 @@ const CoverLetter = () => {
     const save = (e, type) => {
         e.preventDefault();
         //console.log(mclTitle);
-        if(mclTitle === "" || mclTitle === null || mclTitle === undefined){
+        if (mclTitle === "" || mclTitle === null || mclTitle === undefined) {
             alert("제목을 입력해 주세요.")
         } else if (inputValue[0].answer === "" || inputValue[0].answer === null || inputValue[0].answer === undefined) {
             alert("항목을 하나 이상 입력해주세요：)");
@@ -139,7 +139,7 @@ const CoverLetter = () => {
             });
             if (type === "Y") {
                 if (window.confirm("제출하시면 기업 담당자에게 전달됩니다. \n제출하시겠습니까?")) {
-                   axiosSave(updatedInputValue);
+                    axiosSave(updatedInputValue);
                 }
             } else {
                 axiosSave(updatedInputValue);
@@ -148,7 +148,6 @@ const CoverLetter = () => {
     };
 
     async function axiosSave(inputValue) {
-
         try {
             const response = await user.userCoverLetterSave(inputValue, mclTitle);
             //navigate('/auth/login')
@@ -200,59 +199,65 @@ const CoverLetter = () => {
 
     return (
         <div className="content">
-            {loading ? null  :
+            {loading ? null :
                 <Card className="fullHei">
                     <CardHeader>
                         <CardTitle tag="h4">자기소개서</CardTitle>
                     </CardHeader>
                     <CardBody>
+                        {inputValue[0].type === "Y" ?
+                            <Message showIcon type="success">
+                                <strong>제출 완료!</strong> 제출이 완료 되었습니다. 추가 적인 수정을 원하면 작성 후 다시 제출 버튼을 눌러주세요.
+                            </Message>
+                        : inputValue[0].type === "N" ?
                         <Message showIcon type="info">
-                            <strong>Info!</strong> You can use the `Message` component to display a info message.
+                            <strong>임시 저장!</strong> 임시 저장 되었습니디. 제출을 하셔야 프로그램 담당자 확인이 가능합니다.
                         </Message>
+                        : null}
                         {inputLength === "true" ?
-                        <Form role="form" name="" aria-label="coverletter save">
-                            <FormGroup className="coverLetterTitle">
-                                <div className="coverletter_user">
-                                    <div>제목</div>
-                                    <div className="cl_length">
-                                        <span>{mclTitle?.length ? mclTitle?.length : 0}</span>자
+                            <Form role="form" name="" aria-label="coverletter save">
+                                <FormGroup className="coverLetterTitle">
+                                    <div className="coverletter_user">
+                                        <div>제목</div>
+                                        <div className="cl_length">
+                                            <span>{mclTitle?.length ? mclTitle?.length : 0}</span>자
+                                        </div>
                                     </div>
-                                </div>
-                                <Input
-                                    type="text"
-                                    value={mclTitle}
-                                    name="mclTitle"
-                                    id="mclTitle"
-                                    maxLength="50"
-                                    placeholder="제목을 입력해주세요. (100자이내)"
-                                    onChange={handleMclTitleChange}
-                                />
-                            </FormGroup>
-                            {inputValue.map((value, index) => {
-                                return (
-                                    <Row key={value.num}>
-                                        <Col className="pr-md-1" md="12">
+                                    <Input
+                                        type="text"
+                                        value={mclTitle}
+                                        name="mclTitle"
+                                        id="mclTitle"
+                                        maxLength="50"
+                                        placeholder="제목을 입력해주세요. (100자이내)"
+                                        onChange={handleMclTitleChange}
+                                    />
+                                </FormGroup>
+                                {inputValue.map((value, index) => {
+                                    return (
+                                        <Row key={value.num}>
+                                            <Col className="pr-md-1" md="12">
 
-                                            <FormGroup>
-                                                {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
-                                                <div className="coverletter_user">
-                                                    <div className="cl_tit">
-                                                        <b>{index + 1}.</b> {value.question}
+                                                <FormGroup>
+                                                    {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
+                                                    <div className="coverletter_user">
+                                                        <div className="cl_tit">
+                                                            <b>{index + 1}.</b> {value.question}
+                                                        </div>
+                                                        <div className="cl_length">
+                                                            <span>{value.answer?.length ? value.answer?.length : 0}</span>자
+                                                        </div>
                                                     </div>
-                                                    <div className="cl_length">
-                                                        <span>{value.answer?.length ? value.answer?.length : 0}</span>자
-                                                    </div>
-                                                </div>
-                                                <Input
-                                                    type="textarea"
-                                                    value={value.answer}
-                                                    placeholder={"자기소개서 항목" + (index + 1 > 10 ? index + 1 : "0" + (index + 1))}
-                                                    onChange={e => onChange({target: e.target, index: index})}
-                                                />
-                                                <div className="text-muted font-italic">
-                                                    <small>
-                                                        {inputValidate(value)}
-                                                        {/*{" "}
+                                                    <Input
+                                                        type="textarea"
+                                                        value={value.answer}
+                                                        placeholder={"자기소개서 항목" + (index + 1 > 10 ? index + 1 : "0" + (index + 1))}
+                                                        onChange={e => onChange({target: e.target, index: index})}
+                                                    />
+                                                    <div className="text-muted font-italic">
+                                                        <small>
+                                                            {inputValidate(value)}
+                                                            {/*{" "}
                                                         {value.answerValid && value.answer !== "" ? (
                                                             <span
                                                                 className="text-success font-weight-700">등록가능합니다.</span>
@@ -273,19 +278,19 @@ const CoverLetter = () => {
                                                                         className={value.answer !== "" ? "text-danger font-weight-700" : ""}>{value.minlength}자 이상, {value.maxlength}자 이하로 작성해주세요.</span>
                                                             )
                                                         )}*/}
-                                                    </small>
-                                                </div>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                )
-                            })}
-                            <div className="btngroup">
-                                <Button className="greyBtn" disabled={!IsDone}
-                                        onClick={(e) => save(e, "N")}>임시저장</Button>
-                                <Button disabled={!IsDone} onClick={(e) => save(e, "Y")}>제출</Button>
-                            </div>
-                        </Form>
+                                                        </small>
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    )
+                                })}
+                                <div className="btngroup">
+                                    <Button className="greyBtn" disabled={!IsDone}
+                                            onClick={(e) => save(e, "N")}>임시저장</Button>
+                                    <Button disabled={!IsDone} onClick={(e) => save(e, "Y")}>제출</Button>
+                                </div>
+                            </Form>
                             : <div className="noCoverLetter">등록된 자기 소개서 항목이 없습니다.</div>}
                     </CardBody>
                 </Card>}
