@@ -1,5 +1,6 @@
 package site.dealim.jobconsulting.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemberListService;
 
 @RestController
+@Tag(name = "MemberList API")
 @RequestMapping("/api/company")
 @Slf4j
 public class MemberListController {

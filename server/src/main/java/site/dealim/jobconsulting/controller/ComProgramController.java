@@ -1,5 +1,6 @@
 package site.dealim.jobconsulting.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import site.dealim.jobconsulting.service.ComProgramService;
 import site.dealim.jobconsulting.service.UserProgramService;
 
 @RestController
+@Tag(name = "Company Program API")
 @RequestMapping("/api/com/program")
 @Slf4j
 public class ComProgramController {

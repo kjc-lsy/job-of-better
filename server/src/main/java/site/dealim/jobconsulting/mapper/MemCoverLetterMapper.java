@@ -19,4 +19,6 @@ public interface MemCoverLetterMapper {
     MemberCoverLetter memCoverLetterInfo(@Param("cclIdx") long cclIdx);
 
     List<CoverLetterDto> userCoverLetterInfo(@Param("idx") long idx,@Param("pgIdx") Long pgIdx);
+
+    void userCoverLetterUpdate(Map map);
 }

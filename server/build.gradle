@@ -51,6 +51,12 @@ dependencies {
 
     // vertex ai
     implementation 'com.google.auth:google-auth-library-oauth2-http:1.23.0'
+
+    //swagger ui
+    //implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
+
 }
 
 tasks.named('test') {

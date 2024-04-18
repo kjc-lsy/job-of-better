@@ -1,5 +1,6 @@
 package site.dealim.jobconsulting.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
+@Tag(name = "Test API")
 @RequestMapping("/test")
 public class TestController {
     @Autowired

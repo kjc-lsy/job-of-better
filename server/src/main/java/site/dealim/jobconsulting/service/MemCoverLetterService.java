@@ -32,10 +32,11 @@ public class MemCoverLetterService {
             map.put("mclTitle", item.getMclTitle());
 
             Long mclIdx = item.getMclIdx();
-            if (mclIdx != null || mclIdx > 0) {
-                userMapper.userCoverLetterSave(map);
+            if ( mclIdx > 0) {
+                map.put("mclIdx", mclIdx);
+                userMapper.userCoverLetterUpdate(map);
             } else {
-
+                userMapper.userCoverLetterSave(map);
             }
         }
 
@@ -48,7 +49,6 @@ public class MemCoverLetterService {
             MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(ccl.getCclIdx());
             coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
         }
-
         return coverLetterDtoList;
     }
 }

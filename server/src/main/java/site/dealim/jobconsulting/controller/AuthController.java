@@ -1,5 +1,7 @@
 package site.dealim.jobconsulting.controller;
 
+//import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import site.dealim.jobconsulting.service.ComCoverLetterService;
 
 @Slf4j
 @RestController
+@Tag(name = "Auth API")
 @RequestMapping("/api/auth")
 public class AuthController {
 

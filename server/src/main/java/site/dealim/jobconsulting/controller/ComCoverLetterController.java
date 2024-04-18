@@ -1,5 +1,6 @@
 package site.dealim.jobconsulting.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import site.dealim.jobconsulting.service.ComCoverLetterService;
 import java.util.List;
 
 @RestController
+@Tag(name = "Company Cover Letter API")
 @RequestMapping("/api/company")
 @Slf4j
 public class ComCoverLetterController {

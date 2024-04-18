@@ -13,9 +13,10 @@ export const pgInfo = () => {
 
 
 export const userCoverLetterSave = (value,mclTitle) => {
-    console.log(value);
+    //console.log(value);
     return api.post('/api/user/user-cover-letter-save', value.map(value => {
         return {
+            mclIdx: value.id,
             mclCclIdx: value.cclIdx,
             mclAnswer: value.answer,
             mclIsConfirm:value.type,

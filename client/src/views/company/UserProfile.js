@@ -43,8 +43,8 @@ function UserProfile() {
                                          src={maleImg}
                                     />
                                 </label>
-                                <h5 className="title">{user?.name}</h5>
-                                <p className="description">{user?.username}</p>
+                                <h5 className="sub-title">{user?.username}</h5>
+                                <p className="title">{user?.name}</p>
                             </div>
                         </CardBody>
                         <CardFooter>
@@ -80,9 +80,10 @@ function UserProfile() {
                 <Col md="8">
                     <Card>
                         <CardBody>
-                            <div className="quote-subcategory">회원 기본 정보</div>
+                            <div className="quote-subcategory">기본 정보</div>
                             <div>
-                                <label>asdasd</label>
+                                <label>이름</label>
+                                div.
 
                             </div>
                         </CardBody>

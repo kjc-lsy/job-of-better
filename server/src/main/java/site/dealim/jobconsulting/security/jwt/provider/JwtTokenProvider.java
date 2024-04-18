@@ -49,6 +49,15 @@ public class JwtTokenProvider {
         return jwt;
     }
 
+    // swagger용 token
+    public String createAdminToken() {
+        return Jwts.builder()
+                .setSubject("admin")
+                .signWith(SignatureAlgorithm.HS512, jwtProps.getSecretKey())
+                .setExpiration(new Date((new Date()).getTime() + 1000 * 3600 * 24 * 365))
+                .compact();
+    }
+
     /**
      * 🔐➡👩‍💼 토큰 해석
      * <p>
