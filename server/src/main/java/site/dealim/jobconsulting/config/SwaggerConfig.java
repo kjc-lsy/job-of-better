@@ -78,6 +78,7 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/user/**")
                 .build();
     }
+
     /*@Bean
     public SecurityConfiguration security() {
         return new SecurityConfiguration(null, null, null, null,

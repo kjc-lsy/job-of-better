@@ -12,7 +12,7 @@ import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemberListService;
 
 @RestController
-@Tag(name = "MemberList API")
+@Tag(name = "기업사용자 - 회원목록", description = "MemberList Controller")
 @RequestMapping("/api/company")
 @Slf4j
 public class MemberListController {

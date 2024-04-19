@@ -860,6 +860,14 @@ td {
 /****************************************** company ******************************************/
 
 /* home */
+.home-wrapper {
+  .card .card-header .card-title {
+    margin-bottom: 0;
+  }
+  .card-chart.card {
+    margin-bottom: 0;
+  }
+}
 .card:not(.card-white) .card-header {
   padding: 25px 15px 0;
 }
@@ -893,7 +901,9 @@ td {
     }
   }
 }
-
+.card-chart .chart-area {
+  height: 255px
+}
 .home_time {
   .btn-group {
     .btn-simple {
@@ -902,16 +912,16 @@ td {
 
       &.approved {
         background: transparent;
-        border: 1px solid $border-color;
-        color: $font-color;
+        border: 1px solid rgba(54, 162, 235, 1);
+        color: rgba(54, 162, 235, 1);
 
         span {
-          color: $font-color;
+          color: rgba(54, 162, 235, 1);
         }
 
         &:hover, &.active {
-          border: 1px solid var(--primary);
-          background: var(--primary) !important;
+          border: 1px solid rgba(54, 162, 235, 1);
+          background: rgba(54, 162, 235, 1) !important;
           color: #fff !important;
 
           span {
@@ -921,15 +931,15 @@ td {
       }
 
       &.apply {
-        border: 1px solid #00d6b4;
-        color: #00d6b4;
+        border: 1px solid rgba(75, 192, 192, 1);
+        color: rgba(75, 192, 192, 1);
 
         span {
-          color: #00d6b4;
+          color: rgba(75, 192, 192, 1);
         }
 
         &:hover, &.active {
-          background: #00d6b4 !important;
+          background: rgba(75, 192, 192, 1) !important;
           color: #fff !important;
 
           span {
@@ -938,15 +948,15 @@ td {
         }
       }
       &.duplicate {
-        border: 1px solid var(--red);
-        color: var(--red);
+        border: 1px solid rgba(255, 99, 132, 1);
+        color:rgba(255, 99, 132, 1);
 
         span {
-          color: var(--red);
+          color: rgba(255, 99, 132, 1);
         }
 
         &:hover, &.active {
-          background: var(--red) !important;
+          background: rgba(255, 99, 132, 1) !important;
           color: #fff !important;
 
           span {
@@ -956,6 +966,7 @@ td {
       }
     }
   }
+
 
   .time_list {
     display: flex;

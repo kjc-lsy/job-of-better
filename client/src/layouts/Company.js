@@ -23,6 +23,7 @@ import withAuthorization from "../components/HOC/withAuthorization";
 var ps;
 
 function Company(props) {
+    const {loading} = useLoading();
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
     const {isLogin} = useAuth();
@@ -148,6 +149,7 @@ function Company(props) {
                         {
                             location.pathname === "/company/map" ? null : <Footer fluid/>
                         }
+
                     </div>
                 </div>
             )}

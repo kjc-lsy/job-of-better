@@ -1,8 +1,10 @@
 package site.dealim.jobconsulting.controller;
 
 //import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.RouterOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import site.dealim.jobconsulting.service.ComCoverLetterService;
 
 @Slf4j
 @RestController
-@Tag(name = "Auth API")
+@Tag(name = "회원 - Auth", description = "Auth Controller")
 @RequestMapping("/api/auth")
 public class AuthController {
 

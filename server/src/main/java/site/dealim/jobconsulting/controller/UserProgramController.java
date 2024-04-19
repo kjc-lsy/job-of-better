@@ -15,7 +15,7 @@ import site.dealim.jobconsulting.service.UserProgramService;
 import java.util.List;
 
 @RestController
-@Tag(name = "Member Program API")
+@Tag(name = "회원 - 프로그램", description = "User Program Controller")
 @RequestMapping("/api/user/program")
 @Slf4j
 public class UserProgramController {
