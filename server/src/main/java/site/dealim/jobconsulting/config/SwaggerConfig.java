@@ -22,7 +22,6 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI api() {
-        log.info("SwaggerConfig OpenAPI Bean 생성...");
         Info info = new Info()
                 .version("v1.0.0")
                 .title("JOB OF BETTER API")

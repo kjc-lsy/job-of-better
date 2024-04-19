@@ -64,6 +64,7 @@ public class ComProgramService {
         Program program = programMapper.selectByPgIdx(pgIdx);
         String content = program.getPgContent();
         String summary = "";
+
         try {
             summary = vertexAiService.getSummary(content);
             program.setPgContentSummary(summary);
@@ -72,6 +73,7 @@ public class ComProgramService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         programMapper.updateProgram(program);
 
         return summary;

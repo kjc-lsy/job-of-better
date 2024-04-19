@@ -61,55 +61,31 @@
 
     <update id="updateProgram" parameterType="Program">
         UPDATE program
+
         <set>
-            <trim suffixOverrides=",">
-                <if test="pgTitle != null">
-                    pg_title = #{pgTitle},
-                </if>
-                <if test="pgContent != null">
-                    pg_content = #{pgContent},
-                </if>
-                <if test="pgContentSummary != null">
-                    pg_content_summary = #{pgContentSummary},
-                </if>
-                <if test="pgProgStartDate != null">
-                    pg_prog_start_date = #{pgProgStartDate},
-                </if>
-                <if test="pgProgEndDate != null">
-                    pg_prog_end_date = #{pgProgEndDate},
-                </if>
-                <if test="pgEduStartDate != null">
-                    pg_edu_start_date = #{pgEduStartDate},
-                </if>
-                <if test="pgEduEndDate != null">
-                    pg_edu_end_date = #{pgEduEndDate},
-                </if>
-                <if test="pgRegValStartDate != null">
-                    pg_reg_val_start_date = #{pgRegValStartDate},
-                </if>
-                <if test="pgRegValEndDate != null">
-                    pg_reg_val_end_date = #{pgRegValEndDate},
-                </if>
-                <if test="pgInterviewValStartDate != null">
-                    pg_interview_val_start_date = #{pgInterviewValStartDate},
-                </if>
-                <if test="pgInterviewValEndDate != null">
-                    pg_interview_val_end_date = #{pgInterviewValEndDate},
-                </if>
-                <if test="pgInterviewValStartTime != null">
-                    pg_interview_val_start_time = #{pgInterviewValStartTime},
-                </if>
-                <if test="pgInterviewValEndTime != null">
-                    pg_interview_val_end_time = #{pgInterviewValEndTime},
-                </if>
-                <if test="pgIsWithdrawn != null">
-                    pg_is_withdrawn = #{pgIsWithdrawn},
-                </if>
-                <if test="pgModifiedDate != null">
-                    pg_modified_date = #{pgModifiedDate},
-                </if>
-            </trim>
+            <if test="pgTitle != null">pg_title = #{pgTitle},</if>
+            <if test="pgContent != null">pg_content = #{pgContent},</if>
+            <if test="pgContentSummary != null">pg_content_summary = #{pgContentSummary},</if>
+            <if test="pgProgStartDate != null">pg_prog_start_date = #{pgProgStartDate},</if>
+            <if test="pgProgEndDate != null">pg_prog_end_date = #{pgProgEndDate},</if>
+            <if test="pgEduStartDate != null">pg_edu_start_date = #{pgEduStartDate},</if>
+            <if test="pgEduEndDate != null">pg_edu_end_date = #{pgEduEndDate},</if>
+            <if test="pgRegValStartDate != null">pg_reg_val_start_date = #{pgRegValStartDate},</if>
+            <if test="pgRegValEndDate != null">pg_reg_val_end_date = #{pgRegValEndDate},</if>
+            <if test="pgInterviewValStartDate != null">pg_interview_val_start_date = #{pgInterviewValStartDate},</if>
+            <if test="pgInterviewValEndDate != null">pg_interview_val_end_date = #{pgInterviewValEndDate},</if>
+            <if test="pgInterviewValStartTime != null">pg_interview_val_start_time = #{pgInterviewValStartTime},</if>
+            <if test="pgInterviewValEndTime != null">pg_interview_val_end_time = #{pgInterviewValEndTime},</if>
+            <if test="pgInterviewUnitTime != null">pg_interview_unit_time = #{pgInterviewUnitTime},</if>
+            <if test="pgMaxIntervieweesPerUnit != null">pg_max_interviewees_per_unit = #{pgMaxIntervieweesPerUnit},</if>
+            <if test="pgCreatedDate != null">pg_created_date = #{pgCreatedDate},</if>
+            <if test="pgModifiedDate != null">pg_modified_date = #{pgModifiedDate},</if>
+            <if test="pgIsWithdrawn != null">pg_is_withdrawn = #{pgIsWithdrawn},</if>
+            <if test="pgWithdrawnDate != null">pg_withdrawn_date = #{pgWithdrawnDate},</if>
+            <if test="pgStatus != null">pg_status = #{pgStatus},</if>
+            <if test="pgComIdx != null">pg_com_idx = #{pgComIdx},</if>
         </set>
+
         WHERE pg_idx = #{pgIdx}
     </update>
 

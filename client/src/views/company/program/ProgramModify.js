@@ -6,6 +6,7 @@ import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker";
 import TimeRange30Picker from "../../../components/Picker/TimeRange30Picker";
+import {InputNumber, InputPicker} from "rsuite";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
@@ -20,6 +21,10 @@ const ProgramModify = () => {
     const [interviewValDateRange, setInterviewValDateRange] = useState([null, null]);
     const [interviewValTimeRange, setInterviewValTimeRange] = useState([null, null]);
     const [isLoading, setIsLoading] = useState(true);
+    const [itvUnitTime, setItvUnitTime] = useState(30);
+    const [itvMaxItvPerUnit, setItvMaxItvPerUnit] = useState(3);
+
+    const itvUnitTimeLabel = [{label: '30분', value: 30}, {label: '60분', value: 60}, {label: '90분', value: 90}, {label: '120분', value: 120}];
 
     useEffect(() => {
         getProgram(pgIdx).then((response) => {
@@ -127,17 +132,17 @@ const ProgramModify = () => {
                                             value={eduDateRange}
                                             onChange={setEduDateRange}
                                         />
-                                    </div>
-                                </Col>
-                                <Col md='6'>
-                                    <div className="quote-subcategory">학생모집 기간</div>
-                                    <div>
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
                                             value={regValDateRange}
                                             onChange={setRegValDateRange}
                                         />
+                                    </div>
+                                </Col>
+                                <Col md='6'>
+                                    <div className="quote-subcategory">면접 설정</div>
+                                    <div>
                                         <label>면접 가능 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
@@ -149,6 +154,17 @@ const ProgramModify = () => {
                                             loading={isLoading}
                                             value={interviewValTimeRange}
                                             onChange={setInterviewValTimeRange}
+                                        />
+                                        <label>면접 단위 시간</label>
+                                        <InputPicker
+                                            data={itvUnitTimeLabel}
+                                            style={{width: "100px"}}
+                                        />
+                                        <label>면접 시간당 최대 인원수</label>
+                                        <InputNumber
+                                            style={{width: "100px"}}
+                                            min={0}
+                                            max={10}
                                         />
                                     </div>
                                 </Col>

@@ -15,7 +15,7 @@ import site.dealim.jobconsulting.service.UserProgramService;
 
 @RestController
 @Tag(name = "기업사용자 - 프로그램", description = "Company Program Controller")
-@RequestMapping("/api/com/program")
+@RequestMapping("/api/company/program")
 @Slf4j
 public class ComProgramController {
     @Autowired
@@ -136,6 +136,5 @@ public class ComProgramController {
             return new ResponseEntity<>("프로그램 불합격자 수 가져오기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

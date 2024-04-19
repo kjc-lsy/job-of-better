@@ -11,25 +11,19 @@ import routes from "routes.js";
 
 import logo from "assets/img/react-logo.png";
 import {BackgroundColorContext} from "contexts/BackgroundColorWrapper";
-import {useAuth} from "../contexts/AuthContextProvider";
 import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramDetails from "../views/company/program/ProgramDetails";
 import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserDetails from "../views/company/UserDetails";
-import {useLoading} from "../contexts/LoadingProvider";
 import withAuthorization from "../components/HOC/withAuthorization";
 
 var ps;
 
 function Company(props) {
-    const {loading} = useLoading();
     const location = useLocation();
     const mainPanelRef = React.useRef(null);
-    const {isLogin} = useAuth();
-    const [isMounted, setIsMounted] = React.useState(false);
     const companyRoutes = routes.filter(route => route.layout === "/company");
-    const {setLoading} = useLoading();
     const [sidebarOpened, setsidebarOpened] = React.useState(
         document.documentElement.className.indexOf("nav-open") !== -1
     );

@@ -29,9 +29,11 @@ public class Program {
     private LocalDate pgInterviewValEndDate;
     private LocalTime pgInterviewValStartTime;
     private LocalTime pgInterviewValEndTime;
-    private LocalDate pgCreatedDate;
-    private LocalDate pgModifiedDate;
-    private Character pgIsWithdrawn;
-    private LocalDateTime pgWithdrawDate;
+    private String pgInterviewUnitTime;
+    private Integer pgMaxIntervieweesPerUnit;
+    private LocalDateTime pgCreatedDate;
+    private LocalDateTime pgModifiedDate;
     private String pgStatus;
+    private LocalDate pgWithdrawnDate;
+    private Character pgIsWithdrawn;
 }
