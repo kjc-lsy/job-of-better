@@ -5,16 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
-import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
-import site.dealim.jobconsulting.service.MemCoverLetterService;
 import site.dealim.jobconsulting.service.MyInfoService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,12 +47,12 @@ public class MyInfoController {
         return coverLetterInfo;
     }
 
-    @PostMapping("/interview-time-save")
-    public void interviewTimeSave(@RequestParam("desiredInterviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
+    @PostMapping("/register-interview")
+    public void registerInterview(@RequestParam("desiredInterviewDate") String desiredInterviewDate, @AuthenticationPrincipal CustomMember customMember) {
         log.info("면접시간 저장");
         Member user = customMember.getMember();
         //System.out.println("desiredInterviewDate = " + desiredInterviewDate);
-        myinfoService.interviewTimeSave(desiredInterviewDate,user.getIdx());
+        myinfoService.registerInterview(desiredInterviewDate,user.getIdx());
     }
 
 }

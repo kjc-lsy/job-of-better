@@ -3,21 +3,14 @@ package site.dealim.jobconsulting.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.responses.ApiResponse;
-import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.extern.slf4j.Slf4j;
-//import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import site.dealim.jobconsulting.security.jwt.filter.JwtAuthenticationFilter;
 import site.dealim.jobconsulting.security.jwt.provider.JwtTokenProvider;
-
-import static java.rmi.server.LogStream.log;
 
 @Configuration
 @Slf4j
@@ -29,7 +22,7 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI api() {
-        log.info("SwaggerConfig api()");
+        log.info("SwaggerConfig OpenAPI Bean 생성...");
         Info info = new Info()
                 .version("v1.0.0")
                 .title("JOB OF BETTER API")
@@ -85,19 +78,6 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/user/**")
                 .build();
     }
-    @Bean
-    public GroupedOpenApi getProgramApi() {
-        return GroupedOpenApi
-                .builder()
-                .group("5. Program")
-                .pathsToMatch("/api/user/program/**")
-                .pathsToMatch("/api/com/program/**")
-                .build();
-    }
-
-
-
-
     /*@Bean
     public SecurityConfiguration security() {
         return new SecurityConfiguration(null, null, null, null,

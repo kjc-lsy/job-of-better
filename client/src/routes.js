@@ -16,6 +16,7 @@ import CompanyProgram from "./views/company/program/Program";
 import Icons from "./views/common/Icons";
 import CompanyProfile from "./views/company/CompanyProfile";
 import ProgramInfo from "./views/user/ProgramInfo";
+import InterviewManage from "./views/company/InterviewManage";
 
 var routes = [
   {
@@ -106,6 +107,14 @@ var routes = [
     cate: "",
     icon: "ni ni-building",
     component: <CompanyProfile />,
+    layout: "/company",
+  },
+  {
+    path: "/interview-manage",
+    name: "면접 관리",
+    cate: "student",
+    icon: "tim-icons icon-badge",
+    component: <InterviewManage />,
     layout: "/company",
   },
   /*{

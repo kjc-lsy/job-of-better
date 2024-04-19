@@ -15,7 +15,7 @@ import site.dealim.jobconsulting.service.UserProgramService;
 
 @RestController
 @Tag(name = "Company Program API")
-@RequestMapping("/api/com/program")
+@RequestMapping("/api/company/program")
 @Slf4j
 public class ComProgramController {
     @Autowired

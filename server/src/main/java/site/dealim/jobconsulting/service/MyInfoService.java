@@ -2,19 +2,15 @@ package site.dealim.jobconsulting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
-import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
 import site.dealim.jobconsulting.mapper.MemCoverLetterMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MyInfoService {
@@ -44,8 +40,8 @@ public class MyInfoService {
         return coverLetterInfo;
     }
 
-    public void interviewTimeSave(String desiredInterviewDate, long idx) {
-        memberMapper.interviewTimeSave(desiredInterviewDate, idx);
+    public void registerInterview(String desiredInterviewDate, long idx) {
+        memberMapper.registerInterview(desiredInterviewDate, idx);
     }
 
     public List<MemberCoverLetter> coverLetterList(long idx, Long pgIdx) {

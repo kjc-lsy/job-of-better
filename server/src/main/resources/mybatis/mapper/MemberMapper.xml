@@ -225,6 +225,12 @@
         WHERE idx = #{memIdx}
     </update>
 
+    <update id="updatePgRegDate" parameterType="Map">
+        UPDATE member
+            SET pg_reg_date = #{date}
+        WHERE idx = #{memIdx}
+    </update>
+
     <!-- 프로그램 신청 취소 -->
     <update id="cancelRegister" parameterType="Long">
         UPDATE member
@@ -252,9 +258,9 @@
     </select>
 
     <!-- mypg -->
-    <update id="interviewTimeSave" parameterType="map">
+    <update id="registerInterview" parameterType="map">
         UPDATE member
-        SET desired_interview_date = #{desiredInterviewDate}
+        SET register_interview_date = #{desiredInterviewDate}
         WHERE idx = #{idx}
     </update>
 

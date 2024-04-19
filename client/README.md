@@ -128,7 +128,7 @@ black-dashboard-react
         ├── Rtl.js
         ├── TableList.js
         ├── Typography.js
-        └── UserProfile.js
+        └── UserDetails.js
 ```
 
 ## Browser Support

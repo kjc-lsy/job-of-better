@@ -25,8 +25,8 @@ export const userCoverLetterSave = (value,mclTitle) => {
     }))
 };
 
-export const interviewTimeSave = (value) => {
-    return api.post(`/api/user/interview-time-save?desiredInterviewDate=${value}`)
+export const registerInterview = (value) => {
+    return api.post(`/api/user/register-interview?desiredInterviewDate=${value}`)
 }
 
 //사용자 정보

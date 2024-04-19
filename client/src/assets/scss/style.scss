@@ -1603,6 +1603,23 @@ td {
   }
 
 }
+/******************************** user-details ********************************/
+.user-details {
+  .row {
+    margin-bottom: 20px;
+  }
+
+  .card-user {
+    .row {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  label+.form-control {
+    margin-bottom: 5px;
+  }
+}
 
 /******************************** waiting-reg ********************************/
 

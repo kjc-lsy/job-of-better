@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -46,7 +47,7 @@ public interface MemberMapper {
 
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
 
-    void interviewTimeSave(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
+    void registerInterview(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
 
     int cancelRegister(Long memIdx);
 
@@ -55,5 +56,7 @@ public interface MemberMapper {
     List<Member> getFilteredMembersList(@Param("pageable")Pageable pageable, @Param("comIdx")Long comIdx, @Param("keyword")String keyword, @Param("currPgIdx")Long currPgIdx, @Param("coverLetterFilter")String coverLetterFilter, @Param("resumeFilter")String resumeFilter, @Param("interviewFilter")String interviewFilter, @Param("regStatusFilter")String regStatusFilter);
 
     Integer getFilteredMembersCnt(@Param("comIdx")Long comIdx, @Param("keyword")String keyword, @Param("currPgIdx")Long currPgIdx, @Param("coverLetterFilter")String coverLetterFilter, @Param("resumeFilter")String resumeFilter, @Param("interviewFilter")String interviewFilter, @Param("regStatusFilter")String regStatusFilter);
+
+    Integer updatePgRegDate(@Param("date") LocalDateTime date, @Param("memIdx")Long memIdx);
 
 }

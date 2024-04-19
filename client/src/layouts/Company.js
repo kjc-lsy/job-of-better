@@ -16,7 +16,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramDetails from "../views/company/program/ProgramDetails";
 import ProgramInsert from "../views/company/program/ProgramInsert";
-import UserProfile from "../views/company/UserProfile";
+import UserDetails from "../views/company/UserDetails";
 import {useLoading} from "../contexts/LoadingProvider";
 import withAuthorization from "../components/HOC/withAuthorization";
 
@@ -137,8 +137,8 @@ function Company(props) {
                                 element={<ProgramInsert/>}
                             />
                             <Route
-                                path="/user-profile/:idx"
-                                element={<UserProfile/>}
+                                path="/user-details/:idx"
+                                element={<UserDetails/>}
                             />
                             <Route
                                 path="*"

@@ -68,11 +68,19 @@ function MemberList() {
         return abortController;
     }
 
-    const renderMenuItem = (label, item) => item.value === 'Registered' ?
-        <span style={{color: '#e55757'}}>{label}</span> : label;
+    const renderMenuItem = (label, item) => {
+        if(item.value == 'Registered') return <span style={{color: '#e55757'}}>{label}</span>
+
+        if(item.value == 'Rejected') return <span style={{color: '#000000'}}>{label}</span>
+
+        return label
+    }
 
     const renderValue = (value, item, selectedEl) => {
         if (value === 'Registered') return (<span style={{color: '#e55757'}}>{item.label}</span>)
+
+        if (value === 'Rejected') return (<span style={{color: '#000000'}}>{item.label}</span>)
+
         return selectedEl
     }
 
@@ -193,7 +201,7 @@ function MemberList() {
                                                 <td>
                                                     <a onClick={(e) => {
                                                         e.preventDefault()
-                                                        navigate(`/company/user-profile/${member.idx}`)
+                                                        navigate(`/company/user-details/${member.idx}`)
                                                     }}>
                                                         {member.username}
                                                     </a>
@@ -204,10 +212,12 @@ function MemberList() {
                                                 <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
-                                                <td><a onClick={(e)=>{
+                                                <td>
+                                                    <a onClick={(e)=>{
                                                     e.preventDefault()
                                                     navigate(`/company/program-details/${member.pgIdx}`)
-                                                }}>{pgTitle}</a></td>
+                                                }}>{pgTitle}</a>
+                                                </td>
                                                 <td>
                                                     <SelectPicker
                                                         cleanable={false}

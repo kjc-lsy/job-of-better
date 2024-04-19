@@ -12,7 +12,6 @@ import KorDatePicker from "../../components/KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {DatePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
-import {useAuth} from "../../contexts/AuthContextProvider";
 import {Viewer} from "@toast-ui/react-editor";
 import ProgCurrentStatus from "../../components/Infos/ProgCurrentStatus";
 
@@ -180,7 +179,7 @@ function UserProfile() {
         } else if (interviewTimeStr < inputValue.pgInterviewValStartTime || interviewTimeStr > inputValue.pgInterviewValEndTime) {
             alert("해당 시간엔 신청 할 수 없습니다.\n확인바랍니다.");
         } else {
-            user.interviewTimeSave(interviewDateTime)
+            user.registerInterview(interviewDateTime)
                 .then((response) => {
                     console.log(response.data);
                     alert("신청이 완료 되었습니다. \n기업관리자 확인 후 확정됩니다.")
@@ -298,7 +297,8 @@ function UserProfile() {
                                     <td>{inputValue.mclDate ? new Date(inputValue?.mclDate)?.split("T")[0] : null}</td>
                                     <td className="text-center">
                                         {inputValue.mclIsConfirm === "confirm" ? "완료" :
-                                            inputValue.mclIsConfirm === "denied" ? "거절" : "보류"}
+                                            inputValue.mclIsConfirm === "denied" ? "거절" :
+                                                "보류"}
                                     </td>
                                     <td className="text-center">
                                         <a onClick={(e) => {
@@ -421,7 +421,7 @@ function UserProfile() {
                                             />
                                             <DatePicker
                                                 name="interviewTime"
-                                                value={inputValue.interviewTime}
+                                                defaultValue={inputValue.interviewTime}
                                                 format="HH:mm"
                                                 hideHours={(hour) => {
                                                     const startTimeString = inputValue.pgInterviewValStartTime;
@@ -435,7 +435,6 @@ function UserProfile() {
                                                 hideSeconds={second => second % 30 !== 0}
                                                 caretAs={FaClock}
                                                 onChange={e => {
-                                                    // e를 Date 객체로 파싱
                                                     const selectedTime = new Date(e);
                                                     setInputValue(prevInputValue => ({
                                                         ...prevInputValue,
