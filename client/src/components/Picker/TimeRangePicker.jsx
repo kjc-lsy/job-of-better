@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {DateRangePicker} from "rsuite";
 import {FaClock} from "react-icons/fa";
 
-const TimeRange30Picker = (props) => {
+const TimeRangePicker = (props) => {
     const calendarLocaleType = {
         sunday: '일',
         monday: '월',
@@ -39,9 +39,10 @@ const TimeRange30Picker = (props) => {
                 caretAs={FaClock}
                 locale={calendarLocaleType}
                 defaultValue={[now, now]}
+                placement={"auto"}
                 {...props}
             />
     );
 };
 
-export default TimeRange30Picker;
+export default TimeRangePicker;

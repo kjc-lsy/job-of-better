@@ -1,96 +1,38 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row} from "reactstrap";
-import {Editor} from "@toast-ui/react-editor";
 import {ThemeContext} from "../../../contexts/ThemeWrapper";
 import {getProgram, updateProgram} from "../../../apis/program";
 import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker";
-import TimeRange30Picker from "../../../components/Picker/TimeRange30Picker";
+import TimeRangePicker from "../../../components/Picker/TimeRangePicker";
 import {InputNumber, InputPicker} from "rsuite";
+import {format} from "date-fns";
+import {Editor} from "@toast-ui/react-editor";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
-    const [content, setContent] = useState('');
     const editorRef = useRef();
     const theme = useContext(ThemeContext);
     const [title, setTitle] = useState('');
     const navigate = useNavigate();
-    const [progDateRange, setProgDateRange] = useState([null, null]);
-    const [eduDateRange, setEduDateRange] = useState([null, null]);
-    const [regValDateRange, setRegValDateRange] = useState([null, null]);
-    const [interviewValDateRange, setInterviewValDateRange] = useState([null, null]);
-    const [interviewValTimeRange, setInterviewValTimeRange] = useState([null, null]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [itvUnitTime, setItvUnitTime] = useState(30);
-    const [itvMaxItvPerUnit, setItvMaxItvPerUnit] = useState(3);
+    const [isLoading, setIsLoading] = useState(false);
+    const [fetchedProgram, setFetchedProgram] = useState({});
 
-    const itvUnitTimeLabel = [{label: '30분', value: 30}, {label: '60분', value: 60}, {label: '90분', value: 90}, {label: '120분', value: 120}];
+    const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {label: '90분', value: "90"}, {label: '120분', value: "120"}];
 
     useEffect(() => {
         getProgram(pgIdx).then((response) => {
-            const fetchedProgram = response.data;
-
-            setTitle(fetchedProgram.pgTitle);
-            setContent(fetchedProgram.pgContent);
-            setProgDateRange([
-                fetchedProgram.pgProgStartDate ? new Date(fetchedProgram.pgProgStartDate) : null,
-                fetchedProgram.pgProgEndDate ? new Date(fetchedProgram.pgProgEndDate) : null
-            ]);
-            setEduDateRange([
-                fetchedProgram.pgEduStartDate ? new Date(fetchedProgram.pgEduStartDate) : null,
-                fetchedProgram.pgEduEndDate ? new Date(fetchedProgram.pgEduEndDate) : null
-            ]);
-            setRegValDateRange([
-                fetchedProgram.pgRegValStartDate ? new Date(fetchedProgram.pgRegValStartDate) : null,
-                fetchedProgram.pgRegValEndDate ? new Date(fetchedProgram.pgRegValEndDate) : null
-            ]);
-            setInterviewValDateRange([
-                fetchedProgram.pgInterviewValStartDate ? new Date(fetchedProgram.pgInterviewValStartDate) : null,
-                fetchedProgram.pgInterviewValEndDate ? new Date(fetchedProgram.pgInterviewValEndDate) : null
-            ]);
-            setInterviewValTimeRange([
-                fetchedProgram.pgInterviewValStartTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValStartTime) : null,
-                fetchedProgram.pgInterviewValEndTime ? new Date(new Date().toISOString().slice(0, 10) + ' ' + fetchedProgram.pgInterviewValEndTime) : null
-            ]);
-            setIsLoading(false)
+            setFetchedProgram(response.data);
         });
     }, []);
 
-    const addNineHours = (date) => {
-        if (!date) return null;
-        const newDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-        return newDate;
-    };
-
-    const formatTime = (date) => {
-        if (!date) return null;
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        // 시간과 분이 한 자리수일 경우 앞에 '0'을 붙여줍니다.
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return `${hours}:${minutes}`;
-    };
-
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        // 수정 내용을 content 변수에 담기
+        e.preventDefault()
+        // content를 markdown으로 저장
+        const updatedProgram = {...fetchedProgram, pgContent: editorRef.current?.getInstance().getMarkdown()}
+
         try {
-            const response = await updateProgram({
-                pgProgStartDate: addNineHours(progDateRange[0]),
-                pgProgEndDate: addNineHours(progDateRange[1]),
-                pgEduStartDate: addNineHours(eduDateRange[0]),
-                pgEduEndDate: addNineHours(eduDateRange[1]),
-                pgRegValStartDate: addNineHours(regValDateRange[0]),
-                pgRegValEndDate: addNineHours(regValDateRange[1]),
-                pgInterviewValStartDate: addNineHours(interviewValDateRange[0]),
-                pgInterviewValEndDate: addNineHours(interviewValDateRange[1]),
-                pgInterviewValStartTime: formatTime(interviewValTimeRange[0]),
-                pgInterviewValEndTime: formatTime(interviewValTimeRange[1]),
-                pgTitle: title,
-                pgContent: editorRef.current.getInstance().getMarkdown(),
-                pgIdx: pgIdx
-            });
+            const response = await updateProgram(updatedProgram);
             alert(response.data)
             navigate('/company/program-details/' + pgIdx)
         } catch (e) {
@@ -111,8 +53,9 @@ const ProgramModify = () => {
                         <FormGroup>
                             <div className="quote-subcategory">프로그램 제목</div>
                             <Input
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={fetchedProgram.pgTitle}
+                                onChange={(e) => setFetchedProgram({...fetchedProgram, pgTitle: e.target.value})}
+                                name={"pgTitle"}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -123,20 +66,20 @@ const ProgramModify = () => {
                                         <label>전체 프로그램 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
-                                            value={progDateRange}
-                                            onChange={setProgDateRange}
+                                            value={[new Date(fetchedProgram.pgProgStartDate), new Date(fetchedProgram.pgProgEndDate)]}
+                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgProgStartDate: value[0], pgProgEndDate: value[1]})}
                                         />
                                         <label>교육 진행 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
-                                            value={eduDateRange}
-                                            onChange={setEduDateRange}
+                                            value={[new Date(fetchedProgram.pgEduStartDate), new Date(fetchedProgram.pgEduEndDate)]}
+                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgEduStartDate: value[0], pgEduEndDate: value[1]})}
                                         />
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
-                                            value={regValDateRange}
-                                            onChange={setRegValDateRange}
+                                            value={[new Date(fetchedProgram.pgRegValStartDate), new Date(fetchedProgram.pgRegValEndDate)]}
+                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgRegValStartDate: value[0], pgRegValEndDate: value[1]})}
                                         />
                                     </div>
                                 </Col>
@@ -146,25 +89,30 @@ const ProgramModify = () => {
                                         <label>면접 가능 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
-                                            value={interviewValDateRange}
-                                            onChange={setInterviewValDateRange}
+                                            value={[new Date(fetchedProgram.pgInterviewValStartDate), new Date(fetchedProgram.pgInterviewValEndDate)]}
+                                            onChange={(value) => setFetchedProgram({ ...fetchedProgram, pgInterviewValStartDate: value[0], pgInterviewValEndDate: value[1] })}
                                         />
                                         <label>면접 가능 시간</label>
-                                        <TimeRange30Picker
+                                        <TimeRangePicker
                                             loading={isLoading}
-                                            value={interviewValTimeRange}
-                                            onChange={setInterviewValTimeRange}
+                                            value={[new Date(new Date().toISOString().slice(0, 10) + 'T' +fetchedProgram.pgInterviewValStartTime), new Date(new Date().toISOString().slice(0, 10) + 'T' + fetchedProgram.pgInterviewValEndTime)]}
+                                            onChange={(value) => setFetchedProgram({ ...fetchedProgram, pgInterviewValStartTime: format(value[0], 'HH:mm:ss'), pgInterviewValEndTime: format(value[1], 'HH:mm:ss') })}
                                         />
                                         <label>면접 단위 시간</label>
                                         <InputPicker
+                                            loading={isLoading}
                                             data={itvUnitTimeLabel}
                                             style={{width: "100px"}}
+                                            onChange={value => setFetchedProgram({...fetchedProgram, pgInterviewUnitTime: value})}
+                                            value={fetchedProgram.pgInterviewUnitTime}
                                         />
                                         <label>면접 시간당 최대 인원수</label>
                                         <InputNumber
                                             style={{width: "100px"}}
                                             min={0}
                                             max={10}
+                                            onChange={value => setFetchedProgram({...fetchedProgram, pgMaxIntervieweesPerUnit: value})}
+                                            value={fetchedProgram.pgMaxIntervieweesPerUnit}
                                         />
                                     </div>
                                 </Col>
@@ -174,12 +122,12 @@ const ProgramModify = () => {
                             <div className="quote-subcategory">프로그램 내용</div>
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
                                 <Editor
-                                    key={content}
+                                    key={fetchedProgram.pgContent}
                                     height="600px"
                                     previewStyle={window.innerWidth < 991 ? 'tab' : 'vertical'}
                                     initialEditType="markdown"
                                     ref={editorRef}
-                                    initialValue={content}
+                                    initialValue={fetchedProgram.pgContent}
                                 />
                             </div>
                         </FormGroup>

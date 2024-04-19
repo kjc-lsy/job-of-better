@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 // date-range-rsuite
 import 'rsuite/dist/rsuite.min.css';
 import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker";
-import TimeRange30Picker from "../../../components/Picker/TimeRange30Picker";
+import TimeRangePicker from "../../../components/Picker/TimeRangePicker";
 import {format} from "date-fns";
 
 const ProgramInsert = () => {
@@ -156,7 +156,7 @@ const ProgramInsert = () => {
                                         onChange={handleInterviewValDate}
                                         />
                                         <label>면접 가능 시간</label>
-                                        <TimeRange30Picker
+                                        <TimeRangePicker
                                             onChange={handleInterviewValTime}
                                         />
                                     </div>

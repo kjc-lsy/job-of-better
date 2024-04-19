@@ -80,12 +80,12 @@ const ProgDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">시작일</label>
-                                        <h4>{program?.pgProgStartDate || "시작일이 설정되지 않았습니다"}</h4>
+                                        <h4>{program?.pgInterviewValStartDate || "시작일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className=""><label htmlFor="">종료일</label>
-                                        <h4>{program?.pgProgEndDate || "종료일이 설정되지 않았습니다"}</h4>
+                                        <h4>{program?.pgInterviewValEndDate || "종료일이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>
