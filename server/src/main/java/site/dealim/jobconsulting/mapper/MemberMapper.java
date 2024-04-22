@@ -8,6 +8,7 @@ import site.dealim.jobconsulting.domain.MemberRole;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MemberMapper {
@@ -58,5 +59,14 @@ public interface MemberMapper {
     Integer getFilteredMembersCnt(@Param("comIdx")Long comIdx, @Param("keyword")String keyword, @Param("currPgIdx")Long currPgIdx, @Param("coverLetterFilter")String coverLetterFilter, @Param("resumeFilter")String resumeFilter, @Param("interviewFilter")String interviewFilter, @Param("regStatusFilter")String regStatusFilter);
 
     Integer updatePgRegDate(@Param("date") LocalDateTime date, @Param("memIdx")Long memIdx);
+
+    Map<String, Object> getUserCount(Long pgIdx);
+
+    Map<String, Object> getResumeCount(Long pgIdx);
+
+    Map<String,Object> getCoverLetterCount(Long pgIdx);
+
+    List<Map<String, Object>> getRegUserCount(Long pgIdx);
+
 
 }

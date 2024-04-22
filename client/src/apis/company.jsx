@@ -46,3 +46,6 @@ export const getMembersPage = (page, pageSize, keyword, currPgIdx, coverLetterFi
 //사용자 정보 조회
 export const getMemberListInfoByIdx = (idx) => api.get(`/api/company/get-user-info/${idx}`)
 
+export const getCountApi = (currProg) => {
+    return api.get("/api/company/get-user-count/"+currProg)
+}
