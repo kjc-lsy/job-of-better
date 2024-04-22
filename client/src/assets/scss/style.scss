@@ -859,6 +859,7 @@ td {
 
 /****************************************** company ******************************************/
 
+
 /* home */
 .home-wrapper {
   .card .card-header .card-title {
@@ -966,21 +967,8 @@ td {
       }
     }
   }
-
-
-  .time_list {
-    display: flex;
-    align-items: center;
-
-    .date {
-      width: 200px;
-      font-size: 1.2rem
-    }
-
-    .time {
-    }
-  }
 }
+
 
 
 /* program */
@@ -1504,18 +1492,53 @@ td {
       }
     }
   }
+  .interview-card {
+    min-height: calc(100vh - 200px);
+    .rs-list {
+      -webkit-box-shadow: 0 1px 0 #e5e5ea;
+      -webkit-box-shadow: 0 1px 0 var(--rs-list-border);
+      box-shadow:  0 1px 0 #e5e5ea;
+      box-shadow: 0 1px 0 var(--rs-list-border);
+    }
+  }
 
-
-  .time_list {
+  .time_list , .date_list {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     .date {
       width: 200px;
-      font-size: 1.2rem
+      font-size: 1.2rem;
+      text-align: center;
     }
 
     .time {
+      flex:1 ;
+      .btn-group {
+        flex-direction: column;
+        gap: 5px;
+        .btn {
+          border-radius : 0.2857rem;
+          font-size:14px;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .date_list {
+    border-top: 0;
+    box-shadow: none;
+    .time {
+      font-size:1.2rem
+    }
+  }
+  ul {
+    display: flex;
+    margin-bottom: 0;
+    li  {
+      width: 20%;
+      text-align: center;
+      margin-bottom: 0;
     }
   }
 }

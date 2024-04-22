@@ -36,7 +36,7 @@ public class MemberListController {
         log.info("keyword : " + keyword + ", currPgIdx : " + currPgIdx + ", coverLetterFilter : " + coverLetterFilter + ", resumeFilter : " + resumeFilter + ", interviewFilter : " + interviewFilter + ", regStatusFilter : " + regStatusFilter);
 
         //TODO: 지울것
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
 
         return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter));
     }
