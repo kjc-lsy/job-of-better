@@ -20,4 +20,6 @@ public interface InterviewSlotMapper {
     public Integer updateCurrentOccupancy(@Param("slotIdx")Long slotIdx, @Param("currentOccupancy")Integer currentOccupancy);
 
     public Integer deleteSlot(Long slotIdx);
+
+    public Integer selectCurrOccupByStartDateAndPgIdx(@Param("slotStartDatetime")LocalDateTime slotStartDatetime, @Param("slotPgIdx")Long slotPgIdx);
 }

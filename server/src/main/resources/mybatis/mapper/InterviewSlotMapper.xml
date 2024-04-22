@@ -35,6 +35,13 @@
         WHERE slot_idx = #{slotIdx}
     </update>
 
+    <!-- 현재 슬롯 점유 수 조회-->
+    <select id="selectCurrOccupByStartDateAndPgIdx" parameterType="Map">
+        SELECT slot_current_occupancy
+        FROM interview_slot
+        WHERE slot_start_datetime = #{slotStartDatetime} AND slot_pg_idx = #{slotPgIdx}
+    </select>
+
     <!-- 슬롯 삭제 -->
     <delete id="deleteSlot" parameterType="Long">
         DELETE

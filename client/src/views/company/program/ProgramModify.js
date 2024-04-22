@@ -17,7 +17,10 @@ const ProgramModify = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [fetchedProgram, setFetchedProgram] = useState({});
 
-    const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {label: '90분', value: "90"}, {label: '120분', value: "120"}];
+    const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {
+        label: '90분',
+        value: "90"
+    }, {label: '120분', value: "120"}];
 
     useEffect(() => {
         getProgram(pgIdx).then((response) => {
@@ -66,19 +69,31 @@ const ProgramModify = () => {
                                         <ProgDateRangePicker
                                             loading={isLoading}
                                             value={[new Date(fetchedProgram.pgProgStartDate), new Date(fetchedProgram.pgProgEndDate)]}
-                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgProgStartDate: value[0], pgProgEndDate: value[1]})}
+                                            onChange={(value) => setFetchedProgram({
+                                                ...fetchedProgram,
+                                                pgProgStartDate: value[0],
+                                                pgProgEndDate: value[1]
+                                            })}
                                         />
                                         <label>교육 진행 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
                                             value={[new Date(fetchedProgram.pgEduStartDate), new Date(fetchedProgram.pgEduEndDate)]}
-                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgEduStartDate: value[0], pgEduEndDate: value[1]})}
+                                            onChange={(value) => setFetchedProgram({
+                                                ...fetchedProgram,
+                                                pgEduStartDate: value[0],
+                                                pgEduEndDate: value[1]
+                                            })}
                                         />
                                         <label>신청 가능 기간</label>
                                         <ProgDateRangePicker
                                             loading={isLoading}
                                             value={[new Date(fetchedProgram.pgRegValStartDate), new Date(fetchedProgram.pgRegValEndDate)]}
-                                            onChange={(value) => setFetchedProgram({...fetchedProgram, pgRegValStartDate: value[0], pgRegValEndDate: value[1]})}
+                                            onChange={(value) => setFetchedProgram({
+                                                ...fetchedProgram,
+                                                pgRegValStartDate: value[0],
+                                                pgRegValEndDate: value[1]
+                                            })}
                                         />
                                     </div>
                                 </Col>
@@ -89,20 +104,30 @@ const ProgramModify = () => {
                                         <ProgDateRangePicker
                                             loading={isLoading}
                                             value={[new Date(fetchedProgram.pgInterviewValStartDate), new Date(fetchedProgram.pgInterviewValEndDate)]}
-                                            onChange={(value) => setFetchedProgram({ ...fetchedProgram, pgInterviewValStartDate: value[0], pgInterviewValEndDate: value[1] })}
+                                            onChange={(value) => setFetchedProgram({
+                                                ...fetchedProgram,
+                                                pgInterviewValStartDate: value[0],
+                                                pgInterviewValEndDate: value[1]
+                                            })}
                                         />
                                         <label>면접 가능 시간</label>
                                         <TimeRangePicker
                                             loading={isLoading}
-                                            value={[new Date(new Date().toISOString().slice(0, 10) + 'T' +fetchedProgram.pgInterviewValStartTime), new Date(new Date().toISOString().slice(0, 10) + 'T' + fetchedProgram.pgInterviewValEndTime)]}
-                                            onChange={(value) => setFetchedProgram({ ...fetchedProgram, pgInterviewValStartTime: format(value[0], 'HH:mm:ss'), pgInterviewValEndTime: format(value[1], 'HH:mm:ss') })}
+                                            value={[new Date(new Date().toISOString().slice(0, 10) + 'T' + fetchedProgram.pgInterviewValStartTime), new Date(new Date().toISOString().slice(0, 10) + 'T' + fetchedProgram.pgInterviewValEndTime)]}
+                                            onChange={(value) => setFetchedProgram({
+                                                ...fetchedProgram,
+                                                pgInterviewValStartTime: format(value[0], 'HH:mm:ss'),
+                                                pgInterviewValEndTime: format(value[1], 'HH:mm:ss')
+                                            })}
                                         />
                                         <label>면접 단위 시간</label>
                                         <InputPicker
                                             loading={isLoading}
                                             data={itvUnitTimeLabel}
                                             style={{width: "100px"}}
-                                            onChange={value => setFetchedProgram({...fetchedProgram, pgInterviewUnitTime: value})}
+                                            onChange={value => {
+                                                setFetchedProgram({...fetchedProgram, pgInterviewUnitTime: value})
+                                            }}
                                             value={fetchedProgram.pgInterviewUnitTime}
                                         />
                                         <label>면접 시간당 최대 인원수</label>
@@ -110,7 +135,9 @@ const ProgramModify = () => {
                                             style={{width: "100px"}}
                                             min={0}
                                             max={10}
-                                            onChange={value => setFetchedProgram({...fetchedProgram, pgMaxIntervieweesPerUnit: value})}
+                                            onChange={value => {
+                                                setFetchedProgram({...fetchedProgram, pgMaxIntervieweesPerUnit: value})
+                                            }}
                                             value={fetchedProgram.pgMaxIntervieweesPerUnit}
                                         />
                                     </div>

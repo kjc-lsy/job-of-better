@@ -20,7 +20,7 @@
         <result property="pgRegStatus" column="pg_reg_status"/>
         <result property="pgRegDate" column="pg_reg_date"/>
         <result property="resumeFile" column="resume_file"/>
-        <result property="registeredInterviewDate" column="desired_interview_date"/>
+        <result property="registeredInterviewDate" column="registered_interview_date"/>
         <result property="assignedInterviewDate" column="assigned_interview_date"/>
         <result property="interviewStatus" column="interview_status"/>
         <result property="coverLetterStatus" column="cover_letter_status"/>

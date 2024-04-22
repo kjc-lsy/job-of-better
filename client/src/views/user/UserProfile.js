@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import * as user from '../../apis/user';
+import {getCurrentOccupancy} from '../../apis/user';
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 
@@ -19,6 +20,8 @@ function UserProfile() {
     const navigate = useNavigate();
     const imgRef = useRef();
     const [interviewTimeLabel, setInterviewTimeLabel] = React.useState([]);
+    const [interviewDisableTimeLabel, setInterviewDisableTimeLabel] = React.useState([]);
+    const [interviewTimeLabelNode, setInterviewTimeLabelNode] = React.useState([]);
     const [inputValue, setInputValue] = React.useState({
         name: "",
         profileImg: "", //require("assets/img/emilyz.jpg")
@@ -58,7 +61,9 @@ function UserProfile() {
         pgInterviewValStartTime: "",
         pgInterviewValEndTime: "",
 
-        registeredInterviewDate: new Date(),
+        registeredInterviewDatetime: null,
+        registeredInterviewDate: null,
+        registeredInterviewTime: null,
 
         assignedInterviewDate: "",
     });
@@ -73,8 +78,40 @@ function UserProfile() {
     useEffect(() => {
         const timeLabel = generateTimeLabel(convertTimeToMinutes(inputValue.pgInterviewValStartTime), convertTimeToMinutes(inputValue.pgInterviewValEndTime), parseInt(inputValue.pgInterviewUnitTime));
         setInterviewTimeLabel(timeLabel)
-    }, [inputValue]);
+    }, [inputValue.pgInterviewValStartTime,inputValue.pgInterviewValEndTime,inputValue.pgInterviewUnitTime]);
 
+    useEffect(() => {
+        if (inputValue.registeredInterviewDate) {
+            setInterviewDisableTimeLabel([])
+
+            const newNodes = interviewTimeLabel.map(value => {
+                const searchedDatetime = new Date(inputValue.registeredInterviewDate.getTime());
+                searchedDatetime.setHours(parseInt(value.label.split(":")[0], 10));
+                searchedDatetime.setMinutes(parseInt(value.label.split(":")[1], 10));
+
+                return getCurrentOccupancy(searchedDatetime).then(res => {
+                    if(res.data === inputValue.pgMaxIntervieweesPerUnit) {
+                        setInterviewDisableTimeLabel(prevLabels => [...prevLabels, value.label]);
+                    }
+                    return { ...value, node: (<div>{value.label} ({res.data ? res.data : 0}/{inputValue.pgMaxIntervieweesPerUnit})</div>) };
+                });
+            });
+
+            Promise.all(newNodes).then(results => {
+                setInterviewTimeLabelNode(results);
+            });
+        }
+    }, [inputValue.registeredInterviewDate, interviewTimeLabel, inputValue.registeredInterviewTime]);
+
+    useEffect(() => {
+        const registeredInterviewDatetime = new Date(inputValue.registeredInterviewDate?.getTime());
+        if(inputValue.registeredInterviewTime) {
+            registeredInterviewDatetime?.setHours(inputValue?.registeredInterviewTime?.split(':')[0])
+            registeredInterviewDatetime?.setMinutes(inputValue?.registeredInterviewTime?.split(':')[1])
+        }
+        setInputValue({...inputValue, registeredInterviewDatetime: registeredInterviewDatetime})
+
+    }, [inputValue.registeredInterviewTime, inputValue.registeredInterviewDate]);
 
     const changeProfileImg = () => {
         document.getElementById("profile-img").click();
@@ -98,6 +135,12 @@ function UserProfile() {
     const userInfo = async () => {
         try {
             const response = await user.userProfileInfo();
+
+            // time 파싱하기...
+            const registeredInterviewDate = response.data.registeredInterviewDate;
+            const hour = registeredInterviewDate?.split('T')[1]?.split(':')[0];
+            const minute = registeredInterviewDate?.split('T')[1]?.split(':')[1];
+
             // 사용자 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
@@ -105,7 +148,9 @@ function UserProfile() {
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
                 pgRegStatus: response.data.pgRegStatus,
+                registeredInterviewDatetime: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : null,
                 registeredInterviewDate: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : new Date(),
+                registeredInterviewTime: response.data.registeredInterviewDate ? `${hour}:${minute}` : null,
                 interviewStatus: response.data.interviewStatus
             }));
         } catch (error) {
@@ -186,9 +231,15 @@ function UserProfile() {
 
     const handleBtnClick = (e) => {
         e.preventDefault()
-        user.registerInterview(inputValue.registeredInterviewDate)
+        user.registerInterview(inputValue.registeredInterviewDatetime)
             .then((response) => {
                 alert("신청이 완료 되었습니다. \n기업관리자 확인 후 확정됩니다.")
+
+                // 랜더링을 새로 하기위함
+                setInputValue(prev => ({
+                    ...prev,
+                    registeredInterviewDate: new Date(inputValue.registeredInterviewDate)
+                }));
             })
             .catch((error) => {
                 alert(error.response.data);
@@ -409,49 +460,29 @@ function UserProfile() {
                                             <p>{new Date(inputValue.registeredInterviewDate).toLocaleString()}</p>
                                             : <p>
                                                 <KorDatePicker
-                                                    defaultValue={inputValue.registeredInterviewDate ? new Date(inputValue.registeredInterviewDate) : new Date()}
+                                                    value={inputValue.registeredInterviewDate}
                                                     name="interviewDate"
                                                     format="yyyy-MM-dd"
                                                     shouldDisableDate={(allowedRange(Math.max(new Date(inputValue.pgInterviewValStartDate), new Date()), inputValue.pgInterviewValEndDate))}
                                                     onChange={value => {
-                                                        const updatedValue = new Date(inputValue.registeredInterviewDate.getTime());
-                                                        updatedValue.setFullYear(value.getFullYear())
-                                                        updatedValue.setMonth(value.getMonth())
-                                                        updatedValue.setDate(value.getDate())
-                                                        setInputValue({
-                                                            ...inputValue,
-                                                            registeredInterviewDate: updatedValue
-                                                        })
+                                                        setInputValue({...inputValue, registeredInterviewDate: value});
                                                     }}
                                                 />
                                                 <InputPicker
+                                                    key={inputValue.registeredInterviewTime + interviewDisableTimeLabel}
                                                     style={{width: '100px'}}
-                                                    defaultValue={() => {
-                                                        if (inputValue.registeredInterviewDate instanceof Date) {
-                                                            const hours = inputValue.registeredInterviewDate.getHours().toString().padStart(2, '0');
-                                                            const minutes = inputValue.registeredInterviewDate.getMinutes().toString().padStart(2, '0');
-                                                            return `${hours}:${minutes}`;
-                                                        }
-                                                        return null;
-                                                    }}
+                                                    value={inputValue.registeredInterviewTime}
                                                     onChange={value => {
-                                                        if (inputValue.registeredInterviewDate instanceof Date) {
-                                                            const updatedValue = new Date(inputValue.registeredInterviewDate.getTime()); // 기존 날짜를 복제
-                                                            updatedValue.setHours(parseInt(value.split(':')[0], 10));
-                                                            updatedValue.setMinutes(parseInt(value.split(':')[1], 10));
-                                                            setInputValue({
-                                                                ...inputValue,
-                                                                registeredInterviewDate: updatedValue
-                                                            });
-                                                        }
+                                                        setInputValue({...inputValue, registeredInterviewTime: value});
                                                     }}
                                                     data={interviewTimeLabel}
-                                                    renderMenuItem={(label, item) =>
-                                                        <div>{label} (1/{inputValue.pgMaxIntervieweesPerUnit})</div>
-                                                    }
-                                                    disabledItemValues={['06:00']}
+                                                    renderMenuItem={(label, item) => {
+                                                        const node = interviewTimeLabelNode.find(node => node.label === label);
+                                                        return node ? node.node : <div>{label}</div>;
+                                                    }}
+                                                    disabledItemValues={interviewDisableTimeLabel}
                                                 />
-                                                <Button type="button" onClick={handleBtnClick}>
+                                                <Button type="button" onClick={handleBtnClick} disabled={!inputValue.registeredInterviewTime}>
                                                     신청
                                                 </Button>
                                             </p>

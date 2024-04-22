@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -55,13 +57,27 @@ public class MyInfoController {
 
     @Secured("ROLE_USER")
     @PostMapping("/register-interview")
-    public void registerInterview(
+    public ResponseEntity<?> registerInterview(
             @RequestParam("registeredInterviewDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registeredInterviewDate,
-            @AuthenticationPrincipal CustomMember customMember)
-    {
-        log.info("면접시간 저장... : registeredInterviewDate = " + registeredInterviewDate);
-        Member user = customMember.getMember();
-        myinfoService.registerInterview(registeredInterviewDate.withNano(0).withSecond(0), user.getIdx(), user.getPgIdx());
+            @AuthenticationPrincipal CustomMember customMember) {
+        try {
+            log.info("면접시간 저장... : registeredInterviewDate = " + registeredInterviewDate);
+            Member user = customMember.getMember();
+            myinfoService.registerInterview(registeredInterviewDate.withNano(0).withSecond(0), user.getIdx(), user.getPgIdx());
+
+            return new ResponseEntity<>("면접 신청 성공", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Secured("ROLE_USER")
+    @GetMapping("/get-current-occupancy")
+    public ResponseEntity<?> getCurrentOccupancy(@AuthenticationPrincipal CustomMember customMember, @RequestParam("slotStartDatetime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime slotStartDatetime) {
+        log.info("슬롯 점유 상태 확인 : slotStartDatetime = {}", slotStartDatetime);
+
+        return new ResponseEntity<>(myinfoService.getCurrOccup(slotStartDatetime.withNano(0).withSecond(0), customMember.getMember().getPgIdx()), HttpStatus.OK);
     }
 
 }

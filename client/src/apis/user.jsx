@@ -34,3 +34,8 @@ export const registerInterview = (value) => {
 export const userProfileInfo = () => {
     return api.get('/api/user/user-profile-info')
 }
+
+export const getCurrentOccupancy = (slotStartDatetime) => {
+    const time = slotStartDatetime.setSeconds(0, 0)
+    return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
+}

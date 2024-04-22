@@ -45,11 +45,9 @@ public class MyInfoService {
 
     @Transactional
     public void registerInterview(LocalDateTime registeredInterviewDate, Long memIdx, Long pgIdx) {
-        // 회원 인터뷰 날짜 업데이트
-        log.info("registered_interview_date 업데이트...");
+        log.info("회원 면접 날짜 업데이트...");
         memberMapper.registerInterview(registeredInterviewDate, memIdx);
 
-        // 슬롯과 프로그램 조회
         log.info("슬롯, 프로그램 조회...");
         InterviewSlot existingSlot = interviewSlotMapper.selectSlotByStartTime(registeredInterviewDate);
         Program program = programMapper.selectByPgIdx(pgIdx);
@@ -84,29 +82,33 @@ public class MyInfoService {
                     .slotIdx(existingSlot.getSlotIdx())
                     .build());
         } else {
-            log.info("학생 스케줄이 이미 존재하여 변경합니다...");
+            log.info("학생 스케줄이 이미 존재하여 변경합니다 : 기존 슬롯 - {}, 변경 슬롯 - {}", existingSchedule.getSlotIdx(), existingSlot.getSlotIdx());
             interviewScheduleMapper.updateSlot(existingSchedule.getScheduleIdx(), existingSlot.getSlotIdx());
+
+            log.info("기존 슬롯 업데이트...");
+            updateCurrentOccupancy(existingSchedule.getSlotIdx());
         }
 
-        // 현재 점유 상태 업데이트
-        log.info("현재 점유자 수 업데이트...");
-        Integer currentOccupancy = updateCurrentOccupancy(existingSlot.getSlotIdx());
-
-        if(currentOccupancy.equals(0)) {
-            log.info("현재 점유자가 존재하지 않아 슬롯 삭제...");
-            interviewSlotMapper.deleteSlot(existingSlot.getSlotIdx());
-        }
+        log.info("현재 슬롯 업데이트...");
+        updateCurrentOccupancy(existingSlot.getSlotIdx());
 
         log.info("면접 신청 완료!");
     }
 
+    @Transactional
     public Integer updateCurrentOccupancy(Long slotIdx) {
         Integer currentOccupancy = interviewScheduleMapper.getCntBySlotIdx(slotIdx);
         interviewSlotMapper.updateCurrentOccupancy(slotIdx, currentOccupancy);
+
         return currentOccupancy;
     }
 
     public List<MemberCoverLetter> coverLetterList(long idx, Long pgIdx) {
         return memberCoverLetterMapper.coverLetterInfo(idx,pgIdx);
     }
+
+    public Integer getCurrOccup(LocalDateTime slotStartDatetime, Long slotPgIdx) {
+        return interviewSlotMapper.selectCurrOccupByStartDateAndPgIdx(slotStartDatetime, slotPgIdx);
+    }
+
 }
