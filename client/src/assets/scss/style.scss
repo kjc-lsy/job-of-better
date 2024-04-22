@@ -1440,6 +1440,86 @@ td {
   margin: 50px 0 100px;
 }
 
+/*************** interview manager ****************/
+
+.interview-manager {
+  .btn-group {
+    .btn-simple {
+      padding: 4px 25px;
+      background: transparent;
+
+      &.approved {
+        background: transparent;
+        border: 1px solid rgba(54, 162, 235, 1);
+        color: rgba(54, 162, 235, 1);
+
+        span {
+          color: rgba(54, 162, 235, 1);
+        }
+
+        &:hover, &.active {
+          border: 1px solid rgba(54, 162, 235, 1);
+          background: rgba(54, 162, 235, 1) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+
+      &.apply {
+        border: 1px solid rgba(75, 192, 192, 1);
+        color: rgba(75, 192, 192, 1);
+
+        span {
+          color: rgba(75, 192, 192, 1);
+        }
+
+        &:hover, &.active {
+          background: rgba(75, 192, 192, 1) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+      &.duplicate {
+        border: 1px solid rgba(255, 99, 132, 1);
+        color:rgba(255, 99, 132, 1);
+
+        span {
+          color: rgba(255, 99, 132, 1);
+        }
+
+        &:hover, &.active {
+          background: rgba(255, 99, 132, 1) !important;
+          color: #fff !important;
+
+          span {
+            color: #fff
+          }
+        }
+      }
+    }
+  }
+
+
+  .time_list {
+    display: flex;
+    align-items: center;
+
+    .date {
+      width: 200px;
+      font-size: 1.2rem
+    }
+
+    .time {
+    }
+  }
+}
+
 /*************** fixed plugin ****************/
 
 .changeThemeWrap {

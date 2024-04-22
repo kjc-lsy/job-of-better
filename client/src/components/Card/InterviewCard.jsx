@@ -5,7 +5,7 @@ import {List} from "rsuite";
 const InterviewCard = () => {
 
     return (
-        <Card className="interview-card home_time">
+        <Card className="interview-card">
             <CardHeader>
                 <Row>
                     <Col className="text-left" sm="6">

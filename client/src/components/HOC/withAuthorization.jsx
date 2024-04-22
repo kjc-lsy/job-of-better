@@ -15,6 +15,7 @@ function withAuthorization(WrappedComponent, requiredRoles) {
                     navigate('/auth/login');
                 }
             }
+
         }, [isLogin]);
 
         return <WrappedComponent {...props} />;

@@ -1,12 +1,12 @@
 import React from 'react';
 import InterviewCard from "../../components/Card/InterviewCard";
 
-const InterviewManage = () => {
+const InterviewManager = () => {
     return (
-        <div className="content interview-manage">
+        <div className="content interview-manager">
             <InterviewCard/>
         </div>
     );
 };
 
-export default InterviewManage;
+export default InterviewManager;

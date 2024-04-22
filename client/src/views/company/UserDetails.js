@@ -7,7 +7,6 @@ import maleImg from "../../assets/img/userImg_male.png";
 import {getMemberListInfoByIdx} from "../../apis/company";
 import {format} from "date-fns";
 
-
 function UserDetails() {
     const navigate = useNavigate();
     const imgRef = useRef();

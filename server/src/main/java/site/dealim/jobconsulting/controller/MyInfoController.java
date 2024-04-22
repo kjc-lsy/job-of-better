@@ -61,7 +61,7 @@ public class MyInfoController {
             @RequestParam("registeredInterviewDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime registeredInterviewDate,
             @AuthenticationPrincipal CustomMember customMember) {
         try {
-            log.info("면접시간 저장... : registeredInterviewDate = " + registeredInterviewDate);
+            log.info("면접 신청 : registeredInterviewDate - " + registeredInterviewDate);
             Member user = customMember.getMember();
             myinfoService.registerInterview(registeredInterviewDate.withNano(0).withSecond(0), user.getIdx(), user.getPgIdx());
 
