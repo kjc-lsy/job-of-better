@@ -44,7 +44,7 @@ const InterviewCard = () => {
                                 className="btn-simple btn btn-info btn-sm duplicate"
                             >
                                             <span className="">
-                                              중복
+                                              보류
                                             </span>
                                 <span className="d-block d-sm-none">
                                               <i className="tim-icons icon-single-02"/>
@@ -57,38 +57,89 @@ const InterviewCard = () => {
             <CardBody>
                 <div className="chart-area">
                     <List>
-                        <List.Item className="time_list">
-                            <div className="date">04/15</div>
+                        <List.Item className="date_list">
+                            <div className="date"> </div>
                             <div className="time">
-                                <ButtonGroup
-                                    className="btn-group-toggle float-right"
-                                    data-toggle="buttons"
-                                >
-                                    <Button
-                                        tag="label"
-                                        className="btn-simple btn btn-info btn-sm approved"
-                                    >
-                                        김민지 10:00
-                                    </Button>
-                                    <Button
-                                        tag="label"
-                                        className="btn-simple btn btn-info btn-sm apply"
-                                    >
-                                        김민지 11:00
-                                    </Button>
-                                    <Button
-                                        tag="label"
-                                        className="btn-simple btn btn-info btn-sm duplicate"
-                                    >
-                                        김민지 12:00
-                                    </Button>
-                                    <Button
-                                        tag="label"
-                                        className="btn-simple btn btn-info btn-sm duplicate"
-                                    >
-                                        김민지 12:00
-                                    </Button>
-                                </ButtonGroup>
+                                <ul>
+                                    <li>04/15</li>
+                                    <li>04/16</li>
+                                    <li>04/17</li>
+                                    <li>04/18</li>
+                                    <li>04/19</li>
+                                </ul>
+                            </div>
+                        </List.Item>
+                        <List.Item className="time_list">
+                            <div className="date">09 : 00</div>
+                            <div className="time">
+                                <ul>
+                                    <li>
+                                        <ButtonGroup
+                                            className="btn-group-toggle"
+                                            data-toggle="buttons"
+                                        >
+                                            <Button
+                                                tag="label"
+                                                className="btn-simple btn btn-info btn-sm approved"
+                                            >
+                                                김민지
+                                            </Button>
+                                            <Button
+                                                tag="label"
+                                                className="btn-simple btn btn-info btn-sm apply"
+                                            >
+                                                김민지
+                                            </Button>
+                                        </ButtonGroup>
+                                    </li>
+                                    <li></li>
+                                    <li></li>
+                                    <li>
+                                        <ButtonGroup
+                                            className="btn-group-toggle"
+                                            data-toggle="buttons"
+                                        >
+                                            <Button
+                                                tag="label"
+                                                className="btn-simple btn btn-info btn-sm duplicate"
+                                            >
+                                                김민지
+                                            </Button>
+                                            <Button
+                                                tag="label"
+                                                className="btn-simple btn btn-info btn-sm duplicate"
+                                            >
+                                                김민지
+                                            </Button>
+                                        </ButtonGroup>
+                                    </li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                        </List.Item>
+                        <List.Item className="time_list">
+                            <div className="date">10 : 00</div>
+                            <div className="time">
+                                <ul>
+                                    <li>
+                                    </li>
+                                    <li></li>
+                                    <li>
+                                        <ButtonGroup
+                                            className="btn-group-toggle"
+                                            data-toggle="buttons"
+                                        >
+                                            <Button
+                                                tag="label"
+                                                className="btn-simple btn btn-info btn-sm duplicate"
+                                            >
+                                                김민지
+                                            </Button>
+                                        </ButtonGroup>
+                                    </li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
                             </div>
                         </List.Item>
                     </List>

@@ -859,129 +859,6 @@ td {
 
 /****************************************** company ******************************************/
 
-/* home */
-.home-wrapper {
-  .card .card-header .card-title {
-    margin-bottom: 0;
-  }
-  .card-chart.card {
-    margin-bottom: 0;
-  }
-}
-.card:not(.card-white) .card-header {
-  padding: 25px 15px 0;
-}
-
-.home_top {
-  .card:not(.card-white) .card-header {
-    .card-title {
-      margin-bottom: 0;
-    }
-  }
-
-  .card-body {
-    text-align: right;
-    color: #9A9A9A;
-    margin-bottom: 5px;
-    font-weight: 300;
-    padding-top: 0;
-    font-size: 0.7500000025rem;
-
-    span {
-      font-size: 1.687499975rem;
-      color: $font-color;
-      display: inline-block;
-      margin-right: 5px;
-    }
-  }
-
-  .col-lg-3:nth-of-type(4) {
-    .card-body span {
-      color: $main-color;
-    }
-  }
-}
-.card-chart .chart-area {
-  height: 255px
-}
-.home_time {
-  .btn-group {
-    .btn-simple {
-      padding: 4px 25px;
-      background: transparent;
-
-      &.approved {
-        background: transparent;
-        border: 1px solid rgba(54, 162, 235, 1);
-        color: rgba(54, 162, 235, 1);
-
-        span {
-          color: rgba(54, 162, 235, 1);
-        }
-
-        &:hover, &.active {
-          border: 1px solid rgba(54, 162, 235, 1);
-          background: rgba(54, 162, 235, 1) !important;
-          color: #fff !important;
-
-          span {
-            color: #fff
-          }
-        }
-      }
-
-      &.apply {
-        border: 1px solid rgba(75, 192, 192, 1);
-        color: rgba(75, 192, 192, 1);
-
-        span {
-          color: rgba(75, 192, 192, 1);
-        }
-
-        &:hover, &.active {
-          background: rgba(75, 192, 192, 1) !important;
-          color: #fff !important;
-
-          span {
-            color: #fff
-          }
-        }
-      }
-      &.duplicate {
-        border: 1px solid rgba(255, 99, 132, 1);
-        color:rgba(255, 99, 132, 1);
-
-        span {
-          color: rgba(255, 99, 132, 1);
-        }
-
-        &:hover, &.active {
-          background: rgba(255, 99, 132, 1) !important;
-          color: #fff !important;
-
-          span {
-            color: #fff
-          }
-        }
-      }
-    }
-  }
-
-
-  .time_list {
-    display: flex;
-    align-items: center;
-
-    .date {
-      width: 200px;
-      font-size: 1.2rem
-    }
-
-    .time {
-    }
-  }
-}
-
 
 /* program */
 
@@ -1504,18 +1381,53 @@ td {
       }
     }
   }
+  .interview-card {
+    min-height: calc(100vh - 200px);
+    .rs-list {
+      -webkit-box-shadow: 0 1px 0 #e5e5ea;
+      -webkit-box-shadow: 0 1px 0 var(--rs-list-border);
+      box-shadow:  0 1px 0 #e5e5ea;
+      box-shadow: 0 1px 0 var(--rs-list-border);
+    }
+  }
 
-
-  .time_list {
+  .time_list , .date_list {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 
     .date {
       width: 200px;
-      font-size: 1.2rem
+      font-size: 1.2rem;
+      text-align: center;
     }
 
     .time {
+      flex:1 ;
+      .btn-group {
+        flex-direction: column;
+        gap: 5px;
+        .btn {
+          border-radius : 0.2857rem;
+          font-size:14px;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .date_list {
+    border-top: 0;
+    box-shadow: none;
+    .time {
+      font-size:1.2rem
+    }
+  }
+  ul {
+    display: flex;
+    margin-bottom: 0;
+    li  {
+      width: 20%;
+      text-align: center;
+      margin-bottom: 0;
     }
   }
 }
