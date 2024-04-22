@@ -34,3 +34,4 @@ export const registerInterview = (value) => {
 export const userProfileInfo = () => {
     return api.get('/api/user/user-profile-info')
 }
+

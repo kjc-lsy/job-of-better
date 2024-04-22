@@ -1,5 +1,25 @@
 const Chart = require("chart.js");
 
+const currentDate = new Date();
+const oneDay = 24 * 60 * 60 * 1000;
+const todayBefore= new Date(currentDate.getTime());
+const oneDayBefore= new Date(currentDate.getTime() - oneDay);
+const twoDayBefore= new Date(currentDate.getTime() - oneDay * 2);
+const threeDayBefore= new Date(currentDate.getTime() - oneDay * 3);
+const fourDayBefore= new Date(currentDate.getTime() - oneDay * 4);
+const fiveDayBefore= new Date(currentDate.getTime() - oneDay * 5);
+const sixDayBefore = new Date(currentDate.getTime() - oneDay * 6);
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  //${year}-
+  return `${month}-${day}`;
+}
+
+
+
 // // // Chart variables
 
 // chartExample1 and chartExample2 options
@@ -189,6 +209,7 @@ let chartExample1 = {
 };
 
 let chartExample2 = {
+
   data: (canvas) => {
     let ctx = canvas.getContext("2d");
 
@@ -199,7 +220,7 @@ let chartExample2 = {
     gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
     return {
-      labels: ["JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+      labels: [formatDate(fourDayBefore), formatDate(threeDayBefore), formatDate(twoDayBefore), formatDate(oneDayBefore), formatDate(currentDate)],
       datasets: [
         {
           label: "Data",
@@ -216,7 +237,7 @@ let chartExample2 = {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [80, 100, 70, 80, 120, 80],
+          data: [0,0,0,0,0],
         },
       ],
     };
@@ -388,7 +409,7 @@ const pieChart = {
       datasets: [
         {
           label: '자기소개서',
-          data:[10,5,7],
+          data:[0,0,0],
           backgroundColor:[
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -438,5 +459,5 @@ module.exports = {
   chartExample2, // used inside src/views/DashBoard.js
   chartExample3, // used inside src/views/DashBoard.js
   chartExample4, // used inside src/views/DashBoard.js
-  pieChart,
+  //pieChart,
 };
