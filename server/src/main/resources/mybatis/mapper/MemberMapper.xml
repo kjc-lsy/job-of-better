@@ -20,7 +20,7 @@
         <result property="pgRegStatus" column="pg_reg_status"/>
         <result property="pgRegDate" column="pg_reg_date"/>
         <result property="resumeFile" column="resume_file"/>
-        <result property="desiredInterviewDate" column="desired_interview_date"/>
+        <result property="registeredInterviewDate" column="desired_interview_date"/>
         <result property="assignedInterviewDate" column="assigned_interview_date"/>
         <result property="interviewStatus" column="interview_status"/>
         <result property="coverLetterStatus" column="cover_letter_status"/>
@@ -136,7 +136,7 @@
         VALUES (
                    #{name}, #{username}, #{password}, #{email}, #{address}, #{zipCode}, #{birthDate}, #{gender},
                    #{phone}, #{comIdx}, #{pgIdx}, #{pgRegStatus}, #{pgRegDate}, #{resumeFile},
-                   #{desiredInterviewDate}, #{assignedInterviewDate}, #{interviewStatus},
+                   #{registeredInterviewDate}, #{assignedInterviewDate}, #{interviewStatus},
                    #{interviewComment}, #{coverLetterStatus}, #{resumeStatus}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
                )
     </insert>
@@ -177,7 +177,7 @@
             phone                   = #{phone},
             com_idx                 = #{comIdx},
             resume_file             = #{resumeFile},
-            desired_interview_date  = #{desiredInterviewDate},
+            desired_interview_date  = #{registeredInterviewDate},
             assigned_interview_date = #{assignedInterviewDate},
             interview_status       = #{interviewStatus},
             interview_comment       = #{interviewComment},
@@ -260,8 +260,8 @@
     <!-- mypg -->
     <update id="registerInterview" parameterType="map">
         UPDATE member
-        SET register_interview_date = #{desiredInterviewDate}
-        WHERE idx = #{idx}
+        SET registered_interview_date = #{registeredInterviewDate}
+        WHERE idx = #{memIdx}
     </update>
 
 </mapper>

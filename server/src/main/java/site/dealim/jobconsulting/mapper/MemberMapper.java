@@ -47,7 +47,7 @@ public interface MemberMapper {
 
     void updateCompanyIdx(@Param("comIdx")Long comIdx, @Param("memIdx") Long memIdx);
 
-    void registerInterview(@Param("desiredInterviewDate")String desiredInterviewDate,@Param("idx") long idx);
+    int registerInterview(@Param("registeredInterviewDate")LocalDateTime registeredInterviewDate,@Param("memIdx") long memIdx);
 
     int cancelRegister(Long memIdx);
 

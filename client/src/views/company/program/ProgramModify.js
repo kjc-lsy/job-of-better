@@ -13,7 +13,6 @@ const ProgramModify = () => {
     const {pgIdx} = useParams();
     const editorRef = useRef();
     const theme = useContext(ThemeContext);
-    const [title, setTitle] = useState('');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [fetchedProgram, setFetchedProgram] = useState({});

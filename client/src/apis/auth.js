@@ -23,6 +23,7 @@ export const logout = () => api.get('/api/logout')
 
 // 기업 가입
 export const companyJoin = (data) => api.post(`/api/auth/company-join`, {
+
     member:{
         username : data.username,
         password : data.password,

@@ -33,7 +33,7 @@ public class Member {
     private String coverLetterStatus;
     private String resumeStatus;
     private byte[] resumeFile;
-    private LocalDateTime desiredInterviewDate;
+    private LocalDateTime registeredInterviewDate;
     private LocalDateTime assignedInterviewDate;
     private String interviewComment;
     private LocalDateTime joinDate = LocalDateTime.now();

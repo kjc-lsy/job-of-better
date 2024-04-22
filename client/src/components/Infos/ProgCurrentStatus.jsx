@@ -34,9 +34,9 @@ const ProgCurrentStatus = ({program}) => {
     }, [program]);
 
     return (
-        <div className="curr-status">
+        <p className="curr-status">
             {status}
-        </div>
+        </p>
     );
 };
 

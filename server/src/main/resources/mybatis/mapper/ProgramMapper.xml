@@ -123,10 +123,11 @@
             <result property="pgInterviewValEndDate" column="pg_interview_val_end_date"/>
             <result property="pgInterviewValStartTime" column="pg_interview_val_start_time"/>
             <result property="pgInterviewValEndTime" column="pg_interview_val_end_time"/>
+            <result property="pgInterviewUnitTime" column="pg_interview_unit_time"/>
+            <result property="pgMaxIntervieweesPerUnit" column="pg_max_interviewees_per_unit"/>
             <result property="pgCreatedDate" column="pg_created_date"/>
             <result property="pgModifiedDate" column="pg_modified_date"/>
             <result property="pgIsWithdrawn" column="pg_is_withdrawn"/>
-            <!-- 나머지 Program 클래스의 모든 필드에 대한 매핑 -->
         </association>
         <!-- Company 객체에 대한 매핑 -->
         <association property="company" javaType="site.dealim.jobconsulting.domain.Company">
@@ -134,7 +135,6 @@
             <result property="comName" column="com_name"/>
             <result property="comAddress" column="com_address"/>
             <result property="comLogo" column="com_logo"/>
-            <!-- 필요한 필드들만 매핑 -->
         </association>
     </resultMap>
 

@@ -49,6 +49,10 @@ function MemberList() {
         }
     }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
 
+    useEffect(() => {
+        console.log(userList)
+    }, [userList]);
+
     const updatePage = () => {
         const abortController = new AbortController();
         setLoading(true);

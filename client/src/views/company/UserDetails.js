@@ -148,7 +148,7 @@ function UserDetails() {
                                     </div>
                                     <div>
                                         <label>희망 면접일</label>
-                                        <div className="form-control">{user?.desiredInterviewDate ? format(new Date(user.desiredInterviewDate), "yyyy-MM-dd HH:mm") : null}</div>
+                                        <div className="form-control">{user?.registeredInterviewDate ? format(new Date(user.registeredInterviewDate), "yyyy-MM-dd HH:mm") : null}</div>
                                     </div>
                                     <div>
                                         <label>확정 면접일</label>

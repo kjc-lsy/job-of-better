@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.dealim.jobconsulting.mapper.InterviewSlotMapper">
+
+    <!-- 슬롯 조회 -->
+    <select id="selectSlotByStartTime" resultType="InterviewSlot">
+        SELECT *
+        FROM interview_slot
+        WHERE slot_start_datetime = #{slotStartDatetime}
+    </select>
+
+    <select id="selectSlotById" parameterType="long" resultType="InterviewSlot">
+        SELECT * FROM interview_slot WHERE slot_idx = #{slotIdx}
+    </select>
+
+    <!-- 슬롯 삽입 -->
+    <insert id="insertSlot" parameterType="InterviewSlot" useGeneratedKeys="true" keyProperty="slotIdx">
+        INSERT INTO interview_slot (slot_pg_idx, slot_start_datetime, slot_end_datetime, slot_current_occupancy, slot_max_occupancy)
+        VALUES (#{slotPgIdx}, #{slotStartDatetime}, #{slotEndDatetime}, #{slotCurrentOccupancy}, #{slotMaxOccupancy})
+    </insert>
+
+    <!-- 슬롯 현재 인원 업데이트 -->
+    <update id="plusCurrOccupancy" parameterType="InterviewSlot">
+        UPDATE interview_slot
+        SET slot_current_occupancy = slot_current_occupancy + 1
+        WHERE slot_idx = #{slotIdx}
+    </update>
+
+    <!-- 현재 슬롯 점유 수 update-->
+    <update id="updateCurrentOccupancy" parameterType="Map">
+        UPDATE interview_slot
+        SET slot_current_occupancy = #{currentOccupancy}
+        WHERE slot_idx = #{slotIdx}
+    </update>
+
+    <!-- 슬롯 삭제 -->
+    <delete id="deleteSlot" parameterType="Long">
+        DELETE
+        FROM interview_slot
+        WHERE slot_idx = #{param}
+    </delete>
+
+</mapper>

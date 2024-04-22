@@ -12,21 +12,22 @@ export const pgInfo = () => {
 }
 
 
-export const userCoverLetterSave = (value,mclTitle) => {
+export const userCoverLetterSave = (value, mclTitle) => {
     //console.log(value);
     return api.post('/api/user/user-cover-letter-save', value.map(value => {
         return {
             mclIdx: value.id,
             mclCclIdx: value.cclIdx,
             mclAnswer: value.answer,
-            mclIsConfirm:value.type,
-            mclTitle:mclTitle,
+            mclIsConfirm: value.type,
+            mclTitle: mclTitle,
         }
     }))
 };
 
 export const registerInterview = (value) => {
-    return api.post(`/api/user/register-interview?desiredInterviewDate=${value}`)
+    const time = value.setSeconds(0, 0)
+    return api.post(`/api/user/register-interview?registeredInterviewDate=${new Date(time + 9 * 60 * 60 * 1000).toISOString()}`)
 }
 
 //사용자 정보
