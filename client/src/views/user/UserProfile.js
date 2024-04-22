@@ -8,7 +8,7 @@ import maleImg from "../../assets/img/userImg_male.png";
 import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleRight, faArrowCircleUp, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import KorDatePicker from "../../components/KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {Viewer} from "@toast-ui/react-editor";
@@ -78,7 +78,7 @@ function UserProfile() {
     useEffect(() => {
         const timeLabel = generateTimeLabel(convertTimeToMinutes(inputValue.pgInterviewValStartTime), convertTimeToMinutes(inputValue.pgInterviewValEndTime), parseInt(inputValue.pgInterviewUnitTime));
         setInterviewTimeLabel(timeLabel)
-    }, [inputValue.pgInterviewValStartTime,inputValue.pgInterviewValEndTime,inputValue.pgInterviewUnitTime]);
+    }, [inputValue.pgInterviewValStartTime, inputValue.pgInterviewValEndTime, inputValue.pgInterviewUnitTime]);
 
     useEffect(() => {
         if (inputValue.registeredInterviewDate) {
@@ -90,10 +90,13 @@ function UserProfile() {
                 searchedDatetime.setMinutes(parseInt(value.label.split(":")[1], 10));
 
                 return getCurrentOccupancy(searchedDatetime).then(res => {
-                    if(res.data === inputValue.pgMaxIntervieweesPerUnit) {
+                    if (res.data === inputValue.pgMaxIntervieweesPerUnit) {
                         setInterviewDisableTimeLabel(prevLabels => [...prevLabels, value.label]);
                     }
-                    return { ...value, node: (<div>{value.label} ({res.data ? res.data : 0}/{inputValue.pgMaxIntervieweesPerUnit})</div>) };
+                    return {...value,
+                        node: (
+                            <div>{value.label} ({res.data ? res.data : 0}/{inputValue.pgMaxIntervieweesPerUnit})</div>)
+                    };
                 });
             });
 
@@ -105,7 +108,7 @@ function UserProfile() {
 
     useEffect(() => {
         const registeredInterviewDatetime = new Date(inputValue.registeredInterviewDate?.getTime());
-        if(inputValue.registeredInterviewTime) {
+        if (inputValue.registeredInterviewTime) {
             registeredInterviewDatetime?.setHours(inputValue?.registeredInterviewTime?.split(':')[0])
             registeredInterviewDatetime?.setMinutes(inputValue?.registeredInterviewTime?.split(':')[1])
         }
@@ -118,7 +121,7 @@ function UserProfile() {
     };
 
     // 파일 변경 핸들러
-    const handleFileChange = async (e) => {
+    const handleImgFileChange = async (e) => {
         const reader = new FileReader();
         const file = e.target.files[0];
 
@@ -127,6 +130,20 @@ function UserProfile() {
             setInputValue({
                 ...inputValue,
                 profileImg: reader.result,
+            });
+        };
+    };
+
+    // 파일 변경 핸들러
+    const handleResumeFileChange = async (e) => {
+        const reader = new FileReader();
+        const file = e.target.files?.[0];
+
+        reader.readAsDataURL(file)
+        reader.onloadend = () => {
+            setInputValue({
+                ...inputValue,
+                resumeFile: reader.result,
             });
         };
     };
@@ -274,7 +291,7 @@ function UserProfile() {
                                 <div className="block block-two"/>
                                 <div className="block block-three"/>
                                 <div className="block block-four"/>
-                                <input type="file" id="profile-img" onChange={handleFileChange}/>
+                                <input type="file" id="profile-img" onChange={handleImgFileChange}/>
                                 <label htmlFor="profile-img" className="profile_img">
                                     <a href="#pablo" onClick={(e) => {
                                         e.preventDefault();
@@ -334,28 +351,35 @@ function UserProfile() {
                             <Table className="tablesorter">
                                 <thead className="text-primary">
                                 <tr>
-                                    <th>제목</th>
-                                    <th className="text-center">작업 상태</th>
-                                    <th className="text-center">날짜</th>
-                                    <th className="text-center">바로가기</th>
+                                    <th className="text-center">파일명</th>
+                                    <th className="text-center">등록일</th>
+                                    <th className="text-center">이력서 보기</th>
+                                    <th className="text-center">등록하기</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{inputValue.mclTitle}</td>
-                                    <td>{inputValue.mclDate ? new Date(inputValue?.mclDate)?.split("T")[0] : null}</td>
+                                    <td>
+                                        <a>
+                                            {inputValue.mclDate ? new Date(inputValue?.mclDate)?.split("T")[0] : null}
+                                        </a>
+                                    </td>
                                     <td className="text-center">
-                                        {inputValue.mclIsConfirm === "confirm" ? "완료" :
-                                            inputValue.mclIsConfirm === "denied" ? "거절" :
-                                                "보류"}
                                     </td>
                                     <td className="text-center">
                                         <a onClick={(e) => {
                                             e.preventDefault();
-                                            navigate("/user/resume")
+                                            alert("파일등록")
                                         }}>
-                                            <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
+                                            <FontAwesomeIcon icon={faMagnifyingGlass}/>
                                         </a>
+                                    </td>
+                                    <td className="text-center">
+                                        <input type="file" accept=".pdf" id="resume-upload"
+                                               onChange={handleResumeFileChange} style={{display: "none"}}/>
+                                        <label htmlFor={"resume-upload"} className={"justify-content-center"}>
+                                            <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
+                                        </label>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -482,7 +506,8 @@ function UserProfile() {
                                                     }}
                                                     disabledItemValues={interviewDisableTimeLabel}
                                                 />
-                                                <Button type="button" onClick={handleBtnClick} disabled={!inputValue.registeredInterviewTime}>
+                                                <Button type="button" onClick={handleBtnClick}
+                                                        disabled={!inputValue.registeredInterviewTime}>
                                                     신청
                                                 </Button>
                                             </p>
