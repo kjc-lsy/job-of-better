@@ -10,7 +10,6 @@ import React from "react";
 import RegisterChoice from "./views/auth/RegisterChoice";
 import CompanyRegister from "./views/auth/RegisterCompany";
 import CoverLetter from "./views/user/CoverLetter";
-import Resume from "./views/user/Resume";
 import UserProgram from "./views/user/program/Program";
 import CompanyProgram from "./views/company/program/Program";
 import Icons from "./views/common/Icons";
@@ -155,14 +154,6 @@ var routes = [
     cate: "myJobInfo",
     icon: "tim-icons icon-single-copy-04",
     component: <CoverLetter />,
-    layout: "/user",
-  },
-  {
-    path: "/resume",
-    name: "이력서",
-    cate: "myJobInfo",
-    icon: "tim-icons icon-single-copy-04",
-    component: <Resume />,
     layout: "/user",
   },
   {
