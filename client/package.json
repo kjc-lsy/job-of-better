@@ -24,8 +24,8 @@
     "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_ENV=development react-scripts start",
+    "build": "cross-env NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.34",
+    "cross-env": "^7.0.3",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9"
   },
