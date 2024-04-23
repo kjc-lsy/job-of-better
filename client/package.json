@@ -52,6 +52,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@radix-ui/themes": "^3.0.2",
     "@toast-ui/react-editor": "^3.2.3",
+    "aws-sdk": "^2.1604.0",
     "axios": "^1.6.5",
     "bootstrap": "4.6.2",
     "chart.js": "^2.9.4",
