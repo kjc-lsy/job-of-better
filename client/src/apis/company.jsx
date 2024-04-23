@@ -49,3 +49,5 @@ export const getMemberListInfoByIdx = (idx) => api.get(`/api/company/get-user-in
 export const getCountApi = (currProg) => {
     return api.get("/api/company/get-user-count/"+currProg)
 }
+
+export const getOccupiedSlot = (pgIdx) => api.get("/api/company/interview-manager/get-occupied-slot?pgIdx="+pgIdx)

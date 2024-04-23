@@ -47,6 +47,7 @@ public class MyInfoService {
     public void registerInterview(LocalDateTime registeredInterviewDate, Long memIdx, Long pgIdx) {
         log.info("회원 면접 날짜 업데이트...");
         memberMapper.registerInterview(registeredInterviewDate, memIdx);
+        memberMapper.updateInterviewStatus("Registered", memIdx);
 
         log.info("슬롯, 프로그램 조회...");
         InterviewSlot existingSlot = interviewSlotMapper.selectSlotByStartTime(registeredInterviewDate);

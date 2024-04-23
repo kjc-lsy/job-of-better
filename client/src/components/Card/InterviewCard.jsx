@@ -1,8 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, ButtonGroup, Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
 import {List} from "rsuite";
+import {getOccupiedSlot} from "../../apis/company";
 
 const InterviewCard = () => {
+    const [occupiedSlot, setOccupiedSlot] = React.useState(null);
+
+    useEffect(() => {
+        getOccupiedSlot(localStorage.getItem("program")).then((res) => {
+            setOccupiedSlot(res.data);
+        })
+    }, []);
+
+    useEffect(() => {
+        console.log(occupiedSlot)
+    }, [occupiedSlot]);
 
     return (
         <Card className="interview-card">
@@ -44,7 +56,7 @@ const InterviewCard = () => {
                                 className="btn-simple btn btn-info btn-sm duplicate"
                             >
                                             <span className="">
-                                              보류
+                                              거절
                                             </span>
                                 <span className="d-block d-sm-none">
                                               <i className="tim-icons icon-single-02"/>
@@ -58,7 +70,7 @@ const InterviewCard = () => {
                 <div className="chart-area">
                     <List>
                         <List.Item className="date_list">
-                            <div className="date"> </div>
+                            <div className="date"></div>
                             <div className="time">
                                 <ul>
                                     <li>04/15</li>

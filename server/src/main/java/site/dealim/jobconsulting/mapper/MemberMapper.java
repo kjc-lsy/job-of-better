@@ -68,5 +68,5 @@ public interface MemberMapper {
 
     List<Map<String, Object>> getRegUserCount(Long pgIdx);
 
-
+    Integer updateInterviewStatus(@Param("interviewStatus")String interviewStatus, @Param("memIdx")Long memIdx);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GptResponse {
+
     private List<Choice> choices;
 
     @Data

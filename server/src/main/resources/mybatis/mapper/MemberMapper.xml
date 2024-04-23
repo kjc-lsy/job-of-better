@@ -289,21 +289,20 @@
             (SELECT COUNT(*) FROM member m WHERE pg_idx = #{param} AND resume_status = 'Complete') AS resumeCompleteCount
     </select>
 
-
     <!-- company home에서 일별 신청자 수 -->
     <select id="getRegUserCount" resultType="map">
         SELECT
             COUNT(*) AS count,
         SUBSTRING(pg_reg_date, 1, 10) AS regDate
         FROM member
-        WHERE pg_idx = #{par am} AND pg_reg_date is not null
+        WHERE pg_idx = #{param} AND pg_reg_date is not null
         GROUP BY SUBSTRING(pg_reg_date,1,10)
         ORDER BY regDate DESC
     </select>
 
-
-
-
-
-
+    <update id="updateInterviewStatus" parameterType="Map">
+        UPDATE member
+        SET interview_status = #{interviewStatus}
+        WHERE idx=#{memIdx}
+    </update>
 </mapper>
