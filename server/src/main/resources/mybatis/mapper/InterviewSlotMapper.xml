@@ -51,7 +51,7 @@
 
     <!-- 현재 점유중인 학생수, 프로그램 기준으로 슬롯 조회 -->
     <select id="selectOccupiedSlotByPgIdx" parameterType="Long" resultType="InterviewManagerDto">
-        SELECT sl.slot_idx, p.pg_idx, sc.schedule_idx, m.idx, sl.slot_start_datetime, sl.slot_end_datetime, sl.slot_is_available, p.pg_interview_unit_time, p.pg_max_interviewees_per_unit, p.pg_interview_val_start_date, p.pg_interview_val_end_date, p.pg_interview_val_start_time, p.pg_interview_val_end_time, m.name, m.interview_status
+        SELECT sl.slot_idx, p.pg_idx, sc.schedule_idx, m.idx, sl.slot_start_datetime, sl.slot_end_datetime, sl.slot_is_available, p.pg_interview_unit_time, p.pg_max_interviewees_per_unit, p.pg_interview_val_start_date, p.pg_interview_val_end_date, p.pg_interview_val_start_time, p.pg_interview_val_end_time, m.name, m.interview_status, m.phone
         FROM interview_slot sl
                  JOIN interview_schedule sc ON sl.slot_idx = sc.slot_idx
                  JOIN program p ON p.pg_idx = sl.slot_pg_idx

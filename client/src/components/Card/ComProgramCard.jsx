@@ -71,11 +71,11 @@ const ComProgramCard = ({program, loadPrograms}) => {
                 <Row>
                     <Col md="6">
                         <label>신청기간</label>
-                        <div className="form-control"><span>2023. 12. 01</span> ~ <span>2023. 12. 01</span></div>
+                        <div className="form-control"><span>{program.pgRegValStartDate}</span> ~ <span>{program.pgRegValEndDate}</span></div>
                     </Col>
                     <Col md="6">
                         <label>교육기간</label>
-                        <div className="form-control"><span>2023. 12. 01</span> ~ <span>2023. 12. 01</span></div>
+                        <div className="form-control"><span>{program.pgEduStartDate}</span> ~ <span>{program.pgEduEndDate}</span></div>
                     </Col>
                 </Row>
                 <Row>

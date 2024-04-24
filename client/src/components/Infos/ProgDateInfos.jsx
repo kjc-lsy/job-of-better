@@ -70,7 +70,7 @@ const ProgDateInfos = ({program}) => {
                     </tr>
                     </tbody>
                 </Table>
-                <label>면접 기간</label>
+                <label>면접 정보</label>
                 <Table>
                     <tbody>
                     <tr>
@@ -105,6 +105,25 @@ const ProgDateInfos = ({program}) => {
                                     <div className="">
                                         <label htmlFor="">종료시간</label>
                                         <h4>{program?.pgInterviewValEndTime?.substring(0,5) || "종료 시간이 설정되지 않았습니다"}</h4>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>면접 상세</th>
+                        <td>
+                            <Row>
+                                <Col>
+                                    <div className="">
+                                        <label htmlFor="">면접당 최대 인원</label>
+                                        <h4>{program?.pgMaxIntervieweesPerUnit || "최대 인원이 설정되지 않았습니다"}</h4>
+                                    </div>
+                                </Col>
+                                <Col>
+                                    <div className="">
+                                        <label htmlFor="">면접 단위 시간</label>
+                                        <h4>{program?.pgInterviewUnitTime + "분" || "면접 단위 시간이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>

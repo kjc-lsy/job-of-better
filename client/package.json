@@ -1,7 +1,7 @@
 {
   "name": "JobOfBetter-react",
   "version": "1.2.4",
-  "description": "React version of Argon Dashboard by Creative Tim",
+  "description": "React version of JobOfBetter",
   "main": "index.js",
   "private": true,
   "repository": {

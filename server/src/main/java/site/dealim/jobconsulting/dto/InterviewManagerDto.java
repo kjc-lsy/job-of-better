@@ -11,6 +11,7 @@ public class InterviewManagerDto {
     private Long pgIdx;
     private Long scheduleIdx;
     private Long idx;
+    private String phone;
     private LocalDateTime slotStartDatetime;
     private LocalDateTime slotEndDatetime;
     private int slotCurrentOccupancy;
