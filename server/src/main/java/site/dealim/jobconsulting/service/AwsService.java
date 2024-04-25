@@ -56,16 +56,23 @@ private final AmazonS3 amazonS3;
         log.info("AWS file upload start -idx,cate,folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 
-        multipartFiles.forEach(file ->
-            fileList.add(fileBuilder(folder , file).builder()
+        multipartFiles.forEach(file -> {
+            File fileDto = fileBuilder(folder , file);
+            fileList.add(fileDto.builder()
+                    .originalFileName(fileDto.getOriginalFileName())
+                    .uploadFileName(fileDto.getUploadFileName())
+                    .uploadFileUrl(fileDto.getUploadFileUrl())
+                    .folderName(folder)
                     .relatedIdx(idx)
                     .cate(cate)
-                    .build())
-        );
+                    .build());
+            //System.out.println("fileList = " + fileBuilder(folder, file));
+        });
+        //System.out.println("fileList = " + fileList);
         return fileList;
     }
 
-    //@Transactional
+    @Transactional
     public File fileBuilder(String folder,MultipartFile file) {
         log.info("aws file builder");
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가

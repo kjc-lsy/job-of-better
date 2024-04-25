@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import * as user from '../../apis/user';
-import {getCurrentOccupancy} from '../../apis/user';
+import {getCurrentOccupancy, setProfileImg} from '../../apis/user';
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 
@@ -14,11 +14,13 @@ import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {Viewer} from "@toast-ui/react-editor";
 import ProgCurrentStatus from "../../components/Infos/ProgCurrentStatus";
 import {InputPicker} from "rsuite";
+import {useLoading} from "../../contexts/LoadingProvider";
 
 function UserProfile() {
 
     const navigate = useNavigate();
     const imgRef = useRef();
+    const {loading, setLoading} = useLoading(false);
     const [interviewTimeLabel, setInterviewTimeLabel] = React.useState([]);
     const [interviewDisableTimeLabel, setInterviewDisableTimeLabel] = React.useState([]);
     const [interviewTimeLabelNode, setInterviewTimeLabelNode] = React.useState([]);
@@ -122,16 +124,34 @@ function UserProfile() {
 
     // 파일 변경 핸들러
     const handleImgFileChange = async (e) => {
-        const reader = new FileReader();
+        setLoading(true);
+        //const reader = new FileReader();
         const file = e.target.files[0];
 
-        reader.readAsDataURL(file);
+        try {
+            const response = await setProfileImg(file);
+            setInputValue({
+                ...inputValue,
+                profileImg: response.data
+            });
+            console.log(response.data);
+        }
+        catch(error) {
+            console.error(error.response.data);
+        }
+        finally {
+            setLoading(false);
+        }
+
+
+        /*reader.readAsDataURL(file);
         reader.onloadend = () => {
             setInputValue({
                 ...inputValue,
                 profileImg: reader.result,
             });
-        };
+        };*/
+
     };
 
     // 파일 변경 핸들러
@@ -280,6 +300,7 @@ function UserProfile() {
 
     return (
         <div className="content">
+            {loading ? null :
             <Row>
                 <Col md="4">
                     <Card className="card-user">
@@ -290,7 +311,7 @@ function UserProfile() {
                                 <div className="block block-two"/>
                                 <div className="block block-three"/>
                                 <div className="block block-four"/>
-                                <input type="file" id="profile-img" onChange={handleImgFileChange}/>
+                                <input type="file" id="profile-img" accept="image/*" onChange={handleImgFileChange}/>
                                 <label htmlFor="profile-img" className="profile_img">
                                     <a href="#pablo" onClick={(e) => {
                                         e.preventDefault();
@@ -611,6 +632,7 @@ function UserProfile() {
                 </Col>
 
             </Row>
+            }
         </div>
     );
 }
