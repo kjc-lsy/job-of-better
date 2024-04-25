@@ -3,15 +3,19 @@ import {Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, CardTitle, 
 import {Dropdown, List, Popover, Whisper} from "rsuite";
 import {getOccupiedSlot, updateInterviewStatus} from "../../apis/company";
 import {useCurrProg} from "../../contexts/CurrProgProvider";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleInfo, faPhone} from "@fortawesome/free-solid-svg-icons";
 
 const InterviewCard = () => {
     const [occupiedSlot, setOccupiedSlot] = useState(null);
     const [times, setTimes] = useState(null);
     const [days, setDays] = useState(null);
     const [reservations, setReservations] = useState(null);
-    const {currProg, setCurrProg} = useCurrProg();
+    const {currProg} = useCurrProg();
 
     useEffect(() => {
+        initializeStates()
+
         getOccupiedSlot(currProg).then((res) => {
             const newReservations = res.data.reduce((acc, {slotStartDatetime, name, idx, interviewStatus, phone}) => {
                 const day = slotStartDatetime?.split("T")[0];
@@ -35,12 +39,19 @@ const InterviewCard = () => {
     }, [currProg]);
 
     useEffect(() => {
-        if (occupiedSlot) {
-            const slot = occupiedSlot[0];
+        if (occupiedSlot && occupiedSlot.length > 0) {
+            const slot = occupiedSlot?.[0];
             setTimes(generateTimeList(slot?.pgInterviewValStartTime, slot?.pgInterviewValEndTime, slot?.pgInterviewUnitTime));
             setDays(getDatesBetween(new Date(slot?.pgInterviewValStartDate), new Date(slot?.pgInterviewValEndDate)));
         }
     }, [occupiedSlot]);
+
+    function initializeStates() {
+        setTimes(null);
+        setDays(null);
+        setReservations(null);
+        setOccupiedSlot(null);
+    }
 
     function generateTimeList(startTime, endTime, intervalMinutes) {
         const times = [];
@@ -108,10 +119,6 @@ const InterviewCard = () => {
         return (
             <Popover ref={ref} className={className} style={{left, top}} full>
                 <Dropdown.Menu onSelect={handleSelect}>
-                    {/*<Dropdown.Menu title="New File">*/}
-                    {/*    <Dropdown.Item eventKey={1}>New File</Dropdown.Item>*/}
-                    {/*    <Dropdown.Item eventKey={2}>New File with Current Profile</Dropdown.Item>*/}
-                    {/*</Dropdown.Menu>*/}
                     <Dropdown.Item eventKey={1} style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
                     <Dropdown.Item eventKey={2} style={{color: "rgba(75, 192, 192, 1)"}}>신청</Dropdown.Item>
                     <Dropdown.Item eventKey={3} style={{color: "rgba(255, 99, 132, 1)"}}>거절</Dropdown.Item>
@@ -214,6 +221,11 @@ const InterviewCard = () => {
                                                                     className={"btn-simple btn btn-info btn-sm " + interviewStatus.toLowerCase()}
                                                                 >
                                                                     {name}
+                                                                    <Whisper speaker={<Popover><FontAwesomeIcon
+                                                                        icon={faPhone}/> : {phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
+                                                                    </Popover>}>
+                                                                        <FontAwesomeIcon icon={faCircleInfo}/>
+                                                                    </Whisper>
                                                                 </Button>
                                                             </Whisper>
                                                         </div>
@@ -229,7 +241,7 @@ const InterviewCard = () => {
                 </div>
             </CardBody>
             <CardFooter>
-                시간당 면접자 수 : {occupiedSlot?.[0]?.pgMaxIntervieweesPerUnit}
+                시간당 최대 면접자 수 : {occupiedSlot?.[0]?.pgMaxIntervieweesPerUnit}
             </CardFooter>
         </Card>
     );

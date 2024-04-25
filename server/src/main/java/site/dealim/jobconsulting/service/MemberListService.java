@@ -11,7 +11,6 @@ import site.dealim.jobconsulting.dto.MemberListDto;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,10 +62,6 @@ public class MemberListService {
     }
 
     public Integer updateRegStatus(Long memIdx, String status) {
-        if(status.equals("Approved")) {
-            memberMapper.updatePgRegDate(LocalDateTime.now(), memIdx);
-        }
-
         return memberMapper.updatePgRegStatus(status, memIdx);
     }
 

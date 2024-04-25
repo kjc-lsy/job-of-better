@@ -9,6 +9,7 @@ import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ public class UserProgramService {
     public int registerProgram(Long pgIdx, Long memIdx, Long comIdx) {
         memberMapper.updateCompanyIdx(comIdx, memIdx);
         memberMapper.updatePgRegStatus("Registered", memIdx);
+        memberMapper.updatePgRegDate(LocalDateTime.now(), memIdx);
         return memberMapper.updatePgIdx(pgIdx, memIdx);
     }
 

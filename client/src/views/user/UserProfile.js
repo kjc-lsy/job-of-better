@@ -250,9 +250,8 @@ function UserProfile() {
         e.preventDefault()
         user.registerInterview(inputValue.registeredInterviewDatetime)
             .then((response) => {
-                alert("신청이 완료 되었습니다. \n기업관리자 확인 후 확정됩니다.")
+                alert("신청이 완료되었습니다. \n기업 관리자의 확정 이후에는 수정이 불가능합니다.")
 
-                // 랜더링을 새로 하기위함
                 setInputValue(prev => ({
                     ...prev,
                     registeredInterviewDate: new Date(inputValue.registeredInterviewDate)
