@@ -3,6 +3,7 @@ package site.dealim.jobconsulting.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,12 @@ private final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+
     public AwsService(AmazonS3 s3Client) {
         this.amazonS3 = s3Client;
     }
+
+
 
 
     public List<File> uploadFile(String folder,List<MultipartFile> multipartFiles){
