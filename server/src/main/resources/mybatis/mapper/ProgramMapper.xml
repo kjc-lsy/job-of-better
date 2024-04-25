@@ -29,6 +29,8 @@
                              pg_interview_val_end_date,
                              pg_interview_val_start_time,
                              pg_interview_val_end_time,
+                             pg_interview_unit_time,
+                             pg_max_interviewees_per_unit,
                              pg_title,
                              pg_content)
         VALUES (#{pgComIdx},
@@ -42,6 +44,8 @@
                 #{pgInterviewValEndDate},
                 #{pgInterviewValStartTime},
                 #{pgInterviewValEndTime},
+                #{pgInterviewUnitTime},
+                #{pgMaxIntervieweesPerUnit},
                 #{pgTitle},
                 #{pgContent})
     </insert>

@@ -7,7 +7,7 @@ import ProgDateRangePicker from "../../../components/Picker/ProgDateRangePicker"
 import TimeRangePicker from "../../../components/Picker/TimeRangePicker";
 import {InputNumber, InputPicker} from "rsuite";
 import {format} from "date-fns";
-import {Editor} from "@toast-ui/react-editor";
+import ToastUiEditor from "../../../components/Editor/ToastUiEditor";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
@@ -30,8 +30,7 @@ const ProgramModify = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // content를 markdown으로 저장
-        const updatedProgram = {...fetchedProgram, pgContent: editorRef.current?.getInstance().getMarkdown()}
+        const updatedProgram = {...fetchedProgram, pgContent: editorRef?.current?.getInstance().getMarkdown()}
 
         try {
             const response = await updateProgram(updatedProgram);
@@ -147,11 +146,8 @@ const ProgramModify = () => {
                         <FormGroup>
                             <div className="quote-subcategory">프로그램 내용</div>
                             <div className={theme.theme === 'white-content' ? '' : 'toastui-editor-dark'}>
-                                <Editor
+                                <ToastUiEditor
                                     key={fetchedProgram.pgContent}
-                                    height="600px"
-                                    previewStyle={window.innerWidth < 991 ? 'tab' : 'vertical'}
-                                    initialEditType="markdown"
                                     ref={editorRef}
                                     initialValue={fetchedProgram.pgContent}
                                 />

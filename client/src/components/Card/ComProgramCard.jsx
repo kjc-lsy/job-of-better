@@ -40,21 +40,21 @@ const ComProgramCard = ({program, loadPrograms}) => {
                 </Row>
                 <Row className="num-info-section">
                     <Col md='3'>
-                        <div>
+                        <div onClick={()=>navigate('../member-list?pgIdx='+program.pgIdx)} style={{cursor: 'pointer'}}>
                             <FontAwesomeIcon icon={faUsers}/>
                         </div>
                         <label>총 신청자</label>
                         <TotalRegNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
-                        <div>
+                        <div onClick={()=>navigate('../member-list?pgIdx='+program.pgIdx+'&regStatus='+"Approved")} style={{cursor: 'pointer'}}>
                             <FontAwesomeIcon icon={faUserCheck}/>
                         </div>
                         <label>참여자 수</label>
                         <ApprovedNumber pgIdx={program.pgIdx}/>
                     </Col>
                     <Col md='3'>
-                        <div>
+                        <div onClick={()=>navigate('../member-list?pgIdx='+program.pgIdx+'&regStatus='+"Registered")} style={{cursor: 'pointer'}}>
                             <FontAwesomeIcon icon={faUserClock}/>
                         </div>
                         <label>가입신청</label>

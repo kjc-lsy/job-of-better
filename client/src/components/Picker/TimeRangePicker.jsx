@@ -28,9 +28,6 @@ const TimeRangePicker = (props) => {
             key: 'selection'
         }
     ]);
-    const now = new Date();
-    now.setMinutes(0);
-    now.setSeconds(0);
 
     return (
             <DateRangePicker
@@ -38,7 +35,6 @@ const TimeRangePicker = (props) => {
                 format="HH:mm"
                 caretAs={FaClock}
                 locale={calendarLocaleType}
-                defaultValue={[now, now]}
                 placement={"auto"}
                 {...props}
             />

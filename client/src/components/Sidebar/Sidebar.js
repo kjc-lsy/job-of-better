@@ -39,7 +39,8 @@ function Sidebar(props) {
     const routeAllCate = [...new Set(routes.map(route => route.cate))];
     const routeExistingCate = [...new Set(routeAllCate.filter(cate => cate))];
     const [routeState, setRouteState] = useState();
-    const {setCurrProg} = useCurrProg();
+    const {currProg, setCurrProg} = useCurrProg();
+    const [selectedProgramTitle, setSelectedProgramTitle] = useState("프로그램 선택");
 
     useEffect(() => {
         if (navigator.platform.indexOf("Win") > -1) {
@@ -57,8 +58,18 @@ function Sidebar(props) {
     });
 
     useEffect(() => {
+        const selectedProgram = programList.find(item => item.pgIdx === currProg);
+        setSelectedProgramTitle(selectedProgram ? selectedProgram.pgTitle : "프로그램 선택");
+    }, [currProg, programList]);
+
+    useEffect(() => {
         if(roles.company) {
             getProgramList()
+            
+            const storedProgIdx = localStorage.getItem("program");
+            if (storedProgIdx) {
+                setCurrProg(parseInt(storedProgIdx, 10));
+            }
         }
     }, []);
 
@@ -183,30 +194,23 @@ function Sidebar(props) {
                             :
                             null}*/}
                         {pathLayout === "company" ?
-                            <ButtonDropdown className="programSelector" isOpen={dropdownOpen} toggle={() => {
-                                setDropdownOpen(!dropdownOpen)
-                            }}>
+                            <ButtonDropdown className="programSelector" isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
                                 <DropdownToggle caret className="domainSelect">
-                                    <div>{localStorage.getItem("program") ? programList.find(item => item.pgIdx === parseInt(localStorage.getItem("program")))?.pgTitle : "프로그램 선택"}</div>
+                                    <div>{selectedProgramTitle}</div>
                                     <FontAwesomeIcon icon={faChevronDown}/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    {programList.map((item, index) => {
-                                        return (
-                                            <DropdownItem
-                                                key={index}
-                                                className={
-                                                    item.pgStatus === "Prestart" || item.pgStatus === "Ended" ? "grey" : ""
-                                                }
-                                                onClick={(e) => {
-                                                    //setProgramIdx(item.pgIdx);
-                                                    localStorage.setItem("program", item.pgIdx);
-                                                    setCurrProg(item.pgIdx);
-                                                }}>
-                                                {item.pgTitle}
-                                            </DropdownItem>
-                                        );
-                                    })}
+                                    {programList.map((item, index) => (
+                                        <DropdownItem
+                                            key={index}
+                                            className={item.pgStatus === "Prestart" || item.pgStatus === "Ended" ? "grey" : ""}
+                                            onClick={() => {
+                                                localStorage.setItem("program", item.pgIdx);
+                                                setCurrProg(item.pgIdx);
+                                            }}>
+                                            {item.pgTitle}
+                                        </DropdownItem>
+                                    ))}
                                 </DropdownMenu>
                             </ButtonDropdown>
                             :

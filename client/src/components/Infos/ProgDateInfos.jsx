@@ -123,7 +123,7 @@ const ProgDateInfos = ({program}) => {
                                 <Col>
                                     <div className="">
                                         <label htmlFor="">면접 단위 시간</label>
-                                        <h4>{program?.pgInterviewUnitTime + "분" || "면접 단위 시간이 설정되지 않았습니다"}</h4>
+                                        <h4>{program?.pgInterviewUnitTime || "면접 단위 시간이 설정되지 않았습니다"}</h4>
                                     </div>
                                 </Col>
                             </Row>

@@ -4,10 +4,11 @@ import React, {useEffect, useState} from "react";
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 import {Form, InputGroup, Loader, Pagination, SelectPicker, Toggle} from "rsuite";
 import {getMembersPage, updateRegStatus} from "../../apis/company";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {useCurrProg} from "../../contexts/CurrProgProvider";
+import RegStatusPicker from "../../components/SelectPicker/RegStatusPicker";
 
 function MemberList() {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ function MemberList() {
     const [keyword, setKeyword] = useState()
     const {currProg, setCurrProg} = useCurrProg()
     const [loading, setLoading] = useState(false)
+    const [params, setParams] = useSearchParams()
 
     const coverLetterSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
         label: '작성완료',
@@ -31,15 +33,16 @@ function MemberList() {
         label: '합격',
         value: 'Approved'
     }, {label: '불합격', value: 'Rejected'}]
-    const regStatusSelect = [{label: '가입대기', value: 'Registered'}, {label: '확인', value: 'Approved'}, {
-        label: '거절',
-        value: 'Rejected'
-    }]
 
     const [coverLetterFilter, setCoverLetterFilter] = useState(null)
     const [resumeFilter, setResumeFilter] = useState(null)
     const [interviewFilter, setInterviewFilter] = useState(null)
     const [regStatusFilter, setRegStatusFilter] = useState(null)
+
+    useEffect(() => {
+        if(params.get("regStatus")) setRegStatusFilter(params.get("regStatus"))
+        if(params.get("pgIdx")) setCurrProg(parseInt(params.get("pgIdx"),10));
+    }, []);
 
     useEffect(() => {
         const abortController = updatePage();
@@ -48,10 +51,6 @@ function MemberList() {
             abortController.abort()
         }
     }, [page, currProg, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter]);
-
-    useEffect(() => {
-        console.log(userList)
-    }, [userList]);
 
     const updatePage = () => {
         const abortController = new AbortController();
@@ -148,6 +147,7 @@ function MemberList() {
                                     <th></th>
                                     <th>
                                         <SelectPicker
+                                            key={coverLetterFilter}
                                             defaultValue={coverLetterFilter}
                                             onChange={setCoverLetterFilter}
                                             searchable={false}
@@ -159,6 +159,7 @@ function MemberList() {
                                     </th>
                                     <th>
                                         <SelectPicker
+                                            key={resumeSelect}
                                             defaultValue={resumeFilter}
                                             onChange={setResumeFilter}
                                             searchable={false}
@@ -170,6 +171,7 @@ function MemberList() {
                                     </th>
                                     <th>
                                         <SelectPicker
+                                            key={interviewFilter}
                                             defaultValue={interviewFilter}
                                             onChange={setInterviewFilter}
                                             searchable={false}
@@ -181,12 +183,11 @@ function MemberList() {
                                     </th>
                                     <th></th>
                                     <th>
-                                        <SelectPicker
+                                        <RegStatusPicker
+                                            key={regStatusFilter}
                                             defaultValue={regStatusFilter}
                                             onChange={setRegStatusFilter}
-                                            searchable={false}
                                             style={{width: 100}}
-                                            data={regStatusSelect}
                                             placeholder={"filter"}
                                             size="xs"
                                         />
@@ -223,13 +224,9 @@ function MemberList() {
                                                 }}>{pgTitle}</a>
                                                 </td>
                                                 <td>
-                                                    <SelectPicker
+                                                    <RegStatusPicker
                                                         cleanable={false}
-                                                        renderMenuItem={renderMenuItem}
-                                                        renderValue={renderValue}
                                                         onChange={(value) => updateRegStatus(member.idx, value)}
-                                                        data={regStatusSelect}
-                                                        searchable={false}
                                                         style={{width: "100px"}}
                                                         defaultValue={member.pgRegStatus}
                                                     />
