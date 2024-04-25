@@ -3,15 +3,20 @@ package site.dealim.jobconsulting.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import site.dealim.jobconsulting.domain.File;
+import site.dealim.jobconsulting.dto.FileDto;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,34 +32,72 @@ private final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+
     public AwsService(AmazonS3 s3Client) {
         this.amazonS3 = s3Client;
     }
 
 
-    @Transactional
-    public List<String> uploadFile(List<MultipartFile> multipartFiles){
-        List<String> fileNameList = new ArrayList<>();
+
+
+    public List<File> uploadFile(String folder,List<MultipartFile> multipartFiles){
+        log.info("AWS file upload start - folder,multipartFiles");
+        List<File> fileList = new ArrayList<>();
 
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
         multipartFiles.forEach(file -> {
-            String fileName = createFileName(file.getOriginalFilename());
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
-
-            try(InputStream inputStream = file.getInputStream()){
-                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch (IOException e){
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
-            }
-            fileNameList.add(fileName);
-
+            fileList.add(fileBuilder(folder , file));
         });
-
-        return fileNameList;
+        return fileList;
     }
+
+
+    public List<File> uploadFile(Long idx ,String cate ,String folder,List<MultipartFile> multipartFiles){
+        log.info("AWS file upload start -idx,cate,folder,multipartFiles");
+        List<File> fileList = new ArrayList<>();
+
+        multipartFiles.forEach(file -> {
+            File fileDto = fileBuilder(folder , file);
+            fileList.add(fileDto.builder()
+                    .originalFileName(fileDto.getOriginalFileName())
+                    .uploadFileName(fileDto.getUploadFileName())
+                    .uploadFileUrl(fileDto.getUploadFileUrl())
+                    .folderName(folder)
+                    .relatedIdx(idx)
+                    .cate(cate)
+                    .build());
+            //System.out.println("fileList = " + fileBuilder(folder, file));
+        });
+        //System.out.println("fileList = " + fileList);
+        return fileList;
+    }
+
+    @Transactional
+    public File fileBuilder(String folder,MultipartFile file) {
+        log.info("aws file builder");
+        // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
+
+        String fileName = folder + "/" + createFileName(file.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        try(InputStream inputStream = file.getInputStream()){
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        }
+
+        return File.builder()
+                .originalFileName(file.getOriginalFilename())
+                .uploadFileName(fileName)
+                .folderName(folder)
+                .uploadFileUrl(amazonS3.getUrl(bucket, fileName).toString())
+                .uploadFileDate(LocalDateTime.now())
+                .build();
+    }
+
     // 먼저 파일 업로드시, 파일명을 난수화하기 위해 UUID 를 활용하여 난수를 돌린다.
     public String createFileName(String fileName){
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
@@ -76,12 +119,15 @@ private final AmazonS3 amazonS3;
     }
 
 
-    public S3Object getFile(String keyName) {
+    /*public S3Object getFile(String keyName) {
         try {
+            UrlResource urlResource = new UrlResource(amazonS3.getUrl(bucket, keyName));
+            String contentDisposition = "attachment; filename=\"" +  keyName + "\"";
+            String url = amazonS3.getUrl(bucket, keyName).toString();
             return amazonS3.getObject(bucket, keyName);
         } catch (AmazonS3Exception e) {
             log.error(e);
             return null;
         }
-    }
+    }*/
 }

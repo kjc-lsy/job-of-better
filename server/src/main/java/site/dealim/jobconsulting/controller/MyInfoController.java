@@ -1,21 +1,28 @@
 package site.dealim.jobconsulting.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
+import site.dealim.jobconsulting.service.AwsService;
 import site.dealim.jobconsulting.service.MyInfoService;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,6 +32,9 @@ import java.util.Map;
 public class MyInfoController {
     @Autowired
     MyInfoService myinfoService;
+    @Autowired
+    AwsService awsService;
+
 
     @Secured("ROLE_USER")
     @GetMapping("/user-profile-info")
@@ -78,6 +88,27 @@ public class MyInfoController {
         log.info("슬롯 점유 상태 확인 : slotStartDatetime = {}", slotStartDatetime);
 
         return new ResponseEntity<>(myinfoService.getCurrOccup(slotStartDatetime.withNano(0).withSecond(0), customMember.getMember().getPgIdx()), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "S3 파일 업로드" , description = "multifile list를 s3에 업로드하여 filename list 반환")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "success"),
+            @ApiResponse(responseCode = "500", description = "internal server error"),
+            @ApiResponse(responseCode = "400", description = "bad request"),
+            @ApiResponse(responseCode = "404", description = "not found")
+    })
+    public ResponseEntity<?> uploadFile(
+            @AuthenticationPrincipal CustomMember member,
+            @RequestParam("cate") String cate,
+            @RequestParam("folder") String folder,
+            @RequestParam("file") List<MultipartFile> multipartFiles) throws Exception{
+
+        log.info("profile file aws Upload");
+        String profileImg = myinfoService.upload(member, awsService.uploadFile(member.getMember().getIdx(),cate,folder, multipartFiles));
+        return ResponseEntity.ok(profileImg);
     }
 
 }

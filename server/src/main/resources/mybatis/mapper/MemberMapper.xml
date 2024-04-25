@@ -305,4 +305,12 @@
         SET interview_status = #{interviewStatus}
         WHERE idx=#{memIdx}
     </update>
+
+    <update id="updateProfileImg" parameterType="Member">
+        UPDATE member
+        SET profile_img = #{profileImg}
+        WHERE idx = #{idx}
+    </update>
+
+
 </mapper>

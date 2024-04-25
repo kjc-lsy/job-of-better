@@ -39,3 +39,16 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
     const time = slotStartDatetime.setSeconds(0, 0)
     return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
 }
+
+export const setProfileImg = (value) => {
+    const formData = new FormData();
+    formData.append('file', value);
+    formData.append('folder', 'profile');
+    formData.append('cate', 'profile_img');
+
+    return api.post('/api/user/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
