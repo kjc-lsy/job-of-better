@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import site.dealim.jobconsulting.domain.File;
+import site.dealim.jobconsulting.domain.Member;
+import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.AwsService;
 
 import java.io.IOException;
@@ -41,17 +44,22 @@ public class AwsController {
             @ApiResponse(responseCode = "400", description = "bad request"),
             @ApiResponse(responseCode = "404", description = "not found")
     })
-    public ResponseEntity<?> uploadFile(List<MultipartFile> multipartFiles) throws Exception{
+    public ResponseEntity<?> uploadFile(
+            CustomMember member,
+            @RequestParam("cate") Long cate,
+            @RequestParam("folder") String folder,
+            @RequestParam("file") List<MultipartFile> multipartFiles) throws Exception{
         log.info("AWS file Upload");
-        List<String> fileNameList = awsService.uploadFile(multipartFiles);
-        return ResponseEntity.<String>ok().body(fileNameList);
+
+        awsService.uploadFile(folder , multipartFiles);
+        return ResponseEntity.ok("upload success");
     }
 
-    @GetMapping("/download/{fileName}")
+    /*@GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws AmazonS3Exception{
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(new InputStreamResource(awsService.getFile(fileName).getObjectContent()));
-    }
+    }*/
 
 }
