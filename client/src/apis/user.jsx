@@ -40,12 +40,12 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
     return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
 }
 
-export const uploadFileToAWS = (value, folder, cate) => {
+export const uploadFileToAWS = (files, folder, cates) => {
     const formData = new FormData();
 
-    formData.append('file', value);
+    formData.append('file', files);
     formData.append('folder', folder);
-    formData.append('cate', cate);
+    formData.append('cate', cates);
 
     return api.post('/api/files/upload', formData, {
         headers: {

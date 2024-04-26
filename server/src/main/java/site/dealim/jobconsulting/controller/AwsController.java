@@ -25,9 +25,9 @@ import java.util.List;
 @RequestMapping("/api/files")
 @RequiredArgsConstructor
 public class AwsController {
+
     private final AwsService awsService;
     private final MyInfoService myInfoService;
-
 
     @PostMapping(path = "/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,

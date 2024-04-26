@@ -8,13 +8,15 @@ import maleImg from "../../assets/img/userImg_male.png";
 import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Form, Row, Table,} from "reactstrap";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight, faArrowCircleUp, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleRight, faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
 import KorDatePicker from "../../components/KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {Viewer} from "@toast-ui/react-editor";
 import ProgCurrentStatus from "../../components/Infos/ProgCurrentStatus";
 import {InputPicker} from "rsuite";
 import {useLoading} from "../../contexts/LoadingProvider";
+import MagnifyingModal from "../../components/Modal/MagnifyingModal";
+import {useAlert} from "../../components/Alert/useAlert";
 
 function UserProfile() {
 
@@ -24,6 +26,7 @@ function UserProfile() {
     const [interviewTimeLabel, setInterviewTimeLabel] = React.useState([]);
     const [interviewDisableTimeLabel, setInterviewDisableTimeLabel] = React.useState([]);
     const [interviewTimeLabelNode, setInterviewTimeLabelNode] = React.useState([]);
+    const sendAlert = useAlert();
     const [inputValue, setInputValue] = React.useState({
         name: "",
         profileImg: "", //require("assets/img/emilyz.jpg")
@@ -156,24 +159,20 @@ function UserProfile() {
 
     // 파일 변경 핸들러
     const handleResumeFileChange = async (e) => {
-        const file = e.target.files?.[0];
-        const ext = file.name.split('.').pop();
+        const files = e.target.files;
+        const cates = Array.from(files).map(file => 'resume_' + file.name.split('.').pop().toLowerCase());
 
         setLoading(true)
 
         try{
-            uploadFileToAWS(file, 'resume', 'resume_'+ext)
+            uploadFileToAWS(files, 'resume', cates)
         }catch(e) {
-            console.error(e.response.data);
+            sendAlert('error', "전송 오류!")
         }finally {
             setLoading(false)
         }
 
     };
-
-    useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
@@ -394,16 +393,18 @@ function UserProfile() {
                                     <td className="text-center">
                                     </td>
                                     <td className="text-center">
-                                        <a onClick={(e) => {
-                                            e.preventDefault();
-                                            alert("파일등록")
-                                        }}>
-                                            <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                                        </a>
+                                        <MagnifyingModal
+
+                                        />
                                     </td>
                                     <td className="text-center">
-                                        <input type="file" accept="application/pdf, image/*, .hwp" id="resume-upload"
-                                               onChange={handleResumeFileChange} style={{display: "none"}}/>
+                                        <input type="file"
+                                               accept="application/pdf, image/*, .hwp"
+                                               id="resume-upload"
+                                               onChange={handleResumeFileChange}
+                                               style={{display: "none"}}
+                                               multiple
+                                        />
                                         <label htmlFor={"resume-upload"} className={"justify-content-center"}>
                                             <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
                                         </label>
@@ -546,6 +547,7 @@ function UserProfile() {
                                     <Viewer
                                         key={inputValue.pgContent}
                                         initialValue={inputValue.pgContent}
+
                                     />
                                     {/*<Button type="button" onClick={viewMore} className="btn02 viewMore">더
                                         보기</Button>*/}

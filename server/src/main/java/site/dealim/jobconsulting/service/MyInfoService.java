@@ -144,7 +144,6 @@ public class MyInfoService {
                 log.info("파일 수정...");
                 fileMapper.updateUpload(file);
             }
-            member.setProfileImg(file.getUploadFileUrl());
             resumeList.add(file.getUploadFileUrl());
         }
         return resumeList;

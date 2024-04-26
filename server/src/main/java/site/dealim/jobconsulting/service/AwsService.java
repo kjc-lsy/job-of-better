@@ -46,8 +46,8 @@ private final AmazonS3 amazonS3;
     }
 
 
-    public List<File> uploadFile(Long idx, String cate, String folder, List<MultipartFile> multipartFiles){
-        log.info("AWS file upload start -idx,cate,folder,multipartFiles");
+    public List<File> uploadFile(Long relatedIdx, String cate, String folder, List<MultipartFile> multipartFiles){
+        log.info("AWS file upload start -relatedIdx,cate,folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 
         multipartFiles.forEach(file -> {
@@ -57,12 +57,10 @@ private final AmazonS3 amazonS3;
                     .uploadFileName(fileDto.getUploadFileName())
                     .uploadFileUrl(fileDto.getUploadFileUrl())
                     .folderName(folder)
-                    .relatedIdx(idx)
+                    .relatedIdx(relatedIdx)
                     .cate(cate)
                     .build());
-            //System.out.println("fileList = " + fileBuilder(folder, file));
         });
-        //System.out.println("fileList = " + fileList);
         return fileList;
     }
 
