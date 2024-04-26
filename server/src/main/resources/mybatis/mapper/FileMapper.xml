@@ -8,18 +8,28 @@
         INSERT INTO file
         (original_file_name,
          upload_file_name,
-         folder_name,
+         upload_file_path,
          upload_file_url,
          related_idx,
-         cate)
+         upload_file_ext)
         VALUES( #{originalFileName},
                 #{uploadFileName},
-                #{folderName},
+                #{uploadFilePath},
                 #{uploadFileUrl},
                 #{relatedIdx},
-                #{cate}
+                #{uploadFileExt}
               )
     </insert>
+
+    <delete id="deleteFile" parameterType="map">
+        DELETE FROM file
+        WHERE upload_file_url = #{profileImg} AND related_idx = #{idx} AND upload_file_path = #{path}
+    </delete>
+
+    <select id="getFileName" parameterType="map">
+        SELECT upload_file_name FROM file
+        WHERE upload_file_url = #{profileImg} AND related_idx = #{idx} AND upload_file_path = #{path}
+    </select>
 
 
 </mapper>

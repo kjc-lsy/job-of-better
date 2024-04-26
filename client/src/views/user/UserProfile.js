@@ -15,8 +15,8 @@ import {Viewer} from "@toast-ui/react-editor";
 import ProgCurrentStatus from "../../components/Infos/ProgCurrentStatus";
 import {InputPicker} from "rsuite";
 import {useLoading} from "../../contexts/LoadingProvider";
-import MagnifyingModal from "../../components/Modal/MagnifyingModal";
 import {useAlert} from "../../components/Alert/useAlert";
+import MagnifyingModal from "../../components/Modal/MagnifyingModal";
 
 function UserProfile() {
 
@@ -132,7 +132,7 @@ function UserProfile() {
         const file = e.target.files[0];
 
         try {
-            const response = await uploadFileToAWS(file, 'profile', 'profile_img');
+            const response = await uploadFileToAWS(file, 'profile');
             setInputValue({
                 ...inputValue,
                 profileImg: response.data
@@ -159,13 +159,13 @@ function UserProfile() {
 
     // 파일 변경 핸들러
     const handleResumeFileChange = async (e) => {
-        const files = e.target.files;
-        const cates = Array.from(files).map(file => 'resume_' + file.name.split('.').pop().toLowerCase());
+        const file = e.target.files?.[0];
+        const ext = file.name.split('.').pop();
 
         setLoading(true)
 
         try{
-            uploadFileToAWS(files, 'resume', cates)
+            uploadFileToAWS(file, 'resume')
         }catch(e) {
             sendAlert('error', "전송 오류!")
         }finally {
@@ -547,7 +547,6 @@ function UserProfile() {
                                     <Viewer
                                         key={inputValue.pgContent}
                                         initialValue={inputValue.pgContent}
-
                                     />
                                     {/*<Button type="button" onClick={viewMore} className="btn02 viewMore">더
                                         보기</Button>*/}

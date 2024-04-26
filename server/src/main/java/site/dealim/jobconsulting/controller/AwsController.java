@@ -35,19 +35,18 @@ public class AwsController {
     @Operation(summary = "S3 파일 업로드" , description = "multifile list를 s3에 업로드하여 filename list 반환")
     public ResponseEntity<?> uploadFile(
             @AuthenticationPrincipal CustomMember member,
-            @RequestParam("cate") String cate,
-            @RequestParam("folder") String folder,
+            @RequestParam("path") String path,
             @RequestParam("file") List<MultipartFile> multipartFiles) throws Exception{
 
-        log.info("profile file aws Upload : cate - {}, folder - {}", cate, folder);
+        log.info("profile file aws Upload :, path - {}", path);
         List<String> fileUrls = null;
 
-        if(cate.equals("profile_img")) {
-            fileUrls = myInfoService.uploadProfileImg(member.getMember(), awsService.uploadFile(member.getMember().getIdx(), cate, folder, multipartFiles));
+        if(path.equals("profile")) {
+            fileUrls = myInfoService.uploadProfileImg(member.getMember(), awsService.uploadFile(member.getMember().getIdx(), path, multipartFiles));
         }
 
-        if(cate.equals("resume")) {
-            fileUrls = myInfoService.uploadResumeFile(member.getMember(), awsService.uploadFile(member.getMember().getIdx(), cate, folder, multipartFiles));
+        if(path.equals("resume")) {
+            fileUrls = myInfoService.uploadResumeFile(member.getMember(), awsService.uploadFile(member.getMember().getIdx(), path, multipartFiles));
         }
 
         if(fileUrls == null) {

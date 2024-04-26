@@ -34,45 +34,48 @@ private final AmazonS3 amazonS3;
         this.amazonS3 = s3Client;
     }
 
-    public List<File> uploadFile(String folder, List<MultipartFile> multipartFiles){
+    public List<File> uploadFile(String path, List<MultipartFile> multipartFiles){
         log.info("AWS file upload start - folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
         multipartFiles.forEach(file -> {
-            fileList.add(fileBuilder(folder , file));
+            fileList.add(fileBuilder(path , file));
         });
         return fileList;
     }
 
-
-    public List<File> uploadFile(Long relatedIdx, String cate, String folder, List<MultipartFile> multipartFiles){
-        log.info("AWS file upload start -relatedIdx,cate,folder,multipartFiles");
+    public List<File> uploadFile(Long idx, String path, List<MultipartFile> multipartFiles){
+        log.info("AWS file upload start -idx,exe,folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 
         multipartFiles.forEach(file -> {
-            File fileDto = fileBuilder(folder , file);
+            File fileDto = fileBuilder(path , file);
             fileList.add(fileDto.builder()
                     .originalFileName(fileDto.getOriginalFileName())
                     .uploadFileName(fileDto.getUploadFileName())
                     .uploadFileUrl(fileDto.getUploadFileUrl())
-                    .folderName(folder)
-                    .relatedIdx(relatedIdx)
-                    .cate(cate)
+                    .uploadFilePath(path)
+                    .relatedIdx(idx)
+                    .uploadFileExe(getFileExtension(fileDto.getOriginalFileName()).substring(1))
                     .build());
+            //System.out.println("fileList = " + fileBuilder(folder, file));
         });
+        //System.out.println("fileList = " + fileList);
         return fileList;
     }
 
     @Transactional
-    public File fileBuilder(String folder,MultipartFile file) {
+    public File fileBuilder(String path,MultipartFile file) {
         log.info("aws file builder");
         // forEach 구문을 통해 multipartFiles 리스트로 넘어온 파일들을 순차적으로 fileNameList 에 추가
-
-        String fileName = folder + "/" + createFileName(file.getOriginalFilename());
+        String originalFileName = file.getOriginalFilename();
+        String fileName = path + "/" + createFileName(originalFileName);
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
+
+        //System.out.println("getFileExtension(originalFileName) = " + getFileExtension(originalFileName));
 
         try(InputStream inputStream = file.getInputStream()){
             amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
@@ -82,11 +85,12 @@ private final AmazonS3 amazonS3;
         }
 
         return File.builder()
-                .originalFileName(file.getOriginalFilename())
+                .originalFileName(originalFileName)
                 .uploadFileName(fileName)
-                .folderName(folder)
+                .uploadFilePath(path)
                 .uploadFileUrl(amazonS3.getUrl(bucket, fileName).toString())
                 .uploadFileDate(LocalDateTime.now())
+                .uploadFileExe(getFileExtension(originalFileName).substring(1))
                 .build();
     }
 
@@ -104,12 +108,10 @@ private final AmazonS3 amazonS3;
         }
     }
 
-
     public void deleteFile(String fileName){
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-        System.out.println(bucket);
+        System.out.println(fileName);
     }
-
 
     /*public S3Object getFile(String keyName) {
         try {
