@@ -1,20 +1,14 @@
-import React, {useEffect, useRef} from "react";
-import * as user from '../../apis/user';
-import {uploadFileToAWS, userProfileInfo} from '../../apis/user';
-import femaleImg from "../../assets/img/userImg_female.png";
-import maleImg from "../../assets/img/userImg_male.png";
+import React , {useState} from "react";
 
-// reactstrap components
-import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table,} from "reactstrap";
-import {useNavigate} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight, faArrowCircleUp, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+// reactstrap componentsrom "@fortawesome/free-solid-svg-icons";
 import {useLoading} from "../../contexts/LoadingProvider";
 import MyHomeProgramInfo from "../../components/Infos/MyHomeProgramInfo";
 import MyHomeUserInfo from "../../components/Infos/MyHomeUserInfo";
+import {Col, Row} from "reactstrap";
 
 function UserProfile() {
     const {loading, setLoading} = useLoading(false);
+    const [infoLoading, setInfoLoading] = useState(false);
 
     const [inputValue, setInputValue] = React.useState({
         name: "",
@@ -44,16 +38,15 @@ function UserProfile() {
     });
 
 
-
     return (
         <div className="content">
             {loading ? null :
                 <Row>
                     <Col md="4">
-                        <MyHomeUserInfo setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />
+                        <MyHomeUserInfo setInfoLoading={setInfoLoading} setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />
                     </Col>
                     <Col md="8">
-                        <MyHomeProgramInfo inputValue={inputValue} setInputValue={setInputValue} />
+                        {infoLoading && <MyHomeProgramInfo inputValue={inputValue} setInputValue={setInputValue}/> }
                     </Col>
                 </Row>
             }

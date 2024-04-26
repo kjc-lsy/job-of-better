@@ -38,4 +38,14 @@
           AND related_idx = #{memIdx}
     </select>
 
+    <delete id="deleteFileByIdx" parameterType="Long">
+        DELETE FROM file
+        WHERE file_idx = #{param}
+    </delete>
+
+    <select id="getFileNameByIdx" parameterType="Long">
+        SELECT upload_file_name FROM file
+        WHERE file_idx = #{param}
+    </select>
+
 </mapper>

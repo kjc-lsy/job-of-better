@@ -15,4 +15,8 @@ public interface FileMapper {
     String getFileName(@Param("idx") long idx, @Param("path") String profile, @Param("profileImg") String profileImg);
 
     List<File> getFiles(@Param("memIdx") long memIdx, @Param("path") String path);
+
+    void deleteFileByIdx(Long fileIdx);
+
+    String getFileNameByIdx(Long fileIdx);
 }

@@ -110,7 +110,6 @@ private final AmazonS3 amazonS3;
 
     public void deleteFile(String fileName){
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-        System.out.println(fileName);
     }
 
     /*public S3Object getFile(String keyName) {

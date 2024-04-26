@@ -40,7 +40,7 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
     return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
 }
 
-export const uploadFileToAWS = (files, path) => {
+export const uploadFileToAWS = async (files, path) => {
     const formData = new FormData();
 
     Array.from(files).forEach(file => {
@@ -58,4 +58,8 @@ export const uploadFileToAWS = (files, path) => {
 
 export const getFilesByPath = (path) => {
     return api.get(`/api/files/get-files?path=${path}`)
+}
+
+export const deleteResumeFile = async (fileIdx) => {
+    return api.delete(`/api/files/delete-file/${fileIdx}`)
 }

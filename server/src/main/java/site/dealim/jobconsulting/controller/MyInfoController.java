@@ -34,6 +34,7 @@ public class MyInfoController {
     public Member userProfileInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("사용자 정보 불러오기");
         Member user = customMember.getMember();
+        //System.out.println("myinfoService.userProfileInfo(user.getUsername() = " + myinfoService.userProfileInfo(user.getUsername()));
         return myinfoService.userProfileInfo(user.getUsername());
     }
 

@@ -1736,7 +1736,36 @@ td {
   label+.form-control {
     margin-bottom: 5px;
   }
+
+
+
 }
+
+//************************************ modify_form ************************************/
+.user-modify-wrapper {
+  .modify_form {
+
+  }
+  .user_modify_program {
+    > div > span {
+      margin-bottom: 10px;
+      font-size:18px;
+      display: block;
+    }
+    p {
+      > div {
+        margin-right: 5px;
+      }
+    }
+  }
+  .rs-picker-toggle {
+    font-size:16px
+  }
+  .rs-picker-input {
+    height: 38.84px;
+  }
+}
+
 
 /******************************** waiting-reg ********************************/
 

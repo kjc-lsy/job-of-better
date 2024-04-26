@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import * as user from "../../apis/user";
-import {getFilesByPath, uploadFileToAWS, userProfileInfo} from "../../apis/user";
+import {coverLetterInfo, deleteResumeFile, getFilesByPath, uploadFileToAWS, userProfileInfo} from "../../apis/user";
 import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
@@ -8,10 +8,16 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowCircleRight, faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import MagnifyingModal from "../Modal/MagnifyingModal";
+import PdfViewer from "../Viewer/PdfViewer";
+import {format} from "date-fns";
+import {Button, Loader} from "rsuite";
 
-export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) {
+export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
     const imgRef = useRef();
+    const [resumeFiles, setResumeFiles] = useState([])
+    const [resumeDeleteLoadings, setResumeDeleteLoadings] = useState({})
+
     useEffect(() => {
         Promise.all([userInfo(), coverLetterInfo()])
             .catch((error) => {
@@ -21,7 +27,7 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
 
     useEffect(() => {
         getFilesByPath('resume').then(res => {
-            console.log(res.data)
+            setResumeFiles(res.data)
         })
     }, []);
 
@@ -32,7 +38,6 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
     // 파일 변경 핸들러
     const handleImgFileChange = async (e) => {
         setLoading(true);
-        //const reader = new FileReader();
         const file = e.target.files[0];
 
         try {
@@ -47,16 +52,6 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
         } finally {
             setLoading(false);
         }
-
-
-        /*reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setInputValue({
-                ...inputValue,
-                profileImg: reader.result,
-            });
-        };*/
-
     };
 
     const handleResumeFileChange = async (e) => {
@@ -65,7 +60,7 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
         setLoading(true)
 
         try {
-            uploadFileToAWS(files, 'resume')
+            await uploadFileToAWS(files, 'resume')
         } catch (e) {
             console.error(e.response.data);
         } finally {
@@ -73,9 +68,20 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
         }
 
     };
+    useEffect(() => {
+        Promise.all([userInfo(), userCoverLetterInfo()])
+            .catch((error) => {
+                console.error(error.response.data);
+            });
+    }, []);
+
+    /*useEffect(() => {
+        console.log(inputValue)
+    }, [inputValue]);*/
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
+        setInfoLoading(false);
         try {
             const response = await userProfileInfo();
 
@@ -84,6 +90,7 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
             const hour = registeredInterviewDate?.split('T')[1]?.split(':')[0];
             const minute = registeredInterviewDate?.split('T')[1]?.split(':')[1];
 
+            //console.log(response.data);
             // 사용자 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
@@ -98,11 +105,29 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
             }));
         } catch (error) {
             console.error(error.response.data);
+        }finally {
+            setInfoLoading(true);
         }
     };
 
+    const selectViewerComponent = (file) => {
+        const fileType = file.uploadFileExt
+
+        switch (fileType) {
+            case 'pdf':
+                return <PdfViewer fileUrl={file.uploadFileUrl} />;
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+                // return <ImageViewer fileUrl={file.uploadFileUrl} />;
+            default:
+                // return <DefaultViewer fileUrl={file.uploadFileUrl} />;
+        }
+    };
+
+
     //coverletter 값 들고오기
-    const coverLetterInfo = async () => {
+    const userCoverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
             setInputValue((prevInputValue) => ({
@@ -202,22 +227,30 @@ export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <a>
-                                    {inputValue.mclDate ? new Date(inputValue?.mclDate)?.split("T")[0] : null}
-                                </a>
-                            </td>
-                            <td className="text-center">
-                            </td>
-                            <td className="text-center">
-                                <MagnifyingModal
-                                />
-                            </td>
-                            <td className="text-center">
-                                x
-                            </td>
-                        </tr>
+                            {resumeFiles.map((file, index) => (
+                                <tr key={file.fileIdx}>
+                                    <td className="text-center">
+                                        {file.originalFileName}
+                                    </td>
+                                    <td className="text-center">
+                                        {format(file.uploadFileDate, 'yyyy-MM-dd')}
+                                    </td>
+                                    <td className="text-center">
+                                        <MagnifyingModal buttonName={"보기"} component={selectViewerComponent(file)} />
+                                    </td>
+                                    <td className="text-center">
+                                        <Button
+                                        onClick={async () => {
+                                            setResumeDeleteLoadings(prev => ({ ...prev, [file.fileIdx]: true }));
+                                            await deleteResumeFile(file.fileIdx);
+                                            setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
+                                            setResumeDeleteLoadings(prev => ({ ...prev, [file.fileIdx]: false }));
+                                        }}>
+                                            {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm" /> : "삭제"}
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
                 </CardBody>

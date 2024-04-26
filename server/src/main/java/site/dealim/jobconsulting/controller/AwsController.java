@@ -56,7 +56,15 @@ public class AwsController {
 
     @GetMapping("/get-files")
     public ResponseEntity<?> getFiles(@AuthenticationPrincipal CustomMember member, @RequestParam("path") String path) {
+        log.info("파일 불러오기...");
         return new ResponseEntity<>(myInfoService.getFileList(member.getMember().getIdx(), path), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-file/{fileIdx}")
+    public ResponseEntity<?> deleteFile(@AuthenticationPrincipal CustomMember member,@PathVariable("fileIdx") Long fileIdx) {
+        log.info("파일 삭제... : fileIdx - {}", fileIdx);
+        myInfoService.deleteFileByIdx(fileIdx);
+        return new ResponseEntity<>("test",HttpStatus.OK);
     }
 
 }

@@ -156,5 +156,13 @@ public class MyInfoService {
         return fileMapper.getFiles(memIdx, path);
     }
 
+    public void deleteFileByIdx(Long fileIdx) {
+        String fileName = fileMapper.getFileNameByIdx(fileIdx);
+        log.info("AWS 클라우드에서 파일 삭제... : fileName - {}", fileName);
+        awsServie.deleteFile(fileName);
+
+        log.info("파일 테이블 레코드 삭제...");
+        fileMapper.deleteFileByIdx(fileIdx);
+    }
 
 }
