@@ -129,7 +129,7 @@ function UserProfile() {
         const file = e.target.files[0];
 
         try {
-            const response = await uploadFileToAWS(file, 'profile', 'profile_img');
+            const response = await uploadFileToAWS(file, 'profile');
             setInputValue({
                 ...inputValue,
                 profileImg: response.data
@@ -162,7 +162,7 @@ function UserProfile() {
         setLoading(true)
 
         try{
-            uploadFileToAWS(file, 'resume', 'resume_'+ext)
+            uploadFileToAWS(file, 'resume')
         }catch(e) {
             console.error(e.response.data);
         }finally {

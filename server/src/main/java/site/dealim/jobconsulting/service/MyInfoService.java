@@ -12,6 +12,8 @@ import site.dealim.jobconsulting.mapper.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Slf4j
@@ -30,6 +32,8 @@ public class MyInfoService {
     private InterviewScheduleMapper interviewScheduleMapper;
     @Autowired
     private FileMapper fileMapper;
+    @Autowired
+    private AwsService awsServie;
 
     public Member userProfileInfo(String username) {
         return memberMapper.login(username);
@@ -119,13 +123,17 @@ public class MyInfoService {
     public List<String> uploadProfileImg(Member member , List<File> files) {
         List<String> imgList = new ArrayList<>();
         for(File file : files) {
-            if(file.getFileIdx() == null) {
-                log.info("파일 업로드...");
-                fileMapper.upload(file);
-            }else {
-                fileMapper.updateUpload(file);
+            log.info("1. 파일 업로드...");
+            fileMapper.upload(file);
+            System.out.println("member.getProfileImg() = " + member.getProfileImg());
+            if(member.getProfileImg() != null && !member.getProfileImg().equals("")) {
+                log.info("1-1. 기존 aws 파일 삭제...");
+                awsServie.deleteFile(fileMapper.getFileName(member.getIdx(), "profile", member.getProfileImg()));
+
+                log.info("1-2. 기존 file 파일 삭제...");
+                fileMapper.deleteFile(member.getIdx(), "profile", member.getProfileImg());
             }
-            log.info("멤버 프로필 수정...");
+            log.info("2. 맴버 프로필 수정...");
             member.setProfileImg(file.getUploadFileUrl());
             memberMapper.updateProfileImg(member);
             imgList.add(member.getProfileImg());
@@ -137,13 +145,19 @@ public class MyInfoService {
     public List<String> uploadResumeFile(Member member , List<File> files) {
         List<String> resumeList = new ArrayList<>();
         for(File file : files) {
-            if(file.getFileIdx() == null) {
+            log.info("파일 업로드...");
+            fileMapper.upload(file);
+            if(member.getResumeStatus() != "Pending") {
+                log.info("기존 파일 삭제...");
+               // fileMapper.deleteFile(member.getIdx(), "resume");
+            }
+            /*if(file.getFileIdx() == null) {
                 log.info("파일 업로드...");
                 fileMapper.upload(file);
             }else {
                 log.info("파일 수정...");
-                fileMapper.updateUpload(file);
-            }
+                //fileMapper.updateUpload(file);
+            }*/
             member.setProfileImg(file.getUploadFileUrl());
             resumeList.add(file.getUploadFileUrl());
         }

@@ -16,5 +16,7 @@ import java.util.Map;
 public interface FileMapper {
     void upload(File file);
 
-    File updateUpload(File file);
+    void deleteFile(@Param("idx") long idx, @Param("path") String profile, @Param("profileImg") String profileImg);
+
+    String getFileName(@Param("idx") long idx, @Param("path") String profile, @Param("profileImg") String profileImg);
 }
