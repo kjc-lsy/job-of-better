@@ -510,31 +510,32 @@ form.form-register label + .form-control {
 
     }
 
-    .register_addr {
-      .btn {
-        padding: 11.5px 13px;
-        margin: 0;
-      }
 
-      .col-md-7 {
-        flex: 0 0 52.333333%;
-        max-width: 58.33333333%;
-      }
+  }
+}
+.register_addr {
+  .btn {
+    padding: 11.5px 13px;
+    margin: 0;
+  }
 
-      .row {
-        padding: 0 15px;
-        gap: 5px;
-        flex-wrap: nowrap;
+  .col-md-7 {
+    flex: 0 0 52.333333%;
+    max-width: 58.33333333%;
+  }
 
-        div {
-          padding: 0;
-        }
-      }
+  .row {
+    padding: 0 15px;
+    gap: 5px;
+    flex-wrap: nowrap;
 
-      .row + .row {
-        margin-top: 5px;
-      }
+    div {
+      padding: 0;
     }
+  }
+
+  .row + .row {
+    margin-top: 5px;
   }
 }
 
@@ -1744,7 +1745,18 @@ td {
 //************************************ modify_form ************************************/
 .user-modify-wrapper {
   .modify_form {
-
+    .row {
+      margin-bottom: 10px
+    }
+    .register_addr {
+      .col-md-7 {
+        flex: 0 0 calc(100% - (115px + 25%));
+        max-width: calc(100% - (115px + 25%));
+      }
+    }
+  }
+  .emailInput_domain {
+    margin-top: 29px;
   }
   .user_modify_program {
     > div > span {
@@ -1763,6 +1775,11 @@ td {
   }
   .rs-picker-input {
     height: 38.84px;
+  }
+  .birth-date-form {
+    .rs-picker-toggle-wrapper {
+      display: block;
+    }
   }
 }
 

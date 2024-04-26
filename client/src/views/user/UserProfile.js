@@ -16,6 +16,11 @@ function UserProfile() {
         gender: "",
         pgRegStatus: "",
 
+        email: "",
+        validEmail: false,
+        emailUserName: "",
+        domain: "",
+
         resumeLength: 0,
         resumeTotalLength: 0,
         resumePercent: 0,
