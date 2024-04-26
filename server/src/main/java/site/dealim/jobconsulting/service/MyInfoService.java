@@ -4,15 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import site.dealim.jobconsulting.domain.*;
-import site.dealim.jobconsulting.dto.FileDto;
 import site.dealim.jobconsulting.dto.ProgramCompanyDto;
 import site.dealim.jobconsulting.error.exception.SlotFullException;
 import site.dealim.jobconsulting.mapper.*;
-import site.dealim.jobconsulting.security.custom.CustomMember;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,7 +67,7 @@ public class MyInfoService {
                     .build();
             interviewSlotMapper.insertSlot(existingSlot);
         } else {
-            log.info("슬롯이 이미 존재합니다...");
+            log.info("슬롯이 이미 존재합니다");
         }
 
         log.info("슬롯 사용 가능여부 확인...");
@@ -118,20 +116,38 @@ public class MyInfoService {
     }
 
     @Transactional
-    public String upload(CustomMember member , List<File> file) {
-        Member user = member.getMember();
-        for(File f : file) {
-            if(f.getFileIdx() == null) {
-                fileMapper.upload(f);
-                log.info("파일 업로드 완료");
+    public List<String> uploadProfileImg(Member member , List<File> files) {
+        List<String> imgList = new ArrayList<>();
+        for(File file : files) {
+            if(file.getFileIdx() == null) {
+                log.info("파일 업로드...");
+                fileMapper.upload(file);
             }else {
-                fileMapper.updateUpload(f);
+                fileMapper.updateUpload(file);
             }
-            user.setProfileImg(f.getUploadFileUrl());
-            memberMapper.updateProfileImg(user);
-            log.info("멤버 프로필 완료");
+            log.info("멤버 프로필 수정...");
+            member.setProfileImg(file.getUploadFileUrl());
+            memberMapper.updateProfileImg(member);
+            imgList.add(member.getProfileImg());
         }
-        return user.getProfileImg();
+        return imgList;
+    }
+
+    @Transactional
+    public List<String> uploadResumeFile(Member member , List<File> files) {
+        List<String> resumeList = new ArrayList<>();
+        for(File file : files) {
+            if(file.getFileIdx() == null) {
+                log.info("파일 업로드...");
+                fileMapper.upload(file);
+            }else {
+                log.info("파일 수정...");
+                fileMapper.updateUpload(file);
+            }
+            member.setProfileImg(file.getUploadFileUrl());
+            resumeList.add(file.getUploadFileUrl());
+        }
+        return resumeList;
     }
 
 }

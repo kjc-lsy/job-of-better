@@ -1,18 +1,18 @@
 package site.dealim.jobconsulting.service;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import site.dealim.jobconsulting.domain.File;
-import site.dealim.jobconsulting.dto.FileDto;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,8 +20,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static com.google.common.io.Files.getFileExtension;
 
 @Service
 @Log4j2
@@ -32,15 +30,11 @@ private final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-
     public AwsService(AmazonS3 s3Client) {
         this.amazonS3 = s3Client;
     }
 
-
-
-
-    public List<File> uploadFile(String folder,List<MultipartFile> multipartFiles){
+    public List<File> uploadFile(String folder, List<MultipartFile> multipartFiles){
         log.info("AWS file upload start - folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 
@@ -52,7 +46,7 @@ private final AmazonS3 amazonS3;
     }
 
 
-    public List<File> uploadFile(Long idx ,String cate ,String folder,List<MultipartFile> multipartFiles){
+    public List<File> uploadFile(Long idx, String cate, String folder, List<MultipartFile> multipartFiles){
         log.info("AWS file upload start -idx,cate,folder,multipartFiles");
         List<File> fileList = new ArrayList<>();
 

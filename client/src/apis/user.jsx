@@ -40,13 +40,14 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
     return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
 }
 
-export const setProfileImg = (value) => {
+export const uploadFileToAWS = (value, folder, cate) => {
     const formData = new FormData();
-    formData.append('file', value);
-    formData.append('folder', 'profile');
-    formData.append('cate', 'profile_img');
 
-    return api.post('/api/user/upload', formData, {
+    formData.append('file', value);
+    formData.append('folder', folder);
+    formData.append('cate', cate);
+
+    return api.post('/api/files/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import * as user from '../../apis/user';
-import {getCurrentOccupancy, setProfileImg} from '../../apis/user';
+import {getCurrentOccupancy, uploadFileToAWS} from '../../apis/user';
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 
@@ -129,7 +129,7 @@ function UserProfile() {
         const file = e.target.files[0];
 
         try {
-            const response = await setProfileImg(file);
+            const response = await uploadFileToAWS(file, 'profile', 'profile_img');
             setInputValue({
                 ...inputValue,
                 profileImg: response.data
@@ -156,17 +156,24 @@ function UserProfile() {
 
     // 파일 변경 핸들러
     const handleResumeFileChange = async (e) => {
-        const reader = new FileReader();
         const file = e.target.files?.[0];
+        const ext = file.name.split('.').pop();
 
-        reader.readAsDataURL(file)
-        reader.onloadend = () => {
-            setInputValue({
-                ...inputValue,
-                resumeFile: reader.result,
-            });
-        };
+        setLoading(true)
+
+        try{
+            uploadFileToAWS(file, 'resume', 'resume_'+ext)
+        }catch(e) {
+            console.error(e.response.data);
+        }finally {
+            setLoading(false)
+        }
+
     };
+
+    useEffect(() => {
+        console.log(inputValue)
+    }, [inputValue]);
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
@@ -395,7 +402,7 @@ function UserProfile() {
                                         </a>
                                     </td>
                                     <td className="text-center">
-                                        <input type="file" accept=".pdf" id="resume-upload"
+                                        <input type="file" accept="application/pdf, image/*, .hwp" id="resume-upload"
                                                onChange={handleResumeFileChange} style={{display: "none"}}/>
                                         <label htmlFor={"resume-upload"} className={"justify-content-center"}>
                                             <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
