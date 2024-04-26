@@ -91,9 +91,18 @@ export default function MyHomeUserInfo({setInfoLoading,setLoading,inputValue,set
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
                 name: response.data.name,
+                username : response.data.username,
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
+                phone: response.data.phone,
+                birthDate: response.data.birthDate,
+                address: response.data.address,
+                zipCode: response.data.zipCode,
+
+                email: response.data.email,
                 pgRegStatus: response.data.pgRegStatus,
+                emailUserName : (response.data.email).split("@")[0],
+                domain : (response.data.email).split("@")[1],
                 registeredInterviewDatetime: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : null,
                 registeredInterviewDate: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : new Date(),
                 registeredInterviewTime: response.data.registeredInterviewDate ? `${hour}:${minute}` : null,

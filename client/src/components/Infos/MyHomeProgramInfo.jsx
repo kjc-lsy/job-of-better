@@ -203,9 +203,7 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                 </Table>
             </CardBody>
             <CardFooter>
-                <div className={location === "user-modify" ? "" :"programInfo"}>
-                    {location === "user-modify" ? "" :
-                        <>
+                <div className="programInfo">
                     <div>
                         <span>프로그램 진행 기한</span>
                         <p>{pgValue.pgProgStartDate} ~ {pgValue.pgProgEndDate}</p>
@@ -214,9 +212,7 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                         <span>프로그램 진행 상황</span>
                         <ProgCurrentStatus program={pgValue.pgStatus}/>
                     </div>
-                        </>
-                    }
-                    <Form role="form" className={location === "user-modify" ? "user_modify_program" :""}>
+                    <Form role="form">
                         <div>
                             <span>면접 시간</span>
                             {inputValue.interviewStatus === "Approved"
@@ -254,8 +250,6 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                             }
                         </div>
                     </Form>
-                    {location === "user-modify" ? "" :
-                        <>
                     <div>
                         <span>내용</span>
                         <Viewer
@@ -274,8 +268,6 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                                         </span>
                         </p>
                     </div>
-                        </>
-                    }
                 </div>
             </CardFooter>
         </Card>

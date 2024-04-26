@@ -1,26 +1,13 @@
 import React, {useState} from "react";
 
 // reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    CardText,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col, NavLink, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, CardTitle, Table,
-} from "reactstrap";
-import {Navigate, useNavigate} from "react-router-dom";
-import KorDatePicker from "../../components/KorDatePicker";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {Button, Card, CardBody, CardFooter, CardHeader, Col, Form, FormGroup, Input, Row,} from "reactstrap";
 import {useLoading} from "../../contexts/LoadingProvider";
 import MyHomeUserInfo from "../../components/Infos/MyHomeUserInfo";
-import MyHomeProgramInfo from "../../components/Infos/MyHomeProgramInfo";
+import EmailFormGroup from "../../components/FormGroup/EmailFormGroup";
+import BirthDateFormGroup from "../../components/FormGroup/BirthDateFormGroup";
+import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
+import RegisterAddrFormGroup from "../../components/FormGroup/RegisterAddrFormGroup";
 
 function UserProfile() {
     const {loading, setLoading} = useLoading(false);
@@ -28,6 +15,21 @@ function UserProfile() {
 
     const [inputValue, setInputValue] = React.useState({
         name: "",
+        username : "",
+        address : "",
+
+        email: "",
+        validEmail: false,
+        emailUserName: "",
+        domain: "",
+
+        zipCode: "",
+
+        birthDate: "",
+
+        phone: "",
+        validPhone: false,
+
         profileImg: "", //require("assets/img/emilyz.jpg")
         gender: "",
         pgRegStatus: "",
@@ -65,7 +67,6 @@ function UserProfile() {
         }
     };
 
-    const navigate = useNavigate();
     return (
         <div className="content user-profile-wrapper">
             {loading ? "" :
@@ -74,6 +75,7 @@ function UserProfile() {
                     <MyHomeUserInfo setInfoLoading={setInfoLoading} setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />
                 </Col>
                 <Col md="8">
+                    {infoLoading &&
                       <Card className="modify_form">
                         <CardHeader>
                             <h5 className="title">내 정보 수정</h5>
@@ -85,9 +87,11 @@ function UserProfile() {
                                         <FormGroup>
                                             <label>아이디</label>
                                             <Input
-                                                defaultValue="michael23"
-                                                placeholder="Username"
+                                                defaultValue=""
+                                                placeholder="username"
                                                 type="text"
+                                                value={inputValue.username}
+                                                disabled={true}
                                             />
                                         </FormGroup>
                                     </Col>
@@ -95,29 +99,28 @@ function UserProfile() {
                                         <FormGroup>
                                             <label>이름</label>
                                             <Input
-                                                defaultValue="Mike"
-                                                placeholder="Company"
+                                                defaultValue=""
+                                                placeholder="name"
                                                 type="text"
+                                                value={inputValue.name}
+                                                disabled={true}
                                             />
                                         </FormGroup>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col className="pr-md-1" md="6">
-                                        <FormGroup>
-                                            <label htmlFor="birth_date">생년월일</label>
-                                            <KorDatePicker id="birth_date" name="birth_date" />
-                                        </FormGroup>
+                                        <BirthDateFormGroup inputValue={inputValue} setInputValue={setInputValue}/>
                                     </Col>
                                     <Col className="pl-md-1" md="6">
-                                        <FormGroup>
-                                            <label htmlFor="phone">전화번호</label>
-                                            <Input type="text" id="phone" name="phone" placeholder="'-'없이 번호만 입력"  />
-                                        </FormGroup>
+                                        <PhoneFormGroup inputValue={inputValue} setInputValue={setInputValue}/>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col className="pr-md-1" md="6">
+                                    <Col className={"pr-md-1"} md="12">
+                                        <EmailFormGroup inputValue={inputValue} setInputValue={setInputValue}/>
+                                    </Col>
+                                    {/*<Col className="pr-md-1" md="6">
                                         <FormGroup>
                                             <label htmlFor="exampleInputEmail1">
                                                 이메일
@@ -137,9 +140,9 @@ function UserProfile() {
                                             </InputGroup>
                                         </FormGroup>
                                     </Col>
-                                    <Col className="pr-md-1" md="6">
+                                    <Col className="pl-md-1" md="6">
                                         <FormGroup>
-                                            <InputGroup className="emailInput">
+                                            <InputGroup className="emailInput emailInput_domain">
                                                 <span className="">@</span>
                                                 <Input
                                                     value={inputValue.domain}
@@ -174,20 +177,14 @@ function UserProfile() {
                                                 </ButtonDropdown>
                                             </InputGroup>
                                         </FormGroup>
-                                    </Col>
+                                    </Col>*/}
                                 </Row>
-                                <Row>
-                                    <Col md="12">
-                                        <FormGroup>
-                                            <label>주소</label>
-                                            <Input
-                                                defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                                                placeholder="Home Address"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
+                                <RegisterAddrFormGroup
+                                    label="개인 주소"
+                                    placeholder="상세주소"
+                                    handleAddrValue={(value) => setInputValue({...inputValue, address: value})}
+                                    handleZipCodeValue={(value) => setInputValue({...inputValue, zipCode: value})}
+                                />
 
                             </Form>
                         </CardBody>
@@ -196,8 +193,7 @@ function UserProfile() {
                                   저장
                               </Button>
                           </CardFooter>
-                      </Card>
-                    {infoLoading && <MyHomeProgramInfo inputValue={inputValue} setInputValue={setInputValue}/>}
+                      </Card>}
                 </Col>
 
             </Row>

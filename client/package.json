@@ -51,6 +51,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@radix-ui/themes": "^3.0.2",
+    "@react-pdf/renderer": "^3.4.4",
     "@toast-ui/react-editor": "^3.2.3",
     "aws-sdk": "^2.1604.0",
     "axios": "^1.6.5",
@@ -79,6 +80,7 @@
     "react-spinners": "^0.13.8",
     "rsuite": "^5.56.0",
     "sass": "1.69.5",
+    "save": "^2.9.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
