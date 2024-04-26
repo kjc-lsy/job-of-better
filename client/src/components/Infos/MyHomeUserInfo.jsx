@@ -11,6 +11,7 @@ import MagnifyingModal from "../Modal/MagnifyingModal";
 import PdfViewer from "../Viewer/PdfViewer";
 import {format} from "date-fns";
 import {Button, Loader} from "rsuite";
+import HwpViewer from "../Viewer/HwpViewer";
 
 export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
@@ -125,6 +126,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
         switch (fileType) {
             case 'pdf':
                 return <PdfViewer fileUrl={file.uploadFileUrl} />;
+            case 'hwp':
+                return <HwpViewer fileUrl={file.uploadFileUrl} />;
             case 'jpg':
             case 'jpeg':
             case 'png':

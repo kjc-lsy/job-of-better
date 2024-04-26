@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
 import {Document, Page, pdfjs} from 'react-pdf';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const PdfViewer = ({fileUrl}) => {
     const [numPages, setNumPages] = React.useState(null);
-    const [pageNumber, setPageNumber] = React.useState(1);
+    const [pageNumber, setPageNumber] = React.useState(2);
     const [isLoading, setIsLoading] = React.useState(true);
     const pdfRef = useRef(null);
 
@@ -20,8 +20,10 @@ const PdfViewer = ({fileUrl}) => {
                 file={fileUrl}
                 onLoadSuccess={onDocumentLoadSuccess}
                 loading={isLoading}
+                options={{workerSrc: "/pdf.worker.js"}}
             >
                 <Page
+                    renderMode={"svg"}
                     pageNumber={pageNumber}
                     width={pdfRef.current?.clientWidth}
                     height={pdfRef.current?.clientHeight}
