@@ -40,10 +40,13 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
     return api.get('/api/user/get-current-occupancy?slotStartDatetime=' + new Date(time + 9 * 60 * 60 * 1000).toISOString())
 }
 
-export const uploadFileToAWS = (value, path) => {
+export const uploadFileToAWS = (files, path) => {
     const formData = new FormData();
 
-    formData.append('file', value);
+    Array.from(files).forEach(file => {
+        formData.append('file', file);
+    })
+
     formData.append('path', path);
 
     return api.post('/api/files/upload', formData, {
@@ -51,4 +54,8 @@ export const uploadFileToAWS = (value, path) => {
             'Content-Type': 'multipart/form-data'
         }
     });
+}
+
+export const getFilesByPath = (path) => {
+    return api.get(`/api/files/get-files?path=${path}`)
 }

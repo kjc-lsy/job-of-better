@@ -14,7 +14,7 @@ const MagnifyingModal = () => {
     return (
         <>
             <Button onClick={() => handleOpen()}>
-                보기
+                name
             </Button>
             <Modal
                 open={open}

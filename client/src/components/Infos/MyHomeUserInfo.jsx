@@ -1,14 +1,15 @@
 import React, {useEffect, useRef} from "react";
-import {uploadFileToAWS, userProfileInfo} from "../../apis/user";
 import * as user from "../../apis/user";
+import {getFilesByPath, uploadFileToAWS, userProfileInfo} from "../../apis/user";
 import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight, faArrowCircleUp, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleRight, faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import MagnifyingModal from "../Modal/MagnifyingModal";
 
-export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
+export default function MyHomeUserInfo({setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
     const imgRef = useRef();
     useEffect(() => {
@@ -18,6 +19,11 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
             });
     }, []);
 
+    useEffect(() => {
+        getFilesByPath('resume').then(res => {
+            console.log(res.data)
+        })
+    }, []);
 
     const changeProfileImg = () => {
         document.getElementById("profile-img").click();
@@ -53,15 +59,13 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
 
     };
 
-    // 파일 변경 핸들러
     const handleResumeFileChange = async (e) => {
-        const file = e.target.files?.[0];
-        const ext = file.name.split('.').pop();
+        const files = e.target.files;
 
         setLoading(true)
 
         try {
-            uploadFileToAWS(file, 'resume')
+            uploadFileToAWS(files, 'resume')
         } catch (e) {
             console.error(e.response.data);
         } finally {
@@ -69,10 +73,6 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
         }
 
     };
-
-    useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
@@ -182,6 +182,14 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
             <Card className="card-user-box">
                 <CardHeader>
                     <CardTitle tag="h4">이력서</CardTitle>
+                    <input type="file" accept="application/pdf, image/*, .hwp"
+                           id="resume-upload"
+                           onChange={handleResumeFileChange} style={{display: "none"}}
+                           multiple
+                    />
+                    <label htmlFor={"resume-upload"} className={"justify-content-center"}>
+                        <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
+                    </label>
                 </CardHeader>
                 <CardBody>
                     <Table className="tablesorter">
@@ -190,7 +198,7 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
                             <th className="text-center">파일명</th>
                             <th className="text-center">등록일</th>
                             <th className="text-center">이력서 보기</th>
-                            <th className="text-center">등록하기</th>
+                            <th className="text-center">삭제하기</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -203,20 +211,11 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
                             <td className="text-center">
                             </td>
                             <td className="text-center">
-                                <a onClick={(e) => {
-                                    e.preventDefault();
-                                    alert("파일등록")
-                                }}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                                </a>
+                                <MagnifyingModal
+                                />
                             </td>
                             <td className="text-center">
-                                <input type="file" accept="application/pdf, image/*, .hwp"
-                                       id="resume-upload"
-                                       onChange={handleResumeFileChange} style={{display: "none"}}/>
-                                <label htmlFor={"resume-upload"} className={"justify-content-center"}>
-                                    <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
-                                </label>
+                                x
                             </td>
                         </tr>
                         </tbody>
@@ -254,7 +253,6 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
                                         <FontAwesomeIcon size={"lg"} icon={faArrowCircleRight}/>
                                     </a>
                                 </td>
-
                             </tr>
                             :
                             <tr>

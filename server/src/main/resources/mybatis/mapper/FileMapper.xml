@@ -31,5 +31,11 @@
         WHERE upload_file_url = #{profileImg} AND related_idx = #{idx} AND upload_file_path = #{path}
     </select>
 
+    <select id="getFiles" parameterType="map">
+        SELECT *
+        FROM file
+        WHERE upload_file_path = #{path}
+          AND related_idx = #{memIdx}
+    </select>
 
 </mapper>

@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.AwsService;
@@ -53,7 +50,13 @@ public class AwsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
         }
 
+        log.info("파일 업로드 성공!");
         return ResponseEntity.ok(fileUrls);
+    }
+
+    @GetMapping("/get-files")
+    public ResponseEntity<?> getFiles(@AuthenticationPrincipal CustomMember member, @RequestParam("path") String path) {
+        return new ResponseEntity<>(myInfoService.getFileList(member.getMember().getIdx(), path), HttpStatus.OK);
     }
 
 }
