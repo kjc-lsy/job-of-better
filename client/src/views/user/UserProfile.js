@@ -276,7 +276,7 @@ function UserProfile() {
         e.preventDefault()
         user.registerInterview(inputValue.registeredInterviewDatetime)
             .then((response) => {
-                alert("신청이 완료되었습니다. \n기업 관리자의 확정 이후에는 수정이 불가능합니다.")
+                sendAlert("error", "신청이 완료되었습니다. \n기업 관리자의 확정 이후에는 수정이 불가능합니다.")
 
                 setInputValue(prev => ({
                     ...prev,
@@ -284,7 +284,7 @@ function UserProfile() {
                 }));
             })
             .catch((error) => {
-                alert(error.response.data);
+                sendAlert("error", error.response.data);
             });
     }
     const convertTimeToMinutes = (time) => {

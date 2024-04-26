@@ -1,17 +1,17 @@
 import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row} from "reactstrap";
-import React, {Suspense, useEffect, useState, useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import * as user from "../../apis/user";
-import * as company from "../../apis/company";
-import {useAuth} from "../../contexts/AuthContextProvider";
-import {LoadingContext} from "../../contexts/LoadingProvider";
 import {coverLetterInfo} from "../../apis/user";
+import {LoadingContext} from "../../contexts/LoadingProvider";
 import {Message} from 'rsuite';
+import {useAlert} from "../../components/Alert/useAlert";
 
 const CoverLetter = () => {
     const {loading, setLoading} = useContext(LoadingContext);
     const [mclTitle, setMclTitle] = useState("");
     const [inputLength, setInputLength] = useState("");
     const [IsDone, setIsDone] = useState(false);
+    const sendAlert = useAlert();
     let [inputValue, setInputValue] = useState([{
         num: 1,
         id: 0,
@@ -122,9 +122,9 @@ const CoverLetter = () => {
         e.preventDefault();
         //console.log(mclTitle);
         if (mclTitle === "" || mclTitle === null || mclTitle === undefined) {
-            alert("제목을 입력해 주세요.")
+            sendAlert("error", "제목을 입력해 주세요.")
         } else if (inputValue[0].answer === "" || inputValue[0].answer === null || inputValue[0].answer === undefined) {
-            alert("항목을 하나 이상 입력해주세요：)");
+            sendAlert("error", "항목을 하나 이상 입력해주세요 :)")
         } else {
             setInputValue((prevState) => prevState.map((v) => ({
                 ...v,
@@ -152,14 +152,14 @@ const CoverLetter = () => {
             //navigate('/auth/login')
             if (response.data.SUCCESS === "SUCCESS") {
                 if (response.data.type === "Y") {
-                    alert("등록이 완료되었습니다.");
+                    sendAlert("error", "등록이 완료되었습니다.");
                 } else {
-                    alert("임시저장되었습니다. \n작성 완료 후 제출버튼을 눌러주세요.")
+                    sendAlert("success", "임시저장되었습니다. \n작성 완료 후 제출버튼을 눌러주세요.")
                 }
                 getInfo();
             }
 
-            //alert(response.data)
+            //sendAlert("error", response.data)
         } catch (error) {
             console.error("error", error.response.data);
         }

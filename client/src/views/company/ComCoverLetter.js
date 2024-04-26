@@ -1,24 +1,16 @@
-import React, {useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 // reactstrap components
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    Row,
-    Col,
-    FormGroup,
-    Input,
-    Form,
-    Button, CardTitle, Label,
-} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Label, Row,} from "reactstrap";
 //import {coverLetterSave} from "../../apis/company";
 import * as company from "../../apis/company";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLoading} from "../../contexts/LoadingProvider";
+import {useAlert} from "../../components/Alert/useAlert";
 
 function ComCoverLetter() {
     const {isLogin} = useAuth();
     const {loading, setLoading} = useLoading();
+    const sendAlert = useAlert();
 
     const [inputValue, setInputValue] = useState([{
         num: 1,
@@ -49,7 +41,7 @@ function ComCoverLetter() {
             if (inputValue.length > 1) {
                 setInputValue(inputValue.filter(input => (input.num !== num)));
             } else {
-                alert("항목은 한개 이상이어야 합니다.");
+                sendAlert("error", "항목은 한개 이상이어야 합니다.");
             }
         } else {
             company.coverLetterDelete(id)
@@ -69,9 +61,9 @@ function ComCoverLetter() {
     const save = (e) => {
         e.preventDefault();
         if (inputValue[0].question === "") {
-            alert("항목을 하나 이상 입력해주세요.");
+            sendAlert("error", "항목을 하나 이상 입력해주세요.");
         } else if (inputValue.some(value => !value.question)) {
-            alert("빈 값은 등록 할 수 없습니다.\n 삭제 또는 내용을 입력해주세요.")
+            sendAlert("error", "빈 값은 등록 할 수 없습니다.\n 삭제 또는 내용을 입력해주세요.")
         } else {
             //console.log(inputValue);
             //inputValue.map(value => value.question)
@@ -79,9 +71,9 @@ function ComCoverLetter() {
                 .then(response => {
                     //navigate('/auth/login')
                     if (response.data === "SUCCESS") {
-                        alert("등록이 완료되었습니다.")
+                        sendAlert("success", "등록이 완료되었습니다.")
                     }
-                    //alert(response.data)
+                    //sendAlert("error", response.data)
                 })
                 .catch(error => {
                     console.error("error", error.response.data);

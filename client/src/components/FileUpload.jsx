@@ -20,7 +20,7 @@ function FileUpload() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!file) {
-            alert("파일을 선택해주세요.");
+            sendAlert("error", "파일을 선택해주세요.");
             return;
         }
 
@@ -41,11 +41,11 @@ function FileUpload() {
 
             console.log(fileDownloadLink);
 
-            alert("파일이 정상적으로 업로드 되었습니다.");
+            sendAlert("error", "파일이 정상적으로 업로드 되었습니다.");
 
         } catch (error) {
             console.error("Error uploading file: ", error);
-            alert("파일이 업로드 중 에러가 발생했습니다.");
+            sendAlert("error", "파일이 업로드 중 에러가 발생했습니다.");
         }
     };
 

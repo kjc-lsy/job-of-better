@@ -12,9 +12,11 @@ import BirthDateFormGroup from "../../components/FormGroup/BirthDateFormGroup";
 import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
 import GenderFormGroup from "../../components/FormGroup/GenderFormGroup";
 import RegisterAddrFormGroup from "../../components/FormGroup/RegisterAddrFormGroup";
+import {useAlert} from "../../components/Alert/useAlert";
 
 const Register = ({header}) => {
     const navigate = useNavigate();
+    const sendAlert = useAlert();
     const [inputValue, setInputValue] = useState({
         username: "",
         validUsername: false,
@@ -61,10 +63,10 @@ const Register = ({header}) => {
         auth.join(inputValue)
             .then(response => {
                 navigate('/auth/login')
-                alert('회원가입 성공! 로그인 해주세요')
+                sendAlert("error", '회원가입 성공! 로그인 해주세요')
             })
             .catch(error => {
-                alert(error.response.data);
+                sendAlert("error", error.response.data);
             });
     }
 

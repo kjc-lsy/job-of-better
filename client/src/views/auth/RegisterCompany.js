@@ -17,10 +17,12 @@ import EmailFormGroup from "../../components/FormGroup/EmailFormGroup";
 import BOpeningDateFormGroup from "../../components/FormGroup/BOpeningDateFormGroup";
 import CeoNameFormGroup from "../../components/FormGroup/CeoNameFormGroup";
 import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
+import {useAlert} from "../../components/Alert/useAlert";
 
 const CompanyRegister = () => {
 
     const navigate = useNavigate();
+    const sendAlert = useAlert();
     const [inputValue, setInputValue] = useState({
         username: "",
         validUsername: false,
@@ -78,11 +80,11 @@ const CompanyRegister = () => {
         auth.companyJoin(inputValue)
             .then(response => {
                 navigate('/auth/login')
-                alert('회원가입 성공! 로그인 해주세요')
+                sendAlert("success", '회원가입 성공! 로그인 해주세요')
             })
             .catch(error => {
                 console.log(error)
-                alert(error.response.data);
+                sendAlert("error", error.response.data);
             });
     }
 

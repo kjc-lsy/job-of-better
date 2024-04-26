@@ -8,6 +8,7 @@ import TimeRangePicker from "../../../components/Picker/TimeRangePicker";
 import {InputNumber, InputPicker} from "rsuite";
 import {format} from "date-fns";
 import ToastUiEditor from "../../../components/Editor/ToastUiEditor";
+import {useAlert} from "../../../components/Alert/useAlert";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
@@ -16,6 +17,7 @@ const ProgramModify = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [fetchedProgram, setFetchedProgram] = useState({});
+    const sendAlert = useAlert();
 
     const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {
         label: '90분',
@@ -34,10 +36,10 @@ const ProgramModify = () => {
 
         try {
             const response = await updateProgram(updatedProgram);
-            alert(response.data)
+            sendAlert("success", response.data)
             navigate('/company/program-details/' + pgIdx)
         } catch (e) {
-            alert(e.response.data)
+            sendAlert("error", e.response.data)
             console.log(e)
         }
     }

@@ -2,6 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import api from '../apis/api';
 import Cookies from 'js-cookie';
 import * as auth from '../apis/auth';
+import {useAlert} from "../components/Alert/useAlert";
 
 const AuthContext = createContext(null);
 
@@ -13,6 +14,7 @@ export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
     // 권한 정보
     const [roles, setRoles] = useState({user: false, company: false});
+    const sendAlert = useAlert();
 
     // useEffect를 통해 AuthContextProvider가 마운트된 모든 컴포넌트에서 이 함수를 한번 실행
     useEffect(() => {
@@ -35,7 +37,7 @@ export const AuthContextProvider = ({children}) => {
             // 로그인 유저 세팅
             setLoginUser()
         } catch (error) {
-            alert(error.response.status + " : 로그인에 실패하였습니다")
+            sendAlert("error", error.response.status + " : 로그인에 실패하였습니다")
         }
     };
 

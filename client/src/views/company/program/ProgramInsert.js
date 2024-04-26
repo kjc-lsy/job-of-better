@@ -11,12 +11,14 @@ import TimeRangePicker from "../../../components/Picker/TimeRangePicker";
 import {format} from "date-fns";
 import ToastUiEditor from "../../../components/Editor/ToastUiEditor";
 import {InputNumber, InputPicker} from "rsuite";
+import {useAlert} from "../../../components/Alert/useAlert";
 
 const ProgramInsert = () => {
     const [inputValue, setInputValue] = useState({});
     const editorRef = useRef();
     const {theme} = useContext(ThemeContext);
     const navigate = useNavigate();
+    const sendAlert = useAlert();
 
     const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {
         label: '90분',
@@ -49,16 +51,16 @@ const ProgramInsert = () => {
         }
 
         if (missingFields.length > 0) {
-            alert(`다음 정보를 입력해야 합니다: ${missingFields.join(', ')}`);
+            sendAlert("error", `다음 정보를 입력해야 합니다: ${missingFields.join(', ')}`);
             return;
         }
 
         try {
-            const response = await saveProgram(inputValue);
-            alert(response.data);
+            await saveProgram(inputValue);
+            sendAlert("success", "프로그램 등록 성공!")
             navigate('/company/program');
         } catch (e) {
-            alert(e.response.data);
+            sendAlert("error", e.response.data);
             console.log(e);
         }
     }
