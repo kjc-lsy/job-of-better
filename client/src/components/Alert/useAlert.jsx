@@ -5,7 +5,7 @@ export function useAlert() {
     const toaster = useToaster();
 
     const sendAlert = (type, msg) => {
-        toaster.push(<AlertMessage type={type}>{msg}</AlertMessage>, { placement: 'topEnd', duration: 5000 });
+        toaster.push(<AlertMessage type={type}>{msg}</AlertMessage>, { placement: 'bottomEnd', duration: 5000 });
     };
 
     return sendAlert;
