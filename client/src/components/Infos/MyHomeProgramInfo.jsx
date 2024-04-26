@@ -5,12 +5,13 @@ import KorDatePicker from "../KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {InputPicker} from "rsuite";
 import {Viewer} from "@toast-ui/react-editor";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import * as user from '../../apis/user';
 import {getCurrentOccupancy} from '../../apis/user';
 
 export default function MyHomeProgramInfo({inputValue,setInputValue}) {
     const navigate = useNavigate();
+    const location = useLocation().pathname.split('/').pop();
     const [interviewTimeLabel, setInterviewTimeLabel] = React.useState([]);
     const [interviewDisableTimeLabel, setInterviewDisableTimeLabel] = React.useState([]);
     const [interviewTimeLabelNode, setInterviewTimeLabelNode] = React.useState([]);
@@ -40,6 +41,7 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
             .catch((error) => {
                 console.error(error.response.data);
             });
+        console.log(location);
     },[])
 
     useEffect(() => {
@@ -72,6 +74,7 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
             });
         }
     }, [inputValue.registeredInterviewDate, interviewTimeLabel, inputValue.registeredInterviewTime]);
+
     useEffect(() => {
         const registeredInterviewDatetime = new Date(inputValue.registeredInterviewDate?.getTime());
         if (inputValue.registeredInterviewTime) {
@@ -200,7 +203,9 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                 </Table>
             </CardBody>
             <CardFooter>
-                <div className="programInfo">
+                <div className={location === "user-modify" ? "" :"programInfo"}>
+                    {location === "user-modify" ? "" :
+                        <>
                     <div>
                         <span>프로그램 진행 기한</span>
                         <p>{pgValue.pgProgStartDate} ~ {pgValue.pgProgEndDate}</p>
@@ -209,7 +214,9 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                         <span>프로그램 진행 상황</span>
                         <ProgCurrentStatus program={pgValue.pgStatus}/>
                     </div>
-                    <Form role="form">
+                        </>
+                    }
+                    <Form role="form" className={location === "user-modify" ? "user_modify_program" :""}>
                         <div>
                             <span>면접 시간</span>
                             {inputValue.interviewStatus === "Approved"
@@ -247,6 +254,8 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                             }
                         </div>
                     </Form>
+                    {location === "user-modify" ? "" :
+                        <>
                     <div>
                         <span>내용</span>
                         <Viewer
@@ -265,6 +274,8 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                                         </span>
                         </p>
                     </div>
+                        </>
+                    }
                 </div>
             </CardFooter>
         </Card>

@@ -18,13 +18,39 @@ import {Navigate, useNavigate} from "react-router-dom";
 import KorDatePicker from "../../components/KorDatePicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
+import {useLoading} from "../../contexts/LoadingProvider";
+import MyHomeUserInfo from "../../components/Infos/MyHomeUserInfo";
+import MyHomeProgramInfo from "../../components/Infos/MyHomeProgramInfo";
 
 function UserProfile() {
+    const {loading, setLoading} = useLoading(false);
+    const [infoLoading, setInfoLoading] = useState(false);
+
     const [inputValue, setInputValue] = React.useState({
-        email: "",
-        validEmail: false,
-        emailUserName: "",
-        domain: "",
+        name: "",
+        profileImg: "", //require("assets/img/emilyz.jpg")
+        gender: "",
+        pgRegStatus: "",
+
+        resumeLength: 0,
+        resumeTotalLength: 0,
+        resumePercent: 0,
+        coverLetterLength: 0,
+        coverLetterTotalLength: 0,
+        coverLetterPercent: 0,
+
+        mclTitle: "",
+        mclDate: "",
+        mclIsConfirm: "",
+
+        resumeTitle: "",
+        resumeIsConfirm: "",
+
+        registeredInterviewDatetime: null,
+        registeredInterviewDate: null,
+        registeredInterviewTime: null,
+
+        assignedInterviewDate: "",
     });
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
@@ -41,107 +67,20 @@ function UserProfile() {
 
     const navigate = useNavigate();
     return (
-        <div className="content">
+        <div className="content user-profile-wrapper">
+            {loading ? "" :
             <Row>
                 <Col md="4">
-                    <Card className="card-user">
-                        <CardBody>
-                            <CardText/>
-                            <div className="author">
-                                <div className="block block-one"/>
-                                <div className="block block-two"/>
-                                <div className="block block-three"/>
-                                <div className="block block-four"/>
-                                <input type="file" id="profile-img"/>
-                                <label htmlFor="profile-img">
-                                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                                        <img
-                                            alt="..."
-                                            className="avatar"
-                                            src={require("assets/img/emilyz.jpg")}
-                                        />
-
-                                    </a>
-                                </label>
-                                <h5 className="title">Mike Andrew</h5>
-                                <p className="description">Ceo/Co-Founder</p>
-                            </div>
-                            {/*<div className="card-description">
-                                Do not be scared of the truth because we need to restart the
-                                human foundation in truth And I love you like Kanye loves
-                                Kanye I love Rick Owens’ bed design but the back is...
-                            </div>*/}
-                        </CardBody>
-                        <CardFooter>
-                            <Table>
-                                <thead>
-                                <tr>
-                                    <th colspan="2">이력서 / 자기소개서</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <a onClick={(e)=> {
-                                            e.preventDefault()
-                                            navigate("/user/resume")}}>
-                                            이력서 바로가기
-                                        </a>
-                                    </td>
-                                    <td>
-                                        상태
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a onClick={(e) => {
-                                            e.preventDefault()
-                                            navigate("/user/cover-letter")
-                                        }}>
-                                            자기소개서 바로가기
-                                        </a>
-                                    </td>
-                                    <td>상태</td>
-                                </tr>
-                                </tbody>
-                            </Table>
-
-                        </CardFooter>
-                        {/*<CardFooter>
-                            <div className="button-container">
-                                <Button className="btn-icon btn-round" color="facebook">
-                                    <i className="fab fa-facebook"/>
-                                </Button>
-                                <Button className="btn-icon btn-round" color="twitter">
-                                    <i className="fab fa-twitter"/>
-                                </Button>
-                                <Button className="btn-icon btn-round" color="google">
-                                    <i className="fab fa-google-plus"/>
-                                </Button>
-                            </div>
-                        </CardFooter>*/}
-                    </Card>
-
+                    <MyHomeUserInfo setInfoLoading={setInfoLoading} setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />
                 </Col>
                 <Col md="8">
-                      <Card>
+                      <Card className="modify_form">
                         <CardHeader>
-                            <h5 className="title">내 정보</h5>
+                            <h5 className="title">내 정보 수정</h5>
                         </CardHeader>
                         <CardBody>
                             <Form>
                                 <Row>
-                                    {/*<Col className="pr-md-1" md="5">
-                                        <FormGroup>
-                                            <label>Company (disabled)</label>
-                                            <Input
-                                                defaultValue="Creative Code Inc."
-                                                disabled
-                                                placeholder="Company"
-                                                type="text"
-                                            />
-                                        </FormGroup>
-                                    </Col>*/}
                                     <Col className="pr-md-1" md="6">
                                         <FormGroup>
                                             <label>아이디</label>
@@ -178,7 +117,7 @@ function UserProfile() {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col className="pr-md-1" md="12">
+                                    <Col className="pr-md-1" md="6">
                                         <FormGroup>
                                             <label htmlFor="exampleInputEmail1">
                                                 이메일
@@ -195,6 +134,12 @@ function UserProfile() {
                                                     type="text"
                                                     autoComplete="new-email"
                                                 />
+                                            </InputGroup>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col className="pr-md-1" md="6">
+                                        <FormGroup>
+                                            <InputGroup className="emailInput">
                                                 <span className="">@</span>
                                                 <Input
                                                     value={inputValue.domain}
@@ -243,45 +188,20 @@ function UserProfile() {
                                         </FormGroup>
                                     </Col>
                                 </Row>
-                                
+
                             </Form>
                         </CardBody>
-                        <CardFooter>
-                            <Button className="btn-fill" color="primary" type="submit">
-                                저장
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle tag="h4">프로그램</CardTitle>
-                            <p className="category">신청한 프로그램 정보입니다. 면접시간 등 확인해주세요.</p>
-                        </CardHeader>
-                        <CardBody>
-                            <Table className="tablesorter">
-                                <thead className="text-primary">
-                                <tr>
-                                    <th>프로그램명</th>
-                                    <th>기관명</th>
-                                    <th>전화번호</th>
-                                    <th className="text-center">면접시간</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Dakota Rice</td>
-                                    <td>Niger</td>
-                                    <td>Oud-Turnhout</td>
-                                    <td className="text-center">$36,738</td>
-                                </tr>
-
-                                </tbody>
-                            </Table>
-                        </CardBody>
-                    </Card>
+                          <CardFooter>
+                              <Button className="btn-fill" color="primary" type="submit">
+                                  저장
+                              </Button>
+                          </CardFooter>
+                      </Card>
+                    {infoLoading && <MyHomeProgramInfo inputValue={inputValue} setInputValue={setInputValue}/>}
                 </Col>
 
             </Row>
+            }
         </div>
     );
 }

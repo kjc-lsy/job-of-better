@@ -1,8 +1,7 @@
 import React from 'react';
 import {Button, Loader, Modal} from 'rsuite'
-import PdfViewer from "../Viewer/PdfViewer";
 
-const MagnifyingModal = () => {
+const MagnifyingModal = ({buttonName,component}) => {
     const [open, setOpen] = React.useState(false);
     const [rows, setRows] = React.useState(0);
     const handleOpen = () => setOpen(true);
@@ -14,7 +13,7 @@ const MagnifyingModal = () => {
     return (
         <>
             <Button onClick={() => handleOpen()}>
-                보기
+                {buttonName}
             </Button>
             <Modal
                 open={open}
@@ -23,19 +22,17 @@ const MagnifyingModal = () => {
                 onExited={() => {
                     setRows(0);
                 }}
-                overflow={false}
+                overflow={true}
             >
                 <Modal.Header>
                     <Modal.Title>Modal Title</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {rows ? (
-                        <PdfViewer/>
-                    ) : (
+                    {rows ? component : (
                         <div style={{ textAlign: 'center' }}>
                             <Loader size="md" />
                         </div>
-                    )}
+                    )  }
                 </Modal.Body>
             </Modal>
         </>

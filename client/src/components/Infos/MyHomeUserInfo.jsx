@@ -7,17 +7,12 @@ import maleImg from "../../assets/img/userImg_male.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowCircleRight, faArrowCircleUp, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import MagnifyingModal from "../Modal/MagnifyingModal";
+import PdfViewer from "../Viewer/PdfViewer";
 
-export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
+export default function MyHomeUserInfo({setInfoLoading,setLoading,inputValue,setInputValue}) {
     const navigate = useNavigate();
     const imgRef = useRef();
-    useEffect(() => {
-        Promise.all([userInfo(), coverLetterInfo()])
-            .catch((error) => {
-                console.error(error.response.data);
-            });
-    }, []);
-
 
     const changeProfileImg = () => {
         document.getElementById("profile-img").click();
@@ -69,13 +64,20 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
         }
 
     };
-
     useEffect(() => {
+        Promise.all([userInfo(), userCoverLetterInfo()])
+            .catch((error) => {
+                console.error(error.response.data);
+            });
+    }, []);
+
+    /*useEffect(() => {
         console.log(inputValue)
-    }, [inputValue]);
+    }, [inputValue]);*/
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
+        setInfoLoading(false);
         try {
             const response = await userProfileInfo();
 
@@ -84,6 +86,7 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
             const hour = registeredInterviewDate?.split('T')[1]?.split(':')[0];
             const minute = registeredInterviewDate?.split('T')[1]?.split(':')[1];
 
+            //console.log(response.data);
             // 사용자 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
@@ -98,11 +101,15 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
             }));
         } catch (error) {
             console.error(error.response.data);
+        }finally {
+            setInfoLoading(true);
         }
     };
 
+
+
     //coverletter 값 들고오기
-    const coverLetterInfo = async () => {
+    const userCoverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
             setInputValue((prevInputValue) => ({
@@ -203,12 +210,7 @@ export default function MyHomeUserInfo({setLoading,inputValue,setInputValue}) {
                             <td className="text-center">
                             </td>
                             <td className="text-center">
-                                <a onClick={(e) => {
-                                    e.preventDefault();
-                                    alert("파일등록")
-                                }}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                                </a>
+                                <MagnifyingModal buttonName={"보기"} component={<PdfViewer/>} />
                             </td>
                             <td className="text-center">
                                 <input type="file" accept="application/pdf, image/*, .hwp"
