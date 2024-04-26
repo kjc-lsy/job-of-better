@@ -58,7 +58,7 @@ private final AmazonS3 amazonS3;
                     .uploadFileUrl(fileDto.getUploadFileUrl())
                     .uploadFilePath(path)
                     .relatedIdx(idx)
-                    .uploadFileExe(getFileExtension(fileDto.getOriginalFileName()).substring(1))
+                    .uploadFileExt(getFileExtension(fileDto.getOriginalFileName()).substring(1))
                     .build());
             //System.out.println("fileList = " + fileBuilder(folder, file));
         });
@@ -91,7 +91,7 @@ private final AmazonS3 amazonS3;
                 .uploadFilePath(path)
                 .uploadFileUrl(amazonS3.getUrl(bucket, fileName).toString())
                 .uploadFileDate(LocalDateTime.now())
-                .uploadFileExe(getFileExtension(originalFileName).substring(1))
+                .uploadFileExt(getFileExtension(originalFileName).substring(1))
                 .build();
     }
 

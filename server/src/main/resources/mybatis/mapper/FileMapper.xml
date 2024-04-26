@@ -11,13 +11,13 @@
          upload_file_path,
          upload_file_url,
          related_idx,
-         upload_file_exe)
+         upload_file_ext)
         VALUES( #{originalFileName},
                 #{uploadFileName},
                 #{uploadFilePath},
                 #{uploadFileUrl},
                 #{relatedIdx},
-                #{uploadFileExe}
+                #{uploadFileExt}
               )
     </insert>
 

@@ -14,5 +14,5 @@ public class File {
     private String uploadFileUrl;
     private LocalDateTime uploadFileDate;
     private Long relatedIdx;
-    private String uploadFileExe;
+    private String uploadFileExt;
 }
