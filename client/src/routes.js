@@ -1,6 +1,6 @@
 import Login from "./views/auth/Login";
 import Register from "./views/auth/Register";
-import MemberList from "./views/company/MemberList";
+import MemberList from "./views/company/memberList/MemberList";
 import ComCoverLetter from "./views/company/ComCoverLetter";
 import Home from "./views/company/Home";
 import Home2 from "./views/company/Home2";

@@ -1,17 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
 import * as user from "../../apis/user";
 import {coverLetterInfo, deleteResumeFile, getFilesByPath, uploadFileToAWS, userProfileInfo} from "../../apis/user";
-import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
+import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowCircleRight, faArrowCircleUp} from "@fortawesome/free-solid-svg-icons";
+import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
-import MagnifyingModal from "../Modal/MagnifyingModal";
+import BtnModal from "../Modal/BtnModal";
 import PdfViewer from "../Viewer/PdfViewer";
 import {format} from "date-fns";
-import {Button, Loader} from "rsuite";
+import {Loader} from "rsuite";
 import HwpViewer from "../Viewer/HwpViewer";
+import ImagesViewer from "../Viewer/ImagesViewer";
+import InfoPopUp from "../PopUp/InfoPopUp";
+import {ReactComponent as UploadIcon} from '../../assets/img/upload.svg';
 
 export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
@@ -96,7 +99,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
                 name: response.data.name,
-                username : response.data.username,
+                username: response.data.username,
                 profileImg: response.data.profileImg,
                 gender: response.data.gender,
                 phone: response.data.phone,
@@ -106,8 +109,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
 
                 email: response.data.email,
                 pgRegStatus: response.data.pgRegStatus,
-                emailUserName : (response.data.email).split("@")[0],
-                domain : (response.data.email).split("@")[1],
+                emailUserName: (response.data.email).split("@")[0],
+                domain: (response.data.email).split("@")[1],
                 registeredInterviewDatetime: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : null,
                 registeredInterviewDate: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : new Date(),
                 registeredInterviewTime: response.data.registeredInterviewDate ? `${hour}:${minute}` : null,
@@ -115,7 +118,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
             }));
         } catch (error) {
             console.error(error.response.data);
-        }finally {
+        } finally {
             setInfoLoading(true);
         }
     };
@@ -123,17 +126,18 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     const selectViewerComponent = (file) => {
         const fileType = file.uploadFileExt
 
-        switch (fileType) {
+        switch (fileType.toLowerCase()) {
             case 'pdf':
-                return <PdfViewer fileUrl={file.uploadFileUrl} />;
+                return <PdfViewer fileUrl={file.uploadFileUrl}/>;
             case 'hwp':
-                return <HwpViewer fileUrl={file.uploadFileUrl} />;
+                return <HwpViewer fileUrl={file.uploadFileUrl}/>;
             case 'jpg':
             case 'jpeg':
+            case 'gif':
             case 'png':
-                // return <ImageViewer fileUrl={file.uploadFileUrl} />;
+                return <ImagesViewer fileUrl={file.uploadFileUrl}/>;
             default:
-                // return <DefaultViewer fileUrl={file.uploadFileUrl} />;
+                return (<div>읽을 수 없는 파일입니다.</div>);
         }
     };
 
@@ -218,15 +222,21 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
             </Card>
             <Card className="card-user-box">
                 <CardHeader>
-                    <CardTitle tag="h4">이력서</CardTitle>
-                    <input type="file" accept="application/pdf, image/*, .hwp"
-                           id="resume-upload"
-                           onChange={handleResumeFileChange} style={{display: "none"}}
-                           multiple
-                    />
-                    <label htmlFor={"resume-upload"} className={"justify-content-center"}>
-                        <FontAwesomeIcon size={"lg"} icon={faArrowCircleUp}/>
-                    </label>
+                    <div>
+                        <CardTitle tag="h4" style={{display: "inline-block"}}>이력서</CardTitle>
+                        <InfoPopUp>pdf, hwp, jpg, png 형식을 지원합니다.</InfoPopUp>
+                    </div>
+                    <div>
+                        <input type="file" accept="application/pdf, image/*, .hwp"
+                               id="resume-upload"
+                               onChange={handleResumeFileChange}
+                               style={{display: "none"}}
+                               multiple
+                        />
+                        <label htmlFor="resume-upload" className="justify-content-center align-items-center btn" style={{color: "white"}}>
+                                <UploadIcon width={16} height={16} fill={"#fff"}/>업로드
+                        </label>
+                    </div>
                 </CardHeader>
                 <CardBody>
                     <Table className="tablesorter">
@@ -239,30 +249,30 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                         </tr>
                         </thead>
                         <tbody>
-                            {resumeFiles.map((file, index) => (
-                                <tr key={file.fileIdx}>
-                                    <td className="text-center">
-                                        {file.originalFileName}
-                                    </td>
-                                    <td className="text-center">
-                                        {format(file.uploadFileDate, 'yyyy-MM-dd')}
-                                    </td>
-                                    <td className="text-center">
-                                        <MagnifyingModal buttonName={"보기"} component={selectViewerComponent(file)} />
-                                    </td>
-                                    <td className="text-center">
-                                        <Button
+                        {resumeFiles.map((file, index) => (
+                            <tr key={file.fileIdx}>
+                                <td className="text-center">
+                                    {file.originalFileName}
+                                </td>
+                                <td className="text-center">
+                                    {format(file.uploadFileDate, 'yyyy-MM-dd')}
+                                </td>
+                                <td className="text-center">
+                                    <BtnModal buttonName={"보기"} component={selectViewerComponent(file)}/>
+                                </td>
+                                <td className="text-center">
+                                    <Button
                                         onClick={async () => {
-                                            setResumeDeleteLoadings(prev => ({ ...prev, [file.fileIdx]: true }));
+                                            setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
                                             await deleteResumeFile(file.fileIdx);
                                             setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
-                                            setResumeDeleteLoadings(prev => ({ ...prev, [file.fileIdx]: false }));
+                                            setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
                                         }}>
-                                            {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm" /> : "삭제"}
-                                        </Button>
-                                    </td>
-                                </tr>
-                            ))}
+                                        {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
                         </tbody>
                     </Table>
                 </CardBody>

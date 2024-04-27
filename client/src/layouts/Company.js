@@ -15,7 +15,7 @@ import CommonNavbar from "../components/Navbars/Navbar";
 import ProgramModify from "../views/company/program/ProgramModify";
 import ProgramDetails from "../views/company/program/ProgramDetails";
 import ProgramInsert from "../views/company/program/ProgramInsert";
-import UserDetails from "../views/company/UserDetails";
+import UserDetails from "../views/company/memberList/UserDetails";
 import withAuthorization from "../components/HOC/withAuthorization";
 
 var ps;

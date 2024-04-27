@@ -65,4 +65,12 @@ public class MemberListService {
         return memberMapper.updatePgRegStatus(status, memIdx);
     }
 
+    public String getInterviewComment(Long memIdx) {
+        return memberMapper.getInterviewComment(memIdx);
+    }
+
+    public Integer updateInterviewComment(Long memIdx, String comment) {
+        return memberMapper.updateInterviewComment(memIdx, comment);
+    }
+
 }

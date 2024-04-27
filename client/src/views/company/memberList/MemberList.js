@@ -3,12 +3,12 @@ import React, {useEffect, useState} from "react";
 // reactstrap components
 import {Card, CardBody, CardHeader, CardTitle, Col, Row, Table} from "reactstrap";
 import {Form, InputGroup, Loader, Pagination, SelectPicker, Toggle} from "rsuite";
-import {getMembersPage, updateRegStatus} from "../../apis/company";
+import {getMembersPage, updateRegStatus} from "../../../apis/company";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import {useCurrProg} from "../../contexts/CurrProgProvider";
-import RegStatusPicker from "../../components/SelectPicker/RegStatusPicker";
+import {useCurrProg} from "../../../contexts/CurrProgProvider";
+import RegStatusPicker from "../../../components/SelectPicker/RegStatusPicker";
 
 function MemberList() {
     const navigate = useNavigate()

@@ -312,5 +312,17 @@
         WHERE idx = #{idx}
     </update>
 
+    <select id="getInterviewComment" parameterType="map">
+        SELECT interview_comment
+        FROM member
+        WHERE idx = #{memIdx}
+    </select>
+
+    <update id="updateInterviewComment" parameterType="map">
+        UPDATE member
+        SET interview_comment = #{comment}
+        WHERE idx = #{memIdx}
+    </update>
+
 
 </mapper>

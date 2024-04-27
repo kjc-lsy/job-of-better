@@ -4,7 +4,11 @@ import {Dropdown, List, Popover, Whisper} from "rsuite";
 import {getOccupiedSlot, updateInterviewStatus} from "../../apis/company";
 import {useCurrProg} from "../../contexts/CurrProgProvider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleInfo, faPhone} from "@fortawesome/free-solid-svg-icons";
+import {faPhone} from "@fortawesome/free-solid-svg-icons";
+import InfoPopUp from "../PopUp/InfoPopUp";
+import {useNavigate} from "react-router-dom";
+import InterviewCommentModal from "../Modal/InterviewCommentModal";
+import {useAlert} from "../Alert/useAlert";
 
 const InterviewCard = () => {
     const [occupiedSlot, setOccupiedSlot] = useState(null);
@@ -12,6 +16,9 @@ const InterviewCard = () => {
     const [days, setDays] = useState(null);
     const [reservations, setReservations] = useState(null);
     const {currProg} = useCurrProg();
+    const navigate = useNavigate();
+    const [activeModalIdx, setActiveModalIdx] = useState(null);
+    const sendAlert = useAlert();
 
     useEffect(() => {
         initializeStates()
@@ -35,6 +42,8 @@ const InterviewCard = () => {
 
             setOccupiedSlot(res.data);
             setReservations(newReservations);
+        }).catch((e) => {
+            sendAlert("error", e);
         })
     }, [currProg]);
 
@@ -100,16 +109,24 @@ const InterviewCard = () => {
                         updateInterviewStatus(idx, 'Approved').then((res) => {
                             console.log(res.data)
                         })
-                    } else if (eventKey === 2) {
+                    }
+                    if (eventKey === 2) {
                         reservationList[reservationIndex].interviewStatus = 'Registered';
                         updateInterviewStatus(idx, 'Registered').then((res) => {
                             console.log(res.data)
                         })
-                    } else if (eventKey === 3) {
+                    }
+                    if (eventKey === 3) {
                         reservationList[reservationIndex].interviewStatus = 'Rejected';
                         updateInterviewStatus(idx, 'Rejected').then((res) => {
                             console.log(res.data)
                         })
+                    }
+                    if (eventKey === 4) {
+                        navigate(`../user-details/${idx}`)
+                    }
+                    if (eventKey === 5) {
+                        setActiveModalIdx(idx)
                     }
                 }
 
@@ -119,9 +136,12 @@ const InterviewCard = () => {
         return (
             <Popover ref={ref} className={className} style={{left, top}} full>
                 <Dropdown.Menu onSelect={handleSelect}>
-                    <Dropdown.Item eventKey={1} style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
+                    <Dropdown.Item eventKey={1} shortcut="⌘ C" style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
                     <Dropdown.Item eventKey={2} style={{color: "rgba(75, 192, 192, 1)"}}>신청</Dropdown.Item>
                     <Dropdown.Item eventKey={3} style={{color: "rgba(255, 99, 132, 1)"}}>거절</Dropdown.Item>
+                    <Dropdown.Separator/>
+                    <Dropdown.Item eventKey={4} style={{color: "rgb(0,0,0)"}}>학생 상세정보</Dropdown.Item>
+                    <Dropdown.Item eventKey={5} style={{color: "rgb(0,0,0)"}}>면접 후기</Dropdown.Item>
                 </Dropdown.Menu>
             </Popover>
         );
@@ -186,7 +206,7 @@ const InterviewCard = () => {
                                 <ul>
                                     {days?.map((day, index) => (
                                         <li key={index}>
-                                            {new Date(day).getMonth() + 1}월 {new Date(day).getDate()}일
+                                            {new Date(day).getMonth() + 1}/{new Date(day).getDate()}
                                         </li>
                                     ))}
                                 </ul>
@@ -221,11 +241,7 @@ const InterviewCard = () => {
                                                                     className={"btn-simple btn btn-info btn-sm " + interviewStatus.toLowerCase()}
                                                                 >
                                                                     {name}
-                                                                    <Whisper speaker={<Popover><FontAwesomeIcon
-                                                                        icon={faPhone}/> : {phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}
-                                                                    </Popover>}>
-                                                                        <FontAwesomeIcon icon={faCircleInfo}/>
-                                                                    </Whisper>
+                                                                    <InfoPopUp><FontAwesomeIcon icon={faPhone}/> : {phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")}</InfoPopUp>
                                                                 </Button>
                                                             </Whisper>
                                                         </div>
@@ -243,6 +259,7 @@ const InterviewCard = () => {
             <CardFooter>
                 시간당 최대 면접자 수 : {occupiedSlot?.[0]?.pgMaxIntervieweesPerUnit}
             </CardFooter>
+            <InterviewCommentModal isOpen={activeModalIdx !== null} setIsOpen={() => setActiveModalIdx(null)} memIdx={activeModalIdx}/>
         </Card>
     );
 };

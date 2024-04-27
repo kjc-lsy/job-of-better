@@ -8,14 +8,18 @@ import {Viewer} from "@toast-ui/react-editor";
 import {useLocation, useNavigate} from "react-router-dom";
 import * as user from '../../apis/user';
 import {getCurrentOccupancy} from '../../apis/user';
+import {useAlert} from "../Alert/useAlert";
+import {useNotification} from "../Notification/useNotification";
 
-export default function MyHomeProgramInfo({inputValue,setInputValue}) {
+export default function MyHomeProgramInfo({inputValue, setInputValue}) {
     const navigate = useNavigate();
+    const sendAlert = useAlert();
+    const sendNoti = useNotification();
     const location = useLocation().pathname.split('/').pop();
     const [interviewTimeLabel, setInterviewTimeLabel] = React.useState([]);
     const [interviewDisableTimeLabel, setInterviewDisableTimeLabel] = React.useState([]);
     const [interviewTimeLabelNode, setInterviewTimeLabelNode] = React.useState([]);
-    const [pgValue , setPgValue] = React.useState({
+    const [pgValue, setPgValue] = React.useState({
         pgId: 0,
         pgComName: "",
         pgComTel: "",
@@ -42,7 +46,7 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                 console.error(error.response.data);
             });
         console.log(location);
-    },[])
+    }, [])
 
     useEffect(() => {
         const timeLabel = generateTimeLabel(convertTimeToMinutes(pgValue.pgInterviewValStartTime), convertTimeToMinutes(pgValue.pgInterviewValEndTime), parseInt(pgValue.pgInterviewUnitTime));
@@ -62,7 +66,8 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                     if (res.data === pgValue.pgMaxIntervieweesPerUnit) {
                         setInterviewDisableTimeLabel(prevLabels => [...prevLabels, value.label]);
                     }
-                    return {...value,
+                    return {
+                        ...value,
                         node: (
                             <div>{value.label} ({res.data ? res.data : 0}/{pgValue.pgMaxIntervieweesPerUnit})</div>)
                     };
@@ -152,8 +157,8 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
     const handleBtnClick = (e) => {
         e.preventDefault()
         user.registerInterview(inputValue.registeredInterviewDatetime)
-            .then((response) => {
-                alert("신청이 완료되었습니다. \n기업 관리자의 확정 이후에는 수정이 불가능합니다.")
+            .then(() => {
+                sendNoti("success", "신청이 완료되었습니다. \n기업 관리자의 확정 이후에는 수정이 불가능합니다.");
 
                 setInputValue(prev => ({
                     ...prev,
@@ -161,10 +166,9 @@ export default function MyHomeProgramInfo({inputValue,setInputValue}) {
                 }));
             })
             .catch((error) => {
-                alert(error.response.data);
+                sendAlert("error", error.response.data);
             });
     }
-
 
     return (
         <Card>

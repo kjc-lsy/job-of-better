@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Loader, Modal} from 'rsuite'
+import {Loader, Modal} from 'rsuite'
+import {Button} from 'reactstrap'
 
-const MagnifyingModal = ({buttonName, component}) => {
+const BtnModal = ({buttonName, component}) => {
     const [open, setOpen] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -33,4 +34,4 @@ const MagnifyingModal = ({buttonName, component}) => {
     );
 };
 
-export default MagnifyingModal;
+export default BtnModal;

@@ -53,3 +53,7 @@ export const getCountApi = (currProg) => {
 export const getOccupiedSlot = (pgIdx) => api.get("/api/company/interview-manager/get-occupied-slot?pgIdx="+pgIdx)
 
 export const updateInterviewStatus = (memIdx, status) => api.put('/api/company/interview-manager/update-interview-status', {memIdx, status})
+
+export const getInterviewCommet = (memIdx) => api.get(`/api/company/get-interview-comment?memIdx=${memIdx}`)
+
+export const updateInterviewComment = (memIdx, comment) => api.put('/api/company/update-interview-comment', {memIdx, comment})

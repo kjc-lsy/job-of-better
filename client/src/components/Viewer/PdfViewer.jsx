@@ -1,5 +1,8 @@
 import React, {useRef} from 'react';
 import {Document, Page, pdfjs} from 'react-pdf';
+import {Loader} from "rsuite";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -11,10 +14,15 @@ const PdfViewer = ({fileUrl}) => {
 
     const onDocumentLoadSuccess = ({numPages}) => {
         setNumPages(numPages)
+        setIsLoading(false)
     }
 
     return (
         <>
+            {isLoading &&
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                    <Loader/>
+                </div>}
             <Document
                 inputRef={pdfRef}
                 file={fileUrl}
@@ -23,15 +31,21 @@ const PdfViewer = ({fileUrl}) => {
                 options={{workerSrc: "/pdf.worker.js"}}
             >
                 <Page
-                    renderMode={"svg"}
                     pageNumber={pageNumber}
                     width={pdfRef.current?.clientWidth}
                     height={pdfRef.current?.clientHeight}
                 />
             </Document>
-            <p>
-                Page {pageNumber} of {numPages}
-            </p>
+            {
+                !isLoading && (
+                    <p>
+                        <span onClick={() => pageNumber > 1 && setPageNumber(pageNumber - 1)}><FontAwesomeIcon icon={faArrowLeft}/></span>
+                        <span style={{padding: '0 10px'}}>{pageNumber} / {numPages}</span>
+                        <span onClick={() => pageNumber < numPages && setPageNumber(pageNumber + 1)}><FontAwesomeIcon icon={faArrowRight}/></span>
+                    </p>
+                )
+            }
+
         </>
     )
 };

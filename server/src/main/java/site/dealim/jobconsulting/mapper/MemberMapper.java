@@ -3,7 +3,6 @@ package site.dealim.jobconsulting.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
-import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 
@@ -72,4 +71,9 @@ public interface MemberMapper {
     Integer updateInterviewStatus(@Param("interviewStatus")String interviewStatus, @Param("memIdx")Long memIdx);
 
     void updateProfileImg(Member member);
+
+    String getInterviewComment(@Param("memIdx") Long memIdx);
+
+    Integer updateInterviewComment(@Param("memIdx")Long memIdx, @Param("comment")String comment);
 }
+

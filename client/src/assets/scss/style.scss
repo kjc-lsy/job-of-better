@@ -132,6 +132,10 @@ input[type=file] {
   content: "";
 }
 
+.rs-modal-body {
+  text-align: center;
+}
+
 /************* card ************/
 
 .card {
@@ -713,6 +717,10 @@ $base-width: 10%;*/
 
   .table {
     margin-bottom: 0;
+  }
+
+  .btn {
+    padding: 8px 20px;
   }
 }
 
@@ -1500,6 +1508,19 @@ td {
       -webkit-box-shadow: 0 1px 0 var(--rs-list-border);
       box-shadow:  0 1px 0 #e5e5ea;
       box-shadow: 0 1px 0 var(--rs-list-border);
+    }
+
+    .time {
+
+      .btn {
+        padding: 5px 10px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
     }
   }
 

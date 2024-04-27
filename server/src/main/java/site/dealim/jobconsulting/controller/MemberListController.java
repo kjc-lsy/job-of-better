@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.MemberListService;
 
+import java.util.Map;
+
 @RestController
 @Tag(name = "기업사용자 - 회원목록", description = "MemberList Controller")
 @RequestMapping("/api/company")
@@ -56,6 +58,24 @@ public class MemberListController {
             return ResponseEntity.ok("업데이트 성공");
         }
         return ResponseEntity.ok("업데이트 실패");
+    }
+
+    @Secured("ROLE_COMPANY")
+    @GetMapping("/get-interview-comment")
+    public ResponseEntity<?> updateInterviewComment(@RequestParam("memIdx") Long memIdx) {
+        log.info("member 면접 코멘트 조회...");
+        return ResponseEntity.ok(memberListService.getInterviewComment(memIdx));
+    }
+
+    @Secured("ROLE_COMPANY")
+    @PutMapping("/update-interview-comment")
+    public ResponseEntity<?> updateInterviewComment(@RequestBody Map<String, Object> requestData) {
+        log.info("member 면접 코멘트 입력...");
+
+        Long memIdx = Long.valueOf(requestData.get("memIdx").toString());
+        String comment = requestData.get("comment").toString();
+
+        return ResponseEntity.ok(memberListService.updateInterviewComment(memIdx, comment));
     }
 
 }

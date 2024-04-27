@@ -3,8 +3,8 @@ import React, {useEffect, useRef, useState} from "react";
 // reactstrap components
 import {Card, CardBody, CardFooter, CardText, Col, Row,} from "reactstrap";
 import {useNavigate, useParams} from "react-router-dom";
-import maleImg from "../../assets/img/userImg_male.png";
-import {getMemberListInfoByIdx} from "../../apis/company";
+import maleImg from "../../../assets/img/userImg_male.png";
+import {getMemberListInfoByIdx} from "../../../apis/company";
 import {format} from "date-fns";
 
 function UserDetails() {
@@ -147,15 +147,15 @@ function UserDetails() {
                                     </div>
                                     <div>
                                         <label>희망 면접일</label>
-                                        <div className="form-control">{user?.registeredInterviewDate ? format(new Date(user.registeredInterviewDate), "yyyy-MM-dd HH:mm") : null}</div>
+                                        <div className="form-control">{user?.registeredInterviewDate ? format(new Date(user.registeredInterviewDate), "yyyy-MM-dd HH:mm") : '미등록'}</div>
                                     </div>
                                     <div>
                                         <label>확정 면접일</label>
-                                        <div className="form-control">{user?.assignedInterviewDate ? format(new Date(user.assignedInterviewDate), "yyyy-MM-dd HH:mm"): null}</div>
+                                        <div className="form-control">{user?.assignedInterviewDate ? format(new Date(user.assignedInterviewDate), "yyyy-MM-dd HH:mm"): '미등록'}</div>
                                     </div>
                                     <div>
                                         <label>면접 코멘트</label>
-                                        <div className="form-control">{user?.interviewComment}</div>
+                                        <div className="form-control">{user?.interviewComment ?? '미등록'}</div>
                                     </div>
                                 </Col>
                             </Row>
