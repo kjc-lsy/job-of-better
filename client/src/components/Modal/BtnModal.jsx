@@ -1,6 +1,5 @@
 import React from 'react';
-import {Loader, Modal} from 'rsuite'
-import {Button} from 'reactstrap'
+import {Button, Loader, Modal} from 'rsuite'
 
 const BtnModal = ({buttonName, component}) => {
     const [open, setOpen] = React.useState(false);

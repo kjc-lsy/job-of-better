@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, CardBody, CardHeader, CardTitle, Table} from "reactstrap";
+import {Card, CardBody, CardHeader, CardTitle, Table} from "reactstrap";
 import InfoPopUp from "../PopUp/InfoPopUp";
 import {format} from "date-fns";
 import BtnModal from "../Modal/BtnModal";
 import {deleteResumeFile, getFilesByPath, uploadFileToAWS} from "../../apis/user";
-import {Loader} from "rsuite";
+import {Button, Loader} from "rsuite";
 import PdfViewer from "../Viewer/PdfViewer";
 import HwpViewer from "../Viewer/HwpViewer";
 import ImagesViewer from "../Viewer/ImagesViewer";
@@ -72,7 +72,7 @@ const ResumeCard = ({idx}) => {
     return (
         <Card className="card-user-box">
             <CardHeader>
-                <div>
+                <div className="card-title-wrapper">
                     <CardTitle tag="h4" style={{display: "inline-block"}}>이력서</CardTitle>
                     <InfoPopUp>pdf, hwp, jpg, png 형식을 지원합니다.</InfoPopUp>
                 </div>

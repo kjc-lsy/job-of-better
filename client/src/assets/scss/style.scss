@@ -713,6 +713,18 @@ $base-width: 10%;*/
 
   .card-header {
     padding: 30px 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .card-title-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      font-size: 0.875rem;
+    }
   }
 
   .table {
