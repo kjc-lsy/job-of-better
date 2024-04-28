@@ -50,3 +50,5 @@ sql-scripts/*
 
 ### nginx ###
 /nginx/*.pem
+
+vertex-ai-service-key.json

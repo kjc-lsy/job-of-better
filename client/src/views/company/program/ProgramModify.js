@@ -108,7 +108,7 @@ const ProgramModify = () => {
                                     <div className="quote-subcategory">
                                         면접 설정
                                         <InfoPopUp>
-                                            면접 예약 내역이 있는 경우 기간외 설정은 모두 비활성화 됩니다.
+                                            면접 예약 내역이 있는 경우 기간을 제외한 모든 설정은 비활성화 됩니다.
                                         </InfoPopUp>
                                     </div>
                                     <div>
