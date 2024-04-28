@@ -29,7 +29,6 @@ public class ComCoverLetterController {
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
-
     @GetMapping("/cover-letter-info/{pgIdx}")
     public List<ComCoverLetter> comCoverLetterInfo(@PathVariable Long pgIdx) {
         log.info("자소서 항목 불러오기");

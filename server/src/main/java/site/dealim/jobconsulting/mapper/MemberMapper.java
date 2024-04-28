@@ -75,5 +75,7 @@ public interface MemberMapper {
     String getInterviewComment(@Param("memIdx") Long memIdx);
 
     Integer updateInterviewComment(@Param("memIdx")Long memIdx, @Param("comment")String comment);
+
+    Integer updateResumeStatus(@Param("memIdx")Long memIdx, @Param("resumeStatus")String resumeStatus);
 }
 

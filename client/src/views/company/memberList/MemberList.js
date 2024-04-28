@@ -9,6 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {useCurrProg} from "../../../contexts/CurrProgProvider";
 import RegStatusPicker from "../../../components/SelectPicker/RegStatusPicker";
+import ResumeModal from "../../../components/Modal/ResumeModal";
 
 function MemberList() {
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ function MemberList() {
     const {currProg, setCurrProg} = useCurrProg()
     const [loading, setLoading] = useState(false)
     const [params, setParams] = useSearchParams()
+    const [activeResumeModalIdx, setActiveResumeModalIdx] = useState(null)
 
     const coverLetterSelect = [{label: '미작성', value: 'Pending'}, {label: '작성중', value: 'Writing'}, {
         label: '작성완료',
@@ -201,7 +203,7 @@ function MemberList() {
                                     </tbody>
                                     :
                                     <tbody>
-                                    {userList?.map(({member, pgTitle}, idx) => (
+                                    {userList?.map(({member, pgTitle}) => (
                                             <tr key={member.username} className="text-center">
                                                 <td>
                                                     <a onClick={(e) => {
@@ -216,11 +218,17 @@ function MemberList() {
                                                 <td>{member.gender === 'M' ? '남' : '여'}</td>
                                                 <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>
-                                                    <a onClick={(e)=>{
-                                                        e.preventDefault()
-                                                    }}>
-                                                        {member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}
-                                                    </a>
+                                                        {member.resumeStatus === 'Pending'
+                                                            ?
+                                                            "미작성"
+                                                            :
+                                                            <a onClick={(e)=>{
+                                                                e.preventDefault()
+                                                                setActiveResumeModalIdx(member.idx)
+                                                            }}>
+                                                            작성 완료
+                                                            </a>
+                                                        }
                                                 </td>
                                                 <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
                                                 <td>
@@ -263,6 +271,7 @@ function MemberList() {
                     </Card>
                 </Col>
             </Row>
+            <ResumeModal isOpen={activeResumeModalIdx !== null} setIsOpen={() => setActiveResumeModalIdx(null)} memIdx={activeResumeModalIdx}/>
         </div>
     );
 }

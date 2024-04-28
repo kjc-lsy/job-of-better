@@ -19,20 +19,20 @@ const ResumeCard = ({idx}) => {
     const [resumeFiles, setResumeFiles] = useState([])
 
     useEffect(() => {
-        if(roles.user) {
-            updateResumeFiles()
+        updateResumeFiles()
+    }, []);
+
+    const updateResumeFiles = () => {
+        if(roles.user && !roles.company) {
+            getFilesByPath('resume').then(res => {
+                setResumeFiles(res.data)
+            })
         }
         if(roles.company) {
             getFilesByPathAndIdx("resume", idx).then(res => {
                 setResumeFiles(res.data)
             })
         }
-    }, []);
-
-    const updateResumeFiles = () => {
-        getFilesByPath('resume').then(res => {
-            setResumeFiles(res.data)
-        })
     }
 
     const handleResumeFileChange = async (e) => {
@@ -105,7 +105,7 @@ const ResumeCard = ({idx}) => {
                         <th className="text-center">파일명</th>
                         <th className="text-center">등록일</th>
                         <th className="text-center">이력서 보기</th>
-                        <th className="text-center">삭제하기</th>
+                        {roles.company ? null : <th className="text-center">삭제하기</th>}
                     </tr>
                     </thead>
                     <tbody>
@@ -120,17 +120,21 @@ const ResumeCard = ({idx}) => {
                             <td className="text-center">
                                 <BtnModal buttonName={"보기"} component={selectViewerComponent(file)}/>
                             </td>
-                            <td className="text-center">
-                                <Button
-                                    onClick={async () => {
-                                        setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
-                                        await deleteResumeFile(file.fileIdx);
-                                        setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
-                                        setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
-                                    }}>
-                                    {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
-                                </Button>
-                            </td>
+                            {
+                                roles.company ? null :
+                                    <td className="text-center">
+                                        <Button
+                                            onClick={async () => {
+                                                setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
+                                                await deleteResumeFile(file.fileIdx);
+                                                setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
+                                                setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
+
+                                            }}>
+                                            {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
+                                        </Button>
+                                    </td>
+                            }
                         </tr>
                     ))}
                     </tbody>

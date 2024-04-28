@@ -149,11 +149,23 @@ public class MyInfoService {
             fileMapper.upload(file);
             resumeList.add(file.getUploadFileUrl());
         }
+
         return resumeList;
     }
 
     public List<File> getFileList(Long memIdx, String path) {
-        return fileMapper.getFiles(memIdx, path);
+        List<File> files = fileMapper.getFiles(memIdx, path);
+
+        if(path.equals("resume")) {
+            log.info("resumeStatus 업데이트...");
+            if(files.size() == 0) {
+                memberMapper.updateResumeStatus(memIdx, "Pending");
+            }else {
+                memberMapper.updateResumeStatus(memIdx, "Complete");
+            }
+        }
+
+        return files;
     }
 
     public void deleteFileByIdx(Long fileIdx) {

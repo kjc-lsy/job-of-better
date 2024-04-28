@@ -324,5 +324,10 @@
         WHERE idx = #{memIdx}
     </update>
 
+    <update id="updateResumeStatus" parameterType="map">
+        UPDATE member
+            SET resume_status = #{resumeStatus}
+        WHERE idx = #{memIdx}
+    </update>
 
 </mapper>

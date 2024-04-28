@@ -19,4 +19,5 @@ public interface FileMapper {
     void deleteFileByIdx(Long fileIdx);
 
     String getFileNameByIdx(Long fileIdx);
+
 }
