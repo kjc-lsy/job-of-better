@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,8 +57,15 @@ public class AwsController {
 
     @GetMapping("/get-files")
     public ResponseEntity<?> getFiles(@AuthenticationPrincipal CustomMember member, @RequestParam("path") String path) {
-        log.info("파일 불러오기...");
+        log.info("유저 파일 불러오기...");
         return new ResponseEntity<>(myInfoService.getFileList(member.getMember().getIdx(), path), HttpStatus.OK);
+    }
+
+    @Secured("ROLE_COMPANY")
+    @GetMapping("/get-files-idx")
+    public ResponseEntity<?> getFilesIdx(@RequestParam("path") String path, @RequestParam("memIdx") Long memIdx) {
+        log.info("유저 파일 불러오기... : memIdx - {}", memIdx);
+        return new ResponseEntity<>(myInfoService.getFileList(memIdx, path), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-file/{fileIdx}")

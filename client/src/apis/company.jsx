@@ -57,3 +57,5 @@ export const updateInterviewStatus = (memIdx, status) => api.put('/api/company/i
 export const getInterviewCommet = (memIdx) => api.get(`/api/company/get-interview-comment?memIdx=${memIdx}`)
 
 export const updateInterviewComment = (memIdx, comment) => api.put('/api/company/update-interview-comment', {memIdx, comment})
+
+export const getFilesByPathAndIdx = (path, memIdx) => api.get(`/api/files/get-files-idx?path=${path}&memIdx=${memIdx}`)

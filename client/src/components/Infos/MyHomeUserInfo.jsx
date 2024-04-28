@@ -1,38 +1,23 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import * as user from "../../apis/user";
-import {coverLetterInfo, deleteResumeFile, getFilesByPath, uploadFileToAWS, userProfileInfo} from "../../apis/user";
-import {Button, Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
+import {coverLetterInfo, uploadFileToAWS, userProfileInfo} from "../../apis/user";
+import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
 import femaleImg from "../../assets/img/userImg_female.png";
 import maleImg from "../../assets/img/userImg_male.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
-import BtnModal from "../Modal/BtnModal";
-import PdfViewer from "../Viewer/PdfViewer";
-import {format} from "date-fns";
-import {Loader} from "rsuite";
-import HwpViewer from "../Viewer/HwpViewer";
-import ImagesViewer from "../Viewer/ImagesViewer";
-import InfoPopUp from "../PopUp/InfoPopUp";
-import {ReactComponent as UploadIcon} from '../../assets/img/upload.svg';
+import ResumeCard from "../Card/ResumeCard";
 
 export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
     const imgRef = useRef();
-    const [resumeFiles, setResumeFiles] = useState([])
-    const [resumeDeleteLoadings, setResumeDeleteLoadings] = useState({})
 
     useEffect(() => {
         Promise.all([userInfo(), coverLetterInfo()])
             .catch((error) => {
                 console.error(error.response.data);
             });
-    }, []);
-
-    useEffect(() => {
-        getFilesByPath('resume').then(res => {
-            setResumeFiles(res.data)
-        })
     }, []);
 
     const changeProfileImg = () => {
@@ -58,30 +43,12 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
         }
     };
 
-    const handleResumeFileChange = async (e) => {
-        const files = e.target.files;
-
-        setLoading(true)
-
-        try {
-            await uploadFileToAWS(files, 'resume')
-        } catch (e) {
-            console.error(e.response.data);
-        } finally {
-            setLoading(false)
-        }
-
-    };
     useEffect(() => {
         Promise.all([userInfo(), userCoverLetterInfo()])
             .catch((error) => {
                 console.error(error.response.data);
             });
     }, []);
-
-    /*useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);*/
 
     // 사용자 정보 불러오기
     const userInfo = async () => {
@@ -122,25 +89,6 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
             setInfoLoading(true);
         }
     };
-
-    const selectViewerComponent = (file) => {
-        const fileType = file.uploadFileExt
-
-        switch (fileType.toLowerCase()) {
-            case 'pdf':
-                return <PdfViewer fileUrl={file.uploadFileUrl}/>;
-            case 'hwp':
-                return <HwpViewer fileUrl={file.uploadFileUrl}/>;
-            case 'jpg':
-            case 'jpeg':
-            case 'gif':
-            case 'png':
-                return <ImagesViewer fileUrl={file.uploadFileUrl}/>;
-            default:
-                return (<div>읽을 수 없는 파일입니다.</div>);
-        }
-    };
-
 
     //coverletter 값 들고오기
     const userCoverLetterInfo = async () => {
@@ -220,63 +168,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                     </Row>
                 </CardFooter>
             </Card>
-            <Card className="card-user-box">
-                <CardHeader>
-                    <div>
-                        <CardTitle tag="h4" style={{display: "inline-block"}}>이력서</CardTitle>
-                        <InfoPopUp>pdf, hwp, jpg, png 형식을 지원합니다.</InfoPopUp>
-                    </div>
-                    <div>
-                        <input type="file" accept="application/pdf, image/*, .hwp"
-                               id="resume-upload"
-                               onChange={handleResumeFileChange}
-                               style={{display: "none"}}
-                               multiple
-                        />
-                        <label htmlFor="resume-upload" className="justify-content-center align-items-center btn" style={{color: "white"}}>
-                                <UploadIcon width={16} height={16} fill={"#fff"}/>업로드
-                        </label>
-                    </div>
-                </CardHeader>
-                <CardBody>
-                    <Table className="tablesorter">
-                        <thead className="text-primary">
-                        <tr>
-                            <th className="text-center">파일명</th>
-                            <th className="text-center">등록일</th>
-                            <th className="text-center">이력서 보기</th>
-                            <th className="text-center">삭제하기</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {resumeFiles.map((file, index) => (
-                            <tr key={file.fileIdx}>
-                                <td className="text-center">
-                                    {file.originalFileName}
-                                </td>
-                                <td className="text-center">
-                                    {format(file.uploadFileDate, 'yyyy-MM-dd')}
-                                </td>
-                                <td className="text-center">
-                                    <BtnModal buttonName={"보기"} component={selectViewerComponent(file)}/>
-                                </td>
-                                <td className="text-center">
-                                    <Button
-                                        onClick={async () => {
-                                            setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
-                                            await deleteResumeFile(file.fileIdx);
-                                            setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
-                                            setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
-                                        }}>
-                                        {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
-                                    </Button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </Table>
-                </CardBody>
-            </Card>
+            <ResumeCard/>
             <Card className="card-user-box">
                 <CardHeader>
                     <CardTitle tag="h4">자기소개서</CardTitle>

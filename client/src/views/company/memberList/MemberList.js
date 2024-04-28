@@ -215,7 +215,13 @@ function MemberList() {
                                                 <td>{member.phone}</td>
                                                 <td>{member.gender === 'M' ? '남' : '여'}</td>
                                                 <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
-                                                <td>{member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
+                                                <td>
+                                                    <a onClick={(e)=>{
+                                                        e.preventDefault()
+                                                    }}>
+                                                        {member.resumeStatus === 'Pending' ? "미작성" : member.resumeStatus === 'Writing' ? "작성중" : "작성 완료"}
+                                                    </a>
+                                                </td>
                                                 <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
                                                 <td>
                                                     <a onClick={(e)=>{
