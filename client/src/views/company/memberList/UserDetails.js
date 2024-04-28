@@ -6,6 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import maleImg from "../../../assets/img/userImg_male.png";
 import {getMemberListInfoByIdx} from "../../../apis/company";
 import {format} from "date-fns";
+import ResumeCard from "../../../components/Card/ResumeCard";
 
 function UserDetails() {
     const navigate = useNavigate();
@@ -81,6 +82,7 @@ function UserDetails() {
                             </Row>
                         </CardFooter>
                     </Card>
+                    <ResumeCard idx={memIdx}/>
                 </Col>
                 <Col md="8">
                     <Card>

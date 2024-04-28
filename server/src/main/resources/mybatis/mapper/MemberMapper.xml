@@ -75,7 +75,7 @@
                 AND pg_reg_status = #{regStatusFilter}
             </if>
         </where>
-        ORDER BY join_date DESC
+        ORDER BY join_date ASC
         LIMIT #{pageable.pageSize}
         OFFSET #{pageable.offset}
     </select>

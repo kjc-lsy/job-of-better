@@ -206,7 +206,7 @@ const CoverLetter = () => {
                     <CardBody>
                         {inputValue[0].type === "Y" ?
                             <Message showIcon type="success">
-                                <strong>제출 완료!</strong> 제출이 완료 되었습니다. 추가 적인 수정을 원하면 작성 후 다시 제출 버튼을 눌러주세요.
+                                <strong>제출 완료!</strong> 제출이 완료 되었습니다. 추가 수정을 원하신다면 작성 후 다시 제출 버튼을 눌러주세요.
                             </Message>
                         : inputValue[0].type === "T" ?
                         <Message showIcon type="info">
