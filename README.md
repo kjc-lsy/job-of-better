@@ -47,8 +47,11 @@
     ```
 
 1. **환경변수 설정**
+   
    프로젝트 루트 경로에 `.env` 파일을 생성한뒤 다음과 같이 입력합니다.
    ```
+   ## required ##
+   
     MYSQL_URL=mysql-server:3306
     MYSQL_ROOT_PASSWORD=<DB ROOT 비밀번호>
     MYSQL_DATABASE=<DB 이름>
@@ -59,11 +62,23 @@
     REACT_APP_PROXY=https://springboot-app:9090
     
     JWT_SECRET_KEY=<생성된 JWT Secret Key>
+
+   ## optional ##
+   
+    #GCP에서 받은 서비스키는 프로젝트 root 경로에 위치시킨뒤, 파일명을 환경변수로 설정합니다.
+    VERTEX_AI_SERVICE_KEY_FILENAME=<GCP vertex-ai 서비스 키(json) 파일명> 
+
+    AWS_BUCKET_NAME=<AWS BUCKET NAME>
+    AWS_ACCESS_KEY=<AWS ACCESS KEY>
+    AWS_SECRET_KEY=<AWS SECRET KEY>
+    AWS_REGION=<AWS REGION>
    ```
-    JWT 키는 최소 32바이트 길이를 권장합니다. 비밀키 생성에는 [password generator](https://passwords-generator.org/)를 사용할 수 있습니다.
+    - JWT 키는 최소 32바이트 길이를 권장합니다. 비밀키 생성에는 [password generator](https://passwords-generator.org/)를 사용할 수 있습니다.
+    - 이 프로젝트는 VERTEX-AI 와 AWS 버킷을 사용하고 있습니다.  
+    - 키가 없어도 프로젝트를 실행해 볼 수 있으나, 파일 업로드와 ai 교육 요약 기능이 제한됩니다.
 5. **Docker 이미지 빌드 및 컨테이너 실행**
 
-   Docker Compose를 사용하여 서비스를 빌드하고 실행합니다.
+   프로젝트 루트경로로 이동하여 Docker Compose를 사용해 서비스를 빌드하고 실행합니다.
     ```bash
     docker-compose up --build
     ```
