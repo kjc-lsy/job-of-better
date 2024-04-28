@@ -219,9 +219,14 @@ function MemberList() {
                                                 <td>{member.phone}</td>
                                                 <td>{member.gender === 'M' ? '남' : '여'}</td>
                                                 <td>
-                                                    <a onClick={()=> navigate('../cover-letter-details/' + member.idx)}>
-                                                        {member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}
-                                                    </a>
+                                                    {member.coverLetterStatus === 'Pending'
+                                                        ? "미작성"
+                                                        :
+                                                        <a onClick={() => navigate('../cover-letter-details/' + member.idx)}>
+                                                            {member.coverLetterStatus === 'Writing'
+                                                                ? "작성중"
+                                                                : "작성 완료"}
+                                                        </a>}
                                                 </td>
                                                 <td>
                                                     {member.resumeStatus === 'Pending'
@@ -233,15 +238,23 @@ function MemberList() {
                                                             setActiveResumeModalIdx(member.idx)
                                                         }}>
                                                             작성 완료
-                                                        </a>
-                                                    }
+                                                        </a>}
                                                 </td>
-                                                <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
+                                                <td>
+                                                    {member.interviewStatus === 'Pending'
+                                                        ? '미신청' : member.interviewStatus === 'Registered'
+                                                            ? "면접 대기"
+                                                            : member.interviewStatus === "Approved"
+                                                                ? "합격"
+                                                                : "불합격"}
+                                                </td>
                                                 <td>
                                                     <a onClick={(e) => {
                                                         e.preventDefault()
                                                         navigate(`/company/program-details/${member.pgIdx}`)
-                                                    }}>{pgTitle}</a>
+                                                    }}>
+                                                        {pgTitle}
+                                                    </a>
                                                 </td>
                                                 <td>
                                                     <RegStatusPicker
@@ -277,8 +290,11 @@ function MemberList() {
                     </Card>
                 </Col>
             </Row>
-            <ResumeModal isOpen={activeResumeModalIdx !== null} setIsOpen={() => setActiveResumeModalIdx(null)}
-                         memIdx={activeResumeModalIdx}/>
+            <ResumeModal
+                isOpen={activeResumeModalIdx !== null}
+                setIsOpen={() => setActiveResumeModalIdx(null)}
+                memIdx={activeResumeModalIdx}
+            />
         </div>
     );
 }

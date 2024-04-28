@@ -236,7 +236,6 @@ const CoverLetter = () => {
                                     return (
                                         <Row key={value.num}>
                                             <Col className="pr-md-1" md="12">
-
                                                 <FormGroup>
                                                     {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                                     <div className="coverletter_user">

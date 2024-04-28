@@ -9,6 +9,8 @@ import {InputNumber, InputPicker} from "rsuite";
 import {format} from "date-fns";
 import ToastUiEditor from "../../../components/Editor/ToastUiEditor";
 import {useAlert} from "../../../components/Alert/useAlert";
+import {getOccupiedSlot} from "../../../apis/company";
+import InfoPopUp from "../../../components/PopUp/InfoPopUp";
 
 const ProgramModify = () => {
     const {pgIdx} = useParams();
@@ -18,6 +20,7 @@ const ProgramModify = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [fetchedProgram, setFetchedProgram] = useState({});
     const sendAlert = useAlert();
+    const [isOccupiedSlotExists, setIsOccupiedSlotExists] = useState(false);
 
     const itvUnitTimeLabel = [{label: '30분', value: "30"}, {label: '60분', value: "60"}, {
         label: '90분',
@@ -25,6 +28,9 @@ const ProgramModify = () => {
     }, {label: '120분', value: "120"}];
 
     useEffect(() => {
+        getOccupiedSlot(pgIdx).then((res) => {
+            if(res.data?.length > 0) setIsOccupiedSlotExists(true);
+        })
         getProgram(pgIdx).then((response) => {
             setFetchedProgram(response.data);
         });
@@ -99,7 +105,12 @@ const ProgramModify = () => {
                                     </div>
                                 </Col>
                                 <Col md='6'>
-                                    <div className="quote-subcategory">면접 설정</div>
+                                    <div className="quote-subcategory">
+                                        면접 설정
+                                        <InfoPopUp>
+                                            면접 예약 내역이 있는 경우 기간외 설정은 모두 비활성화 됩니다.
+                                        </InfoPopUp>
+                                    </div>
                                     <div>
                                         <label>면접 가능 기간</label>
                                         <ProgDateRangePicker
@@ -120,6 +131,7 @@ const ProgramModify = () => {
                                                 pgInterviewValStartTime: format(value[0], 'HH:mm:ss'),
                                                 pgInterviewValEndTime: format(value[1], 'HH:mm:ss')
                                             })}
+                                            disabled={isOccupiedSlotExists}
                                         />
                                         <label>면접 단위 시간</label>
                                         <InputPicker
@@ -130,6 +142,7 @@ const ProgramModify = () => {
                                                 setFetchedProgram({...fetchedProgram, pgInterviewUnitTime: value})
                                             }}
                                             value={fetchedProgram.pgInterviewUnitTime}
+                                            disabled={isOccupiedSlotExists}
                                         />
                                         <label>면접 시간당 최대 인원수</label>
                                         <InputNumber
@@ -140,6 +153,7 @@ const ProgramModify = () => {
                                                 setFetchedProgram({...fetchedProgram, pgMaxIntervieweesPerUnit: value})
                                             }}
                                             value={fetchedProgram.pgMaxIntervieweesPerUnit}
+                                            disabled={isOccupiedSlotExists}
                                         />
                                     </div>
                                 </Col>
