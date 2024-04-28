@@ -45,7 +45,6 @@ export default function MyHomeProgramInfo({inputValue, setInputValue}) {
             .catch((error) => {
                 console.error(error.response.data);
             });
-        console.log(location);
     }, [])
 
     useEffect(() => {
