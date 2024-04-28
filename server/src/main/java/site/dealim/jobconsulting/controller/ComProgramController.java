@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComProgramService;
-import site.dealim.jobconsulting.service.UserProgramService;
 
 @RestController
 @Tag(name = "기업사용자 - 프로그램", description = "Company Program Controller")
@@ -20,8 +19,6 @@ import site.dealim.jobconsulting.service.UserProgramService;
 public class ComProgramController {
     @Autowired
     private ComProgramService comProgramService;
-    @Autowired
-    private UserProgramService userProgramService;
     @Secured("ROLE_COMPANY")
     @PostMapping("/insert-program")
     public ResponseEntity<?> insertProgram(@AuthenticationPrincipal CustomMember customMember, @RequestBody Program program) {

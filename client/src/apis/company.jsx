@@ -17,7 +17,7 @@ export const coverLetterSave = (value) => {
 };
 
 export const coverLetterInfo = (pgIdx) => {
-    return api.get(`/api/company/cover-letter-info/${pgIdx}`)
+    return api.get(`/api/company/cover-letter-info?pgIdx=${pgIdx}`)
 }
 
 export function coverLetterDelete(id) {
@@ -59,3 +59,5 @@ export const getInterviewCommet = (memIdx) => api.get(`/api/company/get-intervie
 export const updateInterviewComment = (memIdx, comment) => api.put('/api/company/update-interview-comment', {memIdx, comment})
 
 export const getFilesByPathAndIdx = (path, memIdx) => api.get(`/api/files/get-files-idx?path=${path}&memIdx=${memIdx}`)
+
+export const getCoverLetterInfosByMemIdx = async (memIdx) => api.get(`/api/company/user-cover-letter-info?memIdx=${memIdx}`)

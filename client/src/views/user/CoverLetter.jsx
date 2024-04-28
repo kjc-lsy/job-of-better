@@ -152,7 +152,7 @@ const CoverLetter = () => {
             //navigate('/auth/login')
             if (response.data.SUCCESS === "SUCCESS") {
                 if (response.data.type === "Y") {
-                    sendAlert("error", "등록이 완료되었습니다.");
+                    sendAlert("success", "등록이 완료되었습니다.");
                 } else {
                     sendAlert("success", "임시저장되었습니다. \n작성 완료 후 제출버튼을 눌러주세요.")
                 }

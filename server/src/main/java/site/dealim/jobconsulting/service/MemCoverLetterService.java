@@ -7,6 +7,7 @@ import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.dto.CoverLetterDto;
 import site.dealim.jobconsulting.mapper.ComCoverLetterMapper;
 import site.dealim.jobconsulting.mapper.MemCoverLetterMapper;
+import site.dealim.jobconsulting.mapper.MemberMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,8 @@ public class MemCoverLetterService {
     private ComCoverLetterMapper comCoverLetterMapper;
     @Autowired
     private MemCoverLetterMapper memberCoverLetterMapper;
+    @Autowired
+    private MemberMapper memberMapper;
 
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx) {
         Map map = new HashMap<>();
@@ -42,11 +45,22 @@ public class MemCoverLetterService {
 
     }
 
-    public List<CoverLetterDto> coverLetterInfo(long idx, Long pgIdx) {
+    public List<CoverLetterDto> coverLetterInfo(Long memIdx,Long pgIdx) {
         List<CoverLetterDto> coverLetterDtoList = new ArrayList<>();
         List<ComCoverLetter> ComcoverLetterInfo = comCoverLetterMapper.comCoverLetterInfo(pgIdx);
         for(ComCoverLetter ccl : ComcoverLetterInfo){
-            MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(ccl.getCclIdx());
+            MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(memIdx, ccl.getCclIdx());
+            coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
+        }
+        return coverLetterDtoList;
+    }
+
+    public List<CoverLetterDto> coverLetterInfo(Long memIdx) {
+        Long pgIdx = memberMapper.getPgIdxByIdx(memIdx);
+        List<CoverLetterDto> coverLetterDtoList = new ArrayList<>();
+        List<ComCoverLetter> ComcoverLetterInfo = comCoverLetterMapper.comCoverLetterInfo(pgIdx);
+        for(ComCoverLetter ccl : ComcoverLetterInfo){
+            MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(memIdx, ccl.getCclIdx());
             coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
         }
         return coverLetterDtoList;

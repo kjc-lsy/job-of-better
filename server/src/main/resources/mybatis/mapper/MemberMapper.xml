@@ -330,4 +330,11 @@
         WHERE idx = #{memIdx}
     </update>
 
+    <select id="getPgIdxByIdx" parameterType="long">
+        SELECT pg_idx
+        FROM member
+        where idx = #{param}
+    </select>
+
+
 </mapper>

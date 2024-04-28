@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import site.dealim.jobconsulting.domain.ComCoverLetter;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.dto.CoverLetterDto;
@@ -46,7 +45,7 @@ public class MemCoverLetterController {
     public List<CoverLetterDto> userCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
-        return memCoverLetterService.coverLetterInfo(user.getIdx(),user.getPgIdx());
+        return memCoverLetterService.coverLetterInfo(user.getIdx(), user.getPgIdx());
     }
 
 

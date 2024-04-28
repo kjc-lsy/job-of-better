@@ -13,10 +13,11 @@
         WHERE m.mcl_member_idx = #{idx} AND c.ccl_pg_idx = #{pgIdx}
     </select>
 
-    <select id="memCoverLetterInfo" resultType="MemberCoverLetter" parameterType="Long">
+    <select id="memCoverLetterInfo" resultType="MemberCoverLetter" parameterType="map">
         SELECT *
         FROM member_cover_letter
         WHERE mcl_ccl_idx = #{cclIdx}
+            AND  mcl_member_idx = #{memIdx}
     </select>
 
     <insert id="userCoverLetterSave" parameterType="Map">

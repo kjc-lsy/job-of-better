@@ -17,6 +17,7 @@ import ProgramDetails from "../views/company/program/ProgramDetails";
 import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserDetails from "../views/company/memberList/UserDetails";
 import withAuthorization from "../components/HOC/withAuthorization";
+import CoverLetterDetails from "../views/company/memberList/CoverLetterDetails";
 
 var ps;
 
@@ -134,6 +135,10 @@ function Company(props) {
                             <Route
                                 path="/user-details/:idx"
                                 element={<UserDetails/>}
+                            />
+                            <Route
+                                path={"/cover-letter-details/:idx"}
+                                element={<CoverLetterDetails/>}
                             />
                             <Route
                                 path="*"

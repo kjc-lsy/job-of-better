@@ -1,14 +1,16 @@
 import {Card, CardBody, CardHeader, CardTitle, Col, Form, FormGroup, Input, Row} from "reactstrap";
 import React, {useContext, useEffect, useState} from "react";
-import {coverLetterInfo} from "../../apis/user";
-import {LoadingContext} from "../../contexts/LoadingProvider";
-import {useAlert} from "../../components/Alert/useAlert";
+import {getCoverLetterInfosByMemIdx} from "../../../apis/company";
+import {useParams} from "react-router-dom";
+import {useAlert} from "../../../components/Alert/useAlert";
+import {LoadingContext} from "../../../contexts/LoadingProvider";
 
-const CoverLetterDetails = ({idx}) => {
+const CoverLetterDetails = () => {
     const {loading, setLoading} = useContext(LoadingContext);
     const [mclTitle, setMclTitle] = useState("");
     const [inputLength, setInputLength] = useState("");
     const [IsDone, setIsDone] = useState(false);
+    const memIdx = useParams().idx;
     const sendAlert = useAlert();
     let [inputValue, setInputValue] = useState([{
         num: 1,
@@ -22,7 +24,6 @@ const CoverLetterDetails = ({idx}) => {
         answerValid: false,
     }]);
 
-    // 자소서 항목 들고오기
     useEffect(() => {
         getInfo();
     }, []);
@@ -31,7 +32,7 @@ const CoverLetterDetails = ({idx}) => {
         setLoading(true);
         setIsDone(false);
         try {
-            const response = await coverLetterInfo();
+            const response = await getCoverLetterInfosByMemIdx(memIdx);
             setMclTitle(response.data[0].memberCoverLetter?.mclTitle)
             if (response.data.length > 0) {
                 setInputLength("true");
@@ -102,9 +103,6 @@ const CoverLetterDetails = ({idx}) => {
                         <FormGroup className="coverLetterTitle">
                             <div className="coverletter_user">
                                 <div>제목</div>
-                                <div className="cl_length">
-                                    <span>{mclTitle?.length ? mclTitle?.length : 0}</span>자
-                                </div>
                             </div>
                             <Input
                                 type="text"
@@ -119,23 +117,18 @@ const CoverLetterDetails = ({idx}) => {
                             return (
                                 <Row key={value.num}>
                                     <Col className="pr-md-1" md="12">
-
                                         <FormGroup>
-                                            {/*<label>항목 {index + 1 > 10 ? index + 1 : "0" + (index + 1)}</label>*/}
                                             <div className="coverletter_user">
                                                 <div className="cl_tit">
                                                     <b>{index + 1}.</b> {value.question}
                                                 </div>
-                                                <div className="cl_length">
-                                                    <span>{value.answer?.length ? value.answer?.length : 0}</span>자
-                                                </div>
                                             </div>
-                                            <Input
-                                                type="textarea"
-                                                value={value.answer}
-                                                placeholder={"자기소개서 항목" + (index + 1 > 10 ? index + 1 : "0" + (index + 1))}
-                                                onChange={e => onChange({target: e.target, index: index})}
-                                            />
+                                            <div className="form-control">
+                                                {value.answer}
+                                            </div>
+                                            <div className="cl_length">
+                                                <span>{value.answer?.length ? value.answer?.length : 0}</span>자
+                                            </div>
                                         </FormGroup>
                                     </Col>
                                 </Row>

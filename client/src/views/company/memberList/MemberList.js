@@ -42,8 +42,8 @@ function MemberList() {
     const [regStatusFilter, setRegStatusFilter] = useState(null)
 
     useEffect(() => {
-        if(params.get("regStatus")) setRegStatusFilter(params.get("regStatus"))
-        if(params.get("pgIdx")) setCurrProg(parseInt(params.get("pgIdx"),10));
+        if (params.get("regStatus")) setRegStatusFilter(params.get("regStatus"))
+        if (params.get("pgIdx")) setCurrProg(parseInt(params.get("pgIdx"), 10));
     }, []);
 
     useEffect(() => {
@@ -74,9 +74,9 @@ function MemberList() {
     }
 
     const renderMenuItem = (label, item) => {
-        if(item.value == 'Registered') return <span style={{color: '#e55757'}}>{label}</span>
+        if (item.value == 'Registered') return <span style={{color: '#e55757'}}>{label}</span>
 
-        if(item.value == 'Rejected') return <span style={{color: '#000000'}}>{label}</span>
+        if (item.value == 'Rejected') return <span style={{color: '#000000'}}>{label}</span>
 
         return label
     }
@@ -99,10 +99,10 @@ function MemberList() {
                         </CardHeader>
                         <CardBody>
                             <div className="table-header">
-                                <Form onSubmit={(status, e)=> {
+                                <Form onSubmit={(status, e) => {
                                     e.preventDefault()
                                     updatePage()
-                                } }>
+                                }}>
                                     <InputGroup>
                                         <Form.Control
                                             placeholder="이름 검색"
@@ -117,11 +117,11 @@ function MemberList() {
                                 </Form>
                                 <div className="select-all-members">
                                     <span>모든 프로그램 보기</span>
-                                    <Toggle onChange={(value)=> {
-                                        if(!value) {
-                                           setCurrProg(localStorage.getItem("program"))
+                                    <Toggle onChange={(value) => {
+                                        if (!value) {
+                                            setCurrProg(localStorage.getItem("program"))
                                         }
-                                        if(value) {
+                                        if (value) {
                                             setCurrProg("")
                                         }
                                     }}/>
@@ -199,7 +199,9 @@ function MemberList() {
                                 {loading
                                     ?
                                     <tbody>
-                                    <tr className="mem-list-loader"><td><Loader backdrop center content="loading"/></td></tr>
+                                    <tr className="mem-list-loader">
+                                        <td><Loader backdrop center content="loading"/></td>
+                                    </tr>
                                     </tbody>
                                     :
                                     <tbody>
@@ -216,26 +218,30 @@ function MemberList() {
                                                 <td>{member.name}</td>
                                                 <td>{member.phone}</td>
                                                 <td>{member.gender === 'M' ? '남' : '여'}</td>
-                                                <td>{member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}</td>
                                                 <td>
-                                                        {member.resumeStatus === 'Pending'
-                                                            ?
-                                                            "미작성"
-                                                            :
-                                                            <a onClick={(e)=>{
-                                                                e.preventDefault()
-                                                                setActiveResumeModalIdx(member.idx)
-                                                            }}>
+                                                    <a onClick={()=> navigate('../cover-letter-details/' + member.idx)}>
+                                                        {member.coverLetterStatus === 'Pending' ? "미작성" : member.coverLetterStatus === 'Writing' ? "작성중" : "작성 완료"}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {member.resumeStatus === 'Pending'
+                                                        ?
+                                                        "미작성"
+                                                        :
+                                                        <a onClick={(e) => {
+                                                            e.preventDefault()
+                                                            setActiveResumeModalIdx(member.idx)
+                                                        }}>
                                                             작성 완료
-                                                            </a>
-                                                        }
+                                                        </a>
+                                                    }
                                                 </td>
                                                 <td>{member.interviewStatus === 'Pending' ? '미신청' : member.interviewStatus === 'Registered' ? "면접 대기" : member.interviewStatus === "Approved" ? "합격" : "불합격"}</td>
                                                 <td>
-                                                    <a onClick={(e)=>{
-                                                    e.preventDefault()
-                                                    navigate(`/company/program-details/${member.pgIdx}`)
-                                                }}>{pgTitle}</a>
+                                                    <a onClick={(e) => {
+                                                        e.preventDefault()
+                                                        navigate(`/company/program-details/${member.pgIdx}`)
+                                                    }}>{pgTitle}</a>
                                                 </td>
                                                 <td>
                                                     <RegStatusPicker
@@ -252,7 +258,7 @@ function MemberList() {
                                 }
                             </Table>
                             <div className="pagination-wrapper">
-                            <span className="total-student-cnt">총 학생 수 : {totalPage}</span>
+                                <span className="total-student-cnt">총 학생 수 : {totalPage}</span>
                                 <Pagination
                                     layout={['-', 'pager', '-']}
                                     prev
@@ -271,7 +277,8 @@ function MemberList() {
                     </Card>
                 </Col>
             </Row>
-            <ResumeModal isOpen={activeResumeModalIdx !== null} setIsOpen={() => setActiveResumeModalIdx(null)} memIdx={activeResumeModalIdx}/>
+            <ResumeModal isOpen={activeResumeModalIdx !== null} setIsOpen={() => setActiveResumeModalIdx(null)}
+                         memIdx={activeResumeModalIdx}/>
         </div>
     );
 }

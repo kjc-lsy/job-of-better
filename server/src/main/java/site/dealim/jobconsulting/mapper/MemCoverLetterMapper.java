@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 import site.dealim.jobconsulting.domain.MemberCoverLetter;
 import site.dealim.jobconsulting.dto.CoverLetterDto;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ public interface MemCoverLetterMapper {
 
     List<MemberCoverLetter> coverLetterInfo(@Param("idx") long idx,@Param("pgIdx") Long pgIdx);
 
-    MemberCoverLetter memCoverLetterInfo(@Param("cclIdx") long cclIdx);
+    MemberCoverLetter memCoverLetterInfo(@Param("memIdx") long memIdx, @Param("cclIdx") long cclIdx);
 
     List<CoverLetterDto> userCoverLetterInfo(@Param("idx") long idx,@Param("pgIdx") Long pgIdx);
 
