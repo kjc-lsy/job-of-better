@@ -3,7 +3,7 @@ import {Card, CardBody, CardHeader, CardTitle, Table} from "reactstrap";
 import InfoPopUp from "../PopUp/InfoPopUp";
 import {format} from "date-fns";
 import BtnModal from "../Modal/BtnModal";
-import {deleteResumeFile, getFilesByPath, uploadFileToAWS} from "../../apis/user";
+import {deleteResumeFile, getFilesByPath, updateResumeStatus, uploadFileToAWS} from "../../apis/user";
 import {Button, Loader} from "rsuite";
 import PdfViewer from "../Viewer/PdfViewer";
 import HwpViewer from "../Viewer/HwpViewer";
@@ -42,6 +42,9 @@ const ResumeCard = ({idx}) => {
 
         try {
             await uploadFileToAWS(files, 'resume')
+            if(resumeFiles.length===0) {
+                updateResumeStatus("Complete")
+            }
         } catch (e) {
             console.error(e.response.data);
         } finally {
@@ -127,9 +130,11 @@ const ResumeCard = ({idx}) => {
                                             onClick={async () => {
                                                 setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
                                                 await deleteResumeFile(file.fileIdx);
+                                                if(resumeFiles.length === 1) {
+                                                    await updateResumeStatus('Pending')
+                                                }
                                                 setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
                                                 setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
-
                                             }}>
                                             {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
                                         </Button>

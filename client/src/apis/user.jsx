@@ -70,3 +70,7 @@ export const deleteResumeFile = async (fileIdx) => {
 export const updateUserInfo = (value) => {
     return api.put('/api/user/update-user-info', value)
 }
+
+export const updateResumeStatus = async (status) => {
+    return api.put('/api/user/update-resume-status', {status})
+}

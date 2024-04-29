@@ -84,5 +84,11 @@ public class MyInfoController {
         return new ResponseEntity<>(myinfoService.getCurrOccup(slotStartDatetime.withNano(0).withSecond(0), customMember.getMember().getPgIdx()), HttpStatus.OK);
     }
 
+    @Secured("ROLE_USER")
+    @PutMapping("/update-resume-status")
+    public ResponseEntity<?> updateResumeStatus(@AuthenticationPrincipal CustomMember customMember, @RequestBody Map<String, String> body) {
+        log.info("이력서 상태 변경 - status = {}", body.get("status"));
+        return new ResponseEntity<>(myinfoService.updateResumeStatus(customMember.getMember().getIdx(), body.get("status")), HttpStatus.OK);
+    }
 
 }

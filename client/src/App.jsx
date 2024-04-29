@@ -8,7 +8,7 @@ import {useLoading} from "./contexts/LoadingProvider";
 import {useAuth} from "./contexts/AuthContextProvider";
 
 const App = () => {
-    const {loading} = useLoading();
+    const {loading, setLoading} = useLoading();
     const {isLogin} = useAuth();
 
     return (
@@ -16,8 +16,8 @@ const App = () => {
             <Loading loading={loading}/>
             <Routes>
                 <Route path="/auth/*" element={<AuthLayout/>}/>
-                <Route path="/company/*" element={isLogin ? <CompanyLayout/> : null}/>
-                <Route path="/user/*" element={isLogin ? <UserLayout/> : null}/>
+                <Route path="/company/*" element={isLogin && <CompanyLayout/>}/>
+                <Route path="/user/*" element={isLogin && <UserLayout/>}/>
                 <Route path="*" element={<Navigate to="/auth/login" replace/>}/>
             </Routes>
         </>

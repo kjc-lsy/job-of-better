@@ -2,14 +2,12 @@ package site.dealim.jobconsulting.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.dealim.jobconsulting.domain.Program;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 import site.dealim.jobconsulting.mapper.ProgramMapper;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -68,9 +66,7 @@ public class ComProgramService {
         try {
             summary = vertexAiService.getSummary(content);
             program.setPgContentSummary(summary);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

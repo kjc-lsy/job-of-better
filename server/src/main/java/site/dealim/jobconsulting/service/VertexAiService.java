@@ -4,7 +4,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
@@ -22,7 +21,7 @@ public class VertexAiService {
     @Autowired
     private VertexAiProps vertexAiProps;
 
-    public String getSummary(String prompt) throws IOException, JSONException {
+    public String getSummary(String prompt) throws Exception {
         return sendMsgOnTextBison(
                 """
                 교육 내용 : 
@@ -48,7 +47,7 @@ public class VertexAiService {
      * @param  msg  the message to be sent for prediction
      * @return      the predicted content from Text Bison
      */
-    public String sendMsgOnTextBison(String msg) throws IOException, JSONException {
+    public String sendMsgOnTextBison(String msg) throws Exception {
         // 서비스 계정 키 파일 로드
         GoogleCredentials credentials = GoogleCredentials.fromStream(new ClassPathResource(vertexAiProps.getVertexAiKeyFilename()).getInputStream())
                 .createScoped(Collections.singleton("https://www.googleapis.com/auth/cloud-platform"));

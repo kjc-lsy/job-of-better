@@ -66,7 +66,7 @@ export const AuthContextProvider = ({children}) => {
 
         let accessToken = Cookies.get("accessToken");
 
-        if (!accessToken) { // 토큰이 없을 시 로그아웃 처리하고 함수 실행 종료
+        if (!accessToken) { // 토큰이 없을 시 로그아웃 처리
             logoutSetting();
             return;
         }

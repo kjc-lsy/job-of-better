@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import site.dealim.jobconsulting.service.AwsService;
 import site.dealim.jobconsulting.service.OpenAiService;
 import site.dealim.jobconsulting.service.VertexAiService;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -44,7 +42,7 @@ public class TestController {
     }
 
     @PostMapping("/vertex-ai")
-    public ResponseEntity<?> getSummary(@RequestParam(value = "prompt") String prompt) throws IOException, JSONException {
+    public ResponseEntity<?> getSummary(@RequestParam(value = "prompt") String prompt) throws Exception {
         return ResponseEntity.ok(vertexAiService.sendMsgOnTextBison(prompt));
     }
 
@@ -63,6 +61,7 @@ public class TestController {
             @ApiResponse(responseCode = "400", description = "bad request"),
             @ApiResponse(responseCode = "404", description = "not found")
     })
+
     public ResponseEntity<?> uploadFile(
             CustomMember member,
             @RequestParam("cate") String cate,
