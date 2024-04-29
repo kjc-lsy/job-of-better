@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Col, FormGroup, Input, Row} from "reactstrap";
-import Postcode from "../AddrPlugin";
+import Postcode from "../Plugin/AddrPlugin";
 
 const RegisterAddrFormGroup = ({handleAddrValue, handleZipCodeValue, label, placeholder}) => {
     const [address, setAddress] = useState("");

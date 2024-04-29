@@ -79,7 +79,7 @@ public class MyInfoController {
     @Secured("ROLE_USER")
     @GetMapping("/get-current-occupancy")
     public ResponseEntity<?> getCurrentOccupancy(@AuthenticationPrincipal CustomMember customMember, @RequestParam("slotStartDatetime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime slotStartDatetime) {
-        log.info("슬롯 점유 상태 확인 : slotStartDatetime = {}", slotStartDatetime);
+        log.info("슬롯 현재 점유 상태 확인 : slotStartDatetime = {}", slotStartDatetime);
 
         return new ResponseEntity<>(myinfoService.getCurrOccup(slotStartDatetime.withNano(0).withSecond(0), customMember.getMember().getPgIdx()), HttpStatus.OK);
     }

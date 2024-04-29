@@ -84,10 +84,14 @@ function Sidebar(props) {
         }
 
         if(roles?.company) {
+            if(!currProg) {
+                setRouteState(routeAllCate.filter(value => value !== "student"))
+                return
+            }
             setRouteState(routeAllCate)
         }
 
-    }, [user]);
+    }, [user, currProg]);
 
     const activeRoute = (routeName) => {
         return location.pathname === routeName ? "active" : "";

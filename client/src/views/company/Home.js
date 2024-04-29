@@ -1,20 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
-import {Line, Pie} from "react-chartjs-2";
-import {chartExample2} from "../../variables/charts";
 import {useCurrProg} from "../../contexts/CurrProgProvider";
-import InterviewCard from "../../components/Card/InterviewCard";
 import {getCountApi} from "../../apis/company";
 import {useLoading} from "../../contexts/LoadingProvider";
 import ComHomeCard from "../../components/Card/ComHomeCard";
 import PieChart from "../../components/Chart/PieChart";
 import LineChart from "../../components/Chart/LineChart";
+import InterviewCard from "../../components/Card/InterviewCard";
 
 function Home() {
 
     const {loading, setLoading} = useLoading(false);
     const {currProg} = useCurrProg();
-    const chartRef = React.useRef(null);
 
     const [userCount, setUserCount] = useState({
         totalCount: 0,
@@ -38,11 +35,9 @@ function Home() {
         regDate: new Date()
     }]);
 
-
     useEffect(() => {
         getCount()
     }, [])
-
 
     const getCount = async () => {
         setLoading(true);
@@ -127,11 +122,6 @@ function Home() {
                             </Col>
                         ))}
                     </Row>
-                    <Row className="home_time">
-                        <Col lg={12}>
-                            <InterviewCard/>
-                        </Col>
-                    </Row>
                     <Row className="home_chart">
                         <Col lg="4">
                             <Card className="card-chart">
@@ -206,6 +196,11 @@ function Home() {
                                     </div>
                                 </CardBody>
                             </Card>
+                        </Col>
+                    </Row>
+                    <Row className="home_time interview-manager">
+                        <Col lg={12}>
+                            <InterviewCard/>
                         </Col>
                     </Row>
                 </>

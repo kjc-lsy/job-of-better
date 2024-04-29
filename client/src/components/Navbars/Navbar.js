@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLocation, useNavigate} from "react-router-dom";
-import FixedPlugin from "../FixedPlugin/FixedPlugin";
+import FixedPlugin from "../Plugin/FixedPlugin";
 
 function CommonNavbar(props) {
     const [collapseOpen, setcollapseOpen] = React.useState(false);

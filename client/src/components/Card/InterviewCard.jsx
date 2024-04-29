@@ -23,7 +23,7 @@ const InterviewCard = () => {
     useEffect(() => {
         initializeStates()
 
-        getOccupiedSlot(currProg).then((res) => {
+        getOccupiedSlot(currProg ?? 0).then((res) => {
             const newReservations = res.data.reduce((acc, {slotStartDatetime, name, idx, interviewStatus, phone}) => {
                 const day = slotStartDatetime?.split("T")[0];
                 const time = slotStartDatetime?.split("T")[1].substring(0, 5);

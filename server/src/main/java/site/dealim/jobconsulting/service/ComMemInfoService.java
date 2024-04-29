@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.mapper.MemberMapper;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ComMemInfoService {
@@ -17,7 +19,7 @@ public class ComMemInfoService {
         map.put("resume", memberMapper.getResumeCount(pgIdx));
         map.put("coverLetter", memberMapper.getCoverLetterCount(pgIdx));
         map.put("regUser", memberMapper.getRegUserCount(pgIdx));
-        System.out.println("map = " + map);
+
         return map;
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, ButtonToolbar, Notification} from "rsuite";
 
-const NotificationMessage = ({type, toaster,children}) => {
+const NotificationMessage = ({type, toaster, children}) => {
     return (
         <Notification type={type} header={`${type}!`} closable>
             <p>{children}</p>

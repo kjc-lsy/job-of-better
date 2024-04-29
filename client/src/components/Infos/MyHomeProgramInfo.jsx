@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Button, Card, CardBody, CardFooter, CardHeader, CardTitle, Form, Table} from "reactstrap";
 import ProgCurrentStatus from "./ProgCurrentStatus";
-import KorDatePicker from "../KorDatePicker";
+import KorDatePicker from "../Picker/KorDatePicker";
 import {allowedRange} from "rsuite/cjs/DateRangePicker/disabledDateUtils";
 import {InputPicker} from "rsuite";
 import {Viewer} from "@toast-ui/react-editor";
@@ -67,8 +67,7 @@ export default function MyHomeProgramInfo({inputValue, setInputValue}) {
                     }
                     return {
                         ...value,
-                        node: (
-                            <div>{value.label} ({res.data ? res.data : 0}/{pgValue.pgMaxIntervieweesPerUnit})</div>)
+                        node: (<div>{value.label} ({res.data ? res.data : 0}/{pgValue.pgMaxIntervieweesPerUnit})</div>)
                     };
                 });
             });

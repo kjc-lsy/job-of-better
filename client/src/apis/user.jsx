@@ -43,6 +43,8 @@ export const getCurrentOccupancy = (slotStartDatetime) => {
 export const uploadFileToAWS = async (files, path) => {
     const formData = new FormData();
 
+    console.log(files)
+
     Array.from(files).forEach(file => {
         formData.append('file', file);
     })

@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormGroup} from "reactstrap";
-import KorDatePicker from "../KorDatePicker";
+import KorDatePicker from "../Picker/KorDatePicker";
 
 const BOpeningDateFormGroup = ({inputValue, setInputValue}) => {
     return (
