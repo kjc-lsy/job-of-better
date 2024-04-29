@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Col, FormGroup, Input, Row} from "reactstrap";
 import Postcode from "../Plugin/AddrPlugin";
 
-const RegisterAddrFormGroup = ({handleAddrValue, handleZipCodeValue, label, placeholder}) => {
+const RegisterAddrFormGroup = ({handleDetailAddrValue ,handleAddrValue, handleZipCodeValue, label, placeholder}) => {
     const [address, setAddress] = useState("");
     const [detailAddr, setDetailAddr] = useState("");
 
     useEffect(() => {
-        handleAddrValue(address + " " + detailAddr)
+        handleDetailAddrValue(detailAddr)
+        handleAddrValue(address)
     }, [address, detailAddr]);
 
     return (

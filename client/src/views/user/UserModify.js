@@ -17,14 +17,14 @@ function UserProfile() {
         name: "",
         username : "",
         address : "",
+        detailAddr : "",
+        zipCode: "",
 
         email: "",
         validEmail: false,
         emailUserName: "",
         domain: "",
-
-        zipCode: "",
-
+        
         birthDate: "",
 
         phone: "",
@@ -32,29 +32,18 @@ function UserProfile() {
 
         profileImg: "", //require("assets/img/emilyz.jpg")
         gender: "",
-        pgRegStatus: "",
-
-        resumeLength: 0,
-        resumeTotalLength: 0,
-        resumePercent: 0,
-        coverLetterLength: 0,
-        coverLetterTotalLength: 0,
-        coverLetterPercent: 0,
-
-        mclTitle: "",
-        mclDate: "",
-        mclIsConfirm: "",
-
-        resumeTitle: "",
-        resumeIsConfirm: "",
-
-        registeredInterviewDatetime: null,
-        registeredInterviewDate: null,
-        registeredInterviewTime: null,
-
-        assignedInterviewDate: "",
     });
-    const [dropdownOpen, setDropdownOpen] = React.useState(false);
+    const [modifiedValue, setModifiedValue] = React.useState({
+        birthDate: "",
+        phone : "",
+        email: "",
+        validEmail: false,
+        emailUserName: "",
+        domain: "",
+        zipCode: "",
+        address : "",
+    })
+    /*const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [isReadOnly, setIsReadOnly] = useState(true); // 도메인 입력란의 readOnly 상태 관리를 위한 새로운 상태 변수
 
     const handleDomainChange = (domain) => {
@@ -65,7 +54,7 @@ function UserProfile() {
             setIsReadOnly(true);
             setInputValue({...inputValue, domain: domain});
         }
-    };
+    };*/
 
     return (
         <div className="content user-profile-wrapper">
@@ -120,68 +109,11 @@ function UserProfile() {
                                     <Col className={"pr-md-1"} md="12">
                                         <EmailFormGroup inputValue={inputValue} setInputValue={setInputValue}/>
                                     </Col>
-                                    {/*<Col className="pr-md-1" md="6">
-                                        <FormGroup>
-                                            <label htmlFor="exampleInputEmail1">
-                                                이메일
-                                            </label>
-                                            <InputGroup className="emailInput">
-                                                <Input
-                                                    value={inputValue.emailUserName}
-                                                    onChange={(e) => setInputValue({
-                                                        ...inputValue,
-                                                        emailUserName: e.target.value
-                                                    })} // value={inputValue.emailUserName}(e.target.value)}
-                                                    placeholder="이메일"
-                                                    name="email"
-                                                    type="text"
-                                                    autoComplete="new-email"
-                                                />
-                                            </InputGroup>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col className="pl-md-1" md="6">
-                                        <FormGroup>
-                                            <InputGroup className="emailInput emailInput_domain">
-                                                <span className="">@</span>
-                                                <Input
-                                                    value={inputValue.domain}
-                                                    placeholder="example.com"
-                                                    name="domain"
-                                                    type="text"
-                                                    readOnly={isReadOnly}
-                                                    onChange={(e) => setInputValue({
-                                                        ...inputValue,
-                                                        domain: e.target.value
-                                                    })} // value={inputValue.domain}(e.target.value)}
-                                                />
-                                                <ButtonDropdown isOpen={dropdownOpen} toggle={() => {
-                                                    setDropdownOpen(!dropdownOpen)
-                                                }}>
-                                                    <DropdownToggle caret className="domainSelect">
-                                                        선택 <FontAwesomeIcon icon={faChevronDown}/>
-                                                    </DropdownToggle>
-                                                    <DropdownMenu>
-                                                        <DropdownItem
-                                                            onClick={() => handleDomainChange('gmail.com')}>gmail.com</DropdownItem>
-                                                        <DropdownItem
-                                                            onClick={() => handleDomainChange('naver.com')}>naver.com</DropdownItem>
-                                                        <DropdownItem
-                                                            onClick={() => handleDomainChange('daum.com')}>daum.com</DropdownItem>
-                                                        <DropdownItem
-                                                            onClick={() => handleDomainChange('nate.com')}>nate.com</DropdownItem>
-                                                        <DropdownItem divider/>
-                                                        <DropdownItem onClick={() => handleDomainChange('직접 입력')}>직접
-                                                            입력</DropdownItem>
-                                                    </DropdownMenu>
-                                                </ButtonDropdown>
-                                            </InputGroup>
-                                        </FormGroup>
-                                    </Col>*/}
                                 </Row>
                                 <RegisterAddrFormGroup
                                     label="개인 주소"
                                     placeholder="상세주소"
+                                    handleDetailAddrValue={(value) => setInputValue({...inputValue, detailAddr: value})}
                                     handleAddrValue={(value) => setInputValue({...inputValue, address: value})}
                                     handleZipCodeValue={(value) => setInputValue({...inputValue, zipCode: value})}
                                 />

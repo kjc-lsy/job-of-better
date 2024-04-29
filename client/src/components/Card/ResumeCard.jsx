@@ -104,7 +104,7 @@ const ResumeCard = ({idx}) => {
                     <tr>
                         <th className="text-center">파일명</th>
                         <th className="text-center">등록일</th>
-                        <th className="text-center">이력서 보기</th>
+                        <th className="text-center" colSpan={roles.company ? 2 : 1}>이력서 보기</th>
                         {roles.company ? null : <th className="text-center">삭제하기</th>}
                     </tr>
                     </thead>

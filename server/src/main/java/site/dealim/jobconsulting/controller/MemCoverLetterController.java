@@ -45,6 +45,8 @@ public class MemCoverLetterController {
     public List<CoverLetterDto> userCoverLetterInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("자소서 항목 불러오기");
         Member user = customMember.getMember();
+        List<CoverLetterDto> coverLetterDtoList = memCoverLetterService.coverLetterInfo(user.getIdx());
+        //System.out.println("coverLetterDtoList = " + coverLetterDtoList);
         return memCoverLetterService.coverLetterInfo(user.getIdx(), user.getPgIdx());
     }
 

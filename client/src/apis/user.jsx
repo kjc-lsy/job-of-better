@@ -65,3 +65,8 @@ export const getFilesByPath = (path) => {
 export const deleteResumeFile = async (fileIdx) => {
     return api.delete(`/api/files/delete-file/${fileIdx}`)
 }
+
+//회원정보수정
+export const updateUserInfo = (value) => {
+    return api.put('/api/user/update-user-info', value)
+}

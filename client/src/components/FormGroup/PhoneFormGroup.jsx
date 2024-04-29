@@ -15,9 +15,9 @@ const PhoneFormGroup = ({inputValue, setInputValue}) => {
         <FormGroup>
             <label>전화번호</label>
             <Input
-                vlaue={inputValue.phone}
+                value={inputValue.phone}
                 placeholder="연락가능한 전화번호를 입력해주세요."
-                type="text"
+                type="tel"
                 onChange={e => setInputValue({...inputValue, phone: e.target.value})}
             />
             <div className="text-muted font-italic">
