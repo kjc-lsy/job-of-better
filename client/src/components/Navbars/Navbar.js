@@ -31,6 +31,7 @@ function CommonNavbar(props) {
     const [color, setcolor] = React.useState("navbar-transparent");
     const {logoutSetting} = useAuth();
     const navigate = useNavigate();
+    const {user} = useAuth();
 
     let location = useLocation();
     let pathLayout = location.pathname.split("/")[1];
@@ -162,7 +163,7 @@ function CommonNavbar(props) {
                                         onClick={(e) => e.preventDefault()}
                                     >
                                         <div className="photo">
-                                            <img alt="..." src={require("assets/img/anime3.png")} />
+                                            <img alt="..." src={user.profileImg ? user.profileImg : require("assets/img/anime3.png")} />
                                         </div>
                                         <b className="caret d-none d-lg-block d-xl-block" />
                                         <p className="d-lg-none">Log out</p>

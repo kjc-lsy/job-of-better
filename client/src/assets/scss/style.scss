@@ -138,6 +138,18 @@ input[type=file] {
   text-align: center;
 }
 
+.rs-popover {
+  .approved {
+    color: rgba(54, 162, 235, 1) !important;
+  }
+  .registered {
+    color: rgba(75, 192, 192, 1) !important;
+  }
+  .rejected {
+    color: rgba(255, 99, 132, 1) !important;
+  }
+}
+
 /************* card ************/
 
 .card {

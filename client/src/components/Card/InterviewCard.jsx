@@ -136,9 +136,9 @@ const InterviewCard = () => {
         return (
             <Popover ref={ref} className={className} style={{left, top}} full>
                 <Dropdown.Menu onSelect={handleSelect}>
-                    <Dropdown.Item eventKey={1} style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
-                    <Dropdown.Item eventKey={2} style={{color: "rgba(75, 192, 192, 1)"}}>신청</Dropdown.Item>
-                    <Dropdown.Item eventKey={3} style={{color: "rgba(255, 99, 132, 1)"}}>거절</Dropdown.Item>
+                    <Dropdown.Item eventKey={1} className={"approved"}>확정</Dropdown.Item>
+                    <Dropdown.Item eventKey={2} className={"registered"}>신청</Dropdown.Item>
+                    <Dropdown.Item eventKey={3} className={"rejected"}>거절</Dropdown.Item>
                     <Dropdown.Separator/>
                     <Dropdown.Item eventKey={4} style={{color: "rgb(0,0,0)"}}>학생 상세정보</Dropdown.Item>
                     <Dropdown.Item eventKey={5} style={{color: "rgb(0,0,0)"}}>면접 후기</Dropdown.Item>
