@@ -136,7 +136,7 @@ const InterviewCard = () => {
         return (
             <Popover ref={ref} className={className} style={{left, top}} full>
                 <Dropdown.Menu onSelect={handleSelect}>
-                    <Dropdown.Item eventKey={1} shortcut="⌘ C" style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
+                    <Dropdown.Item eventKey={1} style={{color: "rgba(54, 162, 235, 1)"}}>확정</Dropdown.Item>
                     <Dropdown.Item eventKey={2} style={{color: "rgba(75, 192, 192, 1)"}}>신청</Dropdown.Item>
                     <Dropdown.Item eventKey={3} style={{color: "rgba(255, 99, 132, 1)"}}>거절</Dropdown.Item>
                     <Dropdown.Separator/>

@@ -101,6 +101,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     const userCoverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
+            if(!response.dtaa) return;
             console.log(response.data);
             /*setInputValue((inputValue) =>({
                 ...inputValue,
