@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React, {useState} from "react";
 
 // reactstrap componentsrom "@fortawesome/free-solid-svg-icons";
 import {useLoading} from "../../contexts/LoadingProvider";
@@ -15,25 +15,12 @@ function UserProfile() {
         profileImg: "", //require("assets/img/emilyz.jpg")
         gender: "",
         pgRegStatus: "",
+        resumeStatus : "",
 
         email: "",
         validEmail: false,
         emailUserName: "",
         domain: "",
-
-        resumeLength: 0,
-        resumeTotalLength: 0,
-        resumePercent: 0,
-        coverLetterLength: 0,
-        coverLetterTotalLength: 0,
-        coverLetterPercent: 0,
-
-        mclTitle: "",
-        mclDate: "",
-        mclIsConfirm: "",
-
-        resumeTitle: "",
-        resumeIsConfirm: "",
 
         registeredInterviewDatetime: null,
         registeredInterviewDate: null,

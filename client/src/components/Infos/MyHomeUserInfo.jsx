@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import * as user from "../../apis/user";
 import {coverLetterInfo, uploadFileToAWS, userProfileInfo} from "../../apis/user";
 import {Card, CardBody, CardFooter, CardHeader, CardText, CardTitle, Col, Row, Table} from "reactstrap";
@@ -12,6 +12,13 @@ import ResumeCard from "../Card/ResumeCard";
 export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
     const navigate = useNavigate();
     const imgRef = useRef();
+
+    let [clValue, setClValue] = useState({
+        mclTitle: "",
+        mclDate: "",
+        mclIsConfirm: "",
+        coverLetterPercent : 0,
+    });
 
     useEffect(() => {
         Promise.all([userInfo(), coverLetterInfo()])
@@ -73,6 +80,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                 birthDate: response.data.birthDate,
                 address: response.data.address,
                 zipCode: response.data.zipCode,
+                detailAddr: response.data.detailAddr,
+                resumeStatus : response.data.resumeStatus,
 
                 email: response.data.email,
                 pgRegStatus: response.data.pgRegStatus,
@@ -94,17 +103,28 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     const userCoverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
-            setInputValue((prevInputValue) => ({
-                ...prevInputValue,
-                mclTitle: response.data.memCoverLetter?.mclTitle,
-                mclDate: response.data.memCoverLetter?.mclModifiedDate,
-                mclIsConfirm: response.data.memCoverLetter?.mclIsConfirm,
-                coverLetterPercent: (((response.data.memCoverLetter?.length ? response.data.memCoverLetter?.length : 0) / (response.data.comCoverLetter?.length) ? response.data.comCoverLetter?.length : 0) * 100).toFixed(0),
-            }))
+            console.log(response.data);
+            /*setInputValue((inputValue) =>({
+                ...inputValue,
+                coverLetterLength: response.data.memberCoverLetter?.length,
+                coverLetterTotalLength: response.data.comCoverLetter?.length,
+                coverLetterPercent: (((response.data.memberCoverLetter?.length ? response.data.memberCoverLetter?.length : 0) / (response.data.comCoverLetter?.length) ? response.data.comCoverLetter?.length : 0) * 100).toFixed(0),
+            }));*/
+            const mcl_leng = response.data.reduce((count, item) => (item.memCoverLetter !== null ? count + 1 : count), 0);
+            const ccl_leng = response.data.length;
+            setClValue({
+                mclTitle: response.data[0].memberCoverLetter?.mclTitle,
+                mclDate: response.data[0].memberCoverLetter?.mclModifiedDate,
+                mclIsConfirm: response.data[0].memberCoverLetter?.mclIsConfirm,
+                coverLetterPercent: (mcl_leng / ccl_leng * 100).toFixed(0),
+            });
+
         } catch (error) {
             console.error(error.response.data);
         }
     }
+
+
     return (
         <>
             <Card className="card-user">
@@ -131,20 +151,24 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                             </a>
                         </label>
                         <h5 className="title">{inputValue.name}</h5>
-                        <p className="description">인하대 졸업</p>
+                        <p className="description">
+                            {inputValue.phone ? (inputValue.phone).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : ""}</p>
+                        <p className="description">
+                            {inputValue.birthDate} / {inputValue.gender === 'F' ? "여성" : "남성"}</p>
                     </div>
                     {/*<div className="card-description">
-                                Do not be scared of the truth because we need to restart the
-                                human foundation in truth And I love you like Kanye loves
-                                Kanye I love Rick Owens’ bed design but the back is...
-                            </div>*/}
+                        <p className="">
+                            {inputValue.phone ? (inputValue.phone).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3') : ""}</p>
+                        <p className="">
+                            {inputValue.birthDate} / {inputValue.gender === 'F' ? "여성" : "남성"}</p>
+                    </div>*/}
                 </CardBody>
                 <CardFooter>
                     <Row>
                         <Col md={4}>
                             <b>이력서</b>
-                            <div className="percent percent288">
-                                <span>80%</span>
+                            <div className={"percent percent" + (inputValue.resumeStatus === "Complete" ? 360 : 0)}>
+                                <span>{inputValue.resumeStatus === "Complete" ? "100" : "0"}%</span>
                             </div>
                             <a onClick={(e) => {
                                 e.preventDefault()
@@ -155,8 +179,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                         </Col>
                         <Col md={4}>
                             <b>자기소개서</b>
-                            <div className={"percent percent" + inputValue.coverLetterPercent * 3.6}>
-                                <span>{inputValue.coverLetterPercent}%</span>
+                            <div className={"percent percent" + clValue.coverLetterPercent * 3.6}>
+                                <span>{clValue.coverLetterPercent}%</span>
                             </div>
                             <a onClick={(e) => {
                                 e.preventDefault()
@@ -184,14 +208,14 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                         </tr>
                         </thead>
                         <tbody>
-                        {inputValue.mclTitle ?
+                        {clValue.mclTitle ?
                             <tr>
-                                <td>{inputValue.mclTitle}</td>
+                                <td>{clValue.mclTitle}</td>
                                 <td className="text-center">
-                                    {inputValue.mclIsConfirm === "tmp" ? "임시저장" :
-                                        inputValue.mclIsConfirm === "done" ? "완료" : "미작성"}
+                                    {clValue.mclIsConfirm === "T" ? "임시저장" :
+                                        clValue.mclIsConfirm === "Y" ? "완료" : "미작성"}
                                 </td>
-                                <td className="text-center">{inputValue.mclDate ? new Date(inputValue.mclDate)?.split("T")[0] : null}</td>
+                                <td className="text-center">{clValue.mclDate ? clValue.mclDate?.split("T")[0] : null}</td>
                                 <td className="text-center">
                                     <a onClick={(e) => {
                                         e.preventDefault();

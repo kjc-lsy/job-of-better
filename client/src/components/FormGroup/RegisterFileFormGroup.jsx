@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, FormGroup, Input} from "reactstrap";
 import fileOk from "../../assets/img/fileok.gif";
 import companyPaper from "../../assets/img/company_registration.png";
+import {uploadFileToAWS} from "../../apis/user";
 
 const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
     const [isActive, setIsActive] = useState(false);
@@ -9,6 +10,7 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
     const handleDrop = (event) => {
         event.preventDefault();
         setIsActive(false);
+        setUploadedInfo(false)
 
         const file = event.dataTransfer.files[0];
         setFileInfo(file);
@@ -16,14 +18,28 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
 
     const handleUpload = (event) => {
         console.log("fileupload");
+        setUploadedInfo(false)
         const file = event.target.files[0];
         setFileInfo(file);
     };
 
     const setFileInfo = (file) => {
         const {name, size: byteSize, type} = file;
-        const size = (byteSize / (1024 * 1024)).toFixed(2) + 'mb';
-        setUploadedInfo({name, size, type}); // name, size, type 정보를 uploadedInfo에 저장
+        const size = (byteSize / (1024 * 1024)).toFixed(2);
+        //console.log(file , name, size, byteSize, type);
+        //setUploadedInfo({name, size, type}); // name, size, type 정보를 uploadedInfo에 저장
+        if(size <= 3) {
+            try {
+                const res = uploadFileToAWS(file);
+                //setInputValue({...inputValue, b_img: res.url});
+                setUploadedInfo(true)
+            } catch (e) {
+                console.error(e);
+            }
+        }else {
+            alert("3MB이상 업로드 할 수 없습니다!")
+        }
+
     };
 
     const handleDragStart = () => setIsActive(true);
@@ -34,7 +50,7 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
         event.preventDefault();
     };
 
-    const [uploadedInfo, setUploadedInfo] = useState(null);
+    const [uploadedInfo, setUploadedInfo] = useState(false);
 
     return (
         <FormGroup className="register_file">
@@ -43,7 +59,7 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
                 value={inputValue.b_img}
                 name="b_img"
                 type="file"
-                accept=".jpg, .jpeg, .png"
+                accept=".jpg, .jpeg, .png, .pdf"
                 onChange={e => {
                     handleUpload(e);
                     setInputValue({...inputValue, b_img: e.target.value});

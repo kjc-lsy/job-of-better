@@ -48,8 +48,10 @@ public class MemCoverLetterService {
     public List<CoverLetterDto> coverLetterInfo(Long memIdx,Long pgIdx) {
         List<CoverLetterDto> coverLetterDtoList = new ArrayList<>();
         List<ComCoverLetter> ComcoverLetterInfo = comCoverLetterMapper.comCoverLetterInfo(pgIdx);
+
         for(ComCoverLetter ccl : ComcoverLetterInfo){
             MemberCoverLetter mcl = memberCoverLetterMapper.memCoverLetterInfo(memIdx, ccl.getCclIdx());
+            //.out.println("mcl = " + mcl + ", ccl = " + ccl);
             coverLetterDtoList.add(new CoverLetterDto(ccl,mcl));
         }
         return coverLetterDtoList;

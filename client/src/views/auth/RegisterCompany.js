@@ -54,6 +54,7 @@ const CompanyRegister = () => {
         b_tel: "",
         validBTel: false,
         b_address: "",
+        b_detailAddr: "",
         b_zipCode: "",
         b_openingDate: new Date(),
 
@@ -121,6 +122,9 @@ const CompanyRegister = () => {
                         <RegisterAddrFormGroup
                             label="기업 주소"
                             placeholder="상세 주소"
+                            handleDetailAddrValue={detailAddr => {
+                                setInputValue({...inputValue, b_addressDetail: detailAddr})
+                            }}
                             handleAddrValue={fullAddr => {
                                 setInputValue({...inputValue, b_address: fullAddr})
                             }}
