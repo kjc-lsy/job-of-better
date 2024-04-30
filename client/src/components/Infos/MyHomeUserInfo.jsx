@@ -34,7 +34,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     // 파일 변경 핸들러
     const handleImgFileChange = async (e) => {
         setLoading(true);
-
+        console.log(e.target.files);
         try {
             const response = await uploadFileToAWS(e.target.files, 'profile');
             setInputValue({

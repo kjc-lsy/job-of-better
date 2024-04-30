@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Button, FormGroup, Input} from "reactstrap";
 import fileOk from "../../assets/img/fileok.gif";
 import companyPaper from "../../assets/img/company_registration.png";
-import {uploadFileToAWS} from "../../apis/user";
 
 const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
     const [isActive, setIsActive] = useState(false);
@@ -29,13 +28,7 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
         //console.log(file , name, size, byteSize, type);
         //setUploadedInfo({name, size, type}); // name, size, type 정보를 uploadedInfo에 저장
         if(size <= 3) {
-            try {
-                const res = uploadFileToAWS(file);
-                //setInputValue({...inputValue, b_img: res.url});
-                setUploadedInfo(true)
-            } catch (e) {
-                console.error(e);
-            }
+            setUploadedInfo(true)
         }else {
             alert("3MB이상 업로드 할 수 없습니다!")
         }

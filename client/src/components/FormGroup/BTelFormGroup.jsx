@@ -3,7 +3,7 @@ import {FormGroup, Input} from "reactstrap";
 
 const BTelFormGroup = ({inputValue, setInputValue}) => {
     const inputRegexs = {
-        phoneRegex: /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/,
+        phoneRegex: /^[0-9]*$/,
     };
 
     useEffect(() => {
@@ -18,6 +18,7 @@ const BTelFormGroup = ({inputValue, setInputValue}) => {
                 vlaue={inputValue.b_tel}
                 placeholder="연락가능한 회사 전화번호를 입력해주세요."
                 type="text"
+                maxLength="11"
                 onChange={e => setInputValue({...inputValue, b_tel: e.target.value})}
             />
             <div className="text-muted font-italic">
