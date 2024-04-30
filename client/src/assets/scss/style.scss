@@ -1012,6 +1012,12 @@ td {
   }
 }
 
+/* cover-letter-details */
+.cover-letter-details {
+  .form-control {
+    white-space: pre-line;
+  }
+}
 
 /* program */
 
@@ -2066,5 +2072,12 @@ td {
       }
     }
 
+  }
+}
+
+/* mobile */
+@media screen and (max-width: 768px) {
+  .main-panel {
+    padding: 2rem !important;
   }
 }

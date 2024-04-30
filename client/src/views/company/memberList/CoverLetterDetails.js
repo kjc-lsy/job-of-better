@@ -94,7 +94,7 @@ const CoverLetterDetails = () => {
 
     return (
         <div className="content">
-            <Card className="fullHei">
+            <Card className="cover-letter-wrapper cover-letter-details">
                 <CardHeader>
                     <CardTitle tag="h4">자기소개서</CardTitle>
                 </CardHeader>
