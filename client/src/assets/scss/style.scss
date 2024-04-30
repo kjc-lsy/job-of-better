@@ -1003,7 +1003,14 @@ td {
     }
   }
 }
-
+/* sidebar */
+.navbar-absolute {
+  .photo {
+    img {
+      border-radius: 100%;
+    }
+  }
+}
 
 
 /* program */
