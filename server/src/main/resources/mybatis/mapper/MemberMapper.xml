@@ -129,13 +129,13 @@
     <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="idx">
         INSERT INTO member (
             name, username, password, email, address, zip_code, birth_date, gender, phone, com_idx,
-            pg_idx, pg_reg_status, pg_reg_date, resume_file, desired_interview_date,
+            pg_idx, pg_reg_status, pg_reg_date, desired_interview_date,
             assigned_interview_date, interview_status, interview_comment, cover_letter_status,
             resume_status, withdrawn_date, is_withdrawn, profile_img
         )
         VALUES (
                    #{name}, #{username}, #{password}, #{email}, #{address}, #{zipCode}, #{birthDate}, #{gender},
-                   #{phone}, #{comIdx}, #{pgIdx}, #{pgRegStatus}, #{pgRegDate}, #{resumeFile},
+                   #{phone}, #{comIdx}, #{pgIdx}, #{pgRegStatus}, #{pgRegDate},
                    #{registeredInterviewDate}, #{assignedInterviewDate}, #{interviewStatus},
                    #{interviewComment}, #{coverLetterStatus}, #{resumeStatus}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
                )

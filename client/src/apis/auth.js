@@ -23,7 +23,7 @@ export const logout = () => api.get('/api/logout')
 
 // 기업 가입
 export const companyJoin = (data) => api.post(`/api/auth/company-join`, {
-
+    //todo 사업자 등록 파일 upload
     member:{
         username : data.username,
         password : data.password,

@@ -1,7 +1,7 @@
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, Col, Form, Row,} from "reactstrap";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import BNoFormGroup from "../../components/FormGroup/BNoFormGroup";
@@ -75,6 +75,10 @@ const CompanyRegister = () => {
         inputValue?.validPhone &&
         inputValue?.agree;
 
+    useEffect(() => {
+        console.log(inputValue);
+    },[inputValue])
+
     // 회원가입
     const handleJoin = async (e) => {
         e.preventDefault()
@@ -122,9 +126,8 @@ const CompanyRegister = () => {
                         <RegisterAddrFormGroup
                             label="기업 주소"
                             placeholder="상세 주소"
-                            handleDetailAddrValue={detailAddr => {
-                                setInputValue({...inputValue, b_addressDetail: detailAddr})
-                            }}
+                            inputValue={inputValue}
+                            setInputValue={setInputValue}
                             handleAddrValue={fullAddr => {
                                 setInputValue({...inputValue, b_address: fullAddr})
                             }}

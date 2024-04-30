@@ -131,7 +131,7 @@ const ResumeCard = ({idx}) => {
                                                 setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: false}));
 
                                             }}>
-                                            {resumeDeleteLoadings[file.fileIdx] ? <Loader size="sm"/> : "삭제"}
+                                            {resumeDeleteLoadings[file.fileId] ? <Loader size="sm"/> : "삭제"}
                                         </Button>
                                     </td>
                             }
