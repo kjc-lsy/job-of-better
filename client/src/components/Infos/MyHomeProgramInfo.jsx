@@ -113,7 +113,7 @@ export default function MyHomeProgramInfo({inputValue, setInputValue}) {
                 pgInterviewValEndDate: response.data.program.pgInterviewValEndDate,
                 pgInterviewValEndTime: response.data.program.pgInterviewValEndTime,
                 pgInterviewValStartTime: response.data.program.pgInterviewValStartTime,
-                pgContent: (response.data.program.pgContentSummary).replace(/<[^>]+>/g, ''),
+                pgContent: (response?.data?.program?.pgContentSummary)?.replace(/<[^>]+>/g, ''),
                 pgInterviewUnitTime: response.data.program.pgInterviewUnitTime,
                 pgMaxIntervieweesPerUnit: response.data.program.pgMaxIntervieweesPerUnit
             }));

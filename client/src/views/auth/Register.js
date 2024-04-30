@@ -1,6 +1,6 @@
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, Col, Form, Row,} from "reactstrap";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import UsernameFormGroup from "../../components/FormGroup/UsernameFormGroup";
@@ -64,12 +64,16 @@ const Register = ({header}) => {
         auth.join(inputValue)
             .then(response => {
                 navigate('/auth/login')
-                sendAlert("error", '회원가입 성공! 로그인 해주세요')
+                sendAlert("success", '회원가입 성공! 로그인 해주세요')
             })
             .catch(error => {
                 sendAlert("error", error.response.data);
             });
     }
+
+    useEffect(() => {
+        console.log(inputValue)
+    }, [inputValue]);
 
     return (
         <Col lg="6" md="8" className="register-container">
@@ -110,9 +114,8 @@ const Register = ({header}) => {
                         <RegisterAddrFormGroup
                             label="개인 주소"
                             placeholder="상세주소"
-                            handleDetailAddrValue={(value) => setInputValue({...inputValue, detailAddr: value})}
-                            handleAddrValue={(value) => setInputValue({...inputValue, address: value})}
-                            handleZipCodeValue={(value) => setInputValue({...inputValue, zipCode: value})}
+                            inputValue={inputValue}
+                            setInputValue={setInputValue}
                         />
                         <GenderFormGroup
                             inputValue={inputValue}

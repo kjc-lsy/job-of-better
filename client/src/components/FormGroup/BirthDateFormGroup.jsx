@@ -8,8 +8,9 @@ const BirthDateFormGroup = ({inputValue, setInputValue}) => {
             <label>생년월일</label>
             <DatePicker
                 format="yyyy-MM-dd"
-                defaultValue={new Date()}
+                defaultValue={new Date(new Date().getTime() - 1000*60*60*24*365*18)}
                 onChange={date => setInputValue({...inputValue, birthDate: date})}
+                oneTap
             />
             <div className="text-muted font-italic">
                 <small>

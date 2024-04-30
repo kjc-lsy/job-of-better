@@ -128,12 +128,6 @@ const CompanyRegister = () => {
                             placeholder="상세 주소"
                             inputValue={inputValue}
                             setInputValue={setInputValue}
-                            handleAddrValue={fullAddr => {
-                                setInputValue({...inputValue, b_address: fullAddr})
-                            }}
-                            handleZipCodeValue={zipCode => {
-                                setInputValue({...inputValue, b_zipCode: zipCode})
-                            }}
                         />
                         <BOpeningDateFormGroup
                             inputValue={inputValue}

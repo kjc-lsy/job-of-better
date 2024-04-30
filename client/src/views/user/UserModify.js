@@ -113,9 +113,8 @@ function UserProfile() {
                                 <RegisterAddrFormGroup
                                     label="개인 주소"
                                     placeholder="상세주소"
-                                    handleDetailAddrValue={(value) => setInputValue({...inputValue, detailAddr: value})}
-                                    handleAddrValue={(value) => setInputValue({...inputValue, address: value})}
-                                    handleZipCodeValue={(value) => setInputValue({...inputValue, zipCode: value})}
+                                    inputValue={inputValue}
+                                    setInputValue={setInputValue}
                                 />
 
                             </Form>

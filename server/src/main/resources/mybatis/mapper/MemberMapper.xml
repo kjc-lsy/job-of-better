@@ -21,7 +21,6 @@
         <result property="pgRegDate" column="pg_reg_date"/>
         <result property="resumeFile" column="resume_file"/>
         <result property="registeredInterviewDate" column="registered_interview_date"/>
-        <result property="assignedInterviewDate" column="assigned_interview_date"/>
         <result property="interviewStatus" column="interview_status"/>
         <result property="coverLetterStatus" column="cover_letter_status"/>
         <result property="resumeStatus" column="resume_status"/>
@@ -128,16 +127,16 @@
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="Member" useGeneratedKeys="true" keyProperty="idx">
         INSERT INTO member (
-            name, username, password, email, address, zip_code, birth_date, gender, phone, com_idx,
-            pg_idx, pg_reg_status, pg_reg_date, desired_interview_date,
-            assigned_interview_date, interview_status, interview_comment, cover_letter_status,
+            name, username, password, email, address, detail_addr, zip_code, birth_date, gender, phone, com_idx,
+            pg_idx, registered_interview_date,
+            interview_status, interview_comment, cover_letter_status,
             resume_status, withdrawn_date, is_withdrawn, profile_img
         )
         VALUES (
-                   #{name}, #{username}, #{password}, #{email}, #{address}, #{zipCode}, #{birthDate}, #{gender},
-                   #{phone}, #{comIdx}, #{pgIdx}, #{pgRegStatus}, #{pgRegDate},
-                   #{registeredInterviewDate}, #{assignedInterviewDate}, #{interviewStatus},
-                   #{interviewComment}, #{coverLetterStatus}, #{resumeStatus}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
+                   #{name}, #{username}, #{password}, #{email}, #{address}, #{detailAddr}, #{zipCode}, #{birthDate}, #{gender},
+                   #{phone}, #{comIdx}, #{pgIdx},
+                   #{registeredInterviewDate}, #{interviewStatus}, #{interviewComment}, #{coverLetterStatus},
+                   #{resumeStatus}, #{withdrawnDate}, #{isWithdrawn}, #{profileImg}
                )
     </insert>
 
@@ -177,8 +176,7 @@
             phone                   = #{phone},
             com_idx                 = #{comIdx},
             resume_file             = #{resumeFile},
-            desired_interview_date  = #{registeredInterviewDate},
-            assigned_interview_date = #{assignedInterviewDate},
+            registered_interview_date  = #{registeredInterviewDate},
             interview_status       = #{interviewStatus},
             interview_comment       = #{interviewComment},
             coverLetterStatus         = #{coverLetterStatus},
