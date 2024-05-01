@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.Member;
@@ -13,6 +14,7 @@ import site.dealim.jobconsulting.dto.CoverLetterDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComCoverLetterService;
 import site.dealim.jobconsulting.service.MemCoverLetterService;
+import site.dealim.jobconsulting.service.VertexAiService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,14 +26,15 @@ import java.util.Map;
 @Slf4j
 public class MemCoverLetterController {
     @Autowired
-    MemCoverLetterService memCoverLetterService;
+    private MemCoverLetterService memCoverLetterService;
     @Autowired
-    ComCoverLetterService comCoverLetterService;
+    private ComCoverLetterService comCoverLetterService;
+    @Autowired
+    private VertexAiService vertexAiService;
 
     @PostMapping("/user-cover-letter-save")
     public ResponseEntity<Map<String, String>> userCoverLetterSave(@AuthenticationPrincipal CustomMember customMember, @RequestBody List<MemberCoverLetter> values) {
         Member user = customMember.getMember();
-        System.out.println("values = " + values);
         memCoverLetterService.userCoverLetterSave(values, user.getIdx());
 
         Map<String, String> responseMap = new HashMap<>();
@@ -48,6 +51,13 @@ public class MemCoverLetterController {
         List<CoverLetterDto> coverLetterDtoList = memCoverLetterService.coverLetterInfo(user.getIdx());
         //System.out.println("coverLetterDtoList = " + coverLetterDtoList);
         return memCoverLetterService.coverLetterInfo(user.getIdx(), user.getPgIdx());
+    }
+
+    @Secured("ROLE_USER")
+    @GetMapping("/user-cover-letter-assessment")
+    public String userCoverLetterAssessment(@RequestParam("prompt") String prompt) throws Exception {
+        log.info("자소서 항목 vertex ai 평가...");
+        return vertexAiService.getAssessment(prompt);
     }
 
 

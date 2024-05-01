@@ -41,6 +41,22 @@ public class VertexAiService {
         );
     }
 
+    public String getAssessment(String prompt) throws Exception {
+        return sendMsgOnTextBison(
+                """
+                자기소개서 질문이랑 대답을 알려줄게 아래 형식에 맞춰서 평가좀 해줄래?
+                
+                너가 인사 담당자 역할로 대답 해줘
+                
+                점수 : ?/10
+                한줄 평가 : 
+                
+                %s
+                
+                """.formatted(prompt)
+        );
+    }
+
     /**
      * Send a message to Text Bison for prediction.
      *

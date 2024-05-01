@@ -1,5 +1,6 @@
 package site.dealim.jobconsulting.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
@@ -15,9 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class MemCoverLetterService {
-    @Autowired
-    private MemCoverLetterMapper userMapper;
     @Autowired
     private ComCoverLetterMapper comCoverLetterMapper;
     @Autowired
@@ -26,6 +26,9 @@ public class MemCoverLetterService {
     private MemberMapper memberMapper;
 
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx) {
+        log.info("member 자소서 상태 업데이트...");
+        memberMapper.updateCoverLetterStatus(idx, "Writing"); // TODO : 작성중/작성완료 상태 업데이트 로직 짜야함
+
         Map map = new HashMap<>();
         for (MemberCoverLetter item : values) {
             map.put("mclCclIdx", item.getMclCclIdx());
@@ -37,9 +40,9 @@ public class MemCoverLetterService {
             Long mclIdx = item.getMclIdx();
             if ( mclIdx > 0) {
                 map.put("mclIdx", mclIdx);
-                userMapper.userCoverLetterUpdate(map);
+                memberCoverLetterMapper.userCoverLetterUpdate(map);
             } else {
-                userMapper.userCoverLetterSave(map);
+                memberCoverLetterMapper.userCoverLetterSave(map);
             }
         }
 

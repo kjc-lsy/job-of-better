@@ -24,7 +24,6 @@ const CoverLetter = () => {
         answerValid: false,
     }]);
 
-    // 자소서 항목 들고오기
     useEffect(() => {
         getInfo();
     }, []);
@@ -35,7 +34,6 @@ const CoverLetter = () => {
         try {
             const response = await coverLetterInfo();
             setMclTitle(response.data[0].memberCoverLetter?.mclTitle)
-            console.log(response.data);
             if (response.data.length > 0) {
                 setInputLength("true");
                 setInputValue(
@@ -63,7 +61,6 @@ const CoverLetter = () => {
             setIsDone(true);
         }
     }
-
 
     const onChange = ({target, index}) => {
         let updatedInputValue = [...inputValue];
@@ -191,10 +188,8 @@ const CoverLetter = () => {
                 }
             }
         }
-
         return text;
     }
-
 
     return (
         <div className="content">
@@ -208,11 +203,11 @@ const CoverLetter = () => {
                             <Message showIcon type="success">
                                 <strong>제출 완료!</strong> 제출이 완료 되었습니다. 추가 수정을 원하신다면 작성 후 다시 제출 버튼을 눌러주세요.
                             </Message>
-                        : inputValue[0].type === "T" ?
-                        <Message showIcon type="info">
-                            <strong>임시 저장!</strong> 임시 저장 되었습니디. 제출을 하셔야 프로그램 담당자 확인이 가능합니다.
-                        </Message>
-                        : null}
+                            : inputValue[0].type === "T" ?
+                                <Message showIcon type="info">
+                                    <strong>임시 저장!</strong> 임시 저장 되었습니디. 제출을 하셔야 프로그램 담당자 확인이 가능합니다.
+                                </Message>
+                                : null}
                         {inputLength === "true" ?
                             <Form role="form" name="" aria-label="coverletter save">
                                 <FormGroup className="coverLetterTitle">
@@ -285,15 +280,14 @@ const CoverLetter = () => {
                                 })}
                                 <div className="btngroup">
                                     {inputValue[0].type !== "Y" ?
-                                    <Button className="greyBtn" disabled={!IsDone}
-                                            onClick={(e) => save(e, "N")}>임시저장</Button> : null }
+                                        <Button className="greyBtn" disabled={!IsDone}
+                                                onClick={(e) => save(e, "N")}>임시저장</Button> : null}
                                     <Button disabled={!IsDone} onClick={(e) => save(e, "Y")}>제출</Button>
                                 </div>
                             </Form>
                             : <div className="noCoverLetter">등록된 자기 소개서 항목이 없습니다.</div>}
                     </CardBody>
                 </Card>}
-
         </div>
     )
 };

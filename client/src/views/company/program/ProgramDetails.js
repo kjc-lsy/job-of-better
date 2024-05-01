@@ -33,7 +33,6 @@ const ProgramDetails = () => {
 
     const handleSummaryRefreshBtn = async () => {
         setIsSummaryLoading(true)
-
         try {
             await getContentSummary(pgIdx);
             await updateProgram(pgIdx);

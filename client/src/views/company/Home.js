@@ -37,7 +37,7 @@ function Home() {
 
     useEffect(() => {
         getCount()
-    }, [])
+    }, [currProg])
 
     const getCount = async () => {
         setLoading(true);

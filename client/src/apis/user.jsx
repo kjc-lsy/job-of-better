@@ -74,3 +74,7 @@ export const updateUserInfo = (value) => {
 export const updateResumeStatus = async (status) => {
     return api.put('/api/user/update-resume-status', {status})
 }
+
+export const getUserCoverLetterAssessment = async (prompt) => {
+    return api.get('/api/user/user-cover-letter-assessment?prompt=' + prompt)
+}

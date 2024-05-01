@@ -79,5 +79,7 @@ public interface MemberMapper {
     Integer updateResumeStatus(@Param("memIdx")Long memIdx, @Param("resumeStatus")String resumeStatus);
 
     Long getPgIdxByIdx(Long memIdx);
+
+    public Long updateCoverLetterStatus(@Param("memIdx") Long memIdx,@Param("status") String status);
 }
 

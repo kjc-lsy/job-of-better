@@ -334,5 +334,11 @@
         where idx = #{param}
     </select>
 
+    <update id="updateCoverLetterStatus" parameterType="map">
+        UPDATE member
+            SET cover_letter_status = #{status}
+        WHERE idx = #{memIdx}
+    </update>
+
 
 </mapper>
