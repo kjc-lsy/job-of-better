@@ -17,8 +17,8 @@ const RegisterAddrFormGroup = ({inputValue, setInputValue, label, placeholder}) 
                             id="b_detailAddr"
                             name="b_detailAddr"
                             placeholder={placeholder}
-                            value={inputValue?.b_detailAddr}
-                            onChange={(e) => setInputValue(prev => ({...prev, b_detailAddr: e.target.value}))}
+                            value={inputValue?.detailAddr}
+                            onChange={(e) => setInputValue(prev => ({...prev, detailAddr: e.target.value}))}
                         />
                     </Col>
                 </Row>

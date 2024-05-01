@@ -27,7 +27,7 @@
     "start": "node scripts/start.js ",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "install:clean": "rmdir /s /q node_modules && del /q package-lock.json && node C:\\Program Files\\nodejs\\npm-cli.js install && node C:\\Program Files\\nodejs\\npm-cli.js start",
     "build:scss": "npm run compile:scss && npm run minify:scss && npm run map:scss",
     "compile-scss": "sass src/assets/scss/black-dashboard-react.scss src/assets/css/black-dashboard-react.css",
     "minify-scss": "sass src/assets/scss/black-dashboard-react.scss src/assets/css/black-dashboard-react.min.css --style compressed"

@@ -22,27 +22,37 @@ export const remove = (userId) => api.delete(`/api/auth/delete/${userId}`)
 export const logout = () => api.get('/api/logout')
 
 // 기업 가입
-export const companyJoin = (data) => api.post(`/api/auth/company-join`, {
-    //todo 사업자 등록 파일 upload
-    member:{
-        username : data.username,
-        password : data.password,
-        name : data.name,
-        email : data.email,
-        phone : data.phone
-    },
-    company : {
-        comName : data.b_name,
-        comCeoName : data.b_ceoName,
-        comAddress : data.b_address,
-        comDetailAddress : data.b_detailAddr,
-        comZipcode : data.b_zipCode,
-        comLicenseNum : data.b_no,
-        comOpeningDate : data.b_openingDate,
-        comTel : data.b_tel,
-    }
+export const companyJoin = (data) => {
+    const formData = new FormData();
+    formData.append('member', {
+        username: data.username,
+        password: data.password,
+        name: data.name,
+        email: data.email,
+        phone: data.phone
+    });
+    formData.append('company',{
+        comName: data.b_name,
+        comCeoName: data.b_ceoName,
+        comAddress: data.address,
+        comDetailAddress: data.detailAddr,
+        comZipcode: data.zipCode,
+        comLicenseNum: data.b_no,
+        comOpeningDate: data.b_openingDate,
+        comTel: data.b_tel
+    });
+    formData.append('file', data.b_img); // 파일 업로드 추가
+    formData.append('path', 'licenceFile');
 
-});
+    console.log(formData);
+
+    return api.post(`/api/auth/company-join`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+};
+
 
 //사업자 번호 확인
 export const checkDuplicateBNo = (value) => {
