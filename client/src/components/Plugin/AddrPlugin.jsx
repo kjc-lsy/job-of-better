@@ -22,7 +22,7 @@ const Postcode = ({setInputValue}) => {
             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
         setData(data)
-        setInputValue(prev => ({...prev, b_address: fullAddress, b_zipCode: data.zonecode}))
+        setInputValue(prev => ({...prev, address: fullAddress, zipCode: data.zonecode}))
     };
 
     const handleClick = () => {

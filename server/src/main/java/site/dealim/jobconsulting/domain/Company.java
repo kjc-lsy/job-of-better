@@ -15,6 +15,7 @@ public class Company {
     private String comName;
     private String comCeoName;
     private String comAddress;
+    private String comDetailAddress;
     private int comZipcode;
     private String comTel;
     private String comLogo;

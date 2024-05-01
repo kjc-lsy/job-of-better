@@ -65,6 +65,20 @@ private final AmazonS3 amazonS3;
         return fileList;
     }
 
+    public File uploadFile(Long comIdx,String path, MultipartFile multipartFile){
+        log.info("AWS file upload start - folder,multipartFile");
+        File file = fileBuilder(path , multipartFile);
+        file.builder()
+                .originalFileName(file.getOriginalFileName())
+                .uploadFileName(file.getUploadFileName())
+                .uploadFileUrl(file.getUploadFileUrl())
+                .uploadFilePath(path)
+                .relatedIdx(comIdx)
+                .uploadFileExt(getFileExtension(file.getOriginalFileName()).substring(1))
+                .build();
+        return file;
+    }
+
     @Transactional
     public File fileBuilder(String path,MultipartFile file) {
         log.info("aws file builder");

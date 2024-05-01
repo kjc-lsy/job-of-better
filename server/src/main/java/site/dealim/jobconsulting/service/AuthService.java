@@ -11,11 +11,18 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import site.dealim.jobconsulting.domain.Company;
+import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
+import site.dealim.jobconsulting.mapper.FileMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -28,6 +35,10 @@ public class AuthService {
     private CompanyMapper companyMapper;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private AwsService awsService;
+    @Autowired
+    private FileMapper fileMapper;
 
     /**
      * 회원 등록 (회원 가입)
@@ -155,5 +166,15 @@ public class AuthService {
 
     public void updateCompanyIdx(Long comIdx, long idx) {
         memberMapper.updateCompanyIdx(comIdx, idx);
+    }
+
+    @Transactional
+    public void uploadLicenseFile(Long comIdx, File file) {
+            log.info("1. 파일 업로드...");
+            fileMapper.upload(file);
+
+            log.info("2. Company license file upload...");
+            companyMapper.uploadLicenseFile(comIdx, file.getUploadFileUrl());
+
     }
 }

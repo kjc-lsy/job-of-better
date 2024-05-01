@@ -35,4 +35,11 @@
         FROM company
         WHERE com_mem_idx = #{param}
     </select>
+
+    <!-- 회사 사업자 등록증 업로드 -->
+    <update id="uploadLicenseFile" parameterType="map">
+        UPDATE company
+        SET com_license_file = #{uploadFileUrl}
+        WHERE com_idx = #{comIdx}
+    </update>
 </mapper>

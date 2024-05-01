@@ -7,16 +7,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.RouterOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.AuthService;
+import site.dealim.jobconsulting.service.AwsService;
 import site.dealim.jobconsulting.service.ComCoverLetterService;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -29,6 +35,9 @@ public class AuthController {
 
     @Autowired
     private ComCoverLetterService companyService;
+
+    @Autowired
+    private AwsService awsService;
 
     /**
      * 사용자 정보 조회
@@ -116,18 +125,31 @@ public class AuthController {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @PostMapping("/company-join")
-    public ResponseEntity<?> companyJoin(@RequestBody MemberCompanyDto memberCompanyDto) throws Exception {
+    @PostMapping(path = "/company-join" ,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> companyJoin(
+        @RequestBody MemberCompanyDto memberCompanyDto
+        , @RequestParam("path") String path
+        , @RequestParam("file") MultipartFile multipartFiles
+    ) throws Exception {
         try {
             log.info("멤버 회원가입 시작...");
             authService.MemberInsert(memberCompanyDto.getMember());
+
             Long joinMember = memberCompanyDto.getMember().getIdx();
             log.info("멤버 회원가입 성공! - SUCCESS / idx : "+memberCompanyDto.getMember().getIdx());
+
             log.info("기업 회원가입 시작...");
             authService.companyJoin(joinMember, memberCompanyDto.getCompany());
             log.info("기업 회원가입 성공! - SUCCESS");
+
             log.info("멤버 기업 idx값 추가");
             authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
+
+            log.info("aws 업로드 시작");
+            authService.uploadLicenseFile(memberCompanyDto.getCompany().getComIdx() , awsService.uploadFile(memberCompanyDto.getCompany().getComIdx(), path, multipartFiles));
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.
