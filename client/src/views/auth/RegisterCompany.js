@@ -87,11 +87,11 @@ const CompanyRegister = () => {
         auth.companyJoin(inputValue)
             .then(response => {
                 navigate('/auth/login')
-                //sendAlert("success", '회원가입 성공! 로그인 해주세요')
+                sendAlert("success", '회원가입 성공! 로그인 해주세요')
             })
             .catch(error => {
                 console.log(error.response.data)
-                //sendAlert("error", error.response.data);
+                sendAlert("error", error.response.data);
             });
     }
 
