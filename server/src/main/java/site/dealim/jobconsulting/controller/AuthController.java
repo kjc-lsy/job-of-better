@@ -1,10 +1,9 @@
 package site.dealim.jobconsulting.controller;
 
 //import io.swagger.annotations.Api;
-import io.swagger.v3.oas.annotations.Operation;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.annotations.RouterOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,15 +13,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.AuthService;
 import site.dealim.jobconsulting.service.AwsService;
 import site.dealim.jobconsulting.service.ComCoverLetterService;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -125,14 +121,9 @@ public class AuthController {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @PostMapping(path = "/company-join" ,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @PostMapping(path = "/company-join")
     public ResponseEntity<?> companyJoin(
         @RequestBody MemberCompanyDto memberCompanyDto
-        , @RequestParam("path") String path
-        , @RequestParam("file") MultipartFile multipartFiles
     ) throws Exception {
         try {
             log.info("멤버 회원가입 시작...");
@@ -147,11 +138,28 @@ public class AuthController {
 
             log.info("멤버 기업 idx값 추가");
             authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
-
-            log.info("aws 업로드 시작");
-            authService.uploadLicenseFile(memberCompanyDto.getCompany().getComIdx() , awsService.uploadFile(memberCompanyDto.getCompany().getComIdx(), path, multipartFiles));
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
+            throw e; // 예외를 다시 던져서 롤백을 유도합니다.
+        }
+        return new ResponseEntity<>(memberCompanyDto.getCompany().getComIdx(), HttpStatus.OK);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @PostMapping(path = "/company-join-license" ,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> companyJoin(
+            @RequestParam("comIdx") Long comIdx
+            , @RequestParam("path") String path
+            , @RequestParam("file") MultipartFile multipartFiles
+    ) throws Exception {
+        log.info("aws 업로드 시작");
+        try {
+            authService.uploadLicenseFile(comIdx , awsService.uploadFile(comIdx, path, multipartFiles));
+        } catch(Exception e) {
+            log.error("업로드 실패 - ERROR", e);
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.
         }
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);

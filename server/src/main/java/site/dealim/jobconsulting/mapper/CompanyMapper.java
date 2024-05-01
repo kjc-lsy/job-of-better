@@ -1,7 +1,7 @@
 package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 import site.dealim.jobconsulting.domain.Company;
 
 @Mapper
@@ -13,5 +13,5 @@ public interface CompanyMapper {
     int checkDuplicateBno(String comLicenseNum);
     String getComNameByComIdx(Long comIdx);
 
-    void uploadLicenseFile(@Param("comIdx") Long comIdx, @Param("uploadFileUrl") String uploadFileUrl);
+    int uploadLicenseFile(@Param("comIdx") Long comIdx, @Param("licenseFile") String uploadFileUrl);
 }

@@ -49,13 +49,12 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
         <FormGroup className="register_file">
             <Input
                 id="b_img"
-                value={inputValue.b_img}
                 name="b_img"
                 type="file"
                 accept=".jpg, .jpeg, .png, .pdf"
                 onChange={e => {
                     handleUpload(e);
-                    setInputValue({...inputValue, b_img: e.target.value});
+                    setInputValue({...inputValue, b_img: e.target.files[0]});
                 }}
             />
             <label htmlFor="b_img"

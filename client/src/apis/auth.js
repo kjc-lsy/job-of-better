@@ -22,36 +22,62 @@ export const remove = (userId) => api.delete(`/api/auth/delete/${userId}`)
 export const logout = () => api.get('/api/logout')
 
 // 기업 가입
-export const companyJoin = (data) => {
+export const companyJoin = async (data) => {
+    // 회사 정보와 멤버 정보 JSON 형식으로 전송
+    const memberCompanyData = {
+        member: {
+            username: data.username,
+            password: data.password,
+            name: data.name,
+            email: data.email,
+            phone: data.phone
+        },
+        company: {
+            comName: data.b_name,
+            comCeoName: data.b_ceoName,
+            comAddress: data.address,
+            comDetailAddress: data.detailAddr,
+            comZipcode: data.zipCode,
+            comLicenseNum: data.b_no,
+            comOpeningDate: data.b_openingDate,
+            comTel: data.b_tel
+        }
+    };
+
+    try {
+        const response = await api.post('/api/auth/company-join', memberCompanyData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            const comIdx = response.data; // 회사 ID를 응답에서 받음
+            return await uploadLicense(comIdx, data.b_img);
+        } else {
+            throw new Error('Failed to register company details');
+        }
+    } catch (error) {
+        console.error('Error during the company registration process:', error);
+        throw error;
+    }
+};
+
+// 사업자 등록증 파일 전송
+const uploadLicense = async (comIdx, file) => {
     const formData = new FormData();
-    formData.append('member', {
-        username: data.username,
-        password: data.password,
-        name: data.name,
-        email: data.email,
-        phone: data.phone
-    });
-    formData.append('company',{
-        comName: data.b_name,
-        comCeoName: data.b_ceoName,
-        comAddress: data.address,
-        comDetailAddress: data.detailAddr,
-        comZipcode: data.zipCode,
-        comLicenseNum: data.b_no,
-        comOpeningDate: data.b_openingDate,
-        comTel: data.b_tel
-    });
-    formData.append('file', data.b_img); // 파일 업로드 추가
-    formData.append('path', 'licenceFile');
+    formData.append('comIdx', comIdx);
+    formData.append('file', file);
+    formData.append('path', 'license'); // 경로 예시로 'license' 사용
 
-    console.log(formData);
-
-    return api.post(`/api/auth/company-join`, formData, {
+    return api.post('/api/auth/company-join-license', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     });
 };
+
+
 
 
 //사업자 번호 확인

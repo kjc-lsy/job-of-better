@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
@@ -20,9 +19,6 @@ import site.dealim.jobconsulting.domain.MemberRole;
 import site.dealim.jobconsulting.mapper.CompanyMapper;
 import site.dealim.jobconsulting.mapper.FileMapper;
 import site.dealim.jobconsulting.mapper.MemberMapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -66,7 +62,7 @@ public class AuthService {
         return result;
     }
 
-    
+
     public int update(Member member) {
         String memberPwd = member.getPassword();
         String encondedPwd = passwordEncoder.encode(memberPwd);
@@ -78,7 +74,7 @@ public class AuthService {
     /**
      * 회원 삭제 (회원 탈퇴)
      */
-    
+
     public int delete(String username) {
         return memberMapper.deleteMember(username);
     }
@@ -86,12 +82,12 @@ public class AuthService {
     /**
      * idx로 회원 조회
      */
-    
+
     public Member select(long idx) {
         return memberMapper.selectMember(idx);
     }
 
-    
+
     public void login(Member member, HttpServletRequest request) {
         String username = member.getUsername();
         String password = member.getPassword();
@@ -144,7 +140,7 @@ public class AuthService {
         //회원 등록
         Long result = memberMapper.insertMember(member);
 
-        if(result > 0) {
+        if (result > 0) {
             log.info("회원가입 권한(ROLE_USER) 등록 시작");
             MemberRole memberRole = new MemberRole();
             memberRole.setUsername(member.getUsername());
@@ -170,11 +166,10 @@ public class AuthService {
 
     @Transactional
     public void uploadLicenseFile(Long comIdx, File file) {
-            log.info("1. 파일 업로드...");
-            fileMapper.upload(file);
+        log.info("1. 파일 업로드...");
+        fileMapper.upload(file);
 
-            log.info("2. Company license file upload...");
-            companyMapper.uploadLicenseFile(comIdx, file.getUploadFileUrl());
-
+        log.info("2. Company license file upload...");
+        companyMapper.uploadLicenseFile(comIdx, file.getUploadFileUrl());
     }
 }
