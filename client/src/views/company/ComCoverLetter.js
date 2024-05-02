@@ -49,6 +49,7 @@ function ComCoverLetter() {
                     //console.log(response.data);
                     if (response.data === "SUCCESS") {
                         setInputValue(inputValue.filter(input => (input.num !== num)));
+                        list();
                     }
                 })
                 .catch(error => {
@@ -71,8 +72,10 @@ function ComCoverLetter() {
                 .then(response => {
                     //navigate('/auth/login')
                     if (response.data === "SUCCESS") {
-                        sendAlert("success", "등록이 완료되었습니다.")
+                        sendAlert("success", "등록이 완료되었습니다.");
+                        list();
                     }
+
                     //sendAlert("error", response.data)
                 })
                 .catch(error => {
@@ -81,30 +84,34 @@ function ComCoverLetter() {
         }
     }
     useEffect(() => {
+        list();
+    }, []);
+
+    function list() {
         setLoading(true);
         company.coverLetterInfo(localStorage.getItem("program"))
             .then(response => {
                 setInputValue(
                     response.data.length === 0 ? [
-                        {
-                            num: 1,
-                            id: 0,
-                            maxlength: 0,
-                            minlength: 0,
-                            question: "",
-                            pgIdx: localStorage.getItem("program"),
-                        }
-                    ] :
-                    response.data.map((item, index) => {
-                        return {
-                            num: index + 1,
-                            id: item.cclIdx,
-                            maxlength: item.cclMaxLength,
-                            minlength: item.cclMinLength,
-                            question: item.cclLetterQuestion,
-                            pgIdx: item.cclPgIdx,
-                        }
-                    }));
+                            {
+                                num: 1,
+                                id: 0,
+                                maxlength: 0,
+                                minlength: 0,
+                                question: "",
+                                pgIdx: localStorage.getItem("program"),
+                            }
+                        ] :
+                        response.data.map((item, index) => {
+                            return {
+                                num: index + 1,
+                                id: item.cclIdx,
+                                maxlength: item.cclMaxLength,
+                                minlength: item.cclMinLength,
+                                question: item.cclLetterQuestion,
+                                pgIdx: item.cclPgIdx,
+                            }
+                        }));
                 //console.log(response.data);
             })
             .catch(error => {
@@ -113,7 +120,7 @@ function ComCoverLetter() {
             .finally(
                 setLoading(false)
             );
-    }, []);
+    }
 
 
     return (

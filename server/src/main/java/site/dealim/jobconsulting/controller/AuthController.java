@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.File;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.MemberCompanyDto;
@@ -130,11 +131,14 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<?> companyJoin(
-        @RequestBody MemberCompanyDto memberCompanyDto
-        , @RequestParam("path") String path
-        , @RequestParam("file") MultipartFile multipartFiles
+            @RequestPart(name="member") Member member,
+            @RequestPart(name="company") Company company,
+            @RequestPart(name="file") MultipartFile multipartFiles
     ) throws Exception {
         try {
+            MemberCompanyDto memberCompanyDto = new MemberCompanyDto();
+            memberCompanyDto.setMember(member);
+            memberCompanyDto.setCompany(company);
             log.info("멤버 회원가입 시작...");
             authService.MemberInsert(memberCompanyDto.getMember());
 
@@ -149,7 +153,7 @@ public class AuthController {
             authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
 
             log.info("aws 업로드 시작");
-            authService.uploadLicenseFile(memberCompanyDto.getCompany().getComIdx() , awsService.uploadFile(memberCompanyDto.getCompany().getComIdx(), path, multipartFiles));
+            authService.uploadLicenseFile(memberCompanyDto.getCompany().getComIdx() , awsService.uploadFile(memberCompanyDto.getCompany().getComIdx(), "Business-Registration", multipartFiles));
         } catch(Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.

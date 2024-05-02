@@ -24,14 +24,17 @@ export const logout = () => api.get('/api/logout')
 // 기업 가입
 export const companyJoin = (data) => {
     const formData = new FormData();
-    formData.append('member', {
+
+    formData.append('file', data.b_img); // 파일 업로드 추가
+    /*formData.append('path', 'Business-Registration');*/
+    formData.append('member', JSON.stringify({
         username: data.username,
         password: data.password,
         name: data.name,
         email: data.email,
         phone: data.phone
-    });
-    formData.append('company',{
+    }));
+    formData.append('company', JSON.stringify({
         comName: data.b_name,
         comCeoName: data.b_ceoName,
         comAddress: data.address,
@@ -40,11 +43,10 @@ export const companyJoin = (data) => {
         comLicenseNum: data.b_no,
         comOpeningDate: data.b_openingDate,
         comTel: data.b_tel
-    });
-    formData.append('file', data.b_img); // 파일 업로드 추가
-    formData.append('path', 'licenceFile');
-
-    console.log(formData);
+    }));
+    for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+    };
 
     return api.post(`/api/auth/company-join`, formData, {
         headers: {
@@ -52,6 +54,7 @@ export const companyJoin = (data) => {
         }
     });
 };
+
 
 
 //사업자 번호 확인

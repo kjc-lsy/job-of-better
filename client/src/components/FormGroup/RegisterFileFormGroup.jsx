@@ -23,11 +23,13 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
     };
 
     const setFileInfo = (file) => {
-        const {name, size: byteSize, type} = file;
-        const size = (byteSize / (1024 * 1024)).toFixed(2);
+        const size = (file.size / (1024 * 1024)).toFixed(2);
+       /* const {name, size: byteSize, type} = file;
+        const size = (byteSize / (1024 * 1024)).toFixed(2);*/
         //console.log(file , name, size, byteSize, type);
         //setUploadedInfo({name, size, type}); // name, size, type 정보를 uploadedInfo에 저장
         if(size <= 3) {
+            setInputValue({...inputValue, b_img: file})
             setUploadedInfo(true)
         }else {
             alert("3MB이상 업로드 할 수 없습니다!")
@@ -49,13 +51,13 @@ const RegisterFileFormGroup = ({inputValue,setInputValue}) => {
         <FormGroup className="register_file">
             <Input
                 id="b_img"
-                value={inputValue.b_img}
+                //value={inputValue.b_img}
                 name="b_img"
                 type="file"
                 accept=".jpg, .jpeg, .png, .pdf"
                 onChange={e => {
                     handleUpload(e);
-                    setInputValue({...inputValue, b_img: e.target.value});
+                    //setInputValue({...inputValue, b_img: e.target.value});
                 }}
             />
             <label htmlFor="b_img"

@@ -101,16 +101,17 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     const userCoverLetterInfo = async () => {
         try {
             const response = await user.coverLetterInfo();
-            if(!response.dtaa) return;
-            console.log(response.data);
+            if(!response.data) return;
+            //console.log(response.data);
             /*setInputValue((inputValue) =>({
                 ...inputValue,
                 coverLetterLength: response.data.memberCoverLetter?.length,
                 coverLetterTotalLength: response.data.comCoverLetter?.length,
                 coverLetterPercent: (((response.data.memberCoverLetter?.length ? response.data.memberCoverLetter?.length : 0) / (response.data.comCoverLetter?.length) ? response.data.comCoverLetter?.length : 0) * 100).toFixed(0),
             }));*/
-            const mcl_leng = response.data.reduce((count, item) => (item.memCoverLetter !== null ? count + 1 : count), 0);
+            const mcl_leng = response.data.reduce((count, item) => (item.memberCoverLetter ? count + 1 : count), 0);
             const ccl_leng = response.data.length;
+            //console.log("mcl_leng : " + mcl_leng + " / ccl_leng : " + ccl_leng);
             setClValue({
                 mclTitle: response.data[0].memberCoverLetter?.mclTitle,
                 mclDate: response.data[0].memberCoverLetter?.mclModifiedDate,
