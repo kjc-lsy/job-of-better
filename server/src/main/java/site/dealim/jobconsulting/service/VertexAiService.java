@@ -34,6 +34,7 @@ public class VertexAiService {
                 답변하는 글자수는 200자 이내로.
                 각 컬럼은 한줄로 요약.
                 각 카테고리는 markdown으로 bold 처리.
+                요약할 교육 관련 내용이 아래에 없다면 그냥 없다고 해줘
                 
                 %s
                 

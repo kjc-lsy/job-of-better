@@ -1379,6 +1379,10 @@ td {
         align-items: center;
       }
 
+      .ai-summary-label+.form-control {
+        min-height: 100px;
+      }
+
       .refresh-btn {
         border-radius: 50%;
         height: 24px;
