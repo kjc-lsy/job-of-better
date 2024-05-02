@@ -286,7 +286,7 @@ const CoverLetter = () => {
                                 <div className="btngroup">
                                     {inputValue[0].type !== "Y" ?
                                     <Button className="greyBtn" disabled={!IsDone}
-                                            onClick={(e) => save(e, "N")}>임시저장</Button> : null }
+                                            onClick={(e) => save(e, "T")}>임시저장</Button> : null }
                                     <Button disabled={!IsDone} onClick={(e) => save(e, "Y")}>제출</Button>
                                 </div>
                             </Form>
