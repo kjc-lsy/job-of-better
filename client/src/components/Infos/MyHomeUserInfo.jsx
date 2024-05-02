@@ -42,7 +42,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                 profileImg: response.data
             });
         } catch (error) {
-            console.error(error.response.data);
+            console.error(error.response);
         } finally {
             setLoading(false);
         }
@@ -51,7 +51,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     useEffect(() => {
         Promise.all([userInfo(), userCoverLetterInfo()])
             .catch((error) => {
-                console.error(error.response.data);
+                console.error(error.response);
             });
     }, []);
 
