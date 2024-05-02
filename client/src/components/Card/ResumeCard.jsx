@@ -23,12 +23,12 @@ const ResumeCard = ({idx}) => {
     }, []);
 
     const updateResumeFiles = () => {
-        if(roles.user && !roles.company) {
+        if (roles.user && !roles.company) {
             getFilesByPath('resume').then(res => {
                 setResumeFiles(res.data)
             })
         }
-        if(roles.company) {
+        if (roles.company) {
             getFilesByPathAndIdx("resume", idx).then(res => {
                 setResumeFiles(res.data)
             })
@@ -42,7 +42,7 @@ const ResumeCard = ({idx}) => {
 
         try {
             await uploadFileToAWS(files, 'resume')
-            if(resumeFiles.length===0) {
+            if (resumeFiles.length === 0) {
                 updateResumeStatus("Complete")
             }
         } catch (e) {
@@ -107,7 +107,7 @@ const ResumeCard = ({idx}) => {
                     <tr>
                         <th className="text-center">파일명</th>
                         <th className="text-center">등록일</th>
-                        <th className="text-center" colSpan={roles.company ? 2 : 1}>이력서 보기</th>
+                        <th className="text-center">이력서 보기</th>
                         {roles.company ? null : <th className="text-center">삭제하기</th>}
                     </tr>
                     </thead>
@@ -130,7 +130,7 @@ const ResumeCard = ({idx}) => {
                                             onClick={async () => {
                                                 setResumeDeleteLoadings(prev => ({...prev, [file.fileIdx]: true}));
                                                 await deleteResumeFile(file.fileIdx);
-                                                if(resumeFiles.length === 1) {
+                                                if (resumeFiles.length === 1) {
                                                     await updateResumeStatus('Pending')
                                                 }
                                                 setResumeFiles(prev => prev.filter(f => f.fileIdx !== file.fileIdx));
