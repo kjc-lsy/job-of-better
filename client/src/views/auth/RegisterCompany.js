@@ -77,9 +77,9 @@ const CompanyRegister = () => {
         inputValue?.validPhone &&
         inputValue?.agree;
 
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(inputValue);
-    },[inputValue])
+    },[inputValue])*/
 
     // 회원가입
     const handleJoin = async (e) => {

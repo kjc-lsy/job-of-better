@@ -77,9 +77,6 @@ const uploadLicense = async (comIdx, file) => {
     });
 };
 
-
-
-
 //사업자 번호 확인
 export const checkDuplicateBNo = (value) => {
     return api.post('/api/auth/check-duplicate-bno?comLicenseNum=' + value);
