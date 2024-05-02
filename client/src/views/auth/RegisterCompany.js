@@ -1,7 +1,7 @@
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, Col, Form, Row,} from "reactstrap";
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import BNoFormGroup from "../../components/FormGroup/BNoFormGroup";
@@ -18,11 +18,13 @@ import BOpeningDateFormGroup from "../../components/FormGroup/BOpeningDateFormGr
 import CeoNameFormGroup from "../../components/FormGroup/CeoNameFormGroup";
 import PhoneFormGroup from "../../components/FormGroup/PhoneFormGroup";
 import {useAlert} from "../../components/Alert/useAlert";
+import {Loader} from "rsuite";
 
 const CompanyRegister = () => {
 
     const navigate = useNavigate();
     const sendAlert = useAlert();
+    const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState({
         username: "",
         validUsername: false,
@@ -84,6 +86,7 @@ const CompanyRegister = () => {
     // 회원가입
     const handleJoin = async (e) => {
         e.preventDefault()
+        setLoading(true)
         auth.companyJoin(inputValue)
             .then(response => {
                 navigate('/auth/login')
@@ -92,6 +95,9 @@ const CompanyRegister = () => {
             .catch(error => {
                 console.log(error.response.data)
                 sendAlert("error", error.response.data);
+            })
+            .finally(()=> {
+                setLoading(false)
             });
     }
 
@@ -191,7 +197,7 @@ const CompanyRegister = () => {
                         </Row>
                         <div className="text-center">
                             <Button className="my-4" color="primary" type="submit" disabled={!submitRequirement}>
-                                회원가입
+                                {loading ? <Loader size="sm" /> : "회원가입"}
                             </Button>
                         </div>
                     </CardBody>
