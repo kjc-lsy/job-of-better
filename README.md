@@ -89,20 +89,117 @@
    브라우저를 열고 `http://localhost:3000`으로 접속합니다. 애플리케이션의 홈페이지가 표시됩니다.
 
 ## Architecture
-
+![architecture](./asset/Architecture.png)
 
 ## Folder Structure
 
 ```
-
+client/src
+├── apis                                    # 사용할 api 들
+├── assets                                  # css, scss, plugin, font
+│   ├── css
+│   ├── demo
+│   ├── fonts
+│   ├── img
+│   │   ├── brand
+│   │   ├── icons
+│   │   │   └── common
+│   │   └── theme
+│   ├── plugins
+│   │   └── nucleo
+│   │       ├── css
+│   │       └── fonts
+│   └── scss
+├── components                              # 사용 컴포넌트
+│   ├── Alert                        
+│   ├── Buttons
+│   ├── Card
+│   ├── Chart
+│   ├── Editor
+│   ├── Footer
+│   ├── FormGroup
+│   ├── HOC
+│   ├── Headers
+│   ├── Infos
+│   │   └── numbers
+│   ├── Modal
+│   ├── Navbars
+│   ├── Notification
+│   ├── Picker
+│   ├── Plugin
+│   ├── PopUp
+│   ├── Sidebar
+│   └── Viewer
+├── contexts                               
+├── layouts                             # auth, company, user 권한별 레이아웃
+├── theme                               # 테마 관련
+├── variables
+└── views
+    ├── auth
+    ├── common
+    ├── company
+    │   ├── memberList
+    │   └── program
+    └── user
+        └── program
+        
+server/src
+├── main
+│   ├── META-INF
+│   ├── generated
+│   ├── java
+│   │   └── site
+│   │       └── dealim
+│   │           └── jobconsulting
+│   │               ├── config
+│   │               ├── controller
+│   │               ├── domain
+│   │               ├── dto
+│   │               ├── error
+│   │               │   └── exception
+│   │               ├── mapper              # mybatis용 mapper 인터페이스
+│   │               ├── prop
+│   │               ├── scheduler           # 회원 상태 업데이트용 스케줄러
+│   │               ├── security
+│   │               │   ├── custom
+│   │               │   └── jwt       # jwt 구현 코드
+│   │               │       ├── constants
+│   │               │       ├── filter
+│   │               │       └── provider
+│   │               ├── service
+│   │               └── util
+│   └── resources
+│       ├── mybatis
+│       │   └── mapper
+│       └── static
+└── test
+    └── java
+        └── site
+            └── dealim
+                └── jobconsulting
+                
+database/
+└── sql-scripts         # DB 서버 컨테이너 초기 시작시 실행할 script
 ```
 
 ## Roles
+### 김지창
+- JWT 인증 시스템 구성
+- 교육생 관리, 프로그램 관리 페이지
+- 코드 통합 및 배포
+- LLM(Google Vertex AI)을 활용한 자소서 평가 및 교육 요약
 
+### 이시영
+- 기업 회원가입
+- 기업 사용자 / 일반 사용자 - 대시보드, 자기소개서, 정보수정
+- AWS 파일 업로드
+- Swagger 적용
+- 웹 프론트 테마 구성
 
 ## Demo Video
 
-## Demo Pictures
+## Presentation Video
+[![Video Label](http://img.youtube.com/vi/SbM4iDwViMg/0.jpg)](https://www.youtube.com/watch?v=SbM4iDwViMg)
 
 ## License
 MIT License Copyright (c) 2024 dealim
