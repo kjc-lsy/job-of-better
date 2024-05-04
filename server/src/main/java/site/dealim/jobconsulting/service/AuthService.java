@@ -64,10 +64,6 @@ public class AuthService {
 
 
     public int update(Member member) {
-        String memberPwd = member.getPassword();
-        String encondedPwd = passwordEncoder.encode(memberPwd);
-        member.setPassword(encondedPwd);
-
         return memberMapper.updateMember(member);
     }
 

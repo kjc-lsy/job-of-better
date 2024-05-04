@@ -66,6 +66,15 @@ function CommonNavbar(props) {
         setmodalSearch(!modalSearch);
     };
 
+    function searchForm(value) {
+        try {
+           // const response = search(value);
+        }
+        catch {
+
+        }
+    }
+
     const logout = (e) => {
         e.preventDefault()
         logoutSetting()
@@ -210,7 +219,7 @@ function CommonNavbar(props) {
                 toggle={toggleModalSearch}
             >
                 <ModalHeader>
-                    <Input placeholder="SEARCH" type="text" />
+                    <Input placeholder="SEARCH" onChange={(e) => searchForm(e.target.value)} type="text" />
                     <button
                         aria-label="Close"
                         className="close"

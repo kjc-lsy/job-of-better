@@ -4,7 +4,7 @@ import {Button, Col, Input, Row} from "reactstrap";
 
 const scriptUrl = 'https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
 
-const Postcode = ({setInputValue}) => {
+const Postcode = ({setInputValue , inputValue}) => {
     const open = useDaumPostcodePopup(scriptUrl);
     const [data, setData] = React.useState({})
 
@@ -35,7 +35,8 @@ const Postcode = ({setInputValue}) => {
                 <Input
                     id="exampleCity"
                     name="address"
-                    value={data.address ? data.address : ''}
+                    value={data.address ? data.address : inputValue.address}
+                    onChange={() => setInputValue(prev => ({...prev, address: data.address ? data.address : inputValue.address}))}
                     placeholder="도로명주소"
                 />
             </Col>
@@ -43,8 +44,9 @@ const Postcode = ({setInputValue}) => {
                 <Input
                     id="exampleState"
                     name="zip"
-                    value={data.zonecode ? data.zonecode : ''}
+                    value={data.zonecode ? data.zonecode : inputValue.zipCode}
                     placeholder="우편번호"
+                    onChange={() => setInputValue(prev => ({...prev, zipCode: data.zonecode ? data.zonecode : inputValue.zipCode}))}
                     disabled
                 />
             </Col>

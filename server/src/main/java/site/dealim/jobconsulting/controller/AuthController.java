@@ -85,9 +85,11 @@ public class AuthController {
      */
     @Secured("ROLE_USER")           // USER 권한 설정
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Member member) throws Exception {
+    public ResponseEntity<?> update(@RequestBody Member member,@AuthenticationPrincipal CustomMember customMember) throws Exception {
         log.info("회원 정보 수정 시작...");
-
+        member.setIdx(customMember.getMember().getIdx());
+        member.setUsername(customMember.getMember().getUsername());
+        //System.out.println("member = " + member);
         authService.update(member);
 
         log.info("회원수정 성공! - SUCCESS");
