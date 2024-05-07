@@ -54,6 +54,7 @@ export default function BackgroundColorWrapper(props) {
         </ThemeProvider>
     )
 
+
     /*return (
       <BackgroundColorContext.Provider
         value={{ color: color, changeColor: changeColor }}

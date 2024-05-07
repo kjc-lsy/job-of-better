@@ -9,6 +9,7 @@ const RegisterAddrFormGroup = ({inputValue, setInputValue, label, placeholder}) 
             <FormGroup className="register_addr">
                 <label htmlFor="b_detailAddr">{label}</label>
                 <Postcode
+                    inputValue={inputValue}
                     setInputValue={setInputValue}
                 />
                 <Row>
@@ -17,7 +18,7 @@ const RegisterAddrFormGroup = ({inputValue, setInputValue, label, placeholder}) 
                             id="b_detailAddr"
                             name="b_detailAddr"
                             placeholder={placeholder}
-                            value={inputValue?.detailAddr}
+                            value={inputValue.detailAddr}
                             onChange={(e) => setInputValue(prev => ({...prev, detailAddr: e.target.value}))}
                         />
                     </Col>

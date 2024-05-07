@@ -105,17 +105,17 @@ const ResumeCard = ({idx}) => {
                 <Table className="tablesorter">
                     <thead className="text-primary">
                     <tr>
-                        <th className="text-center">파일명</th>
-                        <th className="text-center">등록일</th>
-                        <th className="text-center">이력서 보기</th>
-                        {roles.company ? null : <th className="text-center">삭제하기</th>}
+                        <th className="text-center" width={130}>파일명</th>
+                        <th className="text-center" width={100}>등록일</th>
+                        <th className="text-center">이력서</th>
+                        {roles.company ? null : <th className="text-center">삭제</th>}
                     </tr>
                     </thead>
                     <tbody>
                     {resumeFiles.map((file, index) => (
                         <tr key={file.fileIdx}>
                             <td className="text-center">
-                                {file.originalFileName}
+                                <div className="ellipsis">{file.originalFileName}</div>
                             </td>
                             <td className="text-center">
                                 {format(file.uploadFileDate, 'yyyy-MM-dd')}

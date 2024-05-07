@@ -9,8 +9,9 @@ import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
 import ResumeCard from "../Card/ResumeCard";
 
-export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue}) {
+export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, setInputValue, setModifiedValue , modifiedValue}) {
     const navigate = useNavigate();
+    const location = window.location.pathname.split("/")[2];
     const imgRef = useRef();
 
     let [clValue, setClValue] = useState({
@@ -21,9 +22,12 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
     });
 
     useEffect(() => {
-        Promise.all([userInfo(), coverLetterInfo()])
+        Promise.all([userInfo(), userCoverLetterInfo()])
+            .then(([userInfoData, userCoverLetterData]) => {
+                // Handle the resolved data
+            })
             .catch((error) => {
-                console.error(error.response.data);
+                console.error(error.response ? error.response.data : error.message);
             });
     }, []);
 
@@ -48,13 +52,6 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
         }
     };
 
-    useEffect(() => {
-        Promise.all([userInfo(), userCoverLetterInfo()])
-            .catch((error) => {
-                console.error(error.response);
-            });
-    }, []);
-
     // 사용자 정보 불러오기
     const userInfo = async () => {
         setInfoLoading(false);
@@ -66,7 +63,7 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
             const hour = registeredInterviewDate?.split('T')[1]?.split(':')[0];
             const minute = registeredInterviewDate?.split('T')[1]?.split(':')[1];
 
-            //console.log(response.data);
+            // console.log(response.data);
             // 사용자 정보 업데이트
             setInputValue((prevInputValue) => ({
                 ...prevInputValue,
@@ -89,6 +86,20 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                 registeredInterviewDate: response.data.registeredInterviewDate ? new Date(response.data.registeredInterviewDate) : new Date(),
                 registeredInterviewTime: response.data.registeredInterviewDate ? `${hour}:${minute}` : null,
                 interviewStatus: response.data.interviewStatus
+            }));
+
+            setModifiedValue((prev) => ({
+                ...prev,
+                username : response.data.username,
+                name : response.data.name,
+                birthDate: response.data.birthDate,
+                phone : response.data.phone,
+                email: response.data.email,
+                emailUserName: (response.data.email).split("@")[0],
+                domain: (response.data.email).split("@")[1],
+                zipCode: response.data.zipCode,
+                address : response.data.address,
+                detailAddr : response.data.detailAddr
             }));
         } catch (error) {
             console.error(error.response.data);
@@ -192,6 +203,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                     </Row>
                 </CardFooter>
             </Card>
+            {location !== "user-modify" ?
+                <>
             <ResumeCard/>
             <Card className="card-user-box">
                 <CardHeader>
@@ -201,16 +214,16 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                     <Table className="tablesorter">
                         <thead className="text-primary">
                         <tr>
-                            <th>제목</th>
+                            <th className="text-center" width={130}>제목</th>
                             <th className="text-center">작업 상태</th>
-                            <th className="text-center">날짜</th>
+                            <th className="text-center" width={100}>날짜</th>
                             <th className="text-center">바로가기</th>
                         </tr>
                         </thead>
                         <tbody>
                         {clValue.mclTitle ?
                             <tr>
-                                <td>{clValue.mclTitle}</td>
+                                <td><div className="ellipsis">{clValue.mclTitle}</div></td>
                                 <td className="text-center">
                                     {clValue.mclIsConfirm === "T" ? "임시저장" :
                                         clValue.mclIsConfirm === "Y" ? "완료" : "미작성"}
@@ -234,6 +247,8 @@ export default function MyHomeUserInfo({setInfoLoading, setLoading, inputValue, 
                     </Table>
                 </CardBody>
             </Card>
+                </>
+                : null }
         </>
     )
 }

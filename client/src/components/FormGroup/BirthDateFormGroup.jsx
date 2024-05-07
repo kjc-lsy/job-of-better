@@ -9,6 +9,7 @@ const BirthDateFormGroup = ({inputValue, setInputValue}) => {
             <DatePicker
                 format="yyyy-MM-dd"
                 defaultValue={new Date(new Date().getTime() - 1000*60*60*24*365*18)}
+                value={inputValue.birthDate ? new Date(inputValue.birthDate) : new Date(new Date().getTime() - 1000*60*60*24*365*18)}
                 onChange={date => setInputValue({...inputValue, birthDate: date})}
                 oneTap
             />

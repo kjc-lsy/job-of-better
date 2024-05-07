@@ -12,6 +12,8 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="address" column="address"/>
+        <result property="detailAddr" column="detail_addr"/>
+        <result property="zipCode" column="zip_code"/>
         <result property="birthDate" column="birth_date"/>
         <result property="gender" column="gender"/>
         <result property="phone" column="phone"/>
@@ -166,24 +168,14 @@
     <!-- 회원 수정 -->
     <update id="updateMember">
         UPDATE member
-        SET name                    = #{name},
-            password                = #{password},
-            email                   = #{email},
+        SET email                   = #{email},
             birth_date              = #{birthDate},
-            gender                  = #{gender},
             phone                   = #{phone},
-            com_idx                 = #{comIdx},
-            resume_file             = #{resumeFile},
-            registered_interview_date  = #{registeredInterviewDate},
-            interview_status       = #{interviewStatus},
-            interview_comment       = #{interviewComment},
-            coverLetterStatus         = #{coverLetterStatus},
-            resume_status               = #{resumeStatus},
-            join_date               = #{joinDate},
-            modified_date           = #{modifiedDate},
-            withdrawn_date          = #{withdrawnDate},
-            is_withdrawn            = #{isWithdrawn}
-        WHERE username = #{username}
+            address                 = #{address},
+            zip_code                = #{zipCode},
+            detail_addr             = #{detailAddr},
+            modified_date           = #{modifiedDate}
+        WHERE idx = #{idx}
     </update>
 
     <!-- 회원 삭제 -->

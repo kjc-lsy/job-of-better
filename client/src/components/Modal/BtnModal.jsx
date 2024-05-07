@@ -16,7 +16,7 @@ const BtnModal = ({buttonName, component}) => {
                 open={open}
                 onClose={handleClose}
                 overflow={true}
-                size={"lg"}
+                size={"md"}
             >
                 <Modal.Body>
                     {isLoading
