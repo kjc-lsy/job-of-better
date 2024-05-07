@@ -2,9 +2,8 @@ package site.dealim.jobconsulting.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -12,15 +11,19 @@ import org.springframework.web.client.RestTemplate;
 import site.dealim.jobconsulting.dto.VertexAiResponse;
 import site.dealim.jobconsulting.prop.VertexAiProps;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 
 @Service
 @Slf4j
 public class VertexAiService {
-    @Autowired
-    private VertexAiProps vertexAiProps;
-
+    private final VertexAiProps vertexAiProps;
+    public VertexAiService(VertexAiProps vertexAiProps) throws IOException {
+        this.vertexAiProps = vertexAiProps;
+    }
     public String getSummary(String prompt) throws Exception {
         return sendMsgOnTextBison(
                 """
@@ -65,8 +68,11 @@ public class VertexAiService {
      * @return      the predicted content from Text Bison
      */
     public String sendMsgOnTextBison(String msg) throws Exception {
+        Path filePath = Paths.get(System.getProperty("user.dir"), vertexAiProps.getVertexAiKeyFilename());
+        log.info("서비스 계정 키 파일 로드... - {}", filePath.toString());
+
         // 서비스 계정 키 파일 로드
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new ClassPathResource(vertexAiProps.getVertexAiKeyFilename()).getInputStream())
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(filePath.toString()))
                 .createScoped(Collections.singleton("https://www.googleapis.com/auth/cloud-platform"));
         credentials.refreshIfExpired();
 
@@ -89,6 +95,7 @@ public class VertexAiService {
         parametersObject.put("maxOutputTokens", 300);
         parametersObject.put("topP", 0.5);
         parametersObject.put("topK", 1);
+
         requestBodyJson.put("parameters", parametersObject);
 
         String requestBody = requestBodyJson.toString();

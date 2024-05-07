@@ -1,28 +1,28 @@
 package site.dealim.jobconsulting.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import site.dealim.jobconsulting.prop.AwsProps;
 
 @Configuration
+@Slf4j
 public class AwsConfig {
-    @Value("${cloud.aws.credentials.accessKey}")
-    private String accessKey;
-    @Value("${cloud.aws.credentials.secretKey}")
-    private String secretKey;
-    @Value("${cloud.aws.region.static}")
-    private String region;
+    @Autowired
+    private AwsProps awsProps;
 
     @Bean
     public AmazonS3Client amazonS3Client(){
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+        log.info("amazonS3Client 빈 생성...");
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsProps.getAccessKey(), awsProps.getSecretKey());
         return (AmazonS3Client) AmazonS3ClientBuilder
                 .standard()
-                .withRegion(region).enablePathStyleAccess()
+                .withRegion(awsProps.getRegion()).enablePathStyleAccess()
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();
     }

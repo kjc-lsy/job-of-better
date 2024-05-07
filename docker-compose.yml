@@ -1,22 +1,14 @@
-version: '3.8'
 services:
   springboot-app:
     build:
-      context: ./server
-      dockerfile: Dockerfile
+      args:
+        - VERTEX_AI_SERVICE_KEY_FILENAME=${VERTEX_AI_SERVICE_KEY_FILENAME}
+      context: .
+      dockerfile: ./server/Dockerfile
     ports:
       - "9090:9090"
-    environment:
-      - MYSQL_URL=${MYSQL_URL}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - VERTEX_AI_SERVICE_KEY_FILENAME=${VERTEX_AI_SERVICE_KEY_FILENAME}
-      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
-      - AWS_ACCESS_KEY=${AWS_ACCESS_KEY}
-      - AWS_SECRET_KEY=${AWS_SECRET_KEY}
-      - AWS_REGION=${AWS_REGION}
+    env_file:
+      - .env
 
   react-app:
     build:
@@ -24,9 +16,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:80"
-    environment:
-      - REACT_APP_ENV=${REACT_APP_ENV}
-      - REACT_APP_PROXY=${REACT_APP_PROXY}
+    env_file:
+      - .env
 
   mysql-server:
     build:
@@ -36,8 +27,5 @@ services:
       - "3306:3306"
     volumes:
       - ./database/db-data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    env_file:
+      - .env
