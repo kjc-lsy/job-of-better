@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.security.custom.CustomMember;
 import site.dealim.jobconsulting.service.ComMemInfoService;
@@ -37,6 +38,11 @@ public class ComMemInfoController {
 
         }
 
+    }
+
+    @GetMapping("/user-company-info")
+    public Company userCompanyInfo(@AuthenticationPrincipal CustomMember customMember) {
+        return comMemInfoService.getComIdxByMemIdx(customMember.getMember().getIdx());
     }
 
 }
