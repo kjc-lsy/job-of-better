@@ -1,21 +1,76 @@
-import React from 'react';
-import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
+import React, {useEffect, useState} from "react";
 
-const CompanyProfile = () => {
+// reactstrap components
+import {Button, Card, CardBody, CardFooter, CardHeader, Col, Form, FormGroup, Input, Row,} from "reactstrap";
+import {useLoading} from "../../contexts/LoadingProvider";
+import ModifiedCard from "../../components/Card/ModifiedCard";
+import MyHomeCompanyInfo from "../../components/Infos/MyHomeCompanyInfo";
+import {useAuth} from "../../contexts/AuthContextProvider";
+
+function CompanyProfile() {
+    const {loading, setLoading} = useLoading(false);
+    const [infoLoading, setInfoLoading] = useState(false);
+    const {user} = useAuth()
+    const [inputValue, setInputValue] = useState({
+        b_no: "",
+        b_name: "",
+        b_ceoName: "",
+        validBCeoName: false,
+        b_img: "",
+        b_tel: "",
+        validBTel: false,
+        zipCode: "",
+        address : "",
+        detailAddr : "",
+        b_openingDate: new Date(),
+    });
+    const [companyModifiedValue , setCompanyModifiedValue] = useState({
+        b_no: "",
+        b_name: "",
+        b_ceoName: "",
+        b_img: "",
+        b_tel: "",
+        zipCode: "",
+        address : "",
+        detailAddr : "",
+        b_openingDate: new Date(),
+    })
+    const [modifiedValue, setModifiedValue] = React.useState({
+        name:user.name,
+        username: user.username,
+        phone : user.phone,
+        email: user.email,
+        emailUserName: (user.email)?.split("@")[0],
+        domain: (user.email)?.split("@")[1],
+    });
+
+    useEffect(() => {
+
+    }, []);
+
+
     return (
-           <Row className="content">
-               <Col>
-                   <Card>
-                       <CardHeader>
-                            <CardTitle tag="h4">회사 프로필</CardTitle>
-                       </CardHeader>
-                       <CardBody>
+        <div className="content user-profile-wrapper">
+            <Row>
+                <Col md="4">
+                    <MyHomeCompanyInfo
+                        setInfoLoading={setInfoLoading}
+                        setLoading={setLoading}
+                        inputValue={modifiedValue}
+                        setInputValue={setModifiedValue}
+                        user={user}
+                    />
+                </Col>
+                <Col md="8">
+                        <ModifiedCard
+                            modifiedValue={modifiedValue}
+                            setModifiedValue={setModifiedValue}/>
+                </Col>
 
-                       </CardBody>
-                   </Card>
-               </Col>
-           </Row>
+            </Row>
+
+        </div>
     );
-};
+}
 
 export default CompanyProfile;

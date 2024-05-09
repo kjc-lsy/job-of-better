@@ -2,6 +2,7 @@ package site.dealim.jobconsulting.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
+import site.dealim.jobconsulting.domain.Company;
 
 import java.util.HashMap;
 import java.util.List;

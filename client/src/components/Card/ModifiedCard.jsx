@@ -27,7 +27,7 @@ export default function ModifiedCard({modifiedValue, setModifiedValue}) {
             </CardHeader>
             <CardBody>
                 <Form>
-                    <Row>
+                    <Row className={"mb-2"}>
                         <Col className="pr-md-1" md="6">
                             <FormGroup>
                                 <label>아이디</label>
@@ -53,7 +53,7 @@ export default function ModifiedCard({modifiedValue, setModifiedValue}) {
                             </FormGroup>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className={"mb-2"}>
                         <Col className="pr-md-1" md="6">
                             <BirthDateFormGroup inputValue={modifiedValue} setInputValue={setModifiedValue}/>
                         </Col>
@@ -61,7 +61,7 @@ export default function ModifiedCard({modifiedValue, setModifiedValue}) {
                             <PhoneFormGroup inputValue={modifiedValue} setInputValue={setModifiedValue}/>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className={"mb-2"}>
                         <Col className={"pr-md-1"} md="12">
                             <EmailFormGroup inputValue={modifiedValue} setInputValue={setModifiedValue}/>
                         </Col>

@@ -61,3 +61,5 @@ export const updateInterviewComment = (memIdx, comment) => api.put('/api/company
 export const getFilesByPathAndIdx = (path, memIdx) => api.get(`/api/files/get-files-idx?path=${path}&memIdx=${memIdx}`)
 
 export const getCoverLetterInfosByMemIdx = async (memIdx) => api.get(`/api/company/user-cover-letter-info?memIdx=${memIdx}`)
+
+export const userCompanyInfo = api.get('/api/company/user-company-info')

@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import site.dealim.jobconsulting.domain.ComCoverLetter;
+import site.dealim.jobconsulting.domain.Company;
 import site.dealim.jobconsulting.domain.Member;
 import site.dealim.jobconsulting.dto.CoverLetterDto;
 import site.dealim.jobconsulting.security.custom.CustomMember;
@@ -56,5 +57,6 @@ public class ComCoverLetterController {
         log.info("학생 자소서 작성 내역 불러오기 - memIdx = {}", memIdx);
         return memCoverLetterService.coverLetterInfo(memIdx);
     }
+
 
 }

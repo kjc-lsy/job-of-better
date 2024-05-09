@@ -42,4 +42,6 @@
         SET com_license_file = #{licenseFile}
         WHERE com_idx = #{comIdx}
     </update>
+
+
 </mapper>
