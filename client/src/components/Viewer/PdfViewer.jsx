@@ -6,7 +6,7 @@ import React from 'react';
 const PdfViewer = ({fileUrl}) => {
     return (
         <div>
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.15.349/build/pdf.worker.js">
                 <Viewer fileUrl={fileUrl} />
             </Worker>
         </div>
