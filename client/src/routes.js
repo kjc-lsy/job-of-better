@@ -54,7 +54,7 @@ var routes = [
     layout: "/company",
   },
   {
-    path: "/program",
+    path: "/program/:search?",
     name: "교육 프로그램",
     cate: "program",
     icon: "tim-icons icon-components",

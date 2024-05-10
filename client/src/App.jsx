@@ -6,6 +6,7 @@ import React from "react";
 import Loading from "./components/Loading";
 import {useLoading} from "./contexts/LoadingProvider";
 import {useAuth} from "./contexts/AuthContextProvider";
+import Program from "./views/user/program/Program";
 
 const App = () => {
     const {loading, setLoading} = useLoading();

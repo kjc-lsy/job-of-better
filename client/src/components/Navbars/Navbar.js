@@ -24,14 +24,16 @@ import {
 import {useAuth} from "../../contexts/AuthContextProvider";
 import {useLocation, useNavigate} from "react-router-dom";
 import FixedPlugin from "../Plugin/FixedPlugin";
+import {useLoading} from "../../contexts/LoadingProvider";
 
 function CommonNavbar(props) {
     const [collapseOpen, setcollapseOpen] = React.useState(false);
     const [modalSearch, setmodalSearch] = React.useState(false);
     const [color, setcolor] = React.useState("navbar-transparent");
+    const [search, setSearch] = React.useState("");
     const {logoutSetting} = useAuth();
     const navigate = useNavigate();
-    const {user} = useAuth();
+    const {user , roles} = useAuth();
 
     let location = useLocation();
     let pathLayout = location.pathname.split("/")[1];
@@ -67,12 +69,9 @@ function CommonNavbar(props) {
     };
 
     function searchForm(value) {
-        try {
-           // const response = search(value);
-        }
-        catch {
-
-        }
+        //console.log(value);
+        navigate("/company/program/" + value);
+        setSearch(value)
     }
 
     const logout = (e) => {
@@ -119,12 +118,14 @@ function CommonNavbar(props) {
                                 <InputGroup className="search-bar">
                                 <FixedPlugin bgColor={color} sideColor={props.sideColor} handleBgClick={props.changeColor}/>
                                 </InputGroup>
+                                {roles.company ?
                                 <InputGroup className="search-bar">
                                     <Button color="link" onClick={toggleModalSearch}>
                                         <i className="tim-icons icon-zoom-split" />
                                         <span className="d-lg-none d-md-block">Search</span>
                                     </Button>
                                 </InputGroup>
+                                    :null}
                                 <UncontrolledDropdown nav>
                                     <DropdownToggle
                                         caret
@@ -179,10 +180,10 @@ function CommonNavbar(props) {
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-navbar" right tag="ul">
                                         <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Profile</DropdownItem>
+                                            <DropdownItem onClick={()=>navigate(roles.user && !roles.company ? "/user/user-profile" : "/company/home")} className="nav-item">Profile</DropdownItem>
                                         </NavLink>
                                         <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Settings</DropdownItem>
+                                            <DropdownItem onClick={()=>navigate( roles.user && !roles.company ? "/user/user-modify" : "/company/user-profile")} className="nav-item">Settings</DropdownItem>
                                         </NavLink>
                                         <DropdownItem divider tag="li" />
                                         <NavLink tag="li">
@@ -213,13 +214,14 @@ function CommonNavbar(props) {
                     }
                 </Container>
             </Navbar>
+            {pathLayout !== "auth" && roles.company ?
             <Modal
                 modalClassName="modal-search"
                 isOpen={modalSearch}
                 toggle={toggleModalSearch}
             >
                 <ModalHeader>
-                    <Input placeholder="SEARCH" onChange={(e) => searchForm(e.target.value)} type="text" />
+                    <Input placeholder="SEARCH" value={search} onChange={(e) => searchForm(e.target.value)} type="text" />
                     <button
                         aria-label="Close"
                         className="close"
@@ -229,6 +231,7 @@ function CommonNavbar(props) {
                     </button>
                 </ModalHeader>
             </Modal>
+                : null}
         </>
     );
 }

@@ -122,7 +122,7 @@ function Sidebar(props) {
                 key={key}
             >
                 <NavLink
-                    to={prop.layout + prop.path}
+                    to={prop.path === "/program/:search?" ? prop.layout + "/program" : prop.layout + prop.path}
                     className="nav-link"
                     onClick={props.toggleSidebar}
                 >

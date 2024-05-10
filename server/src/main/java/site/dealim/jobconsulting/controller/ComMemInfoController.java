@@ -40,9 +40,9 @@ public class ComMemInfoController {
 
     }
 
-    @GetMapping("/user-company-info")
+    /*@GetMapping("/user-company-info")
     public Company userCompanyInfo(@AuthenticationPrincipal CustomMember customMember) {
         return comMemInfoService.getComIdxByMemIdx(customMember.getMember().getIdx());
-    }
+    }*/
 
 }

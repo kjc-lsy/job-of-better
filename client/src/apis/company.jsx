@@ -62,4 +62,4 @@ export const getFilesByPathAndIdx = (path, memIdx) => api.get(`/api/files/get-fi
 
 export const getCoverLetterInfosByMemIdx = async (memIdx) => api.get(`/api/company/user-cover-letter-info?memIdx=${memIdx}`)
 
-export const userCompanyInfo = api.get('/api/company/user-company-info')
+//export const userCompanyInfo = api.get('/api/company/user-company-info')

@@ -37,7 +37,7 @@ export default function MyHomeCompanyInfo({user,setLoading, inputValue, setInput
         }
     };
 
-    async function companyInfo() {
+    /*async function companyInfo() {
         try {
             const response = await userCompanyInfo();
             setInputValue({
@@ -48,7 +48,7 @@ export default function MyHomeCompanyInfo({user,setLoading, inputValue, setInput
         catch (error) {
             console.error(error.response);
         }
-    }
+    }*/
 
 
 
