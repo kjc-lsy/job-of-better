@@ -114,6 +114,7 @@ const CompanyRegister = () => {
                         <BNoFormGroup
                             inputValue={inputValue}
                             setInputValue={setInputValue}
+                            disabled={false}
                         />
                         <RegisterFileFormGroup
                             inputValue={inputValue}

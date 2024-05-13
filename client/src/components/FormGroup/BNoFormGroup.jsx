@@ -113,11 +113,15 @@ const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
                         onChange={handleChange}
                         disabled={disabled}
                     />
-                    <div className="text-muted font-italic">
-                        <small>{validateBNoMsg()}</small>
-                    </div>
+                    {roles?.company
+                        ? null
+                        :
+                        <div className="text-muted font-italic">
+                            <small>{validateBNoMsg()}</small>
+                        </div>
+                    }
                 </Col>
-                {roles.company
+                {roles?.company
                     ?
                     null
                     :
