@@ -13,8 +13,12 @@ const ModifyComCard = () => {
     const sendAlert = useAlert();
 
     useEffect(() => {
+        console.log(inputValue)
+    }, [inputValue]);
+
+    useEffect(() => {
         getComInfo().then(({data})=> {
-            setInputValue({
+            setInputValue((prev) => ({
                 b_name: data.comName,
                 b_tel: data.comPhone,
                 b_no: data.comLicenseNum,
@@ -22,7 +26,9 @@ const ModifyComCard = () => {
                 address: data.comAddress,
                 detailAddr: data.comDetailAddr,
                 zipCode: data.comZipcode,
-            })
+                ...data,
+                ...prev
+            }))
         })
     }, []);
 
@@ -41,7 +47,7 @@ const ModifyComCard = () => {
             sendAlert("error", "정보 수정에 실패했습니다.");
         })
     }
-    
+
     return (
         <Card className="modify_form">
             <CardHeader>
@@ -79,7 +85,7 @@ const ModifyComCard = () => {
                         </Col>
                     </Row>
                     <Row className={"mb-2"}>
-                        <Col className={"pr-md-1"} md="8">
+                        <Col className={"pr-md-1"} md="12">
                             <RegisterAddrFormGroup
                                 label="회사 주소"
                                 inputValue={inputValue}

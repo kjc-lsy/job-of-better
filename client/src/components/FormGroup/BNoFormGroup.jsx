@@ -2,14 +2,15 @@ import React, {useContext, useEffect} from 'react';
 import {Button, Col, FormGroup, Input, Row} from "reactstrap";
 import {LoadingContext} from "../../contexts/LoadingProvider";
 import * as auth from "../../apis/auth";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
     const {setLoading} = useContext(LoadingContext)
+    const {roles} = useAuth();
 
     useEffect(() => {
         handleDuplicateBNo();
     }, [inputValue.validBNo]);
-
 
     const handleDuplicateBNo = () => {
         //console.log("handleDuplicateBNo")
@@ -17,9 +18,9 @@ const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
         auth.checkDuplicateBNo(inputValue.b_no)
             .then(response => {
                 if (response.data) {
-                    setInputValue({...inputValue, validDuplicateBNo: "true"});
+                    setInputValue((prev) => ({...prev, validDuplicateBNo: "true"}));
                 } else {
-                    setInputValue({...inputValue, validDuplicateBNo: "false"});
+                    setInputValue((prev) => ({...prev, validDuplicateBNo: "false"}));
                 }
 
             })
@@ -41,17 +42,17 @@ const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
                 formattedValue = match.slice(1).filter(Boolean).join("-");
             }
         }
-        setInputValue({...inputValue, b_no: formattedValue , validBNo: "", validDuplicateBNo: ""});
+        setInputValue({...inputValue, b_no: formattedValue, validBNo: "", validDuplicateBNo: ""});
     };
 
     const validateBNoMsg = () => {
         if (inputValue.b_no !== "") {
             if (inputValue.validBNo === "true") {
-                if(inputValue.validDuplicateBNo === "true"){
+                if (inputValue.validDuplicateBNo === "true") {
                     return <span className="text-danger font-weight-700">중복된 사업자 등록 번호 입니다.</span>;
-                }else if(inputValue.validDuplicateBNo === "false"){
+                } else if (inputValue.validDuplicateBNo === "false") {
                     return <span className="text-success font-weight-700">유효한 사업자 등록 번호 입니다</span>;
-                }else {
+                } else {
                     return <span><b className="text-danger">발급일 90일 이내</b> 사업자등록증명원의 발급번호만 가능합니다. (사업자등록증 불가)</span>;
                 }
             } else if (inputValue.validBNo === "false") {
@@ -116,11 +117,17 @@ const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
                         <small>{validateBNoMsg()}</small>
                     </div>
                 </Col>
-                <Col md={2}>
-                    <Button type="button" onClick={async () => {
-                    await getJsonData();}
-                }>인증하기</Button>
-                </Col>
+                {roles.company
+                    ?
+                    null
+                    :
+                    <Col md={2}>
+                        <Button type="button" onClick={async () => {
+                            await getJsonData();
+                        }
+                        }>인증하기</Button>
+                    </Col>
+                }
             </Row>
         </FormGroup>
     );
