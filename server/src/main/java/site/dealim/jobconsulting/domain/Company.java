@@ -15,16 +15,21 @@ public class Company {
     private String comName;
     private String comCeoName;
     private String comAddress;
-    private String comDetailAddress;
+    private String comDetailAddr;
     private int comZipcode;
-    private String comTel;
+    private String comPhone;
     private String comLogo;
     private Long comMemIdx;
     private String comLicenseNum;
     private String comLicenseFile;
+    private String comChargeName;
+    private String comChargePhone;
+    private String comEmail;
+    private String comInfo;
     private LocalDate comOpeningDate;
     private LocalDateTime comJoinDate;
     private LocalDateTime comModifiedDate;
     private LocalDateTime comWithdrawDate;
     private String comIsWithdrawn;
+
 }

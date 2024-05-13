@@ -92,15 +92,14 @@ export const AuthContextProvider = ({children}) => {
     }
 
     const loginSetting = (userData) => {
-        const {idx, username, roleList, pgRegStatus, pgIdx, profileImg, name, gender,phone,birthDate} = userData
-        const authList = roleList.map((auth) => auth.roleName)
+        const authList = userData?.roleList.map((auth) => auth.roleName)
 
         // 유저 정보 세팅
-        setUser({idx, username, authList, pgRegStatus, pgIdx, profileImg, name, gender,phone,birthDate})
+        setUser({authList, ...userData});
 
         // 권한 정보 세팅
         const updatedRoles = {user: false, company: false};
-        roleList.forEach((role) => {
+        userData?.roleList.forEach((role) => {
             if (role.roleName === 'ROLE_USER') updatedRoles.user = true
             if (role.roleName === 'ROLE_COMPANY') updatedRoles.company = true
         });

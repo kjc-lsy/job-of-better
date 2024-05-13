@@ -15,7 +15,7 @@ const BTelFormGroup = ({inputValue, setInputValue}) => {
         <FormGroup>
             <label>회사 전화번호</label>
             <Input
-                vlaue={inputValue.b_tel}
+                value={inputValue.b_tel}
                 placeholder="연락가능한 회사 전화번호를 입력해주세요."
                 type="text"
                 maxLength="11"

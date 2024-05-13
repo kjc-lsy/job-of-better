@@ -5,7 +5,7 @@ import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 // reactstrap components
 import {Button, Card, Col, Row,} from "reactstrap";
 import {getPrograms} from "../../../apis/program";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import programAddImg from "../../../assets/img/program-add.png";
 import ComProgramCard from "../../../components/Card/ComProgramCard";
 import {useLoading} from "../../../contexts/LoadingProvider";
@@ -15,20 +15,13 @@ function Program() {
     const {loading, setLoading} = useLoading();
     const navigate = useNavigate();
     const { search } = useParams();
-    console.log("Fetched search param from URL:", search);
+;
 
     useEffect(() => {
-        console.log("Search parameter:", search);
-        loadPrograms(search);
-    }, []);
-
-    useEffect(() => {
-        console.log("Search parameter:", search);
         loadPrograms(search);
     }, [search]);
 
     const loadPrograms = async (search) => {
-        console.log(search);
         setLoading(true)
         const response = await getPrograms();
         if(search) {

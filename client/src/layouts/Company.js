@@ -18,7 +18,6 @@ import ProgramInsert from "../views/company/program/ProgramInsert";
 import UserDetails from "../views/company/memberList/UserDetails";
 import withAuthorization from "../components/HOC/withAuthorization";
 import CoverLetterDetails from "../views/company/memberList/CoverLetterDetails";
-import Program from "../views/user/program/Program";
 
 var ps;
 
@@ -125,10 +124,6 @@ function Company(props) {
                                 path="/program-details/:pgIdx"
                                 element={<ProgramDetails/>}
                             />
-                            {/*<Route
-                                path="/program/:search?"
-                                element={<Program/>}
-                            />*/}
                             <Route
                                 path="/program-modify/:pgIdx"
                                 element={<ProgramModify/>}

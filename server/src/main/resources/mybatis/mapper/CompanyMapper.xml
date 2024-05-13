@@ -43,5 +43,17 @@
         WHERE com_idx = #{comIdx}
     </update>
 
+    <update id="updateComInfo" parameterType="Company">
+        UPDATE company
+        SET com_name = #{comName},
+            com_phone = #{comPhone},
+            com_license_num = #{comLicenseNum},
+            com_address = #{comAddress},
+            com_detail_addr = #{comDetailAddr},
+            com_zipCode = #{comZipcode},
+            com_email = #{comEmail},
+            com_ceo_name = #{comCeoName}
+        WHERE com_idx = #{comIdx}
+    </update>
 
 </mapper>

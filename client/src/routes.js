@@ -92,7 +92,7 @@ var routes = [
   //   layout: "/company",
   // },
   {
-    path: "/user-profile",
+    path: "/company-profile",
     name: "회사 프로필",
     cate: "",
     icon: "ni ni-building",

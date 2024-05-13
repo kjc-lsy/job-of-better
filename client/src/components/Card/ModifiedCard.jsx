@@ -6,9 +6,11 @@ import RegisterAddrFormGroup from "../FormGroup/RegisterAddrFormGroup";
 import React from "react";
 import {useAlert} from "../Alert/useAlert";
 import {update} from "../../apis/auth";
+import {useAuth} from "../../contexts/AuthContextProvider";
 
 export default function ModifiedCard({modifiedValue, setModifiedValue}) {
     const sendAlert = useAlert();
+    const {roles} = useAuth();
     async function save() {
         try {
             await update(modifiedValue);
@@ -23,7 +25,7 @@ export default function ModifiedCard({modifiedValue, setModifiedValue}) {
     return (
         <Card className="modify_form">
             <CardHeader>
-                <h5 className="title">내 정보 수정</h5>
+                <h5 className="title">{roles.company ? "담당자 정보 수정" : "내 정보 수정"}</h5>
             </CardHeader>
             <CardBody>
                 <Form>
@@ -66,13 +68,17 @@ export default function ModifiedCard({modifiedValue, setModifiedValue}) {
                             <EmailFormGroup inputValue={modifiedValue} setInputValue={setModifiedValue}/>
                         </Col>
                     </Row>
-                    <RegisterAddrFormGroup
-                        label="개인 주소"
-                        placeholder="상세주소"
-                        inputValue={modifiedValue}
-                        setInputValue={setModifiedValue}
-                    />
-
+                    {roles.company
+                    ?
+                        null
+                    :
+                        <RegisterAddrFormGroup
+                            label="개인 주소"
+                            placeholder="상세주소"
+                            inputValue={modifiedValue}
+                            setInputValue={setModifiedValue}
+                        />
+                    }
                 </Form>
             </CardBody>
             <CardFooter>

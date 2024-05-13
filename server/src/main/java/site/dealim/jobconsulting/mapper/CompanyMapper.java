@@ -14,4 +14,9 @@ public interface CompanyMapper {
     String getComNameByComIdx(Long comIdx);
 
     int uploadLicenseFile(@Param("comIdx") Long comIdx, @Param("licenseFile") String uploadFileUrl);
+
+    Company selectComInfoByIdx(Long comIdx);
+
+    int updateComInfo(Company company);
+
 }

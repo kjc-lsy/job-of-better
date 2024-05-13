@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 // reactstrap components
-import {Button, Card, CardBody, CardFooter, CardHeader, Col, Form, FormGroup, Input, Row,} from "reactstrap";
+import {Col, Row,} from "reactstrap";
 import {useLoading} from "../../contexts/LoadingProvider";
 import ModifiedCard from "../../components/Card/ModifiedCard";
 import MyHomeCompanyInfo from "../../components/Infos/MyHomeCompanyInfo";
 import {useAuth} from "../../contexts/AuthContextProvider";
+import ModifyComCard from "../../components/Card/ModifyComCard";
 
 function CompanyProfile() {
     const {loading, setLoading} = useLoading(false);
@@ -20,34 +21,29 @@ function CompanyProfile() {
         b_tel: "",
         validBTel: false,
         zipCode: "",
-        address : "",
-        detailAddr : "",
+        address: "",
+        detailAddr: "",
         b_openingDate: new Date(),
     });
-    const [companyModifiedValue , setCompanyModifiedValue] = useState({
+    const [companyModifiedValue, setCompanyModifiedValue] = useState({
         b_no: "",
         b_name: "",
         b_ceoName: "",
         b_img: "",
         b_tel: "",
         zipCode: "",
-        address : "",
-        detailAddr : "",
+        address: "",
+        detailAddr: "",
         b_openingDate: new Date(),
     })
     const [modifiedValue, setModifiedValue] = React.useState({
-        name:user.name,
+        name: user.name,
         username: user.username,
-        phone : user.phone,
+        phone: user.phone,
         email: user.email,
         emailUserName: (user.email)?.split("@")[0],
         domain: (user.email)?.split("@")[1],
     });
-
-    useEffect(() => {
-
-    }, []);
-
 
     return (
         <div className="content user-profile-wrapper">
@@ -62,13 +58,13 @@ function CompanyProfile() {
                     />
                 </Col>
                 <Col md="8">
-                        <ModifiedCard
-                            modifiedValue={modifiedValue}
-                            setModifiedValue={setModifiedValue}/>
+                    <ModifiedCard
+                        modifiedValue={modifiedValue}
+                        setModifiedValue={setModifiedValue}
+                    />
+                    <ModifyComCard/>
                 </Col>
-
             </Row>
-
         </div>
     );
 }

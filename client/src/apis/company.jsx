@@ -63,3 +63,7 @@ export const getFilesByPathAndIdx = (path, memIdx) => api.get(`/api/files/get-fi
 export const getCoverLetterInfosByMemIdx = async (memIdx) => api.get(`/api/company/user-cover-letter-info?memIdx=${memIdx}`)
 
 //export const userCompanyInfo = api.get('/api/company/user-company-info')
+
+export const getComInfo = () => api.get('/api/company/get-com-info')
+
+export const updateComInfo = (data) => api.put('/api/company/update-com-info', data, {headers: {'Content-Type': 'application/json'}})

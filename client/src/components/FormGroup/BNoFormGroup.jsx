@@ -3,7 +3,7 @@ import {Button, Col, FormGroup, Input, Row} from "reactstrap";
 import {LoadingContext} from "../../contexts/LoadingProvider";
 import * as auth from "../../apis/auth";
 
-const BNoFormGroup = ({inputValue, setInputValue}) => {
+const BNoFormGroup = ({inputValue, setInputValue, disabled}) => {
     const {setLoading} = useContext(LoadingContext)
 
     useEffect(() => {
@@ -110,6 +110,7 @@ const BNoFormGroup = ({inputValue, setInputValue}) => {
                         type="text"
                         maxLength="12"
                         onChange={handleChange}
+                        disabled={disabled}
                     />
                     <div className="text-muted font-italic">
                         <small>{validateBNoMsg()}</small>

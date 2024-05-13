@@ -33,6 +33,11 @@ p {
   cursor: pointer
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
 .toastui-editor-contents {
   font-family: $font-stack !important;
 }
