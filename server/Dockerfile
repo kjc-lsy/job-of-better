@@ -23,7 +23,12 @@ EXPOSE 9090
 # Copy build application to 'app' folder in image
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 COPY .env .
-COPY $VERTEX_AI_SERVICE_KEY_FILENAME .
+
+# Check if the service key file exists and copy it if it does
+RUN if [ -n "$VERTEX_AI_SERVICE_KEY_FILENAME" ] && [ -f "$VERTEX_AI_SERVICE_KEY_FILENAME" ]; then \
+    cp $VERTEX_AI_SERVICE_KEY_FILENAME .; \
+    fi
 
 # Run the application
 CMD ["java", "-jar", "/app/app.jar"]
+
