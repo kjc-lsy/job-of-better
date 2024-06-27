@@ -53,10 +53,10 @@
    ## required ##
    
     MYSQL_URL=mysql-server:3306
-    MYSQL_ROOT_PASSWORD=<DB ROOT 비밀번호>
-    MYSQL_DATABASE=<DB 이름>
-    MYSQL_USER=<DB 사용자 계정>
-    MYSQL_PASSWORD=<DB 사용자 비밀번호>
+    MYSQL_ROOT_PASSWORD=0000
+    MYSQL_DATABASE=JOB_OF_BETTER_DB
+    MYSQL_USER=USER
+    MYSQL_PASSWORD=0000
     
     REACT_APP_ENV=production
     REACT_APP_PROXY=https://springboot-app:9090
