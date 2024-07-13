@@ -19,15 +19,14 @@ RUN gradle build
 FROM openjdk:17-jdk-slim
 ARG VERTEX_AI_SERVICE_KEY_FILENAME
 EXPOSE 9090
+WORKDIR /app
 
 # Copy build application to 'app' folder in image
 COPY --from=build /app/build/libs/*.jar /app/app.jar
 COPY .env /app/.env
 
 # Check if the service key file exists and copy it if it does
-RUN if [ -n "$VERTEX_AI_SERVICE_KEY_FILENAME" ] && [ -f "$VERTEX_AI_SERVICE_KEY_FILENAME" ]; then \
-    cp $VERTEX_AI_SERVICE_KEY_FILENAME /app/$VERTEX_AI_SERVICE_KEY_FILENAME; \
-    fi
+COPY ${VERTEX_AI_SERVICE_KEY_FILENAME} /app/${VERTEX_AI_SERVICE_KEY_FILENAME}
 
 # Run the application
 CMD ["java", "-jar", "/app/app.jar"]

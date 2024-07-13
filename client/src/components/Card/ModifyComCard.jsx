@@ -13,10 +13,6 @@ const ModifyComCard = () => {
     const sendAlert = useAlert();
 
     useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);
-
-    useEffect(() => {
         getComInfo().then(({data})=> {
             setInputValue((prev) => ({
                 b_name: data.comName,

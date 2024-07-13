@@ -27,7 +27,7 @@ public class MemCoverLetterService {
 
     public void userCoverLetterSave(List<MemberCoverLetter> values, long idx) {
         log.info("member 자소서 상태 업데이트...");
-        memberMapper.updateCoverLetterStatus(idx, "Writing"); // TODO : 작성중/작성완료 상태 업데이트 로직 짜야함
+        memberMapper.updateCoverLetterStatus(idx, "Writing"); // TODO : 작성중/작성완료 상태 업데이트 로직 짤것
 
         Map map = new HashMap<>();
         for (MemberCoverLetter item : values) {

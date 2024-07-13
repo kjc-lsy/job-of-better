@@ -1,6 +1,6 @@
 // reactstrap components
 import {Button, Card, CardBody, CardHeader, Col, Form, Row,} from "reactstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import * as auth from '../../apis/auth';
 import {useNavigate} from "react-router-dom";
 import UsernameFormGroup from "../../components/FormGroup/UsernameFormGroup";
@@ -70,10 +70,6 @@ const Register = ({header}) => {
                 sendAlert("error", error.response.data);
             });
     }
-
-    useEffect(() => {
-        console.log(inputValue)
-    }, [inputValue]);
 
     return (
         <Col lg="6" md="8" className="register-container">

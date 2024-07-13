@@ -29,9 +29,6 @@ const lineSet = (canvasId ,data) => {
         const found = data.find(item => item.regDate === date);
         return found ? found.regCount : 0;
     });
-
-    console.log(data);
-
     /*let ctx = canvas.getContext("2d");
 
     let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);

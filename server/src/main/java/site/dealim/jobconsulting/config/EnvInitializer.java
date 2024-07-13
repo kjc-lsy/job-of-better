@@ -23,15 +23,24 @@ public class EnvInitializer implements ApplicationContextInitializer<Configurabl
         log.info("환경 변수를 초기화 중...");
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
         MutablePropertySources propertySources = environment.getPropertySources();
+        Properties envProps = new Properties();
+        Dotenv dotenv = null;
+
         try {
-            Properties envProps = new Properties();
-            Dotenv dotenv = setDotEnv(envProps); // Dot env 설정
-            setVertexAiServiceKey(envProps, dotenv.get("VERTEX_AI_SERVICE_KEY_FILENAME")); // vertexi ai service key 설정
-            propertySources.addFirst(new PropertiesPropertySource("dotenvProperties", envProps));
+            dotenv = setDotEnv(envProps); // Dot env 설정
         } catch (RuntimeException e) {
-            log.error("환경 변수 초기화 오류!", e);
+            log.error("Dotenv 설정 중 오류 발생", e);
         }
 
+        if(dotenv != null) {
+            try {
+                setVertexAiServiceKey(envProps, dotenv.get("VERTEX_AI_SERVICE_KEY_FILENAME")); // Vertex AI service key 설정
+            } catch (RuntimeException e) {
+                log.error("Vertex AI 서비스 키 설정 중 오류 발생", e);
+            }
+        }
+
+        propertySources.addFirst(new PropertiesPropertySource("dotenvProperties", envProps));
     }
 
     public Dotenv setDotEnv(Properties envProps) {
@@ -46,7 +55,7 @@ public class EnvInitializer implements ApplicationContextInitializer<Configurabl
                         .filename(".env")
                         .load();
             } else {
-                log.info(".env 파일이 클래스패스에 없습니다. user.dir에서 로드를 시도합니다...");
+                log.info(".env 파일이 클래스패스에 없습니다. " + System.getProperty("user.dir") + "에서 로드를 시도합니다...");
                 Path path = Paths.get(System.getProperty("user.dir"), ".env");
                 dotenv = Dotenv.configure()
                         .directory(path.toString())
