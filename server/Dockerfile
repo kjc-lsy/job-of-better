@@ -22,8 +22,8 @@ EXPOSE 9090
 
 # Copy build application to 'app' folder in image
 COPY --from=build /app/build/libs/*.jar /app/app.jar
-COPY .env .
-COPY $VERTEX_AI_SERVICE_KEY_FILENAME .
+COPY .env /app/.env
+COPY $VERTEX_AI_SERVICE_KEY_FILENAME /app/$VERTEX_AI_SERVICE_KEY_FILENAME 
 
 # Run the application
 CMD ["java", "-jar", "/app/app.jar"]
