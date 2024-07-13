@@ -64,6 +64,7 @@ public class EnvInitializer implements ApplicationContextInitializer<Configurabl
     }
 
     public void setVertexAiServiceKey(Properties envProps, String filename) {
+        log.info("vertex ai service key를 초기화 중...");
 
         try {
             ClassPathResource resource = new ClassPathResource(filename);
