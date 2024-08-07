@@ -1,7 +1,5 @@
 package site.dealim.jobconsulting.util;
 
-import org.springframework.stereotype.Component;
-
 import java.lang.reflect.Field;
 
 public class CopyBeanUtil {
@@ -11,14 +9,16 @@ public class CopyBeanUtil {
 
         Field[] fields = sourceClass.getDeclaredFields();
         for (Field field : fields) {
-            field.setAccessible(true); // private 필드에 접근 가능하도록 설정
+            // private 필드에 접근 가능하도록 설정
+            field.setAccessible(true);
             Object value = field.get(source);
 
             Field targetField;
             try {
                 targetField = targetClass.getDeclaredField(field.getName());
             } catch (NoSuchFieldException e) {
-                continue; // 대상 객체에 해당 필드가 없으면 다음으로 넘어갑니다.
+                // 대상 객체에 해당 필드가 없으면 다음으로 넘어갑니다.
+                continue;
             }
 
             targetField.setAccessible(true);

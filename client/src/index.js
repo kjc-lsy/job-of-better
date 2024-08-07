@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 
 import App from "./App";
-import { AuthContextProvider } from "./contexts/AuthContextProvider";
+import {AuthContextProvider} from "./contexts/AuthContextProvider";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/plugins/nucleo/css/nucleo.css";
@@ -17,7 +17,6 @@ import CurrProgProvider from "./contexts/CurrProgProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <StrictMode>
   <LoadingProvider>
     <ThemeContextWrapper>
       <BackgroundColorWrapper>
@@ -31,5 +30,4 @@ root.render(
       </BackgroundColorWrapper>
     </ThemeContextWrapper>
   </LoadingProvider>,
-  // </StrictMode>
 );
