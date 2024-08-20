@@ -149,11 +149,11 @@ public class JwtTokenProvider {
     }
 
     /**
-     * 💍❓ 토큰 유효성 검사
+     * 토큰 유효성 검사
      * - 만료기간이 넘었는지?
-     *
      * @param jwt
-     * @return ⭕ true     : 유효
+     * @return
+     * ⭕ true     : 유효
      * ❌ false    : 만료
      */
     public boolean validateToken(String jwt) {

@@ -32,12 +32,16 @@ public class MemberListController {
             @RequestParam(value = "coverLetterFilter", required = false) String coverLetterFilter,
             @RequestParam(value = "resumeFilter", required = false) String resumeFilter,
             @RequestParam(value = "interviewFilter", required = false) String interviewFilter,
-            @RequestParam(value = "regStatusFilter", required = false) String regStatusFilter) throws InterruptedException {
+            @RequestParam(value = "regStatusFilter", required = false) String regStatusFilter)
+            throws InterruptedException {
 
         log.info("멤버 필터링...");
-        log.info("keyword : " + keyword + ", currPgIdx : " + currPgIdx + ", coverLetterFilter : " + coverLetterFilter + ", resumeFilter : " + resumeFilter + ", interviewFilter : " + interviewFilter + ", regStatusFilter : " + regStatusFilter);
+        log.info("keyword : " + keyword + ", currPgIdx : " + currPgIdx + ", coverLetterFilter : " + coverLetterFilter
+                + ", resumeFilter : " + resumeFilter + ", interviewFilter : " + interviewFilter + ", regStatusFilter : "
+                + regStatusFilter);
 
-        return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword, currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter));
+        return ResponseEntity.ok(memberListService.getSearchedMembers(pageable, member.getMember().getIdx(), keyword,
+                currPgIdx, coverLetterFilter, resumeFilter, interviewFilter, regStatusFilter));
     }
 
     @Secured("ROLE_COMPANY")
@@ -49,9 +53,10 @@ public class MemberListController {
 
     @Secured("ROLE_COMPANY")
     @PutMapping("/update-reg-status")
-    public ResponseEntity<?> updateRegStatus(@RequestParam("memIdx") Long memIdx, @RequestParam("status") String status) {
+    public ResponseEntity<?> updateRegStatus(@RequestParam("memIdx") Long memIdx,
+            @RequestParam("status") String status) {
         log.info("member 프로그램 신청 상태 업데이트...");
-        if(memberListService.updateRegStatus(memIdx, status) == 1) {
+        if (memberListService.updateRegStatus(memIdx, status) == 1) {
             return ResponseEntity.ok("업데이트 성공");
         }
         return ResponseEntity.ok("업데이트 실패");

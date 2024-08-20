@@ -41,7 +41,7 @@ public class AuthController {
      * @param customMember
      * @return
      */
-    @Secured("ROLE_USER")           // USER 권한 설정
+    @Secured("ROLE_USER") // USER 권한 설정
     @GetMapping("/info")
     public ResponseEntity<?> userInfo(@AuthenticationPrincipal CustomMember customMember) {
         log.info("로그인 유저 조회...");
@@ -83,17 +83,17 @@ public class AuthController {
      * @return
      * @throws Exception
      */
-    @Secured("ROLE_USER")           // USER 권한 설정
+    @Secured("ROLE_USER") // USER 권한 설정
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Member member,@AuthenticationPrincipal CustomMember customMember) throws Exception {
+    public ResponseEntity<?> update(@RequestBody Member member, @AuthenticationPrincipal CustomMember customMember)
+            throws Exception {
         log.info("회원 정보 수정 시작...");
+
         member.setIdx(customMember.getMember().getIdx());
         member.setUsername(customMember.getMember().getUsername());
-        //System.out.println("member = " + member);
         authService.update(member);
 
         log.info("회원수정 성공! - SUCCESS");
-
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
@@ -104,7 +104,7 @@ public class AuthController {
      * @return
      * @throws Exception
      */
-    @Secured("ROLE_COMPANY")          //  USER 권한 설정
+    @Secured("ROLE_COMPANY") // USER 권한 설정
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> destroy(@PathVariable("username") String username) throws Exception {
         log.info("회원 삭제 시작...");
@@ -112,35 +112,36 @@ public class AuthController {
         authService.delete(username);
 
         log.info("회원삭제 성공! - SUCCESS");
-
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
     @PostMapping("/check-duplicate-username")
     public ResponseEntity<?> checkDuplicateUsername(@RequestParam(value = "username") String username) {
-        log.info("로그인 중복 유저 확인..."+username);
+        log.info("로그인 중복 유저 확인..." + username);
+
         return new ResponseEntity<>(authService.checkDuplicateUsername(username), HttpStatus.OK);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(path = "/company-join")
     public ResponseEntity<?> companyJoin(
-        @RequestBody MemberCompanyDto memberCompanyDto
-    ) throws Exception {
+            @RequestBody MemberCompanyDto memberCompanyDto) throws Exception {
         try {
             log.info("멤버 회원가입 시작...");
+
             authService.MemberInsert(memberCompanyDto.getMember());
 
             Long joinMember = memberCompanyDto.getMember().getIdx();
-            log.info("멤버 회원가입 성공! - SUCCESS / idx : "+memberCompanyDto.getMember().getIdx());
+            log.info("멤버 회원가입 성공! - SUCCESS / idx : " + memberCompanyDto.getMember().getIdx());
 
             log.info("기업 회원가입 시작...");
             authService.companyJoin(joinMember, memberCompanyDto.getCompany());
             log.info("기업 회원가입 성공! - SUCCESS");
 
             log.info("멤버 기업 idx값 추가");
-            authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(), memberCompanyDto.getMember().getIdx());
-        } catch(Exception e) {
+            authService.updateCompanyIdx(memberCompanyDto.getCompany().getComIdx(),
+                    memberCompanyDto.getMember().getIdx());
+        } catch (Exception e) {
             log.error("회원가입 실패 - ERROR", e);
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.
         }
@@ -148,19 +149,14 @@ public class AuthController {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @PostMapping(path = "/company-join-license" ,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @PostMapping(path = "/company-join-license", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> companyJoin(
-            @RequestParam("comIdx") Long comIdx
-            , @RequestParam("path") String path
-            , @RequestParam("file") MultipartFile multipartFiles
-    ) throws Exception {
+            @RequestParam("comIdx") Long comIdx, @RequestParam("path") String path,
+            @RequestParam("file") MultipartFile multipartFiles) throws Exception {
         log.info("aws 업로드 시작");
         try {
-            authService.uploadLicenseFile(comIdx , awsService.uploadFile(comIdx, path, multipartFiles));
-        } catch(Exception e) {
+            authService.uploadLicenseFile(comIdx, awsService.uploadFile(comIdx, path, multipartFiles));
+        } catch (Exception e) {
             log.error("업로드 실패 - ERROR", e);
             throw e; // 예외를 다시 던져서 롤백을 유도합니다.
         }

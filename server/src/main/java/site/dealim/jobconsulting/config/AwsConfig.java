@@ -17,7 +17,7 @@ public class AwsConfig {
     private AwsProps awsProps;
 
     @Bean
-    public AmazonS3Client amazonS3Client(){
+    public AmazonS3Client amazonS3Client() {
         log.info("amazonS3Client 빈 생성...");
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsProps.getAccessKey(), awsProps.getSecretKey());
         return (AmazonS3Client) AmazonS3ClientBuilder

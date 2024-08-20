@@ -97,7 +97,7 @@ public class MyInfoService {
 
         log.info("현재 슬롯 업데이트...");
         updateCurrentOccupancy(existingSlot.getSlotIdx());
-
+        
         log.info("면접 신청 완료!");
     }
 

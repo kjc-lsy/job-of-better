@@ -1,51 +1,46 @@
-import React, {useContext, useEffect, useState} from "react";
-import {BeatLoader} from "react-spinners";
+import React, { useContext, useEffect, useState } from "react";
+import { BeatLoader } from "react-spinners";
 import { BackgroundColorContext } from "../contexts/BackgroundColorWrapper";
-import {useTheme} from "styled-components";
-
 
 const override = {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform:"translate(-50% , -50%)",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 999
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50% , -50%)",
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 999,
 };
 
 const Loading = ({ loading }) => {
-    //const {theme} = useContext(ThemeContext);
-    const [load, setLoad] = useState(false);
-    const {theme} = useTheme();
-    const { colors } = useContext(BackgroundColorContext);
+  const [load, setLoad] = useState(false);
+  const { colors } = useContext(BackgroundColorContext);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (loading) {
+      const timer = setTimeout(() => {
+        setLoad(loading);
+      }, 10);
 
-        if (loading) {
-            const timer = setTimeout(() => {
-                setLoad(loading);
-            }, 10);
-
-            return () => clearTimeout(timer);
-        }else {
-            setLoad(loading);
-        }
-        //console.log(theme);
-    }, [loading]);
-    return (
-        <div>
-            <BeatLoader
-                color={colors}
-                loading={load}
-                cssOverride={override}
-                size={15}
-            />
-        </div>
-    );
+      return () => clearTimeout(timer);
+    } else {
+      setLoad(loading);
+    }
+  }, [loading]);
+  return (
+    <div>
+      <BeatLoader
+        color={colors}
+        loading={load}
+        cssOverride={override}
+        size={15}
+      />
+    </div>
+  );
 };
 
 export default Loading;
+
