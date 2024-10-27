@@ -5,27 +5,32 @@ services:
         - VERTEX_AI_SERVICE_KEY_FILENAME=${VERTEX_AI_SERVICE_KEY_FILENAME}
       context: .
       dockerfile: ./server/Dockerfile
-    ports:
-      - "9090:9090"
     env_file:
       - .env
+    networks:
+      - job-of-better
 
   react-app:
     build:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "13000:80"
     env_file:
       - .env
+    networks:
+      - job-of-better
 
   mysql-server:
     build:
       context: ./database
       dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
     volumes:
       - ./database/db-data:/var/lib/mysql
     env_file:
       - .env
+    networks:
+      - job-of-better
+
+networks:
+  job-of-better:
